@@ -1,0 +1,64 @@
+---
+output:
+  revealjs::revealjs_presentation:
+    theme: simple
+    highlight: pygments
+    center: true
+    transition: none
+    progress: true
+    incremental: true
+    font-family: Verdana
+---
+
+<style>
+p{
+  text-align: left;
+}
+
+ul{
+  text-align: left;
+  margin-left: 0px;
+}
+</style>
+
+<section>
+<ul>
+<li>numeric</li>
+<li>integer</li>
+<li>double</li>
+</ul>
+</section>
+
+<section>
+<h2>Values</h2>
+<hr>
+<p>In this workshop, we'll use the term <b>value</b> to represent any datum (single unit of data). There are many different types of values in R, most commonly used are:</p>
+<br>
+<ul>
+<li>numeric</li>
+<li>integer</li>
+<li>double</li>
+</ul>
+</section>
+
+<section>
+<ul>
+<li>numeric<ul>
+<li>integer</li>
+<li>double</li>
+</ul></li>
+<li>character</li>
+<li>factor</li>
+</ul>
+</section>
+
+----
+
+<h2>Types of data: Numeric values</h2>
+<br>
+<p>A numeric value is a number of type:</p>
+<br>
+<ul>
+<li>integer: whole numbers</li>
+<li>double: double precision floating point numbers (on the user end this can be thought of as a decimal number)</li>
+</ul>
