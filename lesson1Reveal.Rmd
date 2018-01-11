@@ -3,62 +3,250 @@ output:
   revealjs::revealjs_presentation:
     theme: simple
     highlight: pygments
-    center: true
+    center: false
     transition: none
     progress: true
-    incremental: true
     font-family: Verdana
 ---
 
 <style>
-p{
-  text-align: left;
+  code{
+    background-color:#f2f2f2;
+  }
+  
+  span.co{
+    color:#000080;
+    font-weight: bold;
+  }
+  
+  img{
+	      border-style: solid;
+	      border-width: 40px;
+	      border-color: white;
+	      width: 65%;
+	      display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      padding: 10px;
+  }
+
+  p{
+    text-align: left;
+  }
+
+  ul{
+    text-align: left;
+    margin-left: 0px;
 }
 
-ul{
-  text-align: left;
-  margin-left: 0px;
-}
 </style>
 
-<section>
-<ul>
-<li>numeric</li>
-<li>integer</li>
-<li>double</li>
-</ul>
-</section>
+```{r echo = FALSE}
+library(tidyverse)
+```
 
-<section>
-<h2>Values</h2>
+## Values
 <hr>
-<p>In this workshop, we'll use the term <b>value</b> to represent any datum (single unit of data). There are many different types of values in R, most commonly used are:</p>
-<br>
+<p style="text-align: center;">In this workshop, we'll use the term <b>value</b> to represent any datum (single unit of data).</p>
+
+## Values
+<hr>
+<p style="text-align: center;">In this workshop, we'll use the term <b>value</b> to represent any datum (single unit of data).</p>
+
+<img src="rWorkshop/images/setData-random.png" 
+	title="Randomly arranged data"
+	alt = "Symbols representing different data values"
+	border="0"
+	style= "
+	      display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      padding: 10px;
+	      border-style: solid;
+	      border-width: 40px;
+	      border-color: white;
+	      width: 65%;"/>
+
+## Values
+
+<hr>
+<p style="text-align: center;">In this workshop, we'll use the term <b>value</b> to represent any datum (single unit of data).</p>
+
+<img src="rWorkshop/images/setData-shapeRow.png" 
+	title="Data arranged by row"
+	alt = "Symbols representing different data values, with types of values arranged by row" 
+	style= "
+	      display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      padding: 10px;
+	      border-style: solid;
+	      border-width: 40px;
+	      border-color: white;
+	      width: 65%;"/>
+
+## Values
+
+<hr>
+<p style="text-align: center;">In this workshop, we'll use the term <b>value</b> to represent any datum (single unit of data).</p>
+
+<img src="rWorkshop/images/setData-shapeColumn1.png" 
+	title="Data arranged by column and shape"
+	alt = "Symbols representing different data values, with types of values arranged by row" 
+	style= "
+	      display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      padding: 10px;
+	      border-style: solid;
+	      border-width: 40px;
+	      border-color: white;
+	      width: 65%;"/>
+	      
+## Values
+
+<hr>
+<p style="text-align: center;">In this workshop, we'll use the term <b>value</b> to represent any datum (single unit of data).</p>
+
+<img src="rWorkshop/images/setData-shapeColumn2.png" 
+	title="Data arranged by column and fill"
+	alt = "Symbols representing different data values, with types of values arranged by row" 
+	style= "
+	      display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      padding: 10px;
+	      border-style: solid;
+	      border-width: 40px;
+	      border-color: white;
+	      width: 65%;"/>
+
+## Types of values
+
+<hr>
+<p>The most commonly used types of values are:</p>
 <ul>
-<li>numeric</li>
-<li>integer</li>
-<li>double</li>
+<li><b>Numeric</b>: numbers</li>
+<li><b>Character</b>: string (i.e., symbols)</li>
+<li><b>Factor</b>: a smart combination of words/letters and numbers</li>
 </ul>
-</section>
 
-<section>
-<ul>
-<li>numeric<ul>
-<li>integer</li>
-<li>double</li>
-</ul></li>
-<li>character</li>
-<li>factor</li>
-</ul>
-</section>
+## Types of values: Numeric
 
-----
-
-<h2>Types of data: Numeric values</h2>
-<br>
+<hr>
 <p>A numeric value is a number of type:</p>
-<br>
 <ul>
-<li>integer: whole numbers</li>
 <li>double: double precision floating point numbers (on the user end this can be thought of as a decimal number)</li>
+<li style = "color:#c0c0c0;" >integer: whole numbers</li>
 </ul>
+
+```{r eval = FALSE}
+# Create a vector of numeric values:
+
+numericV <- c(5, 3, 2)
+
+# What type of object is this?
+
+class(numericV)
+
+typeof(numericV)
+
+str(numericV)
+
+summary(numericV)
+
+```
+
+## Types of values: Numeric
+
+<hr>
+<p>A numeric value is a number of type:</p>
+<ul>
+<li style = "color:#c0c0c0;" >double: double precision floating point numbers (on the user end this can be thought of as a decimal number)</li>
+<li>integer: whole numbers</li>
+</ul>
+
+```{r eval = FALSE}
+# Create a vector of numeric values:
+
+numericInteger <- as.integer(numericV)
+
+# What type of object is this?
+
+class(numericInteger)
+
+typeof(numericInteger)
+
+str(numericInteger)
+
+summary(numericInteger)
+```
+
+## Types of values: Character
+
+<hr>
+<p style="text-align: center;"> A character or "string" value is a symbol or set of symbols from a given library</p>
+
+
+```{r eval = FALSE}
+# Create a vector of numeric values:
+
+exampleCharacter <- c('five', 'three', 'two')
+
+# What type of object is this?
+
+class(exampleCharacter)
+
+typeof(exampleCharacter)
+
+str(exampleCharacter)
+
+summary(exampleCharacter)
+```
+
+## Types of values: Factor
+
+<hr>
+<p> A <b>factor</b> value includes the following information:</p>
+<ul>
+<li>Integer value: Numeric integer value associated with factor level</li>
+<li>Levels: Character values associated with integer value</li>
+<li>Labels: Characters to assign to each factor level</li>
+</ul>
+
+
+```{r eval = FALSE}
+# Create a vector of numeric values:
+
+exampleFactor <- factor(c('may', 'march', 'february', 'january','january'))
+
+# What type of object is this?
+
+class(exampleFactor)
+
+str(exampleFactor)
+
+summary(exampleFactor)
+```
+
+## Types of values: Factor
+
+<hr>
+
+<div border="0" style = "border-style: solid;
+	      border-width: 40px;
+	      border-color: white;
+	      width: 85%;
+	      display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      padding: 10px;" border = 0>
+```{r eval = TRUE, echo = FALSE}
+# Plot factor values:
+data.frame(exampleFactor = factor(c('may', 'march', 'february', 'january','january'))) %>%
+  ggplot(aes(x = exampleFactor)) + 
+  geom_bar() +
+  scale_y_continuous(limits = c(0, 2.5), expand = c(0,0)) +
+  theme_bw()
+```
+</div>
