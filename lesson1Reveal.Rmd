@@ -41,13 +41,52 @@ output:
 
 </style>
 
-```{r echo = FALSE}
+```{r include = FALSE}
 library(tidyverse)
 ```
+
+## Re-thinking data
+<hr>
+<p style="text-align: center;">How we've interacted with data dictates how we structure data mentally.</p>
+
+<img src="rWorkshop/images/excelScreenshot.jpg" 
+	title="excel screenshot"
+	alt = "Screenshot of microsoft excel window"
+	border="0"
+	style= "
+	      display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      padding: 9px;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 75%;"/>
+	      
+<!This is an important place to start because, in many fields, including science, we are hardwired by inertia to consider this -- the typical excel worksheet -- as data. This dictates how we interact with data and limits our flexibility.
+In this workshop we'll work to increase our flexibility to rebuilding how we consider data from the ground up>
 
 ## Values
 <hr>
 <p style="text-align: center;">In this workshop, we'll use the term <b>value</b> to represent any datum (single unit of data).</p>
+
+## Values
+<hr>
+<p style="text-align: center;">In this workshop, we'll use the term <b>value</b> to represent any datum (single unit of data).</p>
+
+<img src="rWorkshop/images/datum.png" 
+	title="Randomly arranged data"
+	alt = "Symbols representing different data values"
+	border="0"
+	style= "
+	      display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      padding: 10px;
+	      border-style: solid;
+	      border-width: 40px;
+	      border-color: white;
+	      width: 65%;"/>
 
 ## Values
 <hr>
@@ -84,6 +123,8 @@ library(tidyverse)
 	      border-width: 40px;
 	      border-color: white;
 	      width: 65%;"/>
+	      
+<!include: each value has a number of characteristics that define it, for example, in this case, the value has a characteristic shape, color, and fill pattern>
 
 ## Values
 
@@ -134,10 +175,10 @@ library(tidyverse)
 ## Types of values: Numeric
 
 <hr>
-<p>A numeric value is a number of type:</p>
+<p>A <b>numeric value</b> is a number of type:</p>
 <ul>
-<li>double: double precision floating point numbers (on the user end this can be thought of as a decimal number)</li>
-<li style = "color:#c0c0c0;" >integer: whole numbers</li>
+<li><b>Double</b>: double precision floating point numbers (on the user end this can be thought of as a decimal number)</li>
+<li style = "color:#c0c0c0;" ><b>Integer</b>: whole numbers</li>
 </ul>
 
 ```{r eval = FALSE}
@@ -160,10 +201,10 @@ summary(numericV)
 ## Types of values: Numeric
 
 <hr>
-<p>A numeric value is a number of type:</p>
+<p>A <b>numeric value</b> is a number of type:</p>
 <ul>
-<li style = "color:#c0c0c0;" >double: double precision floating point numbers (on the user end this can be thought of as a decimal number)</li>
-<li>integer: whole numbers</li>
+<li style = "color:#c0c0c0;" ><b>Double</b>: double precision floating point numbers (on the user end this can be thought of as a decimal number)</li>
+<li><b>Integer</b>: whole numbers</li>
 </ul>
 
 ```{r eval = FALSE}
@@ -185,7 +226,7 @@ summary(numericInteger)
 ## Types of values: Character
 
 <hr>
-<p style="text-align: center;"> A character or "string" value is a symbol or set of symbols from a given library</p>
+<p style="text-align: center;"> A <b>character</b> or "string" value is a symbol or set of symbols from a given library</p>
 
 
 ```{r eval = FALSE}
