@@ -48,6 +48,20 @@ output:
     text-align: right;
     vertical-align: middle;
   }
+  
+  /* Create two equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
 
 </style>
 
@@ -824,21 +838,252 @@ m
 
 ## List objects: Structure
 <hr>
-<p>A <b>list</b> is a one dimensional object constructed by combining ANY objects of ANY dimension.</p>
+<p>A <b>list</b> is a one dimensional object constructed by combining ANY objects with ANY dimensionality.</p>
 <p>List position is denoted by [[<i>x</i>]].</p>
+
+<div style = "float: left; position: absolute; vertical-align: text-top;">
+<p style = "text-align: left;">[[1]]</p>
+<table style = "font-size: 1em; vertical-align: middle; float: left;">
+<tr>
+  <th style = "text-align: center; font-weight: normal;">[1]</th>
+  <th style = "text-align: center; font-weight: normal;">[2]</th>
+  <th style = "text-align: center; font-weight: normal;">[3]</th>
+  <th style = "text-align: center; font-weight: normal;">[4]</th>
+</tr>
+<tr>
+  <td style = "text-align: center;">1</td>
+  <td style = "text-align: center;">1</td>
+  <td style = "text-align: center;">2</td>
+  <td style = "text-align: center;">3</td>
+</tr>
+</table>
+</div>
+
+<div style = "position: absolute; left: 340px;display: block;">
+<p style = "text-align: left">[[2]]</p>
+<table style = "font-size: 1em; vertical-align: middle; float: left;">
+<tr>
+  <th style = "text-align: center; font-weight: normal;"></th>
+  <th style = "text-align: center; font-weight: normal;">[ ,1]</th>
+  <th style = "text-align: center; font-weight: normal;">[ ,2]</th>
+</tr>
+<tr>
+  <td style = "text-align: center;">[1, ]</td>
+  <td style = "text-align: center;">1</td>
+  <td style = "text-align: center;">2</td>
+</tr>
+<tr>
+  <td style = "text-align: center;">[2, ]</td>
+  <td style = "text-align: center;">1</td>
+  <td style = "text-align: center;">3</td>
+</tr>
+</table>
+</div>
+
+<div style = "position: absolute; left: 650px;display: block;">
+<p style = "text-align: left">[[3]]</p>
+<table style = "font-size: 1em; vertical-align: middle; float: left;">
+<tr>
+  <th style = "text-align: center; font-weight: normal;"></th>
+  <th style = "text-align: center; font-weight: normal;">[ ,1]</th>
+  <th style = "text-align: center; font-weight: normal;">[ ,2]</th>
+</tr>
+<tr>
+  <td style = "text-align: center;">[1, ]</td>
+  <td style = "text-align: center;">"1"</td>
+  <td style = "text-align: center;">"2"</td>
+</tr>
+<tr>
+  <td style = "text-align: center;">[2, ]</td>
+  <td style = "text-align: center;">"one"</td>
+  <td style = "text-align: center;">"3"</td>
+</tr>
+</table>
+</div>
+
 
 ## List objects: Structure
 <hr>
-<p>A <b>list</b> is a one dimensional object constructed by combining ANY objects of ANY dimension.</p>
+<p>A <b>list</b> is a one dimensional object constructed by combining ANY objects with ANY dimensionality.</p>
+
+```{r}
+# List of a numeric vector and matrices:
+
+exampleList <- list(numericVector, m, messyMatrix)
+
+exampleList
+```
+
+## List objects: Indexing
+<hr>
+<p>A <b>list</b> is a one dimensional object constructed by combining ANY objects with ANY dimensionality.</p>
+<p>List position is denoted by [[<i>x</i>]].</p>
+
+<div style = "float: left; position: absolute; vertical-align: text-top;">
+<p style = "text-align: left;">[[1]]</p>
+<table style = "font-size: 1em; vertical-align: middle; float: left;">
+<tr>
+  <th style = "text-align: center; font-weight: normal;">[1]</th>
+  <th style = "text-align: center; font-weight: normal;">[2]</th>
+  <th style = "text-align: center; font-weight: normal;">[3]</th>
+  <th style = "text-align: center; font-weight: normal;">[4]</th>
+</tr>
+<tr>
+  <td style = "text-align: center;">1</td>
+  <td style = "text-align: center;">1</td>
+  <td style = "text-align: center;">2</td>
+  <td style = "text-align: center;">3</td>
+</tr>
+</table>
+</div>
+
+<div style = "position: absolute; left: 340px;display: block;">
+<p style = "text-align: left">[[2]]</p>
+<table style = "font-size: 1em; vertical-align: middle; float: left;">
+<tr>
+  <th style = "text-align: center; font-weight: normal;"></th>
+  <th style = "text-align: center; font-weight: normal;">[ ,1]</th>
+  <th style = "text-align: center; font-weight: normal;">[ ,2]</th>
+</tr>
+<tr>
+  <td style = "text-align: center;">[1, ]</td>
+  <td style = "text-align: center;">1</td>
+  <td style = "text-align: center;">2</td>
+</tr>
+<tr>
+  <td style = "text-align: center;">[2, ]</td>
+  <td style = "text-align: center;">1</td>
+  <td style = "text-align: center;">3</td>
+</tr>
+</table>
+</div>
+
+<div style = "position: absolute; left: 650px;display: block;">
+<p style = "text-align: left">[[3]]</p>
+<table style = "font-size: 1em; vertical-align: middle; float: left;">
+<tr>
+  <th style = "text-align: center; font-weight: normal;"></th>
+  <th style = "text-align: center; font-weight: normal;">[ ,1]</th>
+  <th style = "text-align: center; font-weight: normal;">[ ,2]</th>
+</tr>
+<tr>
+  <td style = "text-align: center;">[1, ]</td>
+  <td style = "text-align: center;">"1"</td>
+  <td style = "text-align: center;">"2"</td>
+</tr>
+<tr>
+  <td style = "text-align: center;">[2, ]</td>
+  <td style = "text-align: center;">"one"</td>
+  <td style = "text-align: center;">"3"</td>
+</tr>
+</table>
+</div>
+
+## List objects: Indexing
+<hr>
+<p>A <b>list</b> is a one dimensional object constructed by combining ANY objects with ANY dimensionality.</p>
 <p>List position is denoted by [[<i>x</i>]].</p>
 
 ```{r}
-# List of a numeric vector and matrix:
+# List indexing:
 
-list(numericVector, m)
+exampleList
+
+exampleList[[2]]
 ```
 
-## Objects: Data frames
+## List objects: Indexing
+<hr>
+<p>A <b>list</b> is a one dimensional object constructed by combining ANY objects with ANY dimensionality.</p>
+<p>List position is denoted by [[<i>x</i>]].</p>
+
+```{r eval = FALSE}
+# List indexing:
+
+exampleList[[2]]
+
+exampleList[[2]] == m
+
+m[2,2]
+
+exampleList[[2]][2,2]
+```
+
+## List objects: Attributes
+
+<hr>
+<div style = "text-align: left;">
+<p>Typical attributes we are interested in of lists include:</p>
+<ul>
+<li><b>Class</b>: What type of values?
+<li><b>Length</b>: How many values?
+</ul>
+</div>
+
+```{r eval = FALSE}
+# Attributes of a list:
+
+class(exampleList)
+
+length(exampleList)
+
+str(exampleList)
+```
+
+## List objects: Attributes
+
+<hr>
+<div style = "text-align: left;">
+<p>Typical attributes we are interested in of lists include:</p>
+<ul>
+<li><b>Class</b>: What type of values?
+<li><b>Length</b>: How many values?
+</ul>
+</div>
+
+```{r eval = FALSE}
+# Attributes of list items:
+
+class(exampleList[[1]])
+
+length(exampleList[[1]])
+
+```
+
+## List objects: Attributes
+<hr>
+<p>Attributes can be added to lists</p>
+<br>
+
+```{r eval = FALSE}
+# Adding attributes to a list:
+
+exampleList
+
+names(exampleList)
+
+names(exampleList) <- c('numericVector', 'm', 'messyMatrix')
+
+attributes(exampleList)
+```
+
+## List objects: Attributes
+
+<p>Lists can be indexed by their names attribute using matrix notation or the `$` operator.</p>
+
+
+```{r eval = FALSE}
+# Lists can be indexed by name using the notation:
+
+exampleList[[3]]
+
+exampleList[['messyMatrix']]
+
+exampleList$messyMatrix
+
+```
+
+## Data frame objects: Structure
 <hr>
 <p>A <b>data frame</b> is a two dimensional object constructed by combining vectors.</p>
 
@@ -862,7 +1107,7 @@ list(numericVector, m)
 </tr>
 </table>
 
-## Objects: Data frames
+## Data frame objects: Structure
 <hr>
 <p>A <b>data frame</b> is a two dimensional object constructed by combining vectors.</p>
 
@@ -874,9 +1119,67 @@ df <- data.frame(a = c(1, 1), b =  c(2, 3))
 df
 ```
 
-## Objects: Data frames
+## Data frame objects: Structure
 <hr>
 <p>The vectors that are contained in a data frame may be of different classes.</p>
+
+```{r}
+# Generate a data frame of different vector classes:
+
+data.frame(a = c('one', 'one'), b =  c(2, 3))
+
+```
+
+## Data frame objects: Structure
+<hr>
+<p>But vectors are still coerced into the same class!</p>
+
+```{r}
+# Attempt to generate a data frame with heterogeneous vectors:
+
+messyDf <- data.frame(a = c(1, 'one'), b =  c(2, 3))
+
+messyDf
+
+```
+
+## Data frame objects: Indexing
+<hr>
+<p>Values in a data frame have a row (x) and column (y) position, denoted by "[<i>x</i>, <i>y</i>]"</p>
+
+<br>
+<table style = "font-size: 1.1em; vertical-align: middle;">
+<tr>
+  <th style = "text-align: center; font-weight: normal;"></th>
+  <th style = "text-align: center; font-weight: normal;">[ ,1]</th>
+  <th style = "text-align: center; font-weight: normal;">[ ,2]</th>
+</tr>
+<tr>
+  <td style = "text-align: center;">[1, ]</td>
+  <td style = "text-align: center;">1</td>
+  <td style = "text-align: center;">1</td>
+</tr>
+<tr>
+  <td style = "text-align: center;">[2, ]</td>
+  <td style = "text-align: center;">2</td>
+  <td style = "text-align: center;">3</td>
+</tr>
+</table>
+
+```{r eval = FALSE}
+# Index by row (x) and column (y) position [x,y]:
+
+df[1,1]
+
+df[2,2]
+
+df[1:2,2]
+
+```
+
+## Data frame objects: Attributes
+<hr>
+<p>There are a number of attributes that can be observed for a given data frame:</p>
 
 ```{r eval = FALSE}
 # View data frame attributes:
@@ -892,20 +1195,68 @@ dim(df)
 summary(df)
 ```
 
-## Objects: Data frames
+## Data frame objects: Attributes
 <hr>
-<p>The column names attribute of a data frame is a vector and can be re-assigned.</p>
-```{r eval = FALSE}
-# Change the names of the data frame:
+<p>Always check attributes prior to working with data frame!</p>
 
-names(df)
+```{r}
+# View attributes of the messy dataframe:
 
-names(df) <- c('gen1', 'gen2')
+str(messyDf)
 
-df
+dfStrings <- data.frame(
+  a = c(1, 'one'), 
+  b =  c(2, 3),
+  stringsAsFactors = FALSE
+  )
+
+str(dfStrings)
+
 ```
 
-## Objects: Data frames
+## Data frame objects: Attributes
+<hr>
+<p>Name attributes are automatically set when a data frame is created. Failing to set this attribute leads to bad names:</p>
+
+```{r}
+# Set and unset names:
+
+data.frame(a = c(1, 1), b =  c(2, 3))
+
+data.frame(c(1, 1),c(2, 3))
+
+```
+
+## Data frame objects: Attributes
+<hr>
+<p>Similar to other objects, the names attribute can also be set manually after an object is created:</p>
+
+```{r}
+# View data frame attributes:
+
+exampleDf <- data.frame(c(1, 1),c(2, 3))
+
+names(exampleDf) <- c('hello', 'world')
+
+exampleDf
+
+```
+
+## Data frame objects: Attributes
+<hr>
+<p>Data frames can be indexed by their names attribute using matrix notation or the `$` operator.</p>
+
+```{r eval = FALSE}
+# View data frame attributes:
+
+exampleDf['hello']
+
+
+exampleDf$hello
+
+```
+
+## Data frame objects: The tibble!
 <hr>
 <p>A <b>tibble</b> is a special type of data frame provided by the package tidyverse.</p>
 
@@ -916,6 +1267,102 @@ library(tidyverse)
 
 # Generate a tibble data frame:
 
-data_frame(a = c(1, 'one'), b =  c(2, 3))
+tibbleDf <- data_frame(a = c(1, 'one'), b =  c(2, 3))
+
+tibbleDf
+```
+
+## Data frame objects: The tibble!
+<hr>
+<p>Base R data frames can also be converted to a tibble.</p>
+
+```{r}
+# Convert a data frame to a tbl:
+
+tbl_df(messyDf)
+
+tbl_df(data.frame(a = c(1, 'one'), b =  c(2, 3)))
 
 ```
+
+## Data frame objects: The tibble!
+<hr>
+<p>How do tibbles differ from Base R data frames?</p>
+
+```{r}
+# Compare tibble and base R data frame:
+
+data.frame(a = c(1, 'one'), b =  c(2, 3))
+
+data_frame(a = c(1, 'one'), b =  c(2, 3))
+```
+
+## Data frame objects: The tibble!
+<hr>
+<p>How do tibbles differ from Base R data frames?</p>
+
+```{r eval = FALSE}
+# Load data from:
+
+data(mtcars)
+
+mtcars
+
+tbl_df(mtcars)
+
+```
+
+## Summary
+<hr>
+<div class = "row">
+<div class  = "column">
+  <div class = "row">
+  <img src="rWorkshop/images/dsWorkflowOverview.png" 
+  	title="Randomly arranged data"
+  	alt = "Symbols representing different data values"
+  	style= "
+  	      float:right;
+  	      margin-left: 0px;
+  	      border-color: white;
+  	      width: 70%"/>
+  </div>
+  <div class = "row">
+  <img src="rWorkshop/images/setData-random.png" 
+  	title="Randomly arranged data"
+  	alt = "Symbols representing different data values"
+  	style= "
+  	      float:right;
+  	      margin-left: 0px;
+  	      border-color: white;
+  	      width: 70%"/>
+  </div>
+</div>
+	      
+<div class  = "column">
+<ul>
+<li><b>Values</b>:
+<ul>
+<li>Numbers</li>
+<li>Characters</li>
+<li>Factors</li>
+<li>Logical values</li>
+</ul>
+</li>
+<br>
+<li><b>Objects</b>:
+<ul>
+<li>Vectors</li>
+<li>Matrices</li>
+<li>Lists</li>
+<li>Data frames</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+## Summary
+<hr>
+<div style = "text-align: center;text-size: 1.2em;">
+<p style = "text-align: center; text-size: 1.2em;">By next Wednesday, please complete <a href = "http://scbi-migbirds.github.io/IntroductionToR.html"><b>this worksheet</b></a>.</p>
+</div>
