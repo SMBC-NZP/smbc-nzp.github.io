@@ -108,13 +108,13 @@ numericVector <- c(1, 1, 2, 3)
 
 <h2>Re-thinking data</h2>
 
-<p>In this workshop, we will be exploring a data science workflow using R. The data science workflow can be thought of as a series of interconnected steps, starting with the phenomenon being observed. The holy grail of data science is to develop what I call a “cradle-to-grave” workflow model (phenomenon to reporting). In this model, data science steps, including storage, wrangling, and modeling, are fully reproducible and reportable. <i>Note: the displayed model represents a data science workflow associated with collecting empirical data – in the data science workflow associated with data mining, all steps should be fully reproducible and reportable.</i></p>
+<p>In this workshop, we will be exploring a data science workflow using R. The data science workflow can be thought of as a series of interconnected steps, starting with the phenomenon being observed. The holy grail of data science is to develop what I call a "cradle-to-grave" workflow model (phenomenon to reporting). In this model, data science steps, including storage, wrangling, and modeling, are fully reproducible and reportable. <i>Note: the displayed model represents a data science workflow associated with collecting empirical data -- in the data science workflow associated with data mining, all steps should be fully reproducible and reportable.</i></p>
   
 <p>A solid data management plan is crucial for creating a flexible path from raw data to results that is fully reproducible.</p>
   
 <p>Components of data management we will address in this workshop are data wrangling (transformation and exploration) and reporting. We will not be addressing any collection, entry, storage, or analysis/modeling steps.</p>
 
-<p>How we’ve interacted with data dictates how we structure data mentally. The image to the left of this screen shows a typical Excel workbook. Many of us in science, myself included, have learned to use programs like Microsoft Excel (or iOS’ numbers, libreOffice’s Calc, Google Sheets, etc.) for viewing and managing data. Through learning and using spreadsheet programs, we tend to format and organize data in ways that are incompatible with environments outside of that system. <img src="rWorkshop/images/excelScreenshot.jpg" 
+<p>How we have interacted with data dictates how we structure data mentally. The image to the left of this screen shows a typical Excel workbook. Many of us in science, myself included, have learned to use programs like Microsoft Excel (or iOS' numbers, libreOffice's Calc, Google Sheets, etc.) for viewing and managing data. Through learning and using spreadsheet programs, we tend to format and organize data in ways that are incompatible with environments outside of that system. <img src="rWorkshop/images/excelScreenshot.jpg" 
 	title="excel screenshot"
 	alt = "Screenshot of microsoft excel window"
 	border="0"
@@ -127,7 +127,7 @@ numericVector <- c(1, 1, 2, 3)
 
 <hr>
 
-<p>Today we’re going to start to build our new data science model from the ground up. To understand how data science works in R, it’s necessary to get a solid background in the values that make up data and the structures that hold them. Specifically, we will address:</p>
+<p>Today we're going to start to build our new data science model from the ground up. To understand how data science works in R, it is necessary to get a solid background in the values that make up data and the structures that hold them. Specifically, we will address:</p>
 
 <ul style="line-height: 150%;">
 <li><b>Value</b>: Any datum (single unit of data)</li>
@@ -147,7 +147,7 @@ numericVector <- c(1, 1, 2, 3)
 <p>A value is defined by its:</p>
 <ul>
 <li><b>State</b>: What we typically think of as the value itself. For example, we might consider the state of the symbol on the right as being purple, a squiggle, and having a patterned fill.</li>
-<li><b>Attributes</b>(metadata), e.g.:
+<li><b>Attributes</b> (metadata), e.g.:
 <ul>
 <li>Name: What is the value called?</li>
 <li>Class: What type of value is it?</li>
@@ -160,7 +160,7 @@ numericVector <- c(1, 1, 2, 3)
 <p>Values are distinguished by similarities and differences in their multi-dimensional <b>states</b>, <b>attributes</b>, and <b>contexts</b>.</p>
 
 <br>
-<p>Developing a flexible R skillset, and combating the inertia of our Excel-trained brains, requires us to not think of collections of values as fixed entities, but rather as sets that may be arranged and re-arranged.</p>
+<p>Developing a flexible R skillset, and combating the inertia of our Excel-trained brains, requires us to not think of collections of values as fixed entities, but rather as sets that may be arranged and re-arranged as necessary.</p>
 
 <div class = "row">
   <div class = "column" style = "width = 50%; float: left;">
@@ -184,6 +184,7 @@ numericVector <- c(1, 1, 2, 3)
   	      width: 75%;"/>
 </div>
 
+<br>
 <div class = "row">
 <hr>
 <h2>Classes of values</h2>
@@ -206,8 +207,8 @@ numericVector <- c(1, 1, 2, 3)
 <br>
 <p>Number values can be either:</p>
 <ul>
-<li><b>Numeric</b>: double precision floating point numbers (on the user end this can be thought of as a decimal number)</li>
-<li><b>Integer</b>: whole numbers</li>
+<li><b>Numeric, double</b>: double precision floating point numbers (on the user end this can be thought of as a decimal number). R automatically assigns sets of numbers as double unless told otherwise.</li>
+<li><b>Numeric, integer</b>: whole numbers</li>
 </ul>
 <br>
 ```{r eval = FALSE}
@@ -221,6 +222,8 @@ numericV
 
 class(numericV)
 
+typeof(numericV)
+
 str(numericV)
 
 summary(numericV)
@@ -231,13 +234,25 @@ numericInteger <- 1:5
 
 numericInteger
 
+
 # What type of object is this?
 
 class(numericInteger)
 
+typeof(numericInteger)
+
 str(numericInteger)
 
 summary(numericInteger)
+
+# Read numericV as an integer:
+
+numericVI <- as.integer(numericV)
+
+class(numericVI)
+
+typeof(numericVI)
+
 ```
 
 
@@ -251,7 +266,7 @@ summary(numericInteger)
 ```{r eval = FALSE}
 # Create a vector of character values:
 
-exampleCharacter <- c('three', 'two', 'one', 'one')
+exampleCharacter <- c('march', 'february', 'january', 'january')
 
 exampleCharacter
 
@@ -267,9 +282,9 @@ summary(exampleCharacter)
 <hr>
 <h2>Classes of values: Factor</h2>
 <br>
-<p> A <b>factor</b> value includes the following information:</p>
+<p> A <b>factor</b> is a value that includes the following information:</p>
 <ul>
-<li><b>Integer value</b>: Numeric integer value associated with factor level</li>
+<li><b>Integer value</b>: Numeric integer value associated with factor level. For example, you may construct a factor of female and male treatment groups. In this instance, each treatment group would be assigned to a different integer value. </li>
 <li><b>Levels</b>: Character values associated with integer value</li>
 <li><b>Labels</b>: Characters to assign to each factor level</li>
 </ul>
@@ -278,9 +293,13 @@ summary(exampleCharacter)
 ```{r eval = FALSE}
 # Create a vector of factor values:
 
-exampleFactor <- factor(c('three', 'two', 'one', 'one'))
+exampleFactor <- factor(c('march', 'february', 'january', 'january'))
 
 exampleFactor
+
+# Factor values as integers:
+
+as.integer(exampleFactor)
 
 # What type of object is this?
 
@@ -312,11 +331,9 @@ summary(exampleFactor)
 ```{r eval = FALSE}
 # Set factor levels and labels:
 
-factor(c('three', 'two', 'one', 'one'))
-
 factor(
-  c('three', 'two', 'one', 'one'),
-  levels = c('one', 'two', 'three')
+  c('march', 'february', 'january', 'january'),
+  levels = c('january', 'february', 'march')
   )
 ```
 
@@ -339,12 +356,10 @@ factor(
 ```{r eval = FALSE}
 # Set factor levels and labels:
 
-factor(c('three', 'two', 'one', 'one'))
-
 factor(
-  c('three', 'two', 'one', 'one'),
-  levels = c('one', 'two', 'three'),
-  labels = c('One', 'Two', 'Three')
+  c('march', 'february', 'january', 'january'),
+  levels = c('january', 'february', 'march'),
+  labels = c('January', 'February', 'March')
   )
 ```
 
