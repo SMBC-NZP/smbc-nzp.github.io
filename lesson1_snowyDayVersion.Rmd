@@ -96,7 +96,7 @@ numericVector <- c(1, 1, 2, 3)
 <div class = "row">
 <p>Welcome to the data science in R workshop! We will spend the next few weeks exploring new ways to think about data in program R. R is a user-friendly programming language/software environment that is a great tool for data management and analysis.</p>
 
-<p>People without much previous coding experience often find the process of learning R a grueling uphill climb. I believe one of the biggest impediments to this learning process involves using R as a tool to replace current steps in your data science workflow rather than restructuring the workflow when new tools are incorporated. The latter requires us to better understand R as a language and develop new ways of processing data.</p>
+<p>People without much previous coding experience often find the process of learning R a grueling uphill climb. I believe one of the biggest impediments to this learning process involves using R as a tool to replace current steps in your data science workflow. When new tools are incorporated, especially in regards to learning to code, it is best to assess your workflow and modify as necessary. The latter requires us to better understand R as a language and develop new ways of processing data.</p>
 </div>
 
 <div class = "row">
@@ -114,7 +114,7 @@ numericVector <- c(1, 1, 2, 3)
   
 <p>Components of data management we will address in this workshop are data wrangling (transformation and exploration) and reporting. We will not be addressing any collection, entry, storage, or analysis/modeling steps.</p>
 
-<p>How we’ve interacted with data dictates how we structure data mentally. This image shows a typical Excel workbook. Many of us in science, myself included, have learned to use programs like Microsoft Excel (or iOS’ numbers, libreOffice’s Calc, Google Sheets, etc.) for viewing and managing data. Through learning and using spreadsheet programs, we tend to format and organize data in ways that are incompatible with environments outside of that system. <img src="rWorkshop/images/excelScreenshot.jpg" 
+<p>How we’ve interacted with data dictates how we structure data mentally. The image to the left of this screen shows a typical Excel workbook. Many of us in science, myself included, have learned to use programs like Microsoft Excel (or iOS’ numbers, libreOffice’s Calc, Google Sheets, etc.) for viewing and managing data. Through learning and using spreadsheet programs, we tend to format and organize data in ways that are incompatible with environments outside of that system. <img src="rWorkshop/images/excelScreenshot.jpg" 
 	title="excel screenshot"
 	alt = "Screenshot of microsoft excel window"
 	border="0"
@@ -153,7 +153,7 @@ numericVector <- c(1, 1, 2, 3)
 <li>Class: What type of value is it?</li>
 </ul>
 </li>
-<li><b>Context</b>: How does the value relate to other values in a set?</li>
+<li><b>Context</b>: How does the value relate to other values in a set (see below)?</li>
 </ul>
 
 <br>
@@ -196,19 +196,20 @@ numericVector <- c(1, 1, 2, 3)
 </ul>
 <br>
 <hr>
-<p><i><b>Note</b>: At this point, please open R Studio. Open a new script a save it as "rWorkshop2018.R".<p>
+<p><i><b>Note</b>: At this point, please open R Studio. Open a new script a save it as "rWorkshop2018_lesson1.R".<p>
 
-<p>The gray boxes below include code but no output. Please run the code and study the output within the context of the text in the document. To deepen or test your understanding of a given subject matter, please play around with the inputs to see if you understand the results.</i></p>
+<p>The gray boxes below include code but no output. Please run the code and study the output within the context of the text in the document. To deepen or test your understanding of a given subject matter, please play around with the inputs to see if you fully understand the results.</i></p>
 </div>
 
 <hr>
 <h2>Classes of values: Numeric</h2>
+<br>
 <p>Number values can be either:</p>
 <ul>
 <li><b>Numeric</b>: double precision floating point numbers (on the user end this can be thought of as a decimal number)</li>
-<li style = "color:#c0c0c0;" ><b>Integer</b>: whole numbers</li>
+<li><b>Integer</b>: whole numbers</li>
 </ul>
-
+<br>
 ```{r eval = FALSE}
 # Create a vector of numeric values:
 
@@ -224,17 +225,6 @@ str(numericV)
 
 summary(numericV)
 
-```
-
-
-<hr>
-<p>Number values can be either:</p>
-<ul>
-<li style = "color:#c0c0c0;" ><b>Numeric</b>: double precision floating point numbers (on the user end this can be thought of as a decimal number)</li>
-<li><b>Integer</b>: whole numbers</li>
-</ul>
-
-```{r eval = FALSE}
 # Create a vector of numeric integer values:
 
 numericInteger <- 1:5
@@ -250,13 +240,14 @@ str(numericInteger)
 summary(numericInteger)
 ```
 
+
 <hr>
 
 <h2>Classes of values: Character</h2>
 <br>
 
-<p> A <b>character</b> or "string" value is a symbol or set of symbols from a given library</p>
-
+<p> A <b>character</b> or "string" value is a symbol or set of symbols from a given alphabet (note: also includes numbers and punctuation).</p>
+<br>
 ```{r eval = FALSE}
 # Create a vector of character values:
 
@@ -282,7 +273,7 @@ summary(exampleCharacter)
 <li><b>Levels</b>: Character values associated with integer value</li>
 <li><b>Labels</b>: Characters to assign to each factor level</li>
 </ul>
-
+<br>
 
 ```{r eval = FALSE}
 # Create a vector of factor values:
@@ -316,6 +307,7 @@ summary(exampleFactor)
 	      width: 80%;"/>
 
 <p>Notice that the factor should likely be ordered "one, two, three", but R automatically assigns factor levels alphabetically. To address this, levels can be manually set:</p>
+<br>
 
 ```{r eval = FALSE}
 # Set factor levels and labels:
@@ -342,7 +334,7 @@ factor(
 	      width: 80%;"/>
 	      
 <p>Likewise, labels can be manually set if those that are automatically assigned are not ideal.</p>
-
+<br>
 
 ```{r eval = FALSE}
 # Set factor levels and labels:
@@ -379,6 +371,7 @@ factor(
 <li><b>TRUE</b>: 1</li>
 </ul>
 </div>
+<br>
 
 ```{r eval = FALSE}
 # Observe the behavior of logical values:
@@ -396,8 +389,11 @@ FALSE + TRUE
 FALSE + TRUE + TRUE
 ```
 
+<br>
 
 <p>Logical values can be obtained by evaluating objects with <b>logical operators</b>. For example, the logical operator `==` tests whether a value is equal to another value.</p>
+<br>
+
 
 ```{r eval = FALSE}
 # The "is equal to" logical operator:
@@ -414,6 +410,7 @@ FALSE + TRUE + TRUE
 ```
 <hr>
 <h2>Objects: Containers for values</h2>
+<br>
 
 <p>In R, containers called <b>objects</b> structure collections of values. Different types of objects store values in different ways:</p>
 
@@ -452,7 +449,6 @@ FALSE + TRUE + TRUE
 <p>An <b>atomic vector</b> is a one-dimensional collection of values. All values must be of the same class.</p>
 
 <br>
-<p>An <b>atomic vector</b> is a one-dimensional collection of values.</p>
 
 ```{r eval = FALSE}
 # A vector of numeric values:
@@ -466,6 +462,7 @@ summary(numericVector)
 
 <br>
 <p>All values in an atomic vector must be of the same class.</p>
+<br>
 
 ```{r eval = FALSE}
 # All values in a vector must be of the same class:
@@ -475,7 +472,6 @@ messyVector <- c(1, 'one', 2, 3)
 messyVector
 ```
 
-<hr>
 <h2>Vector objects: Indexing<h2>
 <br>
 
@@ -508,7 +504,7 @@ numericVector[3:4]
 
 numericVector[c(1,3)]
 ```
-<hr>
+<br>
 <h2>Vector objects: Attributes</h2>
 <br>
 
@@ -607,7 +603,7 @@ messyMatrix <- matrix(c(1, 'one', 2, 3), ncol = 2)
 
 messyMatrix
 ```
-<hr>
+<br>
 <h2>Matrix objects: Indexing</h2>
 <br>
 <p>Values in a matrix have a row (x) and column (y) position, denoted by "[<i>x</i>, <i>y</i>]"</p>
@@ -639,7 +635,7 @@ m[2,2]
 m[1:2,2]
 
 ```
-<hr>
+<br>
 
 <h2>Matrix objects: Attributes</h2>
 <br>
@@ -686,7 +682,7 @@ exampleList <- list(numericVector, m, messyMatrix)
 exampleList
 ```
 <br>
-<hr>
+<br>
 
 <h2>List objects: Indexing</h2>
 <br>
@@ -771,7 +767,7 @@ m[2,2]
 exampleList[[2]][2,2]
 ```
 
-<hr>
+<br>
 <h2>List objects: Attributes</h2>
 <br>
 <div style = "text-align: left;">
@@ -867,7 +863,7 @@ messyDf
 
 ```
 
-<hr>
+<br>
 <h2>Data frame objects: Indexing</h2>
 <br>
 <p>Values in a data frame have a row (x) and column (y) position, denoted by "[<i>x</i>, <i>y</i>]"</p>
@@ -908,7 +904,7 @@ df[,2]
 
 ```
 <br>
-<hr>
+<br>
 <h2>Data frame objects: Attributes</h2>
 <br>
 <p>There are a number of attributes that can be observed for a given data frame:</p>
@@ -986,7 +982,7 @@ exampleDf['hello']
 exampleDf$hello
 
 ```
-<hr>
+<br>
 <h2>Data frame objects: The tibble!</h2>
 <br>
 <p>A <b>tibble</b> is a special type of data frame provided by the package tidyverse.</p>
