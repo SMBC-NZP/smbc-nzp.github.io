@@ -285,15 +285,15 @@ summary(exampleCharacter)
 <p> A <b>factor</b> is a value that includes the following information:</p>
 <ul>
 <li><b>Integer value</b>: Numeric integer value associated with factor level. For example, you may construct a factor of female and male treatment groups. In this instance, each treatment group would be assigned to a different integer value. </li>
-<li><b>Levels</b>: Character values associated with integer value</li>
-<li><b>Labels</b>: Characters to assign to each factor level</li>
+<li><b>Levels</b>: Character values, as they appear in the data, that are associated with integer value. Continuing with the example above, the levels would be female and male.</li>
+<li><b>Labels</b>: Characters to assign to each factor level. This relates to the character values that you see when you print or plot your data. For example, you may want to visualize female as "F" and males as "M".</li>
 </ul>
 <br>
 
 ```{r eval = FALSE}
 # Create a vector of factor values:
 
-exampleFactor <- factor(c('march', 'february', 'january', 'january'))
+exampleFactor <- factor(c('one', 'one', 'two', 'three'))
 
 exampleFactor
 
@@ -332,8 +332,8 @@ summary(exampleFactor)
 # Set factor levels and labels:
 
 factor(
-  c('march', 'february', 'january', 'january'),
-  levels = c('january', 'february', 'march')
+  c('one', 'one', 'two', 'three'),
+  levels = c('one', 'two', 'three')
   )
 ```
 
@@ -357,9 +357,9 @@ factor(
 # Set factor levels and labels:
 
 factor(
-  c('march', 'february', 'january', 'january'),
-  levels = c('january', 'february', 'march'),
-  labels = c('January', 'February', 'March')
+  c('one', 'one', 'two', 'three'),
+  levels = c('one', 'two', 'three'),
+  labels = c('One', 'Two', 'Three')
   )
 ```
 
