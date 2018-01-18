@@ -312,7 +312,7 @@ str(exampleFactor)
 summary(exampleFactor)
 ```
 
-<p>Note that `exampleFactor`, as written, would produce the following output (<i>Note: plotting will be covered in a later lesson</i>):</p>
+<p`exampleFactor`, as written, would produce the following output when plotted (<i>Note: plotting will be covered in a later lesson, your code will not produce a plot output</i>):</p>
 
 <img src="rWorkshop/images/exampleFactorPlot.png" 
 	title="Example factor"
