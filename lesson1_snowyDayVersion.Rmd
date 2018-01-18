@@ -224,6 +224,8 @@ class(numericV)
 
 typeof(numericV)
 
+# The structure function (str) can provide a lot of info on the object:
+
 str(numericV)
 
 summary(numericV)
@@ -285,7 +287,7 @@ summary(exampleCharacter)
 <p> A <b>factor</b> is a value that includes the following information:</p>
 <ul>
 <li><b>Integer value</b>: Numeric integer value associated with factor level. For example, you may construct a factor of female and male treatment groups. In this instance, each treatment group would be assigned to a different integer value. </li>
-<li><b>Levels</b>: Character values, as they appear in the data, that are associated with integer value. Continuing with the example above, the levels would be female and male.</li>
+<li><b>Levels</b>: Character values that are associated with the integer value. Continuing with the example above, the levels would be female and male.</li>
 <li><b>Labels</b>: Characters to assign to each factor level. This relates to the character values that you see when you print or plot your data. For example, you may want to visualize female as "F" and males as "M".</li>
 </ul>
 <br>
@@ -375,7 +377,8 @@ factor(
 	      border-width: 10px;
 	      border-color: white;
 	      width: 80%;"/>
-
+<br>
+<p><i>Factors are very useful (especially for statisticians!), but can also be a bit of a pain to deal with. If you are working with a factor that has an untenable number of levels, consider simplifying the factor or using character values instead. At one time, evaluating characters required much more memory to process, but this is no longer the case.</i></p>
 <hr>
 <h2>Classes of values: Logical</h2>
 <br>
@@ -387,6 +390,7 @@ factor(
 </ul>
 </div>
 <br>
+
 
 ```{r eval = FALSE}
 # Observe the behavior of logical values:
@@ -485,6 +489,8 @@ summary(numericVector)
 messyVector <- c(1, 'one', 2, 3)
 
 messyVector
+
+class(messyVector)
 ```
 
 <h2>Vector objects: Indexing<h2>
@@ -594,6 +600,10 @@ numericVector[c('orange', 'pear')]
 m <- matrix(c(1, 1, 2, 3), ncol = 2)
 
 m
+
+class(m)
+
+typeof(m)
 ```
 <br>
 <p>A vector can be structured horizontally (row-wise) or vertically (column-wise) within a matrix:</p>
@@ -617,6 +627,11 @@ matrix(c(1, 1, 2, 3), ncol = 2, byrow = FALSE)
 messyMatrix <- matrix(c(1, 'one', 2, 3), ncol = 2)
 
 messyMatrix
+
+class(messyMatrix)
+
+typeof(messyMatrix)
+
 ```
 <br>
 <h2>Matrix objects: Indexing</h2>
@@ -1041,12 +1056,13 @@ data.frame(a = c(1, 'one'), b =  c(2, 3))
 data_frame(a = c(1, 'one'), b =  c(2, 3))
 
 # Load data and compare between a data frame and a tibble:
+# Note: the "data" function loads example datasets
 
-data(mtcars)
+data(iris)
 
-mtcars
+iris
 
-tbl_df(mtcars)
+tbl_df(iris)
 ```
 
 <br>
