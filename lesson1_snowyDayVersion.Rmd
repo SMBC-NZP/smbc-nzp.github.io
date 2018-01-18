@@ -311,8 +311,8 @@ str(exampleFactor)
 
 summary(exampleFactor)
 ```
-
-<p>`exampleFactor`, as written, would produce the following output when plotted (<i>Note: plotting will be covered in a later lesson, your code will not generate a plot output</i>). The plot below shows factor values on the x axis and the number of records associated with those values on the y axis. What's wrong with this plot?</p>
+<br>
+<p>Note that `exampleFactor`, as written, would produce the following output when plotted (<i>Note: plotting will be covered in a later lesson, your code will not generate a plot output</i>). The plot below shows factor values on the x axis and the number of records associated with those values on the y axis. What's wrong with this plot?</p>
 
 <img src="rWorkshop/images/exampleFactorPlot.png" 
 	title="Example factor"
