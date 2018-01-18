@@ -1069,6 +1069,4 @@ tbl_df(iris)
 <hr>
 
 <b>End of lesson 1</b>
-
-	      
-
+<img style="float: right; margin: 0px 0px 15px 15px;" src="nzpLogoSideways2.png" width="300" />
