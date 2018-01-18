@@ -879,6 +879,18 @@ df <- data.frame(a = c(1, 1), b =  c(2, 3))
 
 df
 ```
+<br>
+<p>A matrix may also be converted to a data frame using the `as.data.frame` function.</p>
+<br>
+
+```{r eval = FALSE}
+# Generate a data frame from a matrix:
+
+as.data.frame(m)
+
+```
+
+<br>
 
 <br>
 <p>The vectors that are contained in a data frame may be of different classes.</p>
