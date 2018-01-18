@@ -4,10 +4,6 @@ output:
     theme: yeti
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 <style>
   code{
     background-color:#f2f2f2;
@@ -70,7 +66,10 @@ table, td, th {
 </style>
 
 
-```{r include = FALSE}
+```{r setup, include = FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+
 # Libraries:
 library(tidyverse)
 
@@ -116,7 +115,7 @@ Smithsonian Conservation Biology Institute</p>
 <br>
 
 
-```{r eval = FALSE}
+```{r is equal to, eval = FALSE}
 # The "is equal to" logical operator:
 
 3 == 3
@@ -135,7 +134,7 @@ Smithsonian Conservation Biology Institute</p>
 <p>We can run a logic test on objects with more than one value. In the following examples, R tests whether each value in the objects below are equal to 3 and returns logical values in the dimensions of the object.</p>
 <br>
 
-```{r eval = FALSE}
+```{r logic with objects, eval = FALSE}
 # Generate and evaluate whether vector v is equal to 3:
 
 v <- c(1,1,2,3,5,8)
@@ -160,31 +159,322 @@ df
 
 df == 3
 ```
+<br>
 
-<h2>The logical operators</h2>
+<h2>The logical operators: Comparing values</h2>
 
-<p>The table below provides a set of the most commonly used logical operators. In each of the table items we are evaluating some object (or value) x relative to some object y.
+<br>
+<p>The table below provides a set of the logical operators that are most commonly used to compare values. In each of the table items we are evaluating some object (or value) x relative to some object y.</p>
+<br>
 
 <table>
 <tr>
   <th><b>Operator</b></th>
   <th><b>Description</b></th>
+  <th><b>Value class</b></th>
 </tr>
 <tr>
   <td>x == y</td>
   <td>x is equal to y</td>
+  <td>any</td>
 </tr>
 <tr>
   <td>x != y</td>
-  <td>x is not equal to y</td>
+  <td>x is NOT equal to y</td>
+  <td>any</td>
+</tr>
+<tr>
+  <td>!x</td>
+  <td>NOT x</td>
+  <td>any</td>
+</tr>
+<tr>
+  <td>x < y</td>
+  <td>x is less than y</td>
+  <td>numbers</td>
+</tr>
+<tr>
+  <td>x <= y</td>
+  <td>x is less than or equal to y</td>
+  <td>numbers</td>
+</tr>
+<tr>
+  <td>x > y</td>
+  <td>x is greater than y</td>
+  <td>numbers</td>
+</tr>
+<tr>
+  <td>x <= y</td>
+  <td>x is greater than or equal to y</td>
+  <td>numbers</td>
 </tr>
 </table>
+<br>
+
+<p>Each of the logical operators above can be applied in the same way that we have applied `==` thus far. Try out the code below, then conduct your own logical tests to explore their application further.</p>
+<br>
+
+```{r explore logical operators with v, eval = FALSE}
+
+# Explore logical operators with vector v:
+
+v
+
+v != 3
+
+!(v == 3)
+
+v < 3
+
+v <= 3
+
+v > 3
+
+v >= 3
+
+```
+
+<br>
+
+<p>Repeat the above with your matrix, `m`, and data frame, `df`.</p>
+<br>
+
+<h2>The logical operators: Comparing sets</h2>
+<br>
+
+<p>We are often interested in comparing sets of values with one another. Using the code above, we may be interested in testing whether values `1` and `3` appear in vector `v`. To do so, we use the operator `%in%`, which tests the logic statement "is in".</p>
+<br>
+
+```{r using in, eval = FALSE}
+# Test whether values in v match values 1 or 3:
+
+v %in% c(1,3)
+
+```
+<br>
+
+<p>The NOT statement, `!x`, wasn't very useful before. In combination with `%in%`, it becomes a powerful tool to examine sets.</p>
+
+```{r using in and not, eval = FALSE}
+# Test whether values in v match values 1 or 3:
+
+!(v %in% c(1,3))
+
+```
+
+<br>
+<p>You can also compare sets with <i>and/or</i> statements, represented in R by `&` and `|`.</p>
+<br>
+
+```{r using and or, eval = FALSE}
+# Test whether values in v match values 1 OR 3:
+
+v == 1 | v ==3
+
+# Test whether values in v match values 1 AND 3:
+
+v == 1 & v == 3
+
+```
+
+<br>
+<p>The first statement above, OR, is equivalent to our previous `v %in% c(1,3)`. The latter, AND, is not very useful in this case, because none of the values can be both 1 and 3 at the same time.</p>
+<br>
+
+<p>The AND operator becomes very useful when querying across multiple conditions. For example, if we wanted to test whether a value was less than 5 and not equal to 2, we would write this out as:</p>
+<br>
+
+```{r better use of and, eval = FALSE}
+# Test whether values in v are less than 5 and not equal to 2:
+
+v < 5 & v != 2
+
+```
+
+<br>
+<p>Logic can get pretty hairy fairly quickly with AND/OR statements. It's good to have a sense of how to tackle more complex statements using these operators. Have a look at the code below and be sure you understand how it is evaluated.</p>
+</br>
+
+```{r complex and or, eval = FALSE}
+# Test whether values in v are less than 5 and not equal to 2 OR equal to eight:
+
+v < 5 & v != 2 | v == 8
+
+```
+<br>
+<h2>Indexing and logic: Querying vectors</h2>
+<br>
+<p>Recall that the position of value `x` in vector `v` would be notated as `v[x]` and that we can use this information to index vector `v` as follows:</p>
+<br>
+
+```{r vector index review, eval = FALSE}
+# Use indexing to subset a vector:
+
+v[3]
+
+v[3:4]
+
+v[c(1,3)]
+
+```
+
+<br>
+<p>In indexing the vector with `v[3]` above, you essentially instructed R to evaluate and return the statement "vector `v` where position v<sub>x</sub> is equal to 3". R returned all of the values from vector `v` for which this statement was `TRUE`. In other words, you conducted a query of vector `v` by <b>position</b>.</p>
+<br>
+
+<p>You may also query values by <b>condition</b>, using logic, in the same manner as above. For example, you may want R to evaluate the statement "vector `v` where value v<sub>x</sub> is greater than two":</p>
+<br>
+
+```{r logic query vector, eval = FALSE}
+# Use logic to subset a vector:
+
+v
+
+v > 2
+
+v[v > 2]
+
+```
 
 
+<br>
+<p>Notice in the above that the line `v > 2` returned logical values of `v` associated with that test. The next line of code, `v[v > 2]` returned values from `v` that met this condition.</p>
+<br>
+
+<p>Why does this work? Let's take a quick look under the hood. The function `which` provides the index location of a logical statement. Using the `v > 2` query above, we can see that:</p>
+<br>
+
+```{r logic query with which, eval = FALSE}
+# At which indices does our logical statement evaluate to TRUE?
+
+v
+
+v > 2
+
+which(v > 2)
+
+v[4:6]
+
+v[v > 2]
+```
+
+<p>All of the various logical statements can be applied in the same manner. Please take a moment to query vector `v` based on the following conditions:</p>
+<ul>
+<li>Values greater than or equal to 3</li>
+<li>Values that do not equal 2</li>
+<li>Values that equal 2</li>
+<li>Values that are greater than or equal to 3 but do not equal 5</li>
+<li>Values that are 3 or 5</li>
+</ul>
+<br>
+
+<h2>Indexing and logic: Querying matrices</h2>
+
+<br>
+<p>Recall that the position of value `x,y` (row, column) in a matrix, `m`, can be notated as `m[x,y]`. We can use this information to index matrix `m` as follows:</p>
+<br>
+
+```{r matrix index, eval = FALSE}
+# Index by matrix m by row (x) and column (y) position [x,y]:
+
+m[1,1]
+
+m[2,2]
+
+m[2, ]
+
+m[ ,2]
+
+m[1:2,2]
+
+```
 
 
+<br>
+<p>Working with what is often called "matrix notation" to query objects can be a bit tricky to wrap your head around at first. Let's start by evaluating `m[,]`, which returns all of the rows and columns of matrix `m`:</p>
+<br>
 
+```{r mAll, eval = FALSE}
+# All rows and columns of m:
 
-<h2>Review: indexing</h2>
+m[,]
 
+```
 
+<br>
+<p>The statement `m[,1]` subsets m to all of the rows of the first column. As above, we are evaluating "matrix `m` where position m<sub>y</sub> is equal to 1". </p>
+<br>
+
+```{r mSubsetColumn, eval = FALSE}
+# A vector of values associated with the first column of matrix m:
+
+m[,1]
+
+```
+
+<br>
+<p>We can evaluate vector `m[,1]` using logic. For example, let's test `m[,1]` to determine whether each value is greater than 1:</p>
+<br>
+
+```{r m just logic, eval = FALSE}
+# Logical test of whether the first column of m is greater than 1:
+
+m[,1] > 1
+
+```
+
+<br>
+<p>We see that this statement only evaluates as TRUE at one position in the vector. Let's use `which`, as above, to determine the index associated with this position:</p>
+<br>
+
+```{r m logic with which, eval = FALSE}
+# At which indices does our logical statement evaluate to TRUE?
+
+which(m[,1] > 1)
+
+```
+
+<br>
+<p>Because our `which` statement evaluates to 3, the following queries are equivalent:</p>
+<br>
+
+```{r m query with which, eval = FALSE}
+# Query m by index and logical statement:
+
+m[3, ]
+
+m[m[,1] > 1, ]
+
+```
+
+<br>
+<p></p>
+<br>
+
+<br>
+<p></p>
+<br>
+
+<br>
+<p></p>
+<br>
+
+<br>
+<p></p>
+<br>
+
+<br>
+<p></p>
+<br>
+
+<br>
+<p></p>
+<br>
+
+<br>
+<p></p>
+<br>
+
+<br>
+<p></p>
+<br>
