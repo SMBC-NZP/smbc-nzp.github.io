@@ -357,7 +357,7 @@ v[4:6]
 
 v[v > 2]
 ```
-
+<br>
 <p>All of the various logical statements can be applied in the same manner. Please take a moment to query vector `v` based on the following conditions:</p>
 <ul>
 <li>Values greater than or equal to 3</li>
@@ -448,8 +448,17 @@ m[m[,1] > 1, ]
 ```
 
 <br>
-<p></p>
+<p>Querying using "matrix notation" tends to be hard to read because of the ways that columns have to be specified. For example a query of column two, in which the first column is less than two and the second column is less than 5 would be written as:</p>
 <br>
+
+```{r m query with which, eval = FALSE}
+# Querying matrix by column 1 less than 2 and column 2 less than 5
+
+which(m[,1] < 2 &  m[,2] < 5)
+
+m[m[,1] < 2 &  m[,2] < 5 , ]
+
+```
 
 <br>
 <p></p>

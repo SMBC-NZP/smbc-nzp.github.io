@@ -464,6 +464,7 @@ which(v &gt; 2)
 v[4:6]
 
 v[v &gt; 2]</code></pre>
+<br>
 <p>
 All of the various logical statements can be applied in the same manner. Please take a moment to query vector <code>v</code> based on the following conditions:
 </p>
@@ -517,7 +518,7 @@ m[,]</code></pre>
 The statement <code>m[,1]</code> subsets m to all of the rows of the first column. As above, we are evaluating “matrix <code>m</code> where position m<sub>y</sub> is equal to 1”.
 </p>
 <p><br></p>
-<pre class="r"><code># All rows and just the first column of m:
+<pre class="r"><code># A vector of values associated with the first column of matrix m:
 
 m[,1]</code></pre>
 <br>
@@ -525,7 +526,7 @@ m[,1]</code></pre>
 We can evaluate vector <code>m[,1]</code> using logic. For example, let’s test <code>m[,1]</code> to determine whether each value is greater than 1:
 </p>
 <p><br></p>
-<pre class="r"><code># All rows and columns of m:
+<pre class="r"><code># Logical test of whether the first column of m is greater than 1:
 
 m[,1] &gt; 1</code></pre>
 <br>
