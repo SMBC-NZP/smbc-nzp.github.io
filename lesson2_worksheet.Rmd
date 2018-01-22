@@ -465,50 +465,488 @@ m[m[,1] < 2 &  m[,2] < 5 , ]
 <h2>Indexing and logic: Querying data frames</h2>
 
 <br>
-<p>Querying data frames can be executed using the same notation as matrices:</p>
+<p>Recall that the position of value `x,y` (row, column) in a data frame, `df`, can be notated as `df[x,y]`. We can use this information to index data frame `df` as follows:</p>
 <br>
 
-```{r df query with which, eval = FALSE}
+```{r data frame index, eval = FALSE}
+# Index by matrix m by row (x) and column (y) position [x,y]:
 
-# Logical test of whether the first column of df is greater than 1:
+df[1,1]
+
+df[2,2]
+
+df[2, ]
+
+df[ ,2]
+
+df[1:2,2]
+
+```
+
+<br>
+<p>As you might expect, querying data frames using "matrix notation" is exactly the same as querying matrices. Recall, however, that data frames has a "names" slot built in:</p>
+<br>
+
+```{r data frame attributes, eval = FALSE}
+# Attributes of object df:
+
+attributes(df)
+```
+
+<br>
+<p>These names can be set and reset as needed:</p>
+<br>
+
+```{r data frame reset names, eval = FALSE}
+
+# Reset names of object df:
+
+names(df) <- c('hello', 'world')
 
 df
 
-df[,1] > 1
-
-# At which indices does our logical statement evaluate to TRUE?
-
-which(df[,1] > 1)
-
-# Query df by index and logical statement:
-
-df[3, ]
-
-df[df[,1] > 1, ]
-
+attributes(df)
 ```
 
 
 <br>
-<p></p>
+<p>Recall that the component vectors in a data frame (i.e., columns -- in this case `c(1,1,2)` and `c(3,5,8)`) can be accessed by name using the `$` notation:</p>
+<br>
+
+```{r data frame extract by name, eval = FALSE}
+
+# Data frame indexing by position ...
+
+df[,1]
+
+df[,2]
+
+# ... is equivalent to:
+
+df$hello
+
+df$world
+
+```
+
+<br>
+<p>The above is very useful for querying data frames, because the `$` notation is much easier to read than "matrix notation". For example:</p>
+<br>
+
+```{r data frame query by position and name, eval = FALSE}
+
+# Querying data frames using "matrix notation" ...
+
+df[,1] > 1
+
+which(df[,1] > 1)
+
+df[df[,1] > 1,]
+
+# ... is equivalent to using column names:
+
+df$hello > 1
+
+which(df$hello > 1)
+
+df[df$hello > 1,]
+
+```
+
+<br>
+<p>In the matrix section, we queried matrix `m` such that values of column one are less than 2 and values of column two are less than 5. Repeat this query on data frame `df` using "matrix notation" and the column names of `df`.</p>
+<br>
+
+<h2>Indexing and logic: Working with strings</h2>
+<br>
+<br>
+<p>Strings are notoriously difficult to work with when cleaning data. Luckily the tidyverse libraries contain the package "stringr" that simplifies the process of working with strings. We won't dive too deeply into the string realm here, but it is important to have some idea of how they work.</p>
 <br>
 
 <br>
-<p></p>
+<p>We'll start by loading the tidyverse and an example dataset, "fruit".</p>
+<br>
+
+```{r load fruits, eval = FALSE} 
+library(tidyverse)
+
+fruit
+
+```
+
+<br>
+<p>Note that `fruit` is simply a vector of fruit names. Strings can be indexed like any other value:</p>
+<br>
+
+```{r index fruits, eval = FALSE} 
+
+# Query the first five fruits by index:
+
+fruit[1:5]
+
+```
+
+<br>
+<p>Strings have many different characteristics that can be used for querying. We've already explored the simplest of them, `is equal to`. Let's see how this works:
+
+```{r fruit by full name, eval = FALSE} 
+
+# Let's look at our vector of fruit again:
+
+fruit
+
+# If there are duplicate entries (there are not), you can use "unique":
+
+unique(fruit)
+
+# There is just one apple!
+
+fruit == 'apple'
+
+# Which position in the fruit vector is apple?
+
+which(fruit == 'apple')
+
+# Subsetting to fruits named "apple" by position ...
+
+fruit[1]
+
+# ... is equivalent to:
+
+fruit[which(fruit == 'apple')]
+
+# ... and is also equivalent to subsetting by condition:
+
+fruit[fruit == 'apple']
+```
+
+<br>
+<p>You can use the function `str_sub` to extract characters from strings by their position within the string. It takes as arguments the string being evaluated, the start point of the string, and the end point. Let's take a moment to explore how this function works:</p>
+<br>
+
+```{r hello world str_sub, eval = FALSE}
+# Using str_sub, generate an example phrase: 
+
+examplePhrase <- 'hello world'
+
+examplePhrase
+
+# Subset to just "hello":
+
+str_sub(examplePhrase, start = 1, end = 5)
+
+# Subset to just "world":
+
+str_sub(examplePhrase, start = 7, end = 12)
+
+# You actually don't have to specify the end point here:
+
+str_sub(examplePhrase, start = 7)
+
+# You can also count from the end:
+
+str_sub(examplePhrase, start = -5)
+
+```
+
+<br>
+<p>The function `str_sub` can be used to query a vector of strings. For example, perhaps we wanted to query fruits, subsetting to those that start with the letter "a":</p>
+<br>
+
+```{r fruit by str_sub, eval = FALSE} 
+
+# str_sub can be used to extract the first letter of each value:
+
+fruit
+
+str_sub(fruit, start = 1, end = 1)
+
+# Which fruits start with the letter "a"?
+
+str_sub(fruit, start = 1, end = 1) == 'a'
+
+which(str_sub(fruit, start = 1, end = 1) == 'a')
+
+# Subsetting to fruits with 7 characters by index ...
+
+fruit[1:3]
+
+# ... is equivalent to ...
+
+fruit[which(str_sub(fruit, start = 1, end = 1) == 'a')]
+
+# ... and is also equivalent to subsetting by condition:
+
+fruit[str_sub(fruit, start = 1, end = 1) == 'a']
+```
+
+<br>
+<p>We can also query by the number of characters (i.e., symbols, numbers, or letters) in the string. For example, perhaps we're not interested in "apple" but rather any fruit that has five letters:</p>
+<br>
+
+```{r fruit by str_count, eval = FALSE} 
+
+# str_count can be used to determine the number of letters or symbols in a string:
+
+fruit
+
+str_count(fruit)
+
+# Which fruits have exactly 5 letters?
+
+str_count(fruit) == 5
+
+which(str_count(fruit) == 5)
+
+# Subsetting to fruits with 5 characters by index ...
+
+fruit[c(1,34,36,44,49,53,58)]
+
+# ... is equivalent to ...
+
+fruit[which(str_count(fruit) == 5)]
+
+# ... and is also equivalent to subsetting by condition:
+
+fruit[str_count(fruit) == 5]
+```
+
+<br>
+<p>Probably the most useful function for querying strings is `str_detect`. This function is a logical test of whether a provided pattern is present in a target value. For example, we might explore the example phrase "hello world" as such:</p>
+<br>
+
+```{r hello world str_detect, eval = FALSE} 
+# Detecting a pattern within a string:
+
+examplePhrase
+
+str_detect(examplePhrase, pattern = 'hello')
+
+str_detect(examplePhrase, pattern = 'ello')
+
+str_detect(examplePhrase, pattern = 'lo wo')
+
+str_detect(examplePhrase, pattern = 'world')
+
+str_detect(examplePhrase, pattern = "foo")
+
+str_detect(examplePhrase, pattern = 'helloworld')
+
+```
+
+<br>
+<p> Let's use `str_detect` to subset the `fruit` vector to only fruits that contain the word "apple":</p>
+<br>
+
+```{r fruit by str_detect, eval = FALSE} 
+
+# str_detect can be used to test whether a pattern is present in a string:
+
+fruit
+
+# Which fruits contain the pattern "apple"?
+
+str_detect(fruit, 'apple')
+
+which(str_detect(fruit, 'apple'))
+
+# Subsetting to fruits with the pattern "apple" by index ...
+
+fruit[c(1,62)]
+
+# ... is equivalent to ...
+
+fruit[which(str_detect(fruit, 'apple'))]
+
+# ... and is also equivalent to subsetting by condition:
+
+fruit[str_detect(fruit, 'apple')]
+```
+
+<br>
+
+<h2>Indexing and logic: Summarizing and queries</h2>
+
+<br>
+<p>Querying with indexing and logic can be a great way to summarize your data. Let's generate a fake data frame and explore the `min` (minimum value in a set) and `max` (maximum value in a set) summary functions:</p>
+<br>
+
+```{r dummy data minMax, eval = FALSE}
+
+# Make a dummy data frame:
+
+dummyData <-  data.frame(
+  gen = c('a', 'b', 'a', 'a', 'b'),
+  n = c(3,5,8,13, 21)
+  )
+
+dummyData
+
+# Basic summary statistics of the dummy data frame:
+
+summary(dummyData)
+
+min(dummyData$n)
+
+max(dummyData$n)
+
+```
+
+<br>
+<p>We often want to see summary values associated with treatment levels. Let's explore querying `dummyData` by maximum and minimum values:</p>
+<br>
+
+```{r dummy data minMax subset, eval = FALSE}
+
+# Subset to maximum and minimum values, returning separate results:
+
+dummyData[dummyData$n == min(dummyData$n),]
+
+dummyData[dummyData$n == max(dummyData$n),]
+
+# Subset to maximum and minimum n values, returning both results in one frame:
+
+dummyData[dummyData$n == min(dummyData$n)|
+            dummyData$n == max(dummyData$n),]
+
+```
+
+<br>
+<p>When querying, remember that we can subset by both position and condition. For example, perhaps we were asked to provide the minimum value of n for treatment level "a". We might address this as:</p>
+<br>
+
+```{r dummy data minMax subset extract, eval = FALSE}
+
+# Subset to group "a":
+
+dummyData[dummyData$gen == 'a',]
+
+# As a data frame, we can pull out the second column using indexing ...
+
+dummyData[dummyData$gen == 'a',2]
+
+# ... or by name (my preference):
+
+dummyData[dummyData$gen == 'a',]$n
+
+
+# We can then calculate the minimum value in group "a" as:
+
+min(dummyData[dummyData$gen == 'a',]$n)
+
+```
+
+<br>
+
+<h2>Indexing and logic: Practice with real data</h2>
+
 <br>
 
 <br>
-<p></p>
+<p>We will practice on an example data frame built in to the tidyverse package. The data provided are the size of the human population, by country, from 1995 to 2013 (source: World Health Organization's Tuberculosis Report, see http://www.who.int/tb/country/data/download/en/). Let's first load and explore the data:</p>
+<br>
+
+```{r tb data load, eval = FALSE}
+
+# Load WHO's TB dataset:
+
+population
+```
+
+<br>
+<p>Notice that this is a tibble data frame. Loading the data as a tibble was very helpful, because only the first 10 records (rows), out of a total of 4,060 total records, are displayed.</p>
 <br>
 
 <br>
-<p></p>
+<p>Let's explore the population of the United States. We'll start by subsetting the data to records where the "country" value is the "United States".</p>
+<br>
+```{r us population data fail, eval = FALSE}
+
+# Subset population data to the United States:
+
+population[population$country == 'United States', ]
+
+```
+<br>
+<p>We've done something wrong! There were 0 rows associated with the United States! Perhaps US data are missing or something else is wrong. Let's use our `str_detect` function to query countries that contain the name "United" and adjust the statement above:</p>
 <br>
 
-<br>
-<p></p>
-<br>
+```{r us population United query, eval = FALSE}
+
+# What are the country names?
+
+population$country
+
+# That is a very messy result, how about just a vector of unique names?
+
+unique(population$country)
+
+# Which of these countries contain the pattern "United"?
+
+str_detect(unique(population$country), 'United')
+
+unique(population$country)[str_detect(unique(population$country), 'United')]
+
+# They call the United States "United States of America", so the query could be written as:
+
+population[population$country == 'United States of America',]
+
+```
 
 <br>
-<p></p>
+<p>You can use the above query techniques to extract meaningful data from this dataset. For example, perhaps you are interested in what the population of the United States was in 2004. Query the data to the year 2004 and return the population size, as below:</p>
 <br>
+
+```{r us population 2004, eval = FALSE}
+
+# To determine the size of a population in 2004:
+
+population[population$year == 2004,]
+
+# Therefore, the data frame reduced to the population of the United States in 2004:
+
+population[population$country == 'United States of America' &
+             population$year == 2004,]
+
+# To return just the population information:
+
+population[population$country == 'United States of America' & 
+             population$year == 2004,]$population
+
+```
+
+<br>
+<p>As another example, you have been asked which years the population of the United States was greater than 300 million. To determine this, subset the population data to only years in which the population was greater than 300,000,000 and return the years vector, as below:</p>
+<br>
+
+```{r us population greater than 300M, eval = FALSE}
+
+# Subset the population data frame to records with a population of greater than 300 million:
+
+population[population$population > 300000000,]
+
+# Repeat the above, but subset the records to the United States:
+
+# Therefore, the data frame reduced to the population of the United States in 2004:
+
+population[population$country == 'United States of America' &
+             population$population > 300000000,]
+
+# To return just the years:
+
+population[population$country == 'United States of America' &
+             population$population > 300000000, ]$year
+
+
+```
+
+<hr>
+<p><b>Now you</b>! Use the population dataset to explore the following questions:</p>
+<br>
+
+<ol>
+<li>What was the population of Palau in 2005?</li>
+<li>Which countries had a population of less than 10,000 in 2013?</li>
+<li>Which country had the smallest population in 2005?</li>
+<li>What was the population of the United Kingdom in 2008?</li>
+</ol>
