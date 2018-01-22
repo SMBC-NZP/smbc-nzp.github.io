@@ -451,7 +451,7 @@ m[m[,1] > 1, ]
 <p>Querying using "matrix notation" tends to be hard to read because of the ways that columns have to be specified. For example a query of column two, in which the first column is less than two and the second column is less than 5 would be written as:</p>
 <br>
 
-```{r m query with which, eval = FALSE}
+```{r m query complicated, eval = FALSE}
 # Querying matrix by column 1 less than 2 and column 2 less than 5
 
 which(m[,1] < 2 &  m[,2] < 5)
@@ -461,8 +461,33 @@ m[m[,1] < 2 &  m[,2] < 5 , ]
 ```
 
 <br>
-<p></p>
+
+<h2>Indexing and logic: Querying data frames</h2>
+
 <br>
+<p>Querying data frames can be executed using the same notation as matrices:</p>
+<br>
+
+```{r df query with which, eval = FALSE}
+
+# Logical test of whether the first column of df is greater than 1:
+
+df
+
+df[,1] > 1
+
+# At which indices does our logical statement evaluate to TRUE?
+
+which(df[,1] > 1)
+
+# Query df by index and logical statement:
+
+df[3, ]
+
+df[df[,1] > 1, ]
+
+```
+
 
 <br>
 <p></p>
