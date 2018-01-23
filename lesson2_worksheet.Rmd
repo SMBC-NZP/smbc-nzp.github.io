@@ -107,6 +107,7 @@ numericVector <- c(1, 1, 2, 3)
 Migratory Bird Center<br />
 Smithsonian Conservation Biology Institute</p>
 <hr>
+<p>In this lesson we will be exploring how to query data using what is often called "matrix notation". We will learn a <b>much easier</b> way to query data by the end of this workshop. I start by teaching this method of querying because it is helpful in understanding how R objects work, gives a glimpse of what is happening under the hood when using other querying techniques, and still used for some advanced querying techniques.</p>
 
 <h2>Review: logical values</h2>
 
@@ -135,7 +136,7 @@ Smithsonian Conservation Biology Institute</p>
 <br>
 
 ```{r logic with objects, eval = FALSE}
-# Generate and evaluate whether vector v is equal to 3:
+# Generate and evaluate whether values in vector v are equal to 3:
 
 v <- c(1,1,2,3,5,8)
 
@@ -143,7 +144,7 @@ v
 
 v == 3
 
-# Generate and evaluate whether matrix m is equal to 3:
+# Generate and evaluate whether values in matrix m are equal to 3:
 
 m <- matrix(v, ncol = 2)
 
@@ -151,7 +152,7 @@ m
 
 m == 3
 
-# Generate and evaluate whether data frame df is equal to 3:
+# Generate and evaluate whether values in data frame df are equal to 3:
 
 df <- as.data.frame(m)
 
