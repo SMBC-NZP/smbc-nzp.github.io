@@ -821,7 +821,7 @@ v %in%<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</spa
 The NOT statement, <code>!x</code>, in combination with <code>%in%</code>, is a powerful tool to examine sets.
 </p>
 <p><br></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Test whether values in v match values 1 or 3:</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Test whether values in v DO NOT match values 1 or 3:</span>
 
 !(v %in%<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</code></pre></div>
 </section>
@@ -945,7 +945,7 @@ Values that are 3 or 5
 The position of value <code>x,y</code> (row, column) in a matrix, <code>m</code>, can be notated as <code>m[x,y]</code>.
 </p>
 <p><br></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Index by matrix m by row (x) and column (y) position [x,y]:</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Index matrix m by row (x) and column (y) position [x,y]:</span>
 
 m[,]
 
@@ -1000,7 +1000,7 @@ m[m[,<span class="dv">1</span>] &lt;<span class="st"> </span><span class="dv">2<
 The position of value <code>x,y</code> (row, column) in a data frame, <code>df</code>, can be notated as <code>df[x,y]</code>.
 </p>
 <p><br></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Index by matrix m by row (x) and column (y) position [x,y]:</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Index dataframe df by row (x) and column (y) position [x,y]:</span>
 
 df[,]
 
