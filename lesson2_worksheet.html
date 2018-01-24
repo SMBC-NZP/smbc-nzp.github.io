@@ -218,7 +218,7 @@ Using logic with objects
 We can run a logic test on objects with more than one value. In the following examples, R tests whether each value in the objects below are equal to 3 and returns logical values in the dimensions of the object.
 </p>
 <p><br></p>
-<pre class="r"><code># Generate and evaluate whether vector v is equal to 3:
+<pre class="r"><code># Generate and evaluate whether values in vector v are equal to 3:
 
 v &lt;- c(1,1,2,3,5,8)
 
@@ -226,7 +226,7 @@ v
 
 v == 3
 
-# Generate and evaluate whether matrix m is equal to 3:
+# Generate and evaluate whether values in matrix m are equal to 3:
 
 m &lt;- matrix(v, ncol = 2)
 
@@ -234,7 +234,7 @@ m
 
 m == 3
 
-# Generate and evaluate whether data frame df is equal to 3:
+# Generate and evaluate whether values in data frame df are equal to 3:
 
 df &lt;- as.data.frame(m)
 
