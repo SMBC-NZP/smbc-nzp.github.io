@@ -57,7 +57,7 @@ numericVector <- c(1, 1, 2, 3)
 # ---- github data ----
 #---------------------------------------------------------------------------------*
 
-fileURL <- getURL('https://raw.githubusercontent.com/SMBC-NZP/smbc-nzp.github.io/master/rWorkshop/data/birdCounts.csv')
+fileURL <- getURL('https://raw.githubusercontent.com/SMBC-NZP/smbc-nzp.github.io/master/rWorkshop/data/birdCounts.csv?token=AFXm5JalDukWyABXt2IR3mC6HGNdqCoDks5ac1ehwA%3D%3D')
 
 birdCounts <- read.csv(text = fileURL) %>%
   tbl_df
