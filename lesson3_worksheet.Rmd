@@ -12,6 +12,7 @@ output:
 
 code{
   background-color:#f2f2f2;
+  border-radius: 25px;
 }
  
 span.co{
@@ -154,29 +155,53 @@ Migratory Bird Center<br/>
 Smithsonian Conservation Biology Institute</p>
 <hr>
 
-<h2>Before we begin:</h2>
+<p>In this lesson we will explore <b><i>for loops</i></b> and <b>functions</b>. A <b><i>for loop</i></b> is a block of code that allows you to repeat an operation a set number of iterations. A function is a set of code that allows you to create or modify objects in a repeatable way. As data analysis often includes many repeated tasks,  <i>for loops</i> and user-defined functions can save considerable time, shorten R scripts, and make your scripts more legible. Understanding how they work is crucial to developing good coding practices.</p>
 
-<p>For this lesson, we will use an example data frame of bird point count observations. This data frame includes a four letter abbreviation of species names, the foraging habits of the species, and the dietary class of the species.</p>
+</p>
+
+<hr>
+
+<h2>Setup for the lesson:</h2>
+
+<p>For this lesson, we will use three example data frames: Iris sepal and petal measurements collected by botanist Edgar Anderson in the 1920's, bird traits collected by Wilman et al. (2014), and bird point count observations from Washington, DC (Evans et al. 2016).</p>
 
 <p>Open R Studio and run the following lines of code to load the data into R:</p>
 <br>
 
 ```{r, eval=FALSE}
-# Load the library
+#=================================================================================*
+# ---- set up ----
+#=================================================================================*
+
+# Load libraries
 
 library(RCurl)
 
-# Note: If you have yet to install this library, please do so with: install.packages('rCurl')
+library(tidyverse)
 
-# Provide the web address of the file:
+# Note: If you have yet to install these library, please do so with: 
+# install.packages('rCurl') ; install.packages('tidyverse')
 
-fileURL <- getURL('https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/birdHabits.csv')
+# Provide the web addresses of the files (note: iris is preloaded example data):
+
+habitsURL <- getURL('https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/birdHabits.csv')
+
+countsURL <- getURL('https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/birdCounts.csv')
 
 # Read in the data:
 
-birdHabits <- read.csv(text = fileURL)
+birdHabits <- tbl_df(read.csv(text = habitsURL))
 
-# Explore the data:
+birdCounts <- tbl_df(read.csv(text = countsURL))
+
+```
+
+<br>
+<p>Take a moment to explore the data:</p>
+<br>
+
+```{r, eval=FALSE}
+# Explore the data (birdHabits example):
 
 head(birdHabits)
 
@@ -187,26 +212,102 @@ attributes(birdHabits)
 str(birdHabits)
 
 summary(birdHabits)
+
 ```
+
+<br>
+<p>Have a look at the built-in iris dataset as well:</p>
 <br>
 
-<hr>
+```{r, eval=FALSE}
+# Explore the iris data:
 
+head(iris)
+
+dim(iris)
+
+attributes(iris)
+
+str(iris)
+
+summary(iris)
+```
+
+<br>
+<p>For the iris dataset, I think it's best to do some familiar cleaning steps:</p>
+<br>
+
+```{r, eval=FALSE}
+
+# Clean up iris for analysis:
+
+irisTbl <- tbl_df(iris)
+
+names(irisTbl) <-
+  c('sepalLength',
+    'sepalWidth',
+    'petalLength',
+    'petalWidth',
+    'species')
+```
+
+<hr>
+<img src="rWorkshop/images/Iris_setosa.jpg" 
+	title="Iris setosa"
+	alt = "picture of the flower Iris setosa"
+	border="0"
+	style= "float: right; 
+	      padding-right: 0px;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 30%;"/>
+	      
 <h2>**For loops**</h2>
 
-<p>A <b><i>for loop</i></b> is a block of code that allows you to repeat an operation a set number of iterations. As data analysis often includes many repeated tasks,  <i>for loops</i> can save considerable time, shorten R scripts, and make your scripts more legible. While there are many functions that replace the necessity of  <i>for loops</i>, you will inevitably have to use them at some point in your data analyses and thus understanding how they work is crucial.</p>
+<br>
+<p><b>Why would you use <i>for loops</i></b>? Let's look at a common example. You have been asked to calculate the mean petal length of three Iris species: <i>Iris setosa</i>, <i>Iris versicolor</i>, and <i>Iris virginica</i>.  (coded as the factor levels `setosa`, `versicolor`, and `virginica` in the `species` field of the `irisTbl` data frame). Using the `mean` function and tools that we have addressed thus far, use the following to calculate the mean petal length for each species:</p>
+<br>
+```{r, eval=FALSE}
+# Filter irisTbl to setosa:
 
-<p><b>When to use <i>for loops</i></b>: Whenever a chunk of code is repeated in its entirety more than twice you should consider replacing that code with a <i>for loop</i>.</p>
+irisTbl[irisTbl$species == 'setosa', ]
 
-<p>Writing <i>for loops</i> generally requires following these three steps:</p>
+# Extract the petalLength field (column):
+
+irisTbl[irisTbl$species == 'setosa', ]$petalLength
+
+# Calculate the mean of petal lengths:
+
+mean(irisTbl[irisTbl$species == 'setosa', ]$petalLength)
+
+```
+
+<br>
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h3>
+<br>
+<p>Calculate the mean petal length of each of the Iris species</p>
+<br>
+</blockquote>
+<br>
+
+<p>The code you generated above is very repetitive -- the only change in each of the lines you should have created above was the name of the species. Writing code like this makes your scripts unnecessarily long and prone to user input error. <b><i>For loops</i></b> should be used whenever a chunk of code is repeated more than twice.</p>
+
+<p>We'll return to the Iris example a bit later, but for now let's start with a very simple <i>for loop</i>.</p> 
+<br>
+<hr>
+
+<p>Writing proper <i>for loops</i> requires following these three steps:</p>
+<br>
 
 <ol>
-<li>Define an object for storing output (e.g., an empty vector, matrix, data frame, or list)</li>
-<li><b>For loop initialization</b>: The locations for which the loop will run</li>
-<li><b>Instuctions</b>: what will occur during each iteration of the loop</li>
+<li><b>Output</b>: Always define an object for storing output (e.g., an empty vector, matrix, or list)</li>
+<li><b>Sequence</b>: The locations for which the loop will run</li>
+<li><b>Body</b>: This is the instructions for what will occur during each iteration of the loop</li>
 </ol>
 
-<hr>
+<br>
 
 <p>Let's use some example data. We'll construct a vector, `v`  using a set of five numbers. </p>
 <br>
@@ -217,83 +318,115 @@ v
 ```
 <br>
 
-<p>The value `v[i]` is equal to the value at position <i>i</i> in vector `v`. Let's take a look at the value of `v` at position 3:</p>
-<br>
-
-```{r, eval=FALSE}
-v[3]
-```
-<br>
-
-<p>This could also be written as:</p>
-<br>
-
-```{r, eval=FALSE}
-i <- 3
-
-v[i]
-```
-<br>
-
-<p>We'll start with a very simple loop. We would like to add one to each number in vector `v` and store the results in a new vector, `vNew`. This might be written mathematically as:</p>
+<p>We would like to modify the values in vector `v` by adding one to each value. This might be written mathematically as:<br>
 
 $$V_{new, i} = V_{i} + 1$$
+</p>
+<br>
 
-<p>To do so, we first create an empty vector, `vNew`, to store the results:</p>
+<p>Recall that value `v[i]` is equal to the value at position <i>i</i> in vector `v`. Let's take a look at the value of `v` at position 3:</p>
 <br>
 
 ```{r, eval=FALSE}
-vNew <- numeric(length = length(v))
-```
-<br>
 
-<p>If we want to calculate `v + 1` at position 3 for our new vector `vNew`, we would write:</p>
-<br>
-
-```{r, eval=FALSE}
-vNew[3] <- v[3] + 1
-```
-
-<p>Let's compare the initial value of `v` with the resultant value of `vNew` at position 3:</p>
-<br>
-
-```{r, eval=FALSE}
 v[3]
-
-vNew[3]
 
 i <- 3
 
 v[i]
 
-vNew[i]
+v[3] == v[i]
 ```
 <br>
 
-<h3>For loop initialization</h3>
-<p>The utility of the  <i>for loop</i> is that we can calculate the above for each position (`i`) in vector `v`. This is done by setting the "<b>for loop initialization</b>" statement which defines the locations over which the  <i>for loop</i> will be calculated. The <i>for loop initialization</i> for locations one through five is written as (<b>DO NOT RUN</b>):</p>
+
+<p>If we want to calculate `v + 1` at position 3, we would write:</p>
 <br>
 
 ```{r, eval=FALSE}
-for(i in 1:5)`
+v[3] + 1
+```
+
+<hr>
+
+<h3><i>For loop</i>, output:</h3>
+
+<br>
+<p><i>For loop</i> development begins by defining an object of a given length that your <i>for loop</i> will write to. This step is <b>very important</b> -- your <i>for loop</i> will run much, much slower if you do not do so!</p>
+
+<br>
+<p>Vector objects are defined as follows:</p>
+<br>
+
+```{r, eval=FALSE}
+vNew <- vector('numeric', length = length(v))
+
+str(vNew)
+```
+
+<br>
+<p>The first argument of the `vector` function is the type of object you would like to create. The next argument sets the length of the created object to be the equivalent to that of `v`.</p>
+<br>
+
+<p>Values of vector `vNew` will be replaced location-by-location. For example, let's compare the initial value of `v` with the resultant value of `v + 1`  at position 3:</p>
+<br>
+
+```{r, eval=FALSE}
+i <- 3
+
+v[i]
+
+vNew[i] <- v[i] + 1
+
+vNew[i]
+
+v[i] + 1 == vNew[i]
+```
+<br>
+
+<h3><i>For loop</i>, sequence</h3>
+<br>
+<p>The utility of the  <i>for loop</i> is that we can calculate the above for each position (`i`) in vector `v`. This is done by setting the "<b>for loop sequence</b>" statement which defines the locations over which the  <i>for loop</i> will be calculated. The <i>for loop</i> sequence for locations one through five is written as (<b>DO NOT RUN</b>):</p>
+<br>
+
+```{r for loop bad sequence, eval=FALSE}
+# for(i in 1:5)
 ```
 <br>
 
 <p>The above can be translated as "for position <i>i</i> in positions one through five".</p>
 
-<p>Because we can determine the length of a vector using the `length` function (`length(v)`), we can specify the end point for the <i>for loop initialization</i> statement as (<b>DO NOT RUN</b>):</p>
-<br>
+<p>To make our code as flexible as possible, we generally do not want to have to directly type in the stopping point of the <i>for loop</i>. We can use `1:length(v)` or the function `seq_along` to specify the <i>for loop</i> address. Run the following and note the behavior:</p>
 
-```{r, eval=FALSE}
-for(i in 1:length(v))
+<br>
+```{r seq_along, eval=FALSE}
+v
+
+1:5
+
+1:length(v)
+
+seq_along(v)
 ```
 <br>
 
-<p>This is a more flexible <i>for loop initialization</i> statement and should generally be used in place of numeric stopping points.</p>
+<p>The <i>for loop</i> sequence statement can then be written as (<b>DO NOT RUN</b>):</p>
+<br>
 
-<h3>For loop instructions</h3>
+```{r for loop sequence statements, eval=FALSE}
+# Example for loop sequence statements:
 
-<p>The <i>for loop initialization</i> statement is followed by the "<b>instructions</b>" statement that tells R what to do during each iteration of the loop. The <i>instructions</i> associated with our "add one" formula is (<b>DO NOT RUN</b>):</p>
+# for(i in 1:length(v))
+  
+# for(i in seq_along(v))
+```
+<br>
+
+<p>The above statements are more flexible than providing a numeric stopping point for your <i>for loop</i>.</p>
+
+<h3><i>For loop</i>, body</h3>
+
+<p>The <i>for loop</i> sequence statement is followed by the "<b>body</b>" statement that tells R what to do during each iteration of the loop. The body associated with our "add one" formula is (<b>DO NOT RUN</b>):</p>
 <br>
 
 ```{r, eval=FALSE}
@@ -301,24 +434,25 @@ vNew[i] <- v[i] + 1
 ```
 <br>
 
-<p>If your for loop spans multiple lines, place the <i>instructions</i> within curly brackets, for example:
+<p>If your for loop spans multiple lines, place the body within curly brackets, for example (<b>DO NOT RUN</b>):</p>
 <br>
 
 ```{r, eval = FALSE}
-for(i in 1:length(x)){
-  instructions
-}
+# for(i in 1:length(x)){
+#   body
+# }
 ```
 <br>
 
 <h3>The complete <i>for loop</i></h3>
-<p>Putting together our steps of: 1) Creating an object for storing the output of our <i>for loop</i>, 2) The <i>for loop initialization</i> statement, and 3) The <i>instructions</i> statement, our completed  <i>for loop</i> is written as follows (<b>RUN THIS ONE</b>):</p>
+<br>
+<p>Putting together our steps of: 1) Creating an <b>output</b> object, 2) The <i>for loop</i> <b>sequence</b> statement, and 3) The <b>body</b> statement, our completed  <i>for loop</i> is written as follows (<b>RUN THIS ONE</b>):</p>
 <br>
 
-```{r, eval=FALSE}
+```{r full example for loop, eval=FALSE}
 vNew <- numeric(length = length(v))
 
-for(i in 1:length(v)){
+for(i in seq_along(v)){
  vNew[i] <- v[i] + 1
 }
 ```
@@ -331,8 +465,9 @@ for(i in 1:length(v)){
 vNew
 
 v
-```
 
+vNew == v
+```
 
 <br>
 <div class = "roundBorderBlack">
@@ -371,12 +506,130 @@ v[i]
 
 <br>
 <blockquote>
-<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h3>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h3>
 <br>
 <ol>
-<li>Use a <i>for loop</i> to run a logical test of each record to determine whether the observation is of a bark foraging bird.</li>
-<li>Calculate the total number of records associated with bark foraging birds.</li>
+<li>Use a <i>for loop</i> to test whether each species of bird in the `birdHabits` data frame is an omnivore (logical test).</li>
+<li>Calculate the total number of records associated with omnivorous birds.</li>
 </ol>
+<br>
+</blockquote>
+<br>
+<hr>
+<br>
+
+<!--Using for loops for subsetting-->
+<h2><i>For loop</i> application, summarizing data</h2>
+<br>
+<p>You may have noticed that none of the operations we completed in the previous section actually required for loops (for example, `v + 1` is calculated for each value of `v` by default). The Iris example at the start of this lesson, however, highlights their utility for summarizing data. Calculating the mean for each species without a <i>for loop</i> required the following code:</p>
+<br>
+
+```{r summarizing review, eval=FALSE}
+# Mean petal lengths of Iris species without a for loop:
+
+mean(irisTbl[irisTbl$species == 'setosa', ]$petalLength)
+
+mean(irisTbl[irisTbl$species == 'versicolor', ]$petalLength)
+
+mean(irisTbl[irisTbl$species == 'virginica', ]$petalLength)
+```
+<br>
+
+<p>We can use a <i>for loop</i> to calculate this value across species. To do so, we first need to create a vector of species:</p>
+<br>
+
+```{r, eval=FALSE}
+# Make a vector of species to loop across:
+
+irisSpecies <- levels(irisTbl$species)
+
+irisSpecies
+```
+<br>
+
+<p>Next, we'll create an empty vector to store our <b>output</b>:</p>
+<br>
+
+```{r, eval=FALSE}
+# For loop output statement:
+
+petalLengths <- vector('numeric',length = length(irisSpecies))
+
+petalLengths
+```
+<br>
+
+<p>The vector of Iris species will define the bounds of our <i>for loop</i> <b>sequence</b> (<b>DO NOT RUN</b>):</p>
+<br>
+
+```{r, eval=FALSE}
+# For loop sequence: 
+
+# for(i in seq_along(irisSpecies))
+```
+<br>
+
+<p>Our <i>for loop</i> body is constructed as:</p>
+<br>
+
+```{r, eval=FALSE}
+# Exploring the construction of the for loop body:
+
+i <- 3
+
+irisSpecies[i]
+
+irisTbl[irisTbl$species == irisSpecies[i], ]
+
+irisTbl[irisTbl$species == irisSpecies[i], ]$petalLength
+
+mean(irisTbl[irisTbl$species == irisSpecies[i], ]$petalLength)
+
+# The for loop body:
+
+petalLengths[i] <- mean(irisTbl[irisTbl$species == irisSpecies[i], ]$petalLength)
+```
+<br>
+
+
+<p>Putting it all together, the <i>for loop</i> would be written as:</p>
+<br>
+
+```{r, eval=FALSE}
+# Make a vector of species to loop across:
+
+irisSpecies <- levels(irisTbl$species)
+
+# For loop output statement:
+
+petalLengths <- vector('numeric',length = length(irisSpecies))
+
+# For loop:
+
+for(i in seq_along(irisSpecies)){
+  petalLengths[i] <- mean(irisTbl[irisTbl$species == irisSpecies[i], ]$petalLength)
+
+}
+
+
+
+```
+<br>
+
+<p>We can turn our result into a tidy tibble data frame, using the `data_frame` function:</p>
+<br>
+
+```{r summarizing putting it together, eval=FALSE}
+petalLengthFrame <- data_frame(species = irisSpecies, count = petalLengths)
+
+petalLengthFrame
+```
+
+<br>
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h3>
+<br>
+<p>Use a <i>for loop</i> and the `birdHabits` data frame to calculate the number species in each diet guild.</p>
 <br>
 </blockquote>
 <br>
@@ -435,82 +688,7 @@ $$N_t = N_{t-1} + N_{t-2}$$
 <hr>
 <br>
 
-<!--Using for loops for subsetting-->
-<h2>Summarizing data with  <i>for loops</i></h2>
-<br>
-<p>Recall that in the previous lesson, we were able to subset <b>data frames</b> using a logical operator. For example, we could calculate the sum of all individuals within the aerial foraging class across sites as:</p>
-<br>
 
-```{r summarizing review, eval=FALSE}
-birdHabits
-
-birdHabits[birdHabits$foraging == 'aerial',]
-
-birdHabits[birdHabits$foraging == 'aerial',]$count
-
-sum(birdHabits[birdHabits$foraging == 'aerial',]$count)
-```
-<br>
-
-<p>We can use a <i>for loop</i> to calculate this value across foraging guilds. To do so, we first need to create a vector of foraging guilds:</p>
-<br>
-
-```{r, eval=FALSE}
-foragingGuilds <- unique(birdHabits$foraging)
-
-foragingGuilds
-```
-<br>
-
-<p>Next, we'll create an empty vector to store our results:</p>
-<br>
-
-```{r, eval=FALSE}
-foragingCounts <- numeric(length = length(foragingGuilds))
-```
-<br>
-
-<p>Now, we construct a  <i>for loop</i> using our sum operation above. To see how it works, let's first look at our <i>instructions</i> at a single value of <i>i</i>, the fourth position:</p>
-<br>
-
-```{r, eval=FALSE}
-foragingGuilds[4]
-
-sum(birdHabits[birdHabits$foraging == foragingGuilds[4],]$count)
-```
-<br>
-
-<p>Note that the above result is equivalent to our result when we subset the birdHabits dataset using row values.</p>
-
-<p>To evaluate this as a for loop, we run the above <i>instructions</i> across each of the guilds:</p>
-<br>
-
-```{r, eval=FALSE}
-for(i in 1:length(foragingGuilds)){
- foragingCounts[i] <- sum(birdHabits[birdHabits$foraging == foragingGuilds[i],]$count)
-}
-```
-<br>
-
-<p>We can turn our result into a pretty nice looking tibble data frame, using the `data_frame` function:</p>
-<br>
-
-```{r summarizing putting it together, eval=FALSE}
-foragingFrame <- data_frame(foragingGuild = foragingGuilds, count = foragingCounts)
-
-foragingFrame
-```
-
-<br>
-<blockquote>
-<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h3>
-<br>
-<p>Use the foragingFrame you created above and a  <i>for loop</i> to calculate the **proportion** of the observed individuals within each dietary guild.</p>
-<br>
-</blockquote>
-<br>
-<hr>
-<br>
 
 
 <h2>**Functions**</h2>
