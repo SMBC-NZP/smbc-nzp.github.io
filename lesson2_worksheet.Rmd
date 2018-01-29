@@ -97,7 +97,6 @@ exampleFactorLabels <- factor(
 
 numericVector <- c(1, 1, 2, 3)
 
-
 ```
 
 <h1 style="text-align: center;">Introduction to data science in R, Lesson 2:<br/>Querying data</h1>

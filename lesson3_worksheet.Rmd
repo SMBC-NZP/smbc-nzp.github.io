@@ -1,0 +1,696 @@
+---
+output:
+ html_document:
+  theme: yeti
+---
+
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<style>
+
+code{
+  background-color:#f2f2f2;
+}
+ 
+span.co{
+  color:#000080;
+  font-weight: bold;
+}
+ 
+img{
+  display: block;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+p{
+  text-align: left;
+  font-size: 18px;
+}
+
+ul, ol{
+  line-height: 27px;
+  text-align: left;
+  font-size: 18px;
+  margin-left: 0px;
+}
+ 
+blockquote{
+  font-size: 18px;
+  border-left: 8px solid #292093;
+  background-color: #e6ffff;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+ 
+.row{
+  margin: auto;
+}
+ 
+table {
+  border-collapse: collapse;
+}
+
+table, td, th {
+  border: 1px solid black;
+  padding: 5px;
+  text-align: center;
+  vertical-align: middle;
+}
+ 
+ /* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.roundBorder {
+  border-radius: 25px;
+  border: 5px solid #30288C;
+  background: #D6EAF8;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.roundBorderBlack {
+  border-radius: 25px;
+  border: 10px solid #D3D3D3;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.roundBorderBlackEx {
+  border-radius: 5px;
+  border: 5px solid #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+}
+
+.roundBorderEx {
+  border-radius: 3px;
+  border: 5px solid #30288C;
+  background: #D6EAF8;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+}
+
+
+.tt {
+    position: relative;
+    display: inline-block;
+    class: inline; 
+    font-weight: bold;
+    font-family: "Avenir";
+    font-size: 18px;
+    border-bottom: 1px black;
+}
+
+/* Tooltip text */
+.tt .ttText {
+    visibility: hidden;
+    font-weight: normal;
+    font-size: 18px;
+    width: 200px;
+    background-color: black;
+    border: 1px solid black;
+    color: white;
+    text-align: left;
+    padding: 5px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tt:hover .ttText {
+    visibility: visible;
+}
+
+</style>
+
+```{r include = FALSE}
+
+library(RCurl); library(tidyverse)
+
+
+fileURL <- getURL('https://raw.githubusercontent.com/SCBI-MigBirds/MigBirds/master/data/exampleBirdData.csv')
+
+birdCounts <- read.csv(text = fileURL) %>% tbl_df
+
+newSiteNames <- data.frame(site = unique(birdCounts$site), newSite = fruit[1:length(unique(birdCounts$site))])
+
+birdCounts <- birdCounts %>%
+  left_join(newSiteNames, by = 'site') %>%
+  select(site = newSite, species:count)
+
+```
+
+  
+<h1 style="text-align: center;">Introduction to data science in R, Lesson 3:<br/>For Loops and Functions</h1>
+<br>
+<!img style="float: left; margin: 0px 0px 15px 15px;" src="nzpLogo.jpg" width="150" />
+<p style = "text-align: center; font-size: 14px;">Brian S. Evans, Ph.D.<br />
+Migratory Bird Center<br/>
+Smithsonian Conservation Biology Institute</p>
+<hr>
+
+<h2>Before we begin:</h2>
+
+<p>For this lesson, we will use an example data frame of bird point count observations. This data frame is a tibble that includes the site name, a four letter abbreviation of species names, the foraging habits of the species, the dietary class of the species, and the number of species detected in the count.</p>
+
+<p>Open R Studio and run the following lines of code to load the data into R:</p>
+<br>
+
+```{r, eval=FALSE}
+# Load the library
+
+library(RCurl)
+
+# Note: If you have yet to install this library, please do so with: install.packages('rCurl')
+
+# Provide the web address of the file:
+
+fileURL <- getURL('https://raw.githubusercontent.com/SCBI-MigBirds/MigBirds/master/data/exampleBirdData.csv')
+
+# Read in the data:
+
+birdCounts <- read.csv(text = fileURL)
+
+# Explore the data:
+
+head(birdCounts)
+
+dim(birdCounts)
+
+attributes(birdCounts)
+
+str(birdCounts)
+
+summary(birdCounts)
+```
+<br>
+
+<hr>
+
+<h2>**For loops**</h2>
+
+<p>A <b><i>for loop</i></b> is a block of code that allows you to repeat an operation a set number of iterations. As data analysis often includes many repeated tasks,  <i>for loops</i> can save considerable time, shorten R scripts, and make your scripts more legible. While there are many functions that replace the necessity of  <i>for loops</i>, you will inevitably have to use them at some point in your data analyses and thus understanding how they work is crucial.</p>
+
+<p><b>When to use <i>for loops</i></b>: Whenever a chunk of code is repeated in its entirety more than twice you should consider replacing that code with a <i>for loop</i>.</p>
+
+<p><i>For loops</i> require three components:</p>
+
+<ol>
+<li>Define an object for storing output (e.g., an empty vector, matrix, data frame, or list)</li>
+<li><b>For loop initialization</b>: The locations for which the loop will run</li>
+<li><b>Instuctions</b>: what will occur during each iteration of the loop</li>
+</ol>
+
+<hr>
+
+<p>Let's use some example data. We'll construct a vector, `v`  using the first five counts in birdCounts. </p>
+<br>
+
+```{r, eval=FALSE}
+v <- birdCounts$count[1:5]
+v
+```
+<br>
+
+<p>The value `v[i]` is equal to the value at position <i>i</i> in vector `v`. Let's take a look at the value of `v` at position 3:</p>
+<br>
+
+```{r, eval=FALSE}
+v[3]
+```
+<br>
+
+<p>This could also be written as:</p>
+<br>
+
+```{r, eval=FALSE}
+i <- 3
+
+v[i]
+```
+<br>
+
+<p>We'll start with a very simple loop. We would like to add one to each number in vector `v` and store the results in a new vector, `vNew`. This might be written mathematically as:</p>
+
+$$V_{new, i} = V_{i} + 1$$
+
+<p>To do so, we first create an empty vector, `vNew`, to store the results:</p>
+<br>
+
+```{r, eval=FALSE}
+vNew <- numeric(length = length(v))
+```
+<br>
+
+<p>If we want to calculate `v + 1` at position 3 for our new vector `vNew`, we would write:</p>
+<br>
+
+```{r, eval=FALSE}
+vNew[3] <- v[3] + 1
+```
+
+<p>Let's compare the initial value of `v` with the resultant value of `vNew` at position 3:</p>
+<br>
+
+```{r, eval=FALSE}
+v[3]
+
+vNew[3]
+
+i <- 3
+
+v[i]
+
+vNew[i]
+```
+<br>
+
+<h3>For loop initialization</h3>
+<p>The utility of the  <i>for loop</i> is that we can calculate the above for each position (`i`) in vector `v`. This is done by setting the "<b>for loop initialization</b>" statement which defines the locations over which the  <i>for loop</i> will be calculated. The <i>for loop initialization</i> for locations one through five is written as (<b>DO NOT RUN</b>):</p>
+<br>
+
+```{r, eval=FALSE}
+for(i in 1:5)`
+```
+<br>
+
+<p>The above can be translated as "for position <i>i</i> in positions one through five".</p>
+
+<p>Because we can determine the length of a vector using the `length` function (`length(v)`), we can specify the end point for the <i>for loop initialization</i> statement as (<b>DO NOT RUN</b>):</p>
+<br>
+
+```{r, eval=FALSE}
+for(i in 1:length(v))
+```
+<br>
+
+<p>This is a more flexible <i>for loop initialization</i> statement and should generally be used in place of numeric stopping points.</p>
+
+<h3>For loop instructions</h3>
+
+<p>The <i>for loop initialization</i> statement is followed by the "<b>instructions</b>" statement that tells R what to do during each iteration of the loop. The <i>instructions</i> associated with our "add one" formula is (<b>DO NOT RUN</b>):</p>
+<br>
+
+```{r, eval=FALSE}
+vNew[i] <- v[i] + 1
+```
+<br>
+
+<p>If your for loop spans multiple lines, place the <i>instructions</i> within curly brackets, for example:
+<br>
+
+```{r, eval = FALSE}
+for(i in 1:length(x)){
+  instructions
+}
+```
+<br>
+
+<h3>The complete <i>for loop</i></h3>
+<p>Putting together our steps of: 1) Creating an object for storing the output of our <i>for loop</i>, 2) The <i>for loop initialization</i> statement, and 3) The <i>instructions</i> statement, our completed  <i>for loop</i> is written as follows (<b>RUN THIS ONE</b>):</p>
+<br>
+
+```{r, eval=FALSE}
+vNew <- numeric(length = length(v))
+
+for(i in 1:length(v)){
+ vNew[i] <- v[i] + 1
+}
+```
+<br>
+
+<p>Take a look at the output and compare it with the values of `v`:</p>
+<br>
+
+```{r, eval=FALSE}
+vNew
+
+v
+```
+
+
+<br>
+<div class = "roundBorderBlack">
+
+<br>
+<p><i class="fa fa-user-secret" aria-hidden="true" style = "font-size: 150%"></i> We specify the length of the vector to provide R with stopping rules -- without this  <i>for loops</i> can become very memory hungry when running over large datasets</p>
+<hr>
+<p><i class="fa fa-user-secret" aria-hidden="true" style = "font-size: 150%"></i> The following two sections of code are equivalent, but the latter much easier to read. As writing code is both a tool and a method of communication, you should ensure that your code is as readable as possible.</p>
+<br>
+
+```{r, eval = FALSE}
+
+for(i in 1:length(v)) vNew[i] <- v[i] + 1
+
+for(i in 1:length(v)){
+  vNew[i] <- v[i] + 1
+}
+```
+<hr>
+
+<p><i class="fa fa-user-secret" aria-hidden="true" style = "font-size: 150%"></i> When writing  <i>for loops</i>, it is necessary to ensure that the loop is doing what you expect it to do. A simple way to ensure that this is the case is to specify <i>i</i> and run the <i>instructions</i> on just that value. For example, to observe the behavior of the  <i>for loop</i> at position 3:</p>
+<br>
+
+```{r, eval=FALSE}
+
+i = 3
+
+vNew[i] <- v[i] + 1
+
+vNew[i]
+
+v[i]
+
+```
+</div>
+
+<br>
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h3>
+<br>
+<ol>
+<li>Use a <i>for loop</i> to run a logical test on each record to determine whether the observation is of a bark foraging bird.</li>
+<li>Calculate the total number of records associated with bark foraging birds.</li>
+</ol>
+<br>
+</blockquote>
+<br>
+<hr>
+<br>
+
+<h2>Generating number series with  <i>for loops</i></h2>
+
+<p>We may also be interested in using a  <i>for loop</i> to generate a vector of numbers based on some mathematical operation. For example, consider we have a value, 10, and want to calculate the mathematical expression:</p>
+
+$$n_t = 2(n_{t-1})$$
+
+<p>We must first start with a "<b>seed</b>" value for our vector. This is the initial value of vector `n`.</p>
+<br>
+
+```{r number series 1, eval=FALSE}
+n <- 10
+```
+<br>
+
+<p>In this instance, because we will store our resultant values within the same vector, `n`, it is unnecessary to create a blank vector to store the results.</p>
+
+<p>Let's calculate the first five values in this series. Because our  <i>for loop</i> starts with our seed value, we are only interested in the second through fifth positions of this vector. Thus, our for loop initialization statement is (<b>DO NOT RUN</b>):</p>
+<br>
+
+```{r number series 2, eval=FALSE}
+for(i in 2:5)
+```
+<br>
+
+<p>And our complete  <i>for loop</i> statement becomes:</p>
+<br>
+
+```{r number series 3, eval=FALSE}
+n = 10
+
+for(i in 2:5){
+ n[i] = n*v[i-1]
+}
+```
+
+<br>
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h3>
+<br>
+
+<p>One of my favorite <i>for loops</i> was created by Leonardo Bonacci (Fibonacci). He created the first known population model, from which the famous Fibonacci number series was created. He described a population (N) at time t as the sum of the population at the previous time step plus the time step before that:</p>
+
+$$N_t = N_{t-1} + N_{t-2}$$
+<ol>
+<li>Use the combine function to create a seed vector of two values, zero and one.</li>
+<li>Use the formula above and your seed vector to generate the first 20 numbers of the Fibonacci number sequence. <i><b>Hint</b>: The for loop initialization will begin at third position -- it will <b>NOT</b> include all of 1:20!</i></li>
+</ol>
+</blockquote>
+<br>
+<hr>
+<br>
+
+<!--Using for loops for subsetting-->
+<h2>Summarizing data with  <i>for loops</i></h2>
+<br>
+<p>Recall that in the previous lesson, we were able to subset <b>data frames</b> using a logical operator. For example, we could calculate the sum of all individuals within the aerial foraging class across sites as:</p>
+<br>
+
+```{r summarizing review, eval=FALSE}
+birdCounts
+
+birdCounts[birdCounts$foraging == 'aerial',]
+
+birdCounts[birdCounts$foraging == 'aerial',]$count
+
+sum(birdCounts[birdCounts$foraging == 'aerial',]$count)
+```
+<br>
+
+<p>We can use a <i>for loop</i> to calculate this value across foraging guilds. To do so, we first need to create a vector of foraging guilds:</p>
+<br>
+
+```{r, eval=FALSE}
+foragingGuilds <- unique(birdCounts$foraging)
+
+foragingGuilds
+```
+<br>
+
+<p>Next, we'll create an empty vector to store our results:</p>
+<br>
+
+```{r, eval=FALSE}
+foragingCounts <- numeric(length = length(foragingGuilds))
+```
+<br>
+
+<p>Now, we construct a  <i>for loop</i> using our sum operation above. To see how it works, let's first look at our <i>instructions</i> at a single value of <i>i</i>, the fourth position:</p>
+<br>
+
+```{r, eval=FALSE}
+foragingGuilds[4]
+
+sum(birdCounts[birdCounts$foraging == foragingGuilds[4],]$count)
+```
+<br>
+
+<p>Note that the above result is equivalent to our result when we subset the birdCounts dataset using row values.</p>
+
+<p>To evaluate this as a for loop, we run the above <i>instructions</i> across each of the guilds:</p>
+<br>
+
+```{r, eval=FALSE}
+for(i in 1:length(foragingGuilds)){
+ foragingCounts[i] <- sum(birdCounts[birdCounts$foraging == foragingGuilds[i],]$count)
+}
+```
+<br>
+
+<p>We can turn our result into a pretty nice looking tibble data frame, using the `data_frame` function:</p>
+<br>
+
+```{r summarizing putting it together, eval=FALSE}
+foragingFrame <- data_frame(foragingGuild = foragingGuilds, count = foragingCounts)
+
+foragingFrame
+```
+
+<br>
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h3>
+<br>
+<p>Use the foragingFrame you created above and a  <i>for loop</i> to calculate the **proportion** of the observed individuals within each dietary guild.</p>
+<br>
+</blockquote>
+<br>
+<hr>
+<br>
+
+
+<h2>**Functions**</h2>
+
+<p>In the introductory lesson and above, we have worked with several functions (e.g., "c", "mean"). Functions allow you to simplify complex tasks, which is especially useful if you need to run a task multiple times. Program R contains many functions and many more still are created by R users and provided to the R community as collections of functions known as packages (or libraries). As datasets and data handling needs are often distinct, relying exclusively on built-in and community-defined functions may be limiting. Learning how to create your own functions, or customize existing functions, provides you with the flexibility to solve unique problems, shorten your script, and make your R code more legible for others.</p>
+
+<p>Writing your own functions is easy, as long as you follow the correct syntax. The basic structure is:</p>
+<br>
+
+```{r, eval=FALSE}
+theNameOfMyFunction <- function(objectToComputeFunctionFor) {
+	What you would like to happen when you run your function
+}
+```
+<br>
+
+<p>Let's write a function that will do the same thing as our first for loop -- add 1 to every value in our vector V0.</p>
+<br>
+
+```{r, eval=FALSE}
+addOneFun <- function(x){
+	x+1
+}
+```
+<br>
+
+<p>Let's run the addOneFun function and compare it to our values in V1 above:</p>
+<br>
+
+```{r, eval=FALSE}
+addOneFun(V0)
+
+V1
+```
+<br>
+
+----
+
+> **Exercise Four:**
+>
+> The mathematical formula for standard error is provided below. Convert this to an R function (_**Note**: the function for standard deviation is "sd" and the function for square root is "sqrt"_):
+> $$StdErr (x) = \frac{StDev(x)}{\sqrt{n}}$$
+
+---
+
+<h2>Subsetting data with functions</h2>
+
+<p>In the  <i>for loops</i> section above, we subset the birdCounts frame by the aerial foraging guild using: </p>
+<br>
+
+```{r, eval=FALSE}
+birdCounts[birdCounts$foraging == 'aerial',]
+```
+<br>
+
+<p>If it is necessary to repeat this operation multiple times, we can simplify our scripts and make them more readable by wrapping our subsetting operation within a function. Below, we create a function that subsets by foraging guild and extract the data using the character value for that guild:</p>
+<br>
+
+```{r, eval=FALSE}
+foragingSubsetFun <- function(foragingGuild){
+ birdCountsSubset <- birdCounts[birdCounts$foraging == foragingGuild,]
+ return(birdCountsSubset)
+}
+
+foragingSubsetFun('aerial')
+```
+<br>
+
+<p>Likewise, we may be interested in calculating the _sum_ of counts for a given guild. Above we calculated the summed counts for a given guild as:</p>
+<br>
+
+```{r, eval=FALSE}
+sum(birdCounts[birdCounts$foraging == 'aerial','count'])
+```
+<br>
+
+<p>We can embed this line of code within a function to extract the sum of counts for a given foraging guild:</p>
+<br>
+
+```{r, eval=FALSE}
+foragingSumFun <- function(foragingGuild){
+ birdCountSubset <- birdCounts[birdCounts$foraging == foragingGuild,'count']
+ return(sum(birdCountSubset))
+}
+
+foragingSumFun('aerial')
+```
+<br>
+
+<p>We could also sum the count field by nesting the previous subsetting function within a new function:</p>
+<br>
+
+```{r, eval=FALSE}
+foragingSumFun <- function(foragingGuild){
+ birdCountSubset <- foragingSubsetFun(foragingGuild)
+ return(sum(birdCountSubset$count))
+}
+
+foragingSumFun('aerial')
+```
+<br>
+
+<p>We can make our subsetting and summing functions more flexible by allowing us to choose which trait (e.g., diet or foraging) and guild we would like to count:</p>
+<br>
+
+```{r, eval=FALSE}
+traitGuildSubsetFun <- function(trait, guild){
+ birdCountSubset <- birdCounts[birdCounts[,trait] == guild,]
+ return(birdCountSubset)
+}
+
+traitGuildSumFun <- function(trait, guild){
+ birdCountSubset <- traitGuildSubsetFun(trait, guild)
+ return(sum(birdCountSubset$count))
+}
+
+traitGuildSumFun('foraging','aerial')
+
+traitGuildSumFun('diet','insectivore')
+```
+<br>
+
+----
+
+> **Exercise Five:**
+>
+>1. Create a function that calculates the mean count for a given diet guild across sites. _**Hint**: Mean count is the sum of counts divided by the total number of sites in the birdCounts data frame. Do not use the built-in "mean"" function. Why can't we use the mean function?_ 
+>
+>2. Create a function that calculates the mean count for a selected trait (e.g. diet or foraging) and guild across sites.
+
+----
+
+<h2>**OPTIONAL CHALLENGE!**</h2>
+
+<p>You can use  <i>for loops</i> and functions to examine fundamental theoretical models in ecology. (**Only**) If you're feeling super comfortable with  <i>for loops</i> and functions, try out these additional exercises:</p>
+
+----
+
+1. The species-area relationship of Arrhenius (1921) states that the number of species (_S_) is dependent on the rate of increase in species with increasing area (_z_) multiplied by a constant (_c_) that represents the number of species that would be present in one spatial unit. This model is summarized as: 
+$$S = c \cdot\ A^z$$
+
+  a. Convert the species-area relationship formula to an R function, with _c_, _A_, and _z_ set as unknowns.
+  b. Create a vector named _areaVector_ of areas values ranging from 1 to 10.
+  c. Using 15 for the value of c and a z of 0.75, use a  <i>for loop</i> to calculate the expected species richness for your _areaVector_. _Note: You don't really need to use a for loop for this, but it's good practice!_  
+
+----
+  
+2. The exponential population growth model describes the growth of a population without resource limitations. This model describes the size of a population ($N_t$) at a given time unit as a function of the per capita growth rate of the population (_r_) and the size of the population at time _t_. This model is summarized as: 
+$$N_t = N_0 \cdot e^{r \cdot t}$$
+
+  a. Convert the exponential population growth model to an R function with _r_, $N_0$, and _t_ as unknowns.
+  b. With an initial population size of 25 and a per capita growth rate (_r_) of 0.45, use the exponential population growth rate function and a  <i>for loop</i> to calculate the size of the population over 10 generations.  
+
+----
+  
+3. The logistic population growth model (Verhulst) states that the growth of the population will be constrained by the population carrying capacity (_K_) as a function of resource limitations. This model is summarized as (_Note: the remaining variables are as above_):
+$$N_t = \dfrac{K}{\mathstrut{1 + \bigg[ \dfrac{K-N_0}{N_0} \bigg] \cdot e^{-r \cdot t}}}$$
+
+  a. Convert the logistic population growth model to an R function with _r_, $N_0$, t, and _K_ as unknowns. 
+  b. With an initial population size of 25, a per capita growth rate (_r_) of 0.45, and a carrying capacity of 500 individuals, use the logistic population growth rate function and a  <i>for loop</i> to calculate the size of the population over 10 generations.
+
+----
+
+
+
