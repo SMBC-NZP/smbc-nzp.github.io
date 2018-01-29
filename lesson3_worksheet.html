@@ -287,23 +287,23 @@ library(RCurl)
 
 # Provide the web address of the file:
 
-fileURL &lt;- getURL('https://raw.githubusercontent.com/SCBI-MigBirds/MigBirds/master/data/exampleBirdData.csv')
+fileURL &lt;- getURL('https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/birdHabits.csv')
 
 # Read in the data:
 
-birdCounts &lt;- read.csv(text = fileURL)
+birdHabits &lt;- read.csv(text = fileURL)
 
 # Explore the data:
 
-head(birdCounts)
+head(birdHabits)
 
-dim(birdCounts)
+dim(birdHabits)
 
-attributes(birdCounts)
+attributes(birdHabits)
 
-str(birdCounts)
+str(birdHabits)
 
-summary(birdCounts)</code></pre>
+summary(birdHabits)</code></pre>
 <p><br></p>
 <hr>
 <h2>
@@ -316,7 +316,7 @@ A <b><i>for loop</i></b> is a block of code that allows you to repeat an operati
 <b>When to use <i>for loops</i></b>: Whenever a chunk of code is repeated in its entirety more than twice you should consider replacing that code with a <i>for loop</i>.
 </p>
 <p>
-<i>For loops</i> require three components:
+Writing <i>for loops</i> generally requires following these three steps:
 </p>
 <ol>
 <li>
@@ -331,10 +331,10 @@ Define an object for storing output (e.g., an empty vector, matrix, data frame, 
 </ol>
 <hr>
 <p>
-Let’s use some example data. We’ll construct a vector, <code>v</code> using the first five counts in birdCounts.
+Let’s use some example data. We’ll construct a vector, <code>v</code> using the first five counts in birdHabits.
 </p>
 <p><br></p>
-<pre class="r"><code>v &lt;- birdCounts$count[1:5]
+<pre class="r"><code>v &lt;- birdHabits$count[1:5]
 v</code></pre>
 <p><br></p>
 <p>
@@ -547,19 +547,19 @@ Summarizing data with <i>for loops</i>
 Recall that in the previous lesson, we were able to subset <b>data frames</b> using a logical operator. For example, we could calculate the sum of all individuals within the aerial foraging class across sites as:
 </p>
 <p><br></p>
-<pre class="r"><code>birdCounts
+<pre class="r"><code>birdHabits
 
-birdCounts[birdCounts$foraging == 'aerial',]
+birdHabits[birdHabits$foraging == 'aerial',]
 
-birdCounts[birdCounts$foraging == 'aerial',]$count
+birdHabits[birdHabits$foraging == 'aerial',]$count
 
-sum(birdCounts[birdCounts$foraging == 'aerial',]$count)</code></pre>
+sum(birdHabits[birdHabits$foraging == 'aerial',]$count)</code></pre>
 <p><br></p>
 <p>
 We can use a <i>for loop</i> to calculate this value across foraging guilds. To do so, we first need to create a vector of foraging guilds:
 </p>
 <p><br></p>
-<pre class="r"><code>foragingGuilds &lt;- unique(birdCounts$foraging)
+<pre class="r"><code>foragingGuilds &lt;- unique(birdHabits$foraging)
 
 foragingGuilds</code></pre>
 <p><br></p>
@@ -575,17 +575,17 @@ Now, we construct a <i>for loop</i> using our sum operation above. To see how it
 <p><br></p>
 <pre class="r"><code>foragingGuilds[4]
 
-sum(birdCounts[birdCounts$foraging == foragingGuilds[4],]$count)</code></pre>
+sum(birdHabits[birdHabits$foraging == foragingGuilds[4],]$count)</code></pre>
 <p><br></p>
 <p>
-Note that the above result is equivalent to our result when we subset the birdCounts dataset using row values.
+Note that the above result is equivalent to our result when we subset the birdHabits dataset using row values.
 </p>
 <p>
 To evaluate this as a for loop, we run the above <i>instructions</i> across each of the guilds:
 </p>
 <p><br></p>
 <pre class="r"><code>for(i in 1:length(foragingGuilds)){
- foragingCounts[i] &lt;- sum(birdCounts[birdCounts$foraging == foragingGuilds[i],]$count)
+ foragingCounts[i] &lt;- sum(birdHabits[birdHabits$foraging == foragingGuilds[i],]$count)
 }</code></pre>
 <p><br></p>
 <p>
@@ -649,18 +649,18 @@ V1</code></pre>
 Subsetting data with functions
 </h2>
 <p>
-In the <i>for loops</i> section above, we subset the birdCounts frame by the aerial foraging guild using:
+In the <i>for loops</i> section above, we subset the birdHabits frame by the aerial foraging guild using:
 </p>
 <p><br></p>
-<pre class="r"><code>birdCounts[birdCounts$foraging == 'aerial',]</code></pre>
+<pre class="r"><code>birdHabits[birdHabits$foraging == 'aerial',]</code></pre>
 <p><br></p>
 <p>
 If it is necessary to repeat this operation multiple times, we can simplify our scripts and make them more readable by wrapping our subsetting operation within a function. Below, we create a function that subsets by foraging guild and extract the data using the character value for that guild:
 </p>
 <p><br></p>
 <pre class="r"><code>foragingSubsetFun &lt;- function(foragingGuild){
- birdCountsSubset &lt;- birdCounts[birdCounts$foraging == foragingGuild,]
- return(birdCountsSubset)
+ birdHabitsSubset &lt;- birdHabits[birdHabits$foraging == foragingGuild,]
+ return(birdHabitsSubset)
 }
 
 foragingSubsetFun('aerial')</code></pre>
@@ -669,15 +669,15 @@ foragingSubsetFun('aerial')</code></pre>
 Likewise, we may be interested in calculating the <em>sum</em> of counts for a given guild. Above we calculated the summed counts for a given guild as:
 </p>
 <p><br></p>
-<pre class="r"><code>sum(birdCounts[birdCounts$foraging == 'aerial','count'])</code></pre>
+<pre class="r"><code>sum(birdHabits[birdHabits$foraging == 'aerial','count'])</code></pre>
 <p><br></p>
 <p>
 We can embed this line of code within a function to extract the sum of counts for a given foraging guild:
 </p>
 <p><br></p>
 <pre class="r"><code>foragingSumFun &lt;- function(foragingGuild){
- birdCountSubset &lt;- birdCounts[birdCounts$foraging == foragingGuild,'count']
- return(sum(birdCountSubset))
+ birdHabitsubset &lt;- birdHabits[birdHabits$foraging == foragingGuild,'count']
+ return(sum(birdHabitsubset))
 }
 
 foragingSumFun('aerial')</code></pre>
@@ -687,8 +687,8 @@ We could also sum the count field by nesting the previous subsetting function wi
 </p>
 <p><br></p>
 <pre class="r"><code>foragingSumFun &lt;- function(foragingGuild){
- birdCountSubset &lt;- foragingSubsetFun(foragingGuild)
- return(sum(birdCountSubset$count))
+ birdHabitsubset &lt;- foragingSubsetFun(foragingGuild)
+ return(sum(birdHabitsubset$count))
 }
 
 foragingSumFun('aerial')</code></pre>
@@ -698,13 +698,13 @@ We can make our subsetting and summing functions more flexible by allowing us to
 </p>
 <p><br></p>
 <pre class="r"><code>traitGuildSubsetFun &lt;- function(trait, guild){
- birdCountSubset &lt;- birdCounts[birdCounts[,trait] == guild,]
- return(birdCountSubset)
+ birdHabitsubset &lt;- birdHabits[birdHabits[,trait] == guild,]
+ return(birdHabitsubset)
 }
 
 traitGuildSumFun &lt;- function(trait, guild){
- birdCountSubset &lt;- traitGuildSubsetFun(trait, guild)
- return(sum(birdCountSubset$count))
+ birdHabitsubset &lt;- traitGuildSubsetFun(trait, guild)
+ return(sum(birdHabitsubset$count))
 }
 
 traitGuildSumFun('foraging','aerial')
@@ -715,7 +715,7 @@ traitGuildSumFun('diet','insectivore')</code></pre>
 <blockquote>
 <p><strong>Exercise Five:</strong></p>
 <ol style="list-style-type: decimal">
-<li><p>Create a function that calculates the mean count for a given diet guild across sites. <em><strong>Hint</strong>: Mean count is the sum of counts divided by the total number of sites in the birdCounts data frame. Do not use the built-in “mean”&quot; function. Why can’t we use the mean function?</em></p></li>
+<li><p>Create a function that calculates the mean count for a given diet guild across sites. <em><strong>Hint</strong>: Mean count is the sum of counts divided by the total number of sites in the birdHabits data frame. Do not use the built-in “mean”&quot; function. Why can’t we use the mean function?</em></p></li>
 <li><p>Create a function that calculates the mean count for a selected trait (e.g. diet or foraging) and guild across sites.</p></li>
 </ol>
 </blockquote>

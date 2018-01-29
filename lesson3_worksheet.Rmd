@@ -146,24 +146,6 @@ table, td, th {
 
 </style>
 
-```{r include = FALSE}
-
-library(RCurl); library(tidyverse)
-
-
-fileURL <- getURL('https://raw.githubusercontent.com/SCBI-MigBirds/MigBirds/master/data/exampleBirdData.csv')
-
-birdCounts <- read.csv(text = fileURL) %>% tbl_df
-
-newSiteNames <- data.frame(site = unique(birdCounts$site), newSite = fruit[1:length(unique(birdCounts$site))])
-
-birdCounts <- birdCounts %>%
-  left_join(newSiteNames, by = 'site') %>%
-  select(site = newSite, species:count)
-
-```
-
-  
 <h1 style="text-align: center;">Introduction to data science in R, Lesson 3:<br/>For Loops and Functions</h1>
 <br>
 <!img style="float: left; margin: 0px 0px 15px 15px;" src="nzpLogo.jpg" width="150" />
@@ -174,7 +156,7 @@ Smithsonian Conservation Biology Institute</p>
 
 <h2>Before we begin:</h2>
 
-<p>For this lesson, we will use an example data frame of bird point count observations. This data frame is a tibble that includes the site name, a four letter abbreviation of species names, the foraging habits of the species, the dietary class of the species, and the number of species detected in the count.</p>
+<p>For this lesson, we will use an example data frame of bird point count observations. This data frame includes a four letter abbreviation of species names, the foraging habits of the species, and the dietary class of the species.</p>
 
 <p>Open R Studio and run the following lines of code to load the data into R:</p>
 <br>
@@ -188,23 +170,23 @@ library(RCurl)
 
 # Provide the web address of the file:
 
-fileURL <- getURL('https://raw.githubusercontent.com/SCBI-MigBirds/MigBirds/master/data/exampleBirdData.csv')
+fileURL <- getURL('https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/birdHabits.csv')
 
 # Read in the data:
 
-birdCounts <- read.csv(text = fileURL)
+birdHabits <- read.csv(text = fileURL)
 
 # Explore the data:
 
-head(birdCounts)
+head(birdHabits)
 
-dim(birdCounts)
+dim(birdHabits)
 
-attributes(birdCounts)
+attributes(birdHabits)
 
-str(birdCounts)
+str(birdHabits)
 
-summary(birdCounts)
+summary(birdHabits)
 ```
 <br>
 
@@ -216,7 +198,7 @@ summary(birdCounts)
 
 <p><b>When to use <i>for loops</i></b>: Whenever a chunk of code is repeated in its entirety more than twice you should consider replacing that code with a <i>for loop</i>.</p>
 
-<p><i>For loops</i> require three components:</p>
+<p>Writing <i>for loops</i> generally requires following these three steps:</p>
 
 <ol>
 <li>Define an object for storing output (e.g., an empty vector, matrix, data frame, or list)</li>
@@ -226,11 +208,11 @@ summary(birdCounts)
 
 <hr>
 
-<p>Let's use some example data. We'll construct a vector, `v`  using the first five counts in birdCounts. </p>
+<p>Let's use some example data. We'll construct a vector, `v`  using a set of five numbers. </p>
 <br>
 
 ```{r, eval=FALSE}
-v <- birdCounts$count[1:5]
+v <- c(1,1,2,3,5)
 v
 ```
 <br>
@@ -392,7 +374,7 @@ v[i]
 <h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h3>
 <br>
 <ol>
-<li>Use a <i>for loop</i> to run a logical test on each record to determine whether the observation is of a bark foraging bird.</li>
+<li>Use a <i>for loop</i> to run a logical test of each record to determine whether the observation is of a bark foraging bird.</li>
 <li>Calculate the total number of records associated with bark foraging birds.</li>
 </ol>
 <br>
@@ -460,13 +442,13 @@ $$N_t = N_{t-1} + N_{t-2}$$
 <br>
 
 ```{r summarizing review, eval=FALSE}
-birdCounts
+birdHabits
 
-birdCounts[birdCounts$foraging == 'aerial',]
+birdHabits[birdHabits$foraging == 'aerial',]
 
-birdCounts[birdCounts$foraging == 'aerial',]$count
+birdHabits[birdHabits$foraging == 'aerial',]$count
 
-sum(birdCounts[birdCounts$foraging == 'aerial',]$count)
+sum(birdHabits[birdHabits$foraging == 'aerial',]$count)
 ```
 <br>
 
@@ -474,7 +456,7 @@ sum(birdCounts[birdCounts$foraging == 'aerial',]$count)
 <br>
 
 ```{r, eval=FALSE}
-foragingGuilds <- unique(birdCounts$foraging)
+foragingGuilds <- unique(birdHabits$foraging)
 
 foragingGuilds
 ```
@@ -494,18 +476,18 @@ foragingCounts <- numeric(length = length(foragingGuilds))
 ```{r, eval=FALSE}
 foragingGuilds[4]
 
-sum(birdCounts[birdCounts$foraging == foragingGuilds[4],]$count)
+sum(birdHabits[birdHabits$foraging == foragingGuilds[4],]$count)
 ```
 <br>
 
-<p>Note that the above result is equivalent to our result when we subset the birdCounts dataset using row values.</p>
+<p>Note that the above result is equivalent to our result when we subset the birdHabits dataset using row values.</p>
 
 <p>To evaluate this as a for loop, we run the above <i>instructions</i> across each of the guilds:</p>
 <br>
 
 ```{r, eval=FALSE}
 for(i in 1:length(foragingGuilds)){
- foragingCounts[i] <- sum(birdCounts[birdCounts$foraging == foragingGuilds[i],]$count)
+ foragingCounts[i] <- sum(birdHabits[birdHabits$foraging == foragingGuilds[i],]$count)
 }
 ```
 <br>
@@ -576,11 +558,11 @@ V1
 
 <h2>Subsetting data with functions</h2>
 
-<p>In the  <i>for loops</i> section above, we subset the birdCounts frame by the aerial foraging guild using: </p>
+<p>In the  <i>for loops</i> section above, we subset the birdHabits frame by the aerial foraging guild using: </p>
 <br>
 
 ```{r, eval=FALSE}
-birdCounts[birdCounts$foraging == 'aerial',]
+birdHabits[birdHabits$foraging == 'aerial',]
 ```
 <br>
 
@@ -589,8 +571,8 @@ birdCounts[birdCounts$foraging == 'aerial',]
 
 ```{r, eval=FALSE}
 foragingSubsetFun <- function(foragingGuild){
- birdCountsSubset <- birdCounts[birdCounts$foraging == foragingGuild,]
- return(birdCountsSubset)
+ birdHabitsSubset <- birdHabits[birdHabits$foraging == foragingGuild,]
+ return(birdHabitsSubset)
 }
 
 foragingSubsetFun('aerial')
@@ -601,7 +583,7 @@ foragingSubsetFun('aerial')
 <br>
 
 ```{r, eval=FALSE}
-sum(birdCounts[birdCounts$foraging == 'aerial','count'])
+sum(birdHabits[birdHabits$foraging == 'aerial','count'])
 ```
 <br>
 
@@ -610,8 +592,8 @@ sum(birdCounts[birdCounts$foraging == 'aerial','count'])
 
 ```{r, eval=FALSE}
 foragingSumFun <- function(foragingGuild){
- birdCountSubset <- birdCounts[birdCounts$foraging == foragingGuild,'count']
- return(sum(birdCountSubset))
+ birdHabitsubset <- birdHabits[birdHabits$foraging == foragingGuild,'count']
+ return(sum(birdHabitsubset))
 }
 
 foragingSumFun('aerial')
@@ -623,8 +605,8 @@ foragingSumFun('aerial')
 
 ```{r, eval=FALSE}
 foragingSumFun <- function(foragingGuild){
- birdCountSubset <- foragingSubsetFun(foragingGuild)
- return(sum(birdCountSubset$count))
+ birdHabitsubset <- foragingSubsetFun(foragingGuild)
+ return(sum(birdHabitsubset$count))
 }
 
 foragingSumFun('aerial')
@@ -636,13 +618,13 @@ foragingSumFun('aerial')
 
 ```{r, eval=FALSE}
 traitGuildSubsetFun <- function(trait, guild){
- birdCountSubset <- birdCounts[birdCounts[,trait] == guild,]
- return(birdCountSubset)
+ birdHabitsubset <- birdHabits[birdHabits[,trait] == guild,]
+ return(birdHabitsubset)
 }
 
 traitGuildSumFun <- function(trait, guild){
- birdCountSubset <- traitGuildSubsetFun(trait, guild)
- return(sum(birdCountSubset$count))
+ birdHabitsubset <- traitGuildSubsetFun(trait, guild)
+ return(sum(birdHabitsubset$count))
 }
 
 traitGuildSumFun('foraging','aerial')
@@ -655,7 +637,7 @@ traitGuildSumFun('diet','insectivore')
 
 > **Exercise Five:**
 >
->1. Create a function that calculates the mean count for a given diet guild across sites. _**Hint**: Mean count is the sum of counts divided by the total number of sites in the birdCounts data frame. Do not use the built-in "mean"" function. Why can't we use the mean function?_ 
+>1. Create a function that calculates the mean count for a given diet guild across sites. _**Hint**: Mean count is the sum of counts divided by the total number of sites in the birdHabits data frame. Do not use the built-in "mean"" function. Why can't we use the mean function?_ 
 >
 >2. Create a function that calculates the mean count for a selected trait (e.g. diet or foraging) and guild across sites.
 
