@@ -19,7 +19,7 @@ habitsURL <- getURL(
   paste(url, 'birdHabits.csv', sep = '/')
 )
 
-habitsURL <- getURL(
+countsURL <- getURL(
   paste(url, 'birdCounts.csv', sep = '/')
 )
 
@@ -32,34 +32,6 @@ birdHabits <- tbl_df(
 birdCounts <- tbl_df(
   read.csv(text = countsURL, stringsAsFactors = FALSE)
 )
-
-#=================================================================================*
-# ---- data exploration and cleaning ----
-#=================================================================================*
-
-# Explore the data (birdHabits example):
-
-head(birdHabits)
-
-dim(birdHabits)
-
-attributes(birdHabits)
-
-str(birdHabits)
-
-summary(birdHabits)
-
-# Explore the iris data:
-
-head(iris)
-
-dim(iris)
-
-attributes(iris)
-
-str(iris)
-
-summary(iris)
 
 # Clean up iris for analysis:
 
@@ -171,7 +143,7 @@ meanSpeciesCounts <- function(spp){
 
 # What is the average number of observed catbirds?
 
-meanSpeciesCounts(birdCounts, 'grca')
+meanSpeciesCounts('grca')
 
 #---------------------------------------------------------------------------------*
 #---- Query function, mean count, nested ----
@@ -223,17 +195,19 @@ v
 
 # Explore vector v using indexing:
 
-v[3]
-
 i <- 3
 
 v[i]
+
+v[3]
 
 v[3] == v[i]
 
 # Add 1 to the value of v at position three:
 
 v[3] + 1
+
+v[i] + 1
 
 # Define a vector for output:
 
