@@ -72,6 +72,18 @@ addOneFun(v)
 #---- Query by species function ----
 #---------------------------------------------------------------------------------*
 
+# Explore birdCounts data:
+
+str(birdCounts)
+
+head(birdCounts)
+
+# Matrix notation query:
+
+birdCounts[birdCounts$species == 'grca', ]
+
+# Query function:
+
 speciesSubset <- function(spp){
   birdCounts[birdCounts$species == spp, ]
 }
@@ -451,7 +463,7 @@ n <- vector('numeric', length = 5)
 
 # Seed:
 
-n <- 10
+n[1] <- 10
 
 # For loop:
 

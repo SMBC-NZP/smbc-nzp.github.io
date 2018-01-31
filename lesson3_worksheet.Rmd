@@ -423,7 +423,7 @@ $$StdErr (x) = \frac{StDev(x)}{\sqrt{n}}$$
 	      border-color: white;
 	      width: 30%;"/>
 	      
-<h2>**For loops**</h2>
+<h2><b><i>For loops</b></i></h2>
 
 <br>
 <p><b>Why would you use <i>for loops</i>?</b> Let's look at a common example. You have been asked to calculate the mean petal length of three Iris species: <i>Iris setosa</i>, <i>Iris versicolor</i>, and <i>Iris virginica</i>.  (coded as the factor levels `setosa`, `versicolor`, and `virginica` in the `species` field of the `irisTbl` data frame). Using the `mean` function and tools that we have addressed thus far, use the following to calculate the mean petal length for each species:</p>
@@ -680,20 +680,6 @@ v[i]
 ```
 </div>
 
-<br>
-<blockquote>
-<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Four:</h3>
-<br>
-<ol>
-<li>Use a <i>for loop</i> to test whether each species of bird in the `birdHabits` data frame is an omnivore (logical test).</li>
-<li>Calculate the total number of records associated with omnivorous birds.</li>
-</ol>
-<br>
-</blockquote>
-<br>
-<hr>
-<br>
-
 <!--Using for loops for subsetting-->
 <h2><i>For loops</i> to split-apply-combine</h2>
 <br>
@@ -813,7 +799,7 @@ petalLengthFrame
 
 <br>
 <blockquote>
-<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Five:</h3>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Four:</h3>
 <br>
 <p>Use a <i>for loop</i> and the `birdHabits` data frame to calculate the number species in each diet guild.</p>
 <br>
@@ -939,7 +925,7 @@ bind_rows(outList)
 <hr>
 <h2><i>For loops</i> for simulation</h2>
 <br>
-<p>We may also be interested in using a  <i>for loop</i> to generate a vector of numbers based on some mathematical operation. For example, consider we have a value, 10, and want to calculate the mathematical expression:</p>
+<p>We may also be interested in using a  <i>for loop</i> to generate a vector of numbers based on some mathematical function. For example, consider we have a value, 10, and want to calculate the mathematical expression:</p>
 
 $$n_t = 2(n_{t-1})$$
 <br>
@@ -1018,7 +1004,7 @@ for(i in 2:5){
 
 <br>
 <blockquote>
-<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Six:</h3>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Five:</h3>
 <br>
 
 <img src="rWorkshop/images/rabbit.jpg" 

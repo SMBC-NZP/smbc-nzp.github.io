@@ -184,50 +184,7 @@ Smithsonian Conservation Biology Institute</p>
 	      border-width: 10px;
 	      border-color: white;
 	      width: 45%;"/>
-	      
-```{r initial, eval = TRUE}
-# Load libraries
 
-library(RCurl)
-
-library(tidyverse)
-
-# Note: If you have yet to install these library, please do so with: 
-# install.packages('rCurl') ; install.packages('tidyverse')
-
-# Provide the web addresses of the files (note: iris is preloaded example data):
-
-url <- 'https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master'
-
-habitsURL <- getURL(
-  paste(url, 'birdHabits.csv', sep = '/')
-)
-
-countsURL <- getURL(
-  paste(url, 'birdCounts.csv', sep = '/')
-)
-
-# Read in the data:
-
-birdHabits <- tbl_df(
-  read.csv(text = habitsURL, stringsAsFactors = FALSE)
-)
-
-birdCounts <- tbl_df(
-  read.csv(text = countsURL, stringsAsFactors = FALSE)
-)
-
-# Clean up iris for analysis:
-
-irisTbl <- tbl_df(iris)
-
-names(irisTbl) <-
-  c('sepalLength',
-    'sepalWidth',
-    'petalLength',
-    'petalWidth',
-    'species')
-```
 	      
 ##
 <h2>Setup for the lesson</h2>
