@@ -113,7 +113,6 @@ table, td, th {
   padding-top: 2px;
 }
 
-
 .tt {
     position: relative;
     display: inline-block;
@@ -190,7 +189,7 @@ habitsURL <- getURL(
   paste(url, 'birdHabits.csv', sep = '/')
   )
 
-habitsURL <- getURL(
+countsURL <- getURL(
   paste(url, 'birdCounts.csv', sep = '/')
   )
 
@@ -204,43 +203,6 @@ birdCounts <- tbl_df(
   read.csv(text = countsURL, stringsAsFactors = FALSE)
   )
 
-```
-
-<br>
-<p>Take a moment to explore the data:</p>
-<br>
-
-```{r, eval=FALSE}
-# Explore the data (birdHabits example):
-
-head(birdHabits)
-
-dim(birdHabits)
-
-attributes(birdHabits)
-
-str(birdHabits)
-
-summary(birdHabits)
-
-```
-
-<br>
-<p>Have a look at the built-in iris dataset as well:</p>
-<br>
-
-```{r, eval=FALSE}
-# Explore the iris data:
-
-head(iris)
-
-dim(iris)
-
-attributes(iris)
-
-str(iris)
-
-summary(iris)
 ```
 
 <br>
@@ -265,12 +227,12 @@ names(irisTbl) <-
 <h2>**Functions**</h2>
 
 <p>In the previous lessons, we worked with several functions (e.g., "c", "mean"). Functions allow you to simplify complex tasks, which is especially useful if you need to run a task multiple times. Program R contains many functions and many more still are created by R users and provided to the R community as collections of functions known as packages (or libraries). As datasets and data handling needs are often distinct, relying exclusively on built-in and community-defined functions is limiting.</p>
-<p><b>Why would you write your own functions?</b> Learning how to create your own functions, or customize existing functions, provides you with the flexibility to solve unique problems, shorten your script, and make your R code more legible for others. Writing your own functions is easy, as long as you follow the correct syntax. The basic structure is:</p>
+<p><b>Why would you write your own functions?</b> Learning how to create your own functions, or customize existing functions, provides you with the flexibility to solve unique problems, shorten your script, and make your R code more legible for others. Writing your own functions is easy, as long as you follow the correct syntax. The basic structure is (<b>DO NOT RUN</b>):</p>
 <br>
 
 ```{r, eval=FALSE}
-theNameOfMyFunction <- function(objectToComputeFunctionFor) {
-	What you would like to happen when you run your function
+functionName <- function(functionTarget) {
+	functionBody: What you would like to happen when you run your function
 }
 ```
 <br>
@@ -392,6 +354,7 @@ query(birdHabits, 'species', 'grca')
 <br>
 
 <p>Functions can sometimes get pretty long and include multiple objects. When this is the case, it's good practice to include `return` to illustrate which object is being returned. Let's write a function in multiple steps that calculates the average (mean) number of individuals of a given species observed on a point count.</p>
+<br>
 
 ```{r query mean fun, eval = FALSE}
 
@@ -410,9 +373,10 @@ meanSpeciesCounts <- function(spp){
 
 # What is the average number of observed catbirds?
 
-meanSpeciesCounts(birdCounts, 'grca')
+meanSpeciesCounts('grca')
 ```
 <br>
+<p>Note in the above that the objects nSites, birdCounts_sppSubset, and nBirds were not placed in your <b>global environment</b>. Objects defined within the function body are only defined inside the function, not the global environment.</p>
 <p>Functions can also be <b>nested</b>. In other words, functions can include user-defined functions written inside the function body. We have already done this quite a bit with functions in base R. For example, the `length` function above is nested inside our user-defined function `meanSpeciesCounts`. Let's try to nest our `speciesSubset` function inside the `meanSpeciesCounts` function above.</p>
 <br>
 ```{r query mean fun2, eval = FALSE}
@@ -494,18 +458,7 @@ mean(irisTbl[irisTbl$species == 'setosa', ]$petalLength)
 <br>
 <hr>
 
-<p>Writing proper <i>for loops</i> requires following these three steps:</p>
-<br>
-
-<ol>
-<li><b>Output</b>: Always define an object for storing output (e.g., an empty vector, matrix, or list)</li>
-<li><b>Sequence</b>: The locations for which the loop will run</li>
-<li><b>Body</b>: This is the instructions for what will occur during each iteration of the loop</li>
-</ol>
-
-<br>
-
-<p>Let's use some example data. We'll construct a vector, `v`  using a set of five numbers. </p>
+<p>Let's start our exploration of <i>for loops</i> by constructing a vector, `v`  using a set of five numbers.</p>
 <br>
 
 ```{r, eval=FALSE}
@@ -523,18 +476,29 @@ $$V_{new, i} = V_{i} + 1$$
 </p>
 <br>
 
-<p>Recall that value `v[i]` is equal to the value at position <i>i</i> in vector `v`. Let's take a look at the value of `v` at position 3:</p>
+<p>To do so, we will write a <i>for loop</i>. Writing proper <i>for loops</i> requires following these three steps:</p>
+
+<ol>
+<li><b>Output</b>: Always define an object for storing output (e.g., an empty vector, matrix, or list)</li>
+<li><b>Sequence</b>: The locations for which the loop will run</li>
+<li><b>Body</b>: This is the instructions for what will occur during each iteration of the loop</li>
+</ol>
+
+<h3>Indexing review:</h3>
+
+<br>
+<p>The key to writing <i>for loops</i> is having a clear understanding of indexing. Recall that value `v[i]` is equal to the value at position <i>i</i> in vector `v`. Let's take a look at the value of `v` at position 3:</p>
 <br>
 
 ```{r, eval=FALSE}
 
 # Explore vector v using indexing:
 
-v[3]
-
 i <- 3
 
 v[i]
+
+v[3]
 
 v[3] == v[i]
 ```
@@ -548,16 +512,17 @@ v[3] == v[i]
 # Add 1 to the value of v at position three:
 
 v[3] + 1
-```
 
+v[i] + 1
+
+```
 <br>
 
 <h3><i>For loop</i>, output:</h3>
 
 <br>
-<p><i>For loop</i> development begins by defining an object of a given length that your <i>for loop</i> will write to. This step is <b>very important</b> -- your <i>for loop</i> will run much, much slower if you do not do so!</p>
+<p><i>For loop</i> development begins by defining an <b>output</b> object of a given length that your <i>for loop</i> will write to. This step is <b>very important</b> -- your <i>for loop</i> will run much, much slower if you do not do so!</p>
 
-<br>
 <p>Vector objects are defined as follows:</p>
 <br>
 
@@ -571,7 +536,6 @@ str(vNew)
 
 <br>
 <p>The first argument of the `vector` function is the type of object you would like to create. The next argument sets the length of the created object to be the equivalent to that of `v`.</p>
-<br>
 
 <p>Values of vector `vNew` will be replaced location-by-location. For example, let's compare the initial value of `v` with the resultant value of `v + 1`  at position 3:</p>
 <br>
@@ -632,6 +596,7 @@ seq_along(v)
 <p>The above statements are more flexible than providing a numeric stopping point for your <i>for loop</i>.</p>
 
 <h3><i>For loop</i>, body</h3>
+<br>
 
 <p>The <i>for loop</i> sequence statement is followed by the "<b>body</b>" statement that tells R what to do during each iteration of the loop. The body associated with our "add one" formula is (<b>DO NOT RUN</b>):</p>
 <br>
