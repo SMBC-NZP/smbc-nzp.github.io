@@ -182,8 +182,9 @@ monthFactor
 <br><br>
 <li>Extract a vector of unique values of monthChar.</li>
 <br><br>
-<li>The code below is an incomplete function that counts the number of values in a vector contains a given letter, 'x'. Complete this function and test  by calculating the number of values in monthChar that end in the letter "y".
+<li>The code below is an incomplete function that counts the number of values in a vector that contain a given letter, `x`, as its last letter. Complete this function and test by calculating the number of values in monthChar that end in the letter "y".
 <br><br>
+
 
 ```{r eval = FALSE}
 lastLetterSum <- function(vectorIn, x){
