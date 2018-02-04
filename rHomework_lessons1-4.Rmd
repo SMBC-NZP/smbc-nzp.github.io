@@ -1,0 +1,403 @@
+---
+output:
+ html_document:
+  theme: yeti
+---
+
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<style>
+
+code{
+  background-color:#f2f2f2;
+  border-radius: 25px;
+}
+ 
+span.co{
+  color:#000080;
+  font-weight: bold;
+}
+ 
+img{
+  display: block;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+p{
+  text-align: left;
+  font-size: 18px;
+}
+
+ul, ol{
+  line-height: 27px;
+  text-align: left;
+  font-size: 18px;
+  margin-left: 0px;
+}
+ 
+blockquote{
+  font-size: 18px;
+  border-left: 8px solid #292093;
+  background-color: #e6ffff;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+ 
+.row{
+  margin: auto;
+}
+ 
+table {
+  border-collapse: collapse;
+}
+
+table, td, th {
+  border: 1px solid black;
+  padding: 5px;
+  text-align: center;
+  vertical-align: middle;
+}
+ 
+ /* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.roundBorder {
+  border-radius: 25px;
+  border: 5px solid #30288C;
+  background: #D6EAF8;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.roundBorderBlack {
+  border-radius: 25px;
+  border: 10px solid #D3D3D3;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.roundBorderBlackEx {
+  border-radius: 5px;
+  border: 5px solid #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+}
+
+.roundBorderEx {
+  border-radius: 3px;
+  border: 5px solid #30288C;
+  background: #D6EAF8;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+}
+
+.tt {
+    position: relative;
+    display: inline-block;
+    class: inline; 
+    font-weight: bold;
+    font-family: "Avenir";
+    font-size: 18px;
+    border-bottom: 1px black;
+}
+
+/* Tooltip text */
+.tt .ttText {
+    visibility: hidden;
+    font-weight: normal;
+    font-size: 18px;
+    width: 200px;
+    background-color: black;
+    border: 1px solid black;
+    color: white;
+    text-align: left;
+    padding: 5px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tt:hover .ttText {
+    visibility: visible;
+}
+
+</style>
+
+<h2>R Homework: Lessons 1-4</h2>
+<hr>
+<p>Please use the file `rWorksheet1-4_script.R` to complete this assignment. You may find some of the questions in this assignment very easy and some prohibitively challenging. Just do what you can. This exercise is to help give you more practice with R and to help me evaluate the level of understanding of workshop participants and isolate current weak points in understanding. I am also curious the length of time it takes to complete this assignment. Please estimate the total time you spend with the assignment (even if you are unable to complete all of the questions). Please be sure to:</p>
+
+<ul>
+<li>Complete all steps in the space provided on the script.</li>
+<li>You must run the complete set up section of the script prior to answering questions!</li>
+<li>Each question can be answered using tools that we have covered thus far in the workshop. Please use only these tools to answer questions.</li>
+<li>Complete all steps in one line of code unless you are instructed otherwise.</li>
+<li>Do not assign any object names unless you are instructed otherwise.</li> 
+</ul>
+<br>
+<p>Once completed, please save your rScript as `rHomework1-4_[your last name]-[your first name].R` (for example, my homework would be titled `rHomework1-4_Evans-Brian.R`) and <a href="mailto:evansbr@si.edu">email it to me</a>. Please use the subject line "rWorkshop, assignment 1" in your email. In the body of your email, please include the amount of time the assignment took to complete.</p>
+
+<hr>
+
+<ol>
+<li><b>Fun with factors</b>:
+<br><br>
+<p>For this question, you will use a preloaded vector object named "monthFactor". Please take a moment to explore this object:</p>
+<br>
+```{r eval = FALSE}
+monthFactor
+```
+<br>
+<ol type = "a">
+<li>Modify monthFactor such that the levels are provided in date order and the first letter of each label is capitalized. Assign the name "month" to the resultant object.</li>
+<br><br>
+<li>Convert the "month" vector to a character vector and assign the name "monthChar" to the resultant object.</li>
+<br><br>
+<li>Use indexing to extract the fourth and seventh value of monthChar.</li>
+<br><br>
+<li>In one line of code, calculate the number of values in monthChar for which the month is February OR March.</li>
+<br><br>
+<li>Extract a vector of unique values of monthChar.</li>
+<br><br>
+<li>The code below is an incomplete function that counts the number of values in a vector contains a given letter, 'x'. Complete this function and test  by calculating the number of values in monthChar that end in the letter "y".
+<br><br>
+
+```{r eval = FALSE}
+lastLetterSum <- function(vectorIn, x){
+  lastLetter <- str_sub(# COMPLETE
+  nLastLetter <- # COMPLETE
+  return(nLastLetter)
+}
+```
+</li>
+</ol>
+</li>
+<br>
+<hr>
+<li><b>The matrix and the data frame</b>:
+<br><br>
+<p>For this question, you will use a preloaded matrix object named "exampleMatrix". Please take a moment to explore this object:</p>
+<br>
+```{r eval = FALSE}
+exampleMatrix
+```
+<br>
+<ol type = "a">
+<li>Subset exampleMatrix to columns 1 and 3 and rows 1-10. Assign the name "exampleMatSub" to the resultant object.</li>
+<br><br>
+
+<li>Convert exampleMatSub to a data frame. Name the resultant object exampleDf.</li>
+
+<br><br>
+
+<li>Rename the columns of the data frame "pre" and "post".</li>
+
+<br><br>
+
+<li>The following vector, "treatmentVector", contains two treatment levels, "a" and "b". Add treatmentVector to exampleDf and name the new column treatment.</li>
+<br>
+```{r eval = FALSE}
+treatmentVector
+```
+<br>
+
+<li>Re-arrange the columns such that "treatment" is the first column, "pre" is the second column, and "post" is the third column. Name the resultant object "exampleDf2".</li>
+
+<br><br>
+
+<li>Calculate the positions (row numbers) for which the pre value is equal to 5.</li>
+
+<br><br>
+
+<li>Using the object exampleDf2, calculate the mean of pre values for treatment "b".</li>
+
+<br><br>
+</ol>
+</li>
+<br>
+<hr>
+<li>
+<b>Revisiting the World Health Organization's population dataset</b>:
+<br><br>
+<p>For this question, you will use a preloaded data frame object named "population". Please take a moment to explore this object:</p>
+<br>
+
+```{r eval = FALSE}
+population
+```
+<br>
+
+<ol type = "a">
+<li>Assign the name "whoPopulation" to the "population" data frame.</li>
+
+<br><br>
+
+<li>Subset whoPopulation to only countries that include the word "State" in their names.</li>
+
+<br><br>
+
+<li>Repeat 3.a above and extract a vector of unique country names.</li>
+
+<br><br>
+
+<li>Subset whoPopulation to the countries Jamaica, Bahamas, Cuba.</li>
+
+<br><br>
+
+<li>The code below is an incomplete function that is intended to allow users to calculate the population of a given country on a given year. Complete the function and use it to calculate the population of the Bahamas in 2012.
+<br><br>
+
+```{r eval = FALSE}
+popCountryYear <- function(country, yr){
+  whoCountrySubset <- whoPopulation[# COMPLETE
+  whoYrSubset <- whoCountrySubset[ # COMPLETE
+  return( # COMPLETE
+}
+```
+<br>
+
+
+</li>
+</ol>
+<br>
+<hr>
+
+<li>
+<b>Querying across data frames</b>:
+<br><br>
+<ol type = "a">
+<p>For this question, you will use the "birdCounts" and "birdHabits" data frames. Please take a moment to explore these objects:</p>
+
+<br><br>
+```{r eval = FALSE}
+birdCounts
+
+birdHabits
+```
+<br><br>
+
+<li>Using the "birdCounts" data frame, extract a unique vector of sites.</li>
+
+<br><br>
+
+<li>Using the "birdCounts" data frame, extract the first five values of unique site names.</li>
+
+<br><br>
+
+<li>Using the "birdHabits" data frame, extract a unique vector of species that are insectivores.</li>
+
+<br><br>
+
+<li>Using the "birdCounts" data frame, extract a unique vector of sites.</li>
+
+<br><br>
+
+<li>The code below is an incomplete function that is intended to allow users to extract a unique vector of species for some diet class. Complete the function and use it to extract a unique vector of insectivores.</li>
+
+<br><br>
+```{r eval = FALSE}
+sppDietClass <- function(dfIn, dietClass){
+  unique(dfIn$diet # COMPLETE
+}
+```
+
+<br><br>
+
+
+<li>Use the function you created in 4.e to subset birdCounts to just insectivore observations.</li>
+
+<br><br>
+
+<li>The code below is an incomplete function that is intended to allow users to subset a data frame to a given diet class (as 4.f above). Complete this function and use it to subset birdCounts to just insectivore observations.</li>
+
+<br><br>
+
+```{r eval = FALSE}
+dietCountSubset <- function(dfIn, dietClass){
+  dfIn[dfIn$species # COMPLETE
+}
+
+```
+<br><br>
+
+<li>The code below is an incomplete function that is intended to allow users to sum the total count of a given diet class for a given site. The function will return a one-row data frame with the columns, "dietClass", "site", and "count". Complete the function and use it to calculate the number of insectivores at the site "apricot".</li>
+<br><br>
+```{r eval = FALSE}
+dietSiteSum <- function(dfIn, dietClass, site){
+  dietClassSubset <- dietCountSubset(dfIn, dietClass)
+  siteSubset <- dietClassSubset[# COMPLETE
+  sumCount <- sum(siteSubset$ # COMPLETE
+  outFrame <- data_frame(site = site, count = # COMPLETE
+  return( # COMPLETE
+}
+```
+<br>
+
+
+</ol>
+</li>
+<br>
+<hr>
+<li><b>The species-area relationship</b>:
+<br><br>
+<p>For this question, you will use the "birdRichness" data frame. Please take a moment to explore this object:</p>
+<br>
+```{r eval = FALSE}
+birdRichness
+```
+<br><br>
+<p>The species-area relationship of Arrhenius (1921) states that the number of species (<i>S</i>) is dependent on the rate of increase in species with increasing area (<i>z</i>) multiplied by a constant (<i>c</i>) that represents the number of species that would be present in one spatial unit. This model is summarized as:</p>
+<br>
+$$S = c \cdot\ A^z$$
+<ol type="a">
+<li>Convert the species-area relationship formula to an R function, with <i>c</i>, <i>A</i>, and <i>z</i> set as unknowns. <i>Note: The exponential relationship $x^y$ is written in R as `x^y`.</i></li>
+<li>Using 15 for the value of c and a z of 0.75 and your function above, calculate the expected species richness at the first three sites in the birdRichness data frame (<i>Note: calculate the richness at each site in a separate line of code)</i>.</li>
+</ol>
+</li>
+<br>
+<hr>
+
+<li>The <b>exponential population growth model</b> describes the growth of a population without resource limitations. This model describes the size of a population ($N_t$) at a given time unit as a function of the per capita growth rate of the population (<i>r</i>) and the size of the population at time <i>t</i>. This model is summarized as:<br>
+
+$$N_t = N_0 \cdot e^{r \cdot t}$$
+<ol type = "a">
+<li>Convert the exponential population growth model to an R function with <i>r</i>, $N_0$, and <i>t</i> as unknowns (<i>Note:  $e^{r \cdot t}$ is written in R as `exp(r*t)`</i>).</li>
+<li>With an initial population size of 25 and a per capita growth rate (<i>r</i>) of 0.45, use the exponential population growth rate function to calculate the size of the population after 2, 5, and 10 generations.</li>
+</ol>
+</li>
+<br>
+<hr>
+
+<li>The <b>logistic population growth model</b> (Verhulst) states that the growth of the population will be constrained by the population carrying capacity (<i>K</i>) as a function of resource limitations. This model is summarized as (<i>Note: the remaining variables are as above</i>):<br>
+
+$$N_t = \dfrac{K}{\mathstrut{1 + \bigg[ \dfrac{K-N_0}{N_0} \bigg] \cdot e^{-r \cdot t}}}$$
+<ol type = "a">
+<li>Convert the logistic population growth model to an R function with <i>r</i>, $N_0$, t, and <i>K</i> as unknowns.</li>
+<li>With an initial population size of 25, a per capita growth rate (<i>r</i> of 0.45, and a carrying capacity of 500 individuals, use the logistic population growth rate function and a  <i>for loop</i> to calculate the size of the population after 2, 5, and 10 generations.</li>
+</ol>
+</li>
+</ol>
+<br>
