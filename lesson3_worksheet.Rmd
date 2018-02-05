@@ -146,7 +146,7 @@ table, td, th {
 
 </style>
 
-<h1 style="text-align: center;">Introduction to data science in R, Lesson 3:<br/>Functions and <i>for loops</i></h1>
+<h1 style="text-align: center;">Introduction to data science in R, Lesson 3:<br/>Writing functions</h1>
 <br>
 <!img style="float: left; margin: 0px 0px 15px 15px;" src="nzpLogo.jpg" width="150" />
 <p style = "text-align: center; font-size: 14px;">Brian S. Evans, Ph.D.<br />
@@ -223,8 +223,6 @@ names(irisTbl) <-
     'species')
 ```
 <hr>
-
-<h2>**Functions**</h2>
 
 <p>In the previous lessons, we worked with several functions (e.g., "c", "mean"). Functions allow you to simplify complex tasks, which is especially useful if you need to run a task multiple times. Program R contains many functions and many more still are created by R users and provided to the R community as collections of functions known as packages (or libraries). As datasets and data handling needs are often distinct, relying exclusively on built-in and community-defined functions is limiting.</p>
 <p><b>Why would you write your own functions?</b> Learning how to create your own functions, or customize existing functions, provides you with the flexibility to solve unique problems, shorten your script, and make your R code more legible for others. Writing your own functions is easy, as long as you follow the correct syntax. The basic structure is (<b>DO NOT RUN</b>):</p>
