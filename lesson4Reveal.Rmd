@@ -1,0 +1,867 @@
+---
+output:
+  revealjs::revealjs_presentation:
+    theme: simple
+    highlight: pygments
+    center: false
+    transition: none
+    progress: true
+    font-family: Verdana
+---
+
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<style>
+
+code{
+  background-color:#f2f2f2;
+  border-radius: 25px;
+}
+ 
+span.co{
+  color:#000080;
+  font-weight: bold;
+}
+ 
+img{
+  display: block;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+p{
+  text-align: left;
+  font-size: 18px;
+}
+
+ul, ol{
+  line-height: 27px;
+  text-align: left;
+  font-size: 18px;
+  margin-left: 0px;
+}
+ 
+blockquote{
+  font-size: 18px;
+  border-left: 8px solid #292093;
+  background-color: #e6ffff;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+ 
+.row{
+  margin: auto;
+}
+ 
+table {
+  border-collapse: collapse;
+}
+
+table, td, th {
+  border: 1px solid black;
+  padding: 5px;
+  text-align: center;
+  vertical-align: middle;
+}
+ 
+ /* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.roundBorder {
+  border-radius: 25px;
+  border: 5px solid #30288C;
+  background: #D6EAF8;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.roundBorderBlack {
+  border-radius: 25px;
+  border: 10px solid #D3D3D3;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.roundBorderBlackEx {
+  border-radius: 5px;
+  border: 5px solid #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+}
+
+.roundBorderEx {
+  border-radius: 3px;
+  border: 5px solid #30288C;
+  background: #D6EAF8;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+}
+
+.tt {
+    position: relative;
+    display: inline-block;
+    class: inline; 
+    font-weight: bold;
+    font-family: "Avenir";
+    font-size: 18px;
+    border-bottom: 1px black;
+}
+
+/* Tooltip text */
+.tt .ttText {
+    visibility: hidden;
+    font-weight: normal;
+    font-size: 18px;
+    width: 200px;
+    background-color: black;
+    border: 1px solid black;
+    color: white;
+    text-align: left;
+    padding: 5px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tt:hover .ttText {
+    visibility: visible;
+}
+
+</style>
+
+<h2 style="text-align: center;">Introduction to data science in R</br> <b>Lesson 4: <i>For loops</i></b></h2>
+<br>
+<p style = "text-align: center; font-size: 24px;">Brian S. Evans, Ph.D.<br />
+Migratory Bird Center<br />
+Smithsonian Conservation Biology Institute</p>
+<br>
+<img style="display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      padding: 9px;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;" src="nzpLogo.png" width="300" />
+
+##
+<h2>Setup for the lesson</h2>
+<br>
+```{r eval = FALSE}
+# Load RCurl library:
+
+library(RCurl)
+
+# Load a source script:
+
+script <-
+  getURL(
+    "https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode.R"
+  )
+
+# Evaluate then remove the source script:
+
+eval(parse(text = script))
+
+rm(script)
+
+```
+
+##
+<h2><i><b>For loops</b></i></h2>
+<hr>
+<p><b>Why would you use <i>for loops</i>?</b></p>
+```{r, eval=FALSE}
+# Filter irisTbl to setosa:
+
+irisTbl[irisTbl$species == 'setosa', ]
+
+# Extract the petalLength field (column):
+
+irisTbl[irisTbl$species == 'setosa', ]$petalLength
+
+# Calculate the mean of petal lengths:
+
+mean(irisTbl[irisTbl$species == 'setosa', ]$petalLength)
+
+```
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h2>
+<hr>
+<p>Calculate the mean petal length of each of the Iris species using matrix notation (as above) and a custom function.</p>
+<br>
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h2>
+<hr>
+<p>Calculate the mean petal length of each of the Iris species using matrix notation (as above) and a custom function.</p>
+
+```{r exercise 1, eval=FALSE}
+# Mean petal lengths, matrix notation:
+
+mean(irisTbl[irisTbl$species == 'setosa', ]$petalLength)
+mean(irisTbl[irisTbl$species == 'versicolor', ]$petalLength)
+mean(irisTbl[irisTbl$species == 'virginica', ]$petalLength)
+
+# Mean petal lengths, function method:
+
+meanPetalFun <- function(spp){
+  mean(irisTbl[irisTbl$species == spp, ]$petalLength)
+}
+
+meanPetalFun('setosa')
+meanPetalFun('versicolor')
+meanPetalFun('virginica')
+```
+
+##
+<h2>Indexing review, vectors</h2>
+<hr>
+<p>Consider the following numeric vector, `v`:</p>
+<br>
+<table style = "font-size: 1em; vertical-align: middle;">
+<tr>
+  <th style = "text-align: center; font-weight: normal;">[1]</th>
+  <th style = "text-align: center; font-weight: normal;">[2]</th>
+  <th style = "text-align: center; font-weight: normal;">[3]</th>
+  <th style = "text-align: center; font-weight: normal;">[4]</th>
+  <th style = "text-align: center; font-weight: normal;">[5]</th>
+</tr>
+<tr>
+  <td style = "text-align: center;">1</td>
+  <td style = "text-align: center;">1</td>
+  <td style = "text-align: center;">2</td>
+  <td style = "text-align: center;">3</td>
+  <td style = "text-align: center;">5</td>
+</tr>
+</table>
+
+##
+<h2>Indexing review, vectors</h2>
+<hr>
+<br>
+<table style = "font-size: 1em; vertical-align: middle;">
+<tr>
+  <th style = "text-align: center; font-weight: normal;">[1]</th>
+  <th style = "text-align: center; font-weight: normal;">[2]</th>
+  <th style = "text-align: center; font-weight: normal;">[3]</th>
+  <th style = "text-align: center; font-weight: normal;">[4]</th>
+  <th style = "text-align: center; font-weight: normal;">[5]</th>
+</tr>
+<tr>
+  <td style = "text-align: center;">1</td>
+  <td style = "text-align: center;">1</td>
+  <td style = "text-align: center;">2</td>
+  <td style = "text-align: center;">3</td>
+  <td style = "text-align: center;">5</td>
+</tr>
+</table>
+<br>
+<p>Vector `v` is an R object comprised of five numbers.</p>
+
+```{r, eval=FALSE}
+# Explore vector v:
+
+v
+
+class(v)
+
+str(v)
+
+length(v)
+
+```
+
+##
+<h2>Indexing review, vectors</h2>
+<hr>
+<table style = "font-size: 1em; vertical-align: middle;">
+<tr>
+  <th style = "text-align: center; font-weight: normal;">[1]</th>
+  <th style = "text-align: center; font-weight: normal;">[2]</th>
+  <th style = "text-align: center; font-weight: normal;">[3]</th>
+  <th style = "text-align: center; font-weight: normal;">[4]</th>
+  <th style = "text-align: center; font-weight: normal;">[5]</th>
+</tr>
+<tr>
+  <td style = "text-align: center;">1</td>
+  <td style = "text-align: center;">1</td>
+  <td style = "text-align: center;">2</td>
+  <td style = "text-align: center;">3</td>
+  <td style = "text-align: center;">5</td>
+</tr>
+</table>
+<br>
+<p>Each value in a vector has a position, denoted by "[<i>i</i>]".</p>
+<p>Recall: `v[i]` is the value of `v` at position <i>i</i>.</p>
+
+```{r, eval=FALSE}
+
+# Explore vector v using indexing:
+
+i <- 3
+
+v[i]
+
+v[3]
+
+v[3] == v[i]
+```
+
+##
+<h2>Indexing review, vectors</h2>
+<hr>
+<br>
+$$V_{new, i} = V_{i} + 1$$
+<br>
+<p>Each value in a vector has a position, denoted by "[<i>i</i>]".</p>
+<p>Recall: `v[i]` is the value of `v` at position <i>i</i>.</p>
+
+```{r, eval=FALSE}
+# Add 1 to the value of v at position three:
+
+i <- 3
+
+v[3] + 1
+
+v[i] + 1
+
+```
+
+##
+<h2><i>For loops</i>, simple example</h2>
+<hr>
+<br>
+$$V_{new, i} = V_{i} + 1$$
+<br>
+<p>Writing proper <i>for loops</i> requires following these three steps:</p>
+
+<ol>
+<li><b>Output</b>: Always define an object for storing output (e.g., an empty vector, matrix, or list)</li>
+<li><b>Sequence</b>: The locations for which the loop will run</li>
+<li><b>Body</b>: This is the instructions for what will occur during each iteration of the loop</li>
+</ol>
+
+
+
+##
+<h2><i>For loop</i>, <b>output</b>:</h2>
+<hr>
+<br>
+$$V_{new, i} = V_{i} + 1$$
+<br>
+<p><b>ALWAYS</b> specify an object to store your output!</p>
+<p>Vector objects are defined as:</p>
+
+```{r, eval=FALSE}
+# Define a vector for output:
+
+vNew <- vector('numeric', length = length(v))
+
+str(vNew)
+```
+
+##
+<h2><i>For loop</i>, <b>output</b></h2>
+<hr>
+<p><b>ALWAYS</b> specify an object to store your output!</p>
+```{r, eval=FALSE}
+# Explore filling values of vNew by index:
+
+i <- 3
+
+v[i]
+
+vNew[i] <- v[i] + 1
+
+vNew[i]
+
+v[i] + 1 == vNew[i]
+```
+
+##
+<h2><i>For loop</i>, <b>sequence</b></h2>
+<hr>
+<p>The <b>sequence</b> can be defined as:</p>
+```{r seq_along, eval=FALSE}
+v
+
+1:5
+
+1:length(v)
+
+seq_along(v)
+
+# Example for loop sequence statements:
+
+# for(i in 1:length(v))
+  
+# for(i in seq_along(v))
+```
+
+
+##
+<h2><i>For loop</i>, <b>body</b></h2>
+<hr>
+<p>The <i>for loop</i> <b>body</b> describes what will happen at each iteration of the loop. For example:</p>
+
+```{r, eval = FALSE}
+i <- 3
+
+vNew[i] <- v[i] + 1
+```
+
+##
+<h2><i>For loop</i>, putting it together</h2>
+<hr>
+<ol>
+<li>Output</li>
+<li>Sequence</li>
+<li>Body</li>
+</ol>
+
+```{r full example for loop, eval=FALSE}
+# For loop output:
+
+vNew <- numeric(length = length(v))
+
+# For loop sequence:
+
+for(i in seq_along(v)){
+  # For loop body:
+  vNew[i] <- v[i] + 1
+}
+
+# Explore first for loop output:
+
+vNew
+
+v
+
+vNew == v + 1
+```
+
+##
+<h2>Subsetting with <i>for loops</i></h2>
+<hr>
+<p style = "text-align: center;">Split-Apply-Combine</p>
+```{r summarizing review, eval=FALSE}
+# Mean petal lengths of Iris species without a for loop:
+
+mean(irisTbl[irisTbl$species == 'setosa', ]$petalLength)
+
+mean(irisTbl[irisTbl$species == 'versicolor', ]$petalLength)
+
+mean(irisTbl[irisTbl$species == 'virginica', ]$petalLength)
+```
+
+##
+<h2>Subsetting with <i>for loops</i></h2>
+<hr>
+<p style = "text-align: center;">Split-Apply-Combine</p>
+<br>
+<p>Start by creating a vector of species:</p>
+
+```{r, eval=FALSE}
+# Make a vector of species to loop across:
+
+irisSpecies <- levels(irisTbl$species)
+
+irisSpecies
+```
+
+##
+<h2>Subsetting with <i>for loops</i></h2>
+<hr>
+<p style = "text-align: center;">Split-Apply-Combine</p>
+<br>
+<p>Create an empty vector to store our <b>output</b>:</p>
+
+```{r, eval=FALSE}
+# For loop output statement:
+
+petalLengths <- vector('numeric',length = length(irisSpecies))
+
+petalLengths
+```
+
+##
+<h2>Subsetting with <i>for loops</i></h2>
+<hr>
+<p style = "text-align: center;">Split-Apply-Combine</p>
+<br>
+<p><b>Split:</b> The <i>for loop</i> body, starts with splitting the data</p>
+
+```{r, eval=FALSE}
+
+# Exploring the iris data, subsetting by species:
+
+i <- 3
+
+irisSpecies[i]
+
+irisTbl[irisTbl$species == irisSpecies[i], ]
+
+# Split:
+
+iris_sppSubset <- irisTbl[irisTbl$species == irisSpecies[i], ]
+```
+
+##
+<h2>Subsetting with <i>for loops</i></h2>
+<hr>
+<p style = "text-align: center;">Split-Apply-Combine</p>
+<br>
+<p><b>Apply:</b> Modification of the data:</p>
+
+```{r, eval=FALSE}
+# Calculate mean petal length of each subset:
+
+mean(iris_sppSubset$petalLength)
+```
+
+##
+<h2>Subsetting with <i>for loops</i></h2>
+<hr>
+<p style = "text-align: center;">Split-Apply-Combine</p>
+```{r, eval=FALSE}
+# Make a vector of species to loop across:
+
+irisSpecies <- levels(irisTbl$species)
+
+# For loop output statement:
+
+petalLengths <- vector('numeric',length = length(irisSpecies))
+
+# For loop:
+
+for(i in seq_along(irisSpecies)){
+  # Split:
+  iris_sppSubset <- irisTbl[irisTbl$species == irisSpecies[i], ]
+  # Apply:
+  petalLengths[i] <- mean(iris_sppSubset$petalLength)
+}
+```
+
+##
+<h2>Subsetting with <i>for loops</i></h2>
+<hr>
+<p style = "text-align: center;">Split-Apply-Combine</p>
+<br>
+<p><b>Combine:</b> Combining the <i>for loop</i> output</p>
+```{r, eval=FALSE}
+# Make a tibble data frame of the for loop output:
+
+petalLengthFrame <- data_frame(species = irisSpecies, count = petalLengths)
+
+petalLengthFrame
+```
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
+<hr>
+<p>Use a <i>for loop</i> and the `birdHabits` data frame to calculate the number species in each diet guild.</p>
+<br>
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
+<hr>
+<p>Use a <i>for loop</i> and the `birdHabits` data frame to calculate the number species in each diet guild.</p>
+<br>
+
+```{r exercise 2, eval=FALSE}
+birdHabits
+
+diets <- unique(birdHabits$diet)
+
+outVector <- vector('numeric', length = length(diets))
+
+for(i in seq_along(outVector)){
+  # Split:
+  dietSubset <- birdHabits[birdHabits$diet == diets[i],]
+  # Apply:
+  outVector[i] <- nrow(dietSubset)
+}
+
+# Combine: 
+data_frame(diet = diets, nSpecies = outVector)
+```
+
+##
+<h2><i>For loops</i> across data objects</h2>
+<hr>
+<p><i>For loops</i> can be used to explore data objects with common features.</p>
+
+<p>How many omnivorous birds were observed at each site?</p>
+
+```{r birdCounts0, eval = FALSE}
+# Explore the bird count data:
+
+head(birdCounts)
+
+str(birdCounts)
+
+# Explore the bird trait data:
+
+head(birdHabits)
+
+str(birdHabits)
+
+```
+
+##
+<h2><i>For loops</i> across data objects</h2>
+<hr>
+<p>How many omnivorous birds were observed at each site?</p>
+
+<p>Get a vector of birds that are ground foragers from the `birdHabits` data frame:</p>
+```{r birdCounts1, eval = FALSE}
+# Extract vector of omnivorous species:
+
+omnivores <- birdHabits[birdHabits$diet == 'omnivore',]$species
+
+```
+
+##
+<h2><i>For loops</i> across data objects</h2>
+<hr>
+<p>How many omnivorous birds were observed at each site?</p>
+
+<p><b>Split</b> the data into individual sites.</p>
+
+```{r birdCounts split, eval = FALSE}
+# Generate a vector of unique sites:
+
+sites <- unique(birdCounts$site)
+
+# Site at position i:
+
+i <- 3
+
+sites[i]
+
+# Subset data:
+
+birdCounts_siteSubset <- birdCounts[birdCounts$site == sites[i],]
+
+birdCounts_siteSubset
+
+```
+
+##
+<h2><i>For loops</i> across data objects</h2>
+<hr>
+<p>How many omnivorous birds were observed at each site?</p>
+<p><b>Split</b>: Use `%in%` to extract only records associated with omnivores and sum the `count` field.</p>
+<br>
+
+```{r birdCounts split1, eval = FALSE}
+# Just a vector of omnivore counts:
+
+countVector <-
+  birdCounts_siteSubset[birdCounts_siteSubset$species %in%
+  omnivores,]$count
+```
+
+##
+<h2><i>For loops</i> across data objects</h2>
+<hr>
+<p>How many omnivorous birds were observed at each site?</p>
+<p><b>Apply</b>: Sum the count vector.</p>
+<br>
+
+```{r birdCounts apply, eval = FALSE}
+
+# Get total number of omnivores at the site:
+
+nOmnivores <- sum(countVector)
+
+```
+
+##
+<h2><i>For loops</i> across data objects</h2>
+<hr>
+<p>How many omnivorous birds were observed at each site?</p>
+<p><b>Combine</b>: Values combined using the vector method</p>
+
+```{r birdCounts combine1, eval = FALSE}
+sites <- unique(birdCounts$site)
+
+outVector <- vector('numeric', length = length(unique(sites)))
+
+for(i in seq_along(sites)){
+  birdCounts_siteSubset <- birdCounts[birdCounts$site == sites[i],]
+  countVector <-
+    birdCounts_siteSubset[birdCounts_siteSubset$species %in%
+    omnivores, ]$count
+  outVector[i] <- sum(countVector)
+}
+
+# Combine:
+
+data_frame(site = sites, nOmnivores = outVector)
+```
+
+##
+<h2><i>For loops</i> across data objects</h2>
+<hr>
+<p>How many omnivorous birds were observed at each site?</p>
+<p><b>Combine</b>: Values combined using the list method</p>
+
+```{r birdCounts combine2, eval = FALSE}
+sites <- unique(birdCounts$site)
+
+outList <- vector('list', length = length(unique(sites)))
+
+for(i in seq_along(sites)){
+  birdCounts_siteSubset <- birdCounts[birdCounts$site == sites[i],]
+  countVector <-
+    birdCounts_siteSubset[birdCounts_siteSubset$species %in%
+    omnivores,]$count
+  outList[[i]] <- data_frame(
+    site = sites[i],
+    nOmnivores = sum(countVector))
+}
+
+# Combine:
+
+bind_rows(outList)
+```
+
+##
+<h2>Simulation with <i>for loops</i></h2>
+<hr>
+<p><i>For loop</i> to generate a vector of numbers based on some mathematical function. For example:</p>
+<br>
+$$n_t = 2(n_{t-1})$$
+<br>
+
+##
+<h2>Simulation with <i>for loops</i></h2>
+<hr>
+<p><i>For loop</i> to generate a vector of numbers based on some mathematical function. For example:</p>
+<br>
+$$n_t = 2(n_{t-1})$$
+
+```{r number series 1, eval=FALSE}
+
+# For loop output:
+
+
+n <- vector('numeric', length = 5)
+
+n
+
+# Set the seed value:
+
+n[1] <- 10
+
+n
+```
+
+##
+<h2>Simulation with <i>for loops</i></h2>
+<hr>
+<p><i>For loop</i> to generate a vector of numbers based on some mathematical function. For example:</p>
+<br>
+$$n_t = 2(n_{t-1})$$
+
+```{r number series 3, eval=FALSE}
+
+# For loop sequence:
+
+# for(i in 2:length(n))
+```
+
+##
+<h2>Simulation with <i>for loops</i></h2>
+<hr>
+<p><i>For loop</i> to generate a vector of numbers based on some mathematical function. For example:</p>
+<br>
+$$n_t = 2(n_{t-1})$$
+
+<p><b>Body:</b> For each iteration (example, position 2):</p>
+
+```{r number series 4, eval=FALSE}
+# Exploring the construction of the for loop body:
+
+i <- 2
+
+n[i]
+
+n[i-1]
+
+n[i] <- 2*n[i-1]
+
+n
+```
+
+##
+<h2>Simulation with <i>for loops</i></h2>
+<hr>
+<p><i>For loop</i> to generate a vector of numbers based on some mathematical function. For example:</p>
+<br>
+$$n_t = 2(n_{t-1})$$
+
+```{r number series 5, eval=FALSE}
+# Output:
+
+n <- vector('numeric', length = 5)
+
+# Seed:
+
+n[1] <- 10
+
+# For loop:
+
+for(i in 2:5){
+ n[i] = n*v[i-1]
+}
+```
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h2>
+<hr>
+
+<img src="rWorkshop/images/rabbit.jpg" 
+	title="European rabbit"
+	alt = "picture of a rabbit"
+	border="0"
+		style= "float: right; 
+	      padding-right: 0px;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 20%;"/>
+	      
+<p style = "font-size: 30px;">One of my favorite <i>for loops</i> was created by Leonardo Bonacci (Fibonacci). He created the first known population model, from which the famous Fibonacci number series was created. He described a population (N) of rabbits at time t as the sum of the population at the previous time step plus the time step before that:</p>
+
+$$N_t = N_{t-1} + N_{t-2}$$
+<br>
+<ol style = "font-size: 30px;">
+<li style = "font-size: 30px;">Create an output vector of 20 numeric values.</li>
+<li style = "font-size: 30px;">Seed the vector with the first two values, 0 and 1.</li>
+<li style = "font-size: 30px;">Use the formula above and your seed vector to generate the first 20 numbers of the Fibonacci number sequence.</li>
+</ol>
