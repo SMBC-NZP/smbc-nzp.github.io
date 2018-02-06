@@ -312,27 +312,23 @@ birdHabits
 
 <br><br>
 
-<li>Using the "birdCounts" data frame, extract a unique vector of sites.</li>
-
-<br><br>
-
 <li>The code below is an incomplete function that is intended to allow users to extract a unique vector of species for some diet class. Complete the function and use it to extract a unique vector of insectivores.</li>
 
 <br><br>
 ```{r eval = FALSE}
 sppDietClass <- function(dfIn, dietClass){
-  unique(dfIn$diet # COMPLETE
+  unique(dfIn[dfIn$diet # COMPLETE
 }
 ```
 
 <br><br>
 
 
-<li>Use the function you created in 4.e to subset birdCounts to just insectivore observations.</li>
+<li>Use the function you created in 4.d to subset birdCounts to just insectivore observations.</li>
 
 <br><br>
 
-<li>The code below is an incomplete function that is intended to allow users to subset a data frame to a given diet class (as 4.f above). Complete this function and use it to subset birdCounts to just insectivore observations.</li>
+<li>The code below is an incomplete function that is intended to allow users to subset a data frame to a given diet class (as 4.e above). Complete this function and use it to subset birdCounts to just insectivore observations.</li>
 
 <br><br>
 
