@@ -404,7 +404,7 @@ v[i] + 1 == vNew[i]
 ##
 <h2><i>For loop</i>, <b>sequence</b></h2>
 <hr>
-<p>The <b>sequence</b> can be defined as:</p>
+<p>The <b>sequence</b> can be defined using:</p>
 ```{r seq_along, eval=FALSE}
 v
 
@@ -445,7 +445,7 @@ vNew[i] <- v[i] + 1
 ```{r full example for loop, eval=FALSE}
 # For loop output:
 
-vNew <- numeric(length = length(v))
+vNew <- vector('numeric',length = length(v))
 
 # For loop sequence:
 
@@ -461,6 +461,73 @@ vNew
 v
 
 vNew == v + 1
+```
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
+<hr>
+<br>
+$$y = mx + b$$
+<br>
+<ol>
+<li>Convert the above mathematical formula to a function with arguments `m`, `b`, and `x`.</li>
+<br>
+<li>Generate a sequential vector of values containing all integers from 1-10. Assign the name `x` to the vector object.</li>
+<br>
+<li>Use a <i>for loop</i> and the function above to calculate values of `y` where: `m = 0.5`,  `b = 1.0`,  and `x` refers to the vector `x` above (<i>Note: A for loop is not really required here</i>).</li>
+</ol>
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
+<hr>
+<br>
+$$y = mx + b$$
+<br>
+<ol>
+<li>Convert the above mathematical formula to a function with arguments `m`, `b`, and `x`.</li>
+<br>
+</ol>
+
+```{r eval = FALSE}
+linearModel <- function(m, x, b){
+  m*x+b
+}
+```
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
+<hr>
+<br>
+$$y = mx + b$$
+<br>
+<ol start = "2">
+<li>Generate a sequential vector of values containing all integers from 1-10. Assign the name `x` to the vector object.</li>
+<br>
+</ol>
+```{r eval = FALSE}
+x <- 1:10
+```
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
+<hr>
+<br>
+$$y = mx + b$$
+<br>
+<ol start = "3">
+<li>Use a <i>for loop</i> and the function above to calculate values of `y` where: `m = 0.5`,  `b = 1.0`,  and `x` refers to the vector `x` above (<i>Note: A for loop is not really required here</i>).</li>
+<br>
+</ol>
+
+```{r eval = FALSE}
+
+x <- 1:10
+
+y <- vector('numeric',length = length(x))
+
+for(i in seq_along(x)){
+  y[i] <- linearModel(m = 0.5, b = 1.0, x = x[i])
+}
 ```
 
 ##
@@ -574,24 +641,25 @@ for(i in seq_along(irisSpecies)){
 ```{r, eval=FALSE}
 # Make a tibble data frame of the for loop output:
 
-petalLengthFrame <- data_frame(species = irisSpecies, count = petalLengths)
-
+petalLengthFrame <-
+  data_frame(species = irisSpecies, count = petalLengths)
+  
 petalLengthFrame
 ```
 
 ##
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h2>
 <hr>
 <p>Use a <i>for loop</i> and the `birdHabits` data frame to calculate the number species in each diet guild.</p>
 <br>
 
 ##
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h2>
 <hr>
 <p>Use a <i>for loop</i> and the `birdHabits` data frame to calculate the number species in each diet guild.</p>
 <br>
 
-```{r exercise 2, eval=FALSE}
+```{r exercise 3, eval=FALSE}
 birdHabits
 
 diets <- unique(birdHabits$diet)
@@ -629,6 +697,82 @@ head(birdHabits)
 
 str(birdHabits)
 
+```
+
+##
+<h2><i>For loops</i> across data objects</h2>
+<hr>
+<p>Example, `site == 'apple'`</p>
+<br>
+```{r birdCounts01, eval = FALSE}
+# Extract vector of omnivorous species:
+
+omnivores <- birdHabits[birdHabits$diet == 'omnivore',]$species
+
+# Subset the counts to omnivores:
+
+birdCounts[birdCounts$species %in% omnivores, ]$count
+
+# Calculate the sum of counts:
+
+sum(birdCounts[birdCounts$species %in% omnivores, ]$count)
+
+```
+
+##
+<h2><i>For loops</i> across data objects</h2>
+<hr>
+<p>Example, `site == 'apple'`</p>
+<br>
+```{r birdCounts02, eval = FALSE}
+# Subset the omnivore counts to site apple:
+
+birdCounts[birdCounts$species %in% omnivores &
+             birdCounts$site == 'apple', ]
+
+# Extract the count column:
+
+birdCounts[birdCounts$species %in% omnivores &
+             birdCounts$site == 'apple', ]$count
+
+# Calculate the sum:
+
+sum(birdCounts[birdCounts$species %in% omnivores &
+             birdCounts$site == 'apple', ]$count)
+```
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Four:</h2>
+<hr>
+<p>Using the `birdHabits` and `birdCounts` data frames, modify the function below such that it will calculate the <b>number of species</b> of a given guild at a selected site.</p>
+<br>
+```{r eval = FALSE}
+richnessSiteGuild <- function(site, guild){
+  guildSpp <- birdHabits[birdHabits$foraging # COMPLETE
+  countSppSubset <- birdCounts[birdCounts$ # COMPLETE
+  countSppSiteSubset <- countSppSubset[# COMPLETE
+  nSpp <- # COMPLETE
+  return(nSpp)
+}
+
+richnessSiteGuild('apple', 'ground')
+```
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Four:</h2>
+<hr>
+<p>Using the `birdHabits` and `birdCounts` data frames, modify the function below such that it will calculate the <b>number of species</b> of a given guild at a selected site.</p>
+<br>
+```{r eval = FALSE}
+richnessSiteGuild <- function(site, guild){
+  guildSpp <- birdHabits[birdHabits$foraging == guild,]$species
+  countSppSubset <- birdCounts[birdCounts$species %in% guildSpp,]
+  countSppSiteSubset <- countSppSubset[countSppSubset$site == site,]
+  nSpp <- length(unique(countSppSiteSubset$species))
+  return(nSpp)
+}
+
+richnessSiteGuild('apple', 'ground')
 ```
 
 ##
@@ -709,7 +853,7 @@ nOmnivores <- sum(countVector)
 ```{r birdCounts combine1, eval = FALSE}
 sites <- unique(birdCounts$site)
 
-outVector <- vector('numeric', length = length(unique(sites)))
+outVector <- vector('numeric', length = length(sites))
 
 for(i in seq_along(sites)){
   birdCounts_siteSubset <- birdCounts[birdCounts$site == sites[i],]
@@ -733,7 +877,7 @@ data_frame(site = sites, nOmnivores = outVector)
 ```{r birdCounts combine2, eval = FALSE}
 sites <- unique(birdCounts$site)
 
-outList <- vector('list', length = length(unique(sites)))
+outList <- vector('list', length = length(sites))
 
 for(i in seq_along(sites)){
   birdCounts_siteSubset <- birdCounts[birdCounts$site == sites[i],]
@@ -748,6 +892,44 @@ for(i in seq_along(sites)){
 # Combine:
 
 bind_rows(outList)
+```
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Five:</h2>
+<hr>
+<p>Using the `richnessSiteGuild` function you created in Exercies Four and the `birdHabits` and `birdCounts` data frames, modify the <i>for loop</i> code below to count the number of species that are `ground` foragers at each site.</p>
+<br>
+```{r eval = FALSE}
+sites <- unique(# COMPLETE 
+
+outList <- vector('list', length = # COMPLETE 
+
+for(i in # COMPLETE 
+  outList[[i]] <- data_frame(site = sites[i],
+  # COMPLETE 
+}
+
+bind_rows(# COMPLETE 
+
+```
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Five:</h2>
+<hr>
+<p>Using the `richnessSiteGuild` function you created in Exercies Four and the `birdHabits` and `birdCounts` data frames, write a <i>for loop</i> that will count the number of observed species that are `ground` foragers at each site.</p>
+<br>
+```{r eval = FALSE}
+sites <- unique(birdCounts$site)
+
+outList <- vector('list', length = length(sites))
+
+for(i in seq_along(sites)) {
+  outList[[i]] <- data_frame(site = sites[i],
+  nSpecies = richnessSiteGuild(sites[i], 'ground'))
+}
+
+bind_rows(outList)
+
 ```
 
 ##
@@ -842,7 +1024,7 @@ for(i in 2:5){
 ```
 
 ##
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h2>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Six:</h2>
 <hr>
 
 <img src="rWorkshop/images/rabbit.jpg" 
@@ -865,3 +1047,46 @@ $$N_t = N_{t-1} + N_{t-2}$$
 <li style = "font-size: 30px;">Seed the vector with the first two values, 0 and 1.</li>
 <li style = "font-size: 30px;">Use the formula above and your seed vector to generate the first 20 numbers of the Fibonacci number sequence.</li>
 </ol>
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Six:</h2>
+<hr>
+<br>
+$$N_t = N_{t-1} + N_{t-2}$$
+<br>
+<ol style = "font-size: 30px;">
+<li style = "font-size: 30px;">Create an output vector of 20 numeric values.</li>
+<br>
+</ol>
+```{r eval = FALSE}
+fibOut <- vector('numeric', length = 20)
+```
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Six:</h2>
+<hr>
+<br>
+$$N_t = N_{t-1} + N_{t-2}$$
+<br>
+<ol style = "font-size: 30px;" start = "2">
+<li style = "font-size: 30px;">Seed the vector with the first two values, 0 and 1.</li>
+</li><br>
+</ol>
+```{r eval = FALSE}
+fibOut[1:2] <- c(0,1)
+```
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Six:</h2>
+<hr>
+<br>
+$$N_t = N_{t-1} + N_{t-2}$$
+<br>
+<ol style = "font-size: 30px;" start = "3">
+<li style = "font-size: 30px;">Use the formula above and your seed vector to generate the first 20 numbers of the Fibonacci number sequence.</li><br>
+</ol>
+```{r eval = FALSE}
+for(i in 3:length(fibOut)){
+  fibOut[i] <- fibOut[i-2] + fibOut[i-1]
+}
+```
