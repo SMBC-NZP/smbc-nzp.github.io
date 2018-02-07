@@ -458,8 +458,6 @@ for(i in seq_along(v)){
 
 vNew
 
-v
-
 vNew == v + 1
 ```
 
@@ -604,7 +602,7 @@ iris_sppSubset <- irisTbl[irisTbl$species == irisSpecies[i], ]
 <p><b>Apply:</b> Modification of the data:</p>
 
 ```{r, eval=FALSE}
-# Calculate mean petal length of each subset:
+# Calculate mean petal length of each subset (apply):
 
 mean(iris_sppSubset$petalLength)
 ```
@@ -639,7 +637,7 @@ for(i in seq_along(irisSpecies)){
 <br>
 <p><b>Combine:</b> Combining the <i>for loop</i> output</p>
 ```{r, eval=FALSE}
-# Make a tibble data frame of the for loop output:
+# Make a tibble data frame of the for loop output (combine):
 
 petalLengthFrame <-
   data_frame(species = irisSpecies, count = petalLengths)
