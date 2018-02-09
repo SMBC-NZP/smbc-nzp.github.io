@@ -245,6 +245,7 @@ mean(irisTbl[irisTbl$species == 'setosa', ]$petalLength)
   <td style = "text-align: center;">5</td>
 </tr>
 </table>
+<br>
 
 <p>Vector `v` is an R object comprised of five numbers.</p>
 
@@ -280,6 +281,7 @@ v[3] == v[i]
 <br>
 $$V_{new, i} = V_{i} + 1$$
 <br>
+
 <p>Each value in a vector has a position, denoted by "[<i>i</i>]".</p>
 <p>Recall: `v[i]` is the value of `v` at position <i>i</i>.</p>
 
@@ -366,7 +368,7 @@ v[i] + 1 == vNew[i]
 
 <p>To make our code as flexible as possible, we generally do not want to have to directly type in the stopping point of the <i>for loop</i>. We can use `1:length(v)` or the function `seq_along` to specify the <i>for loop</i> address. Run the following and note the behavior:</p>
   
-  <br>
+<br>
 ```{r seq_along, eval=FALSE}
 v
 
@@ -443,39 +445,7 @@ vNew == v
 ```
 
 <br>
-<div class = "roundBorderBlack">
 
-<br>
-<p><i class="fa fa-user-secret" aria-hidden="true" style = "font-size: 150%"></i> We specify the length of the vector to provide R with stopping rules -- without this  <i>for loops</i> can become very memory hungry when running over large datasets</p>
-<hr>
-<p><i class="fa fa-user-secret" aria-hidden="true" style = "font-size: 150%"></i> The following two sections of code are equivalent, but the latter much easier to read. As writing code is both a tool and a method of communication, you should ensure that your code is as readable as possible.</p>
-<br>
-  
-```{r, eval = FALSE}
-
-for(i in 1:length(v)) vNew[i] <- v[i] + 1
-
-for(i in 1:length(v)){
-  vNew[i] <- v[i] + 1
-}
-```
-<hr>
-
-<p><i class="fa fa-user-secret" aria-hidden="true" style = "font-size: 150%"></i> When writing  <i>for loops</i>, it is necessary to ensure that the loop is doing what you expect it to do. A simple way to ensure that this is the case is to specify <i>i</i> and run the <i>instructions</i> on just that value. For example, to observe the behavior of the  <i>for loop</i> at position 3:</p>
-<br>
-  
-```{r, eval=FALSE}
-
-i = 3
-
-vNew[i] <- v[i] + 1
-
-vNew[i]
-
-v[i]
-
-```
-</div>
 
 <blockquote>
 <h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
@@ -493,13 +463,13 @@ $$y = mx + b$$
 </blockquote>
 
   
-  <!--Using for loops for subsetting-->
-  <h2><i>For loops</i> to split-apply-combine</h2>
-  <br>
-  <p>You may have noticed that none of the operations we completed in the previous section actually required <i>for loops</i> (for example, `v + 1` is calculated for each value of `v` by default). <i>For loops</i> are predominantly used to split-apply-combine data. In data science, split-apply-combine problems are those that relate to situations in which you seek to split a dataset into multiple parts, apply a function to each part, and combine the resulting parts. <i>For loops</i> can be a great tool for split-apply-combine problems.</p>
-  
-  <p>We will summarize the iris data frame to illustrate using a <i>for loop</i> for a typical split-apply-combine problem. Calculating the mean for each species without a <i>for loop</i> required the following code:</p>
-  <br>
+<!--Using for loops for subsetting-->
+<h2>Subsetting with <i>For loops</i>: Split-apply-combine</h2>
+<br>
+<p>You may have noticed that none of the operations we completed in the previous section actually required <i>for loops</i> (for example, `v + 1` is calculated for each value of `v` by default). <i>For loops</i> are predominantly used to split-apply-combine data. In data science, split-apply-combine problems are those that relate to situations in which you seek to split a dataset into multiple parts, apply a function to each part, and combine the resulting parts. <i>For loops</i> can be a great tool for split-apply-combine problems.</p>
+
+<p>We will summarize the iris data frame to illustrate using a <i>for loop</i> for a typical split-apply-combine problem. Calculating the mean for each species without a <i>for loop</i> required the following code:</p>
+<br>
   
 ```{r summarizing review, eval=FALSE}
 # Mean petal lengths of Iris species without a for loop:
@@ -566,8 +536,8 @@ iris_sppSubset <- irisTbl[irisTbl$species == irisSpecies[i], ]
 ```
 
 <br>
-  <p><b>Apply:</b> Modification of the data:</p>
-  <br>
+<p><b>Apply:</b> Modification of the data:</p>
+<br>
   
 ```{r, eval=FALSE}
 # Calculate mean petal length of each subset:
@@ -576,8 +546,8 @@ mean(iris_sppSubset$petalLength)
 ```
 
 <br>
-  <p>The completed <i>for loop</i>  is constructed as:</p>
-  <br>
+<p>The completed <i>for loop</i>  is constructed as:</p>
+<br>
   
 ```{r, eval=FALSE}
 # Make a vector of species to loop across:
@@ -598,8 +568,8 @@ for(i in seq_along(irisSpecies)){
 ```
 
 <br>
-  <p><b>Combine:</b> Combining the <i>for loop</i> output can be done in a number of ways. Below, we bind our results in a tidy tibble data frame, using the `data_frame` function. </p>
-  <br>
+<p><b>Combine:</b> Combining the <i>for loop</i> output can be done in a number of ways. Below, we bind our results in a tidy tibble data frame, using the `data_frame` function. </p>
+<br>
   
 ```{r, eval=FALSE}
 # Make a tibble data frame of the for loop output:
@@ -610,22 +580,22 @@ petalLengthFrame
 ```
 <br>
   
-  <br>
-  <blockquote>
-  <h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Four:</h3>
-  <br>
-  <p>Use a <i>for loop</i> and the `birdHabits` data frame to calculate the number species in each diet guild.</p>
-  <br>
-  </blockquote>
-  <br>
-  <hr>
+<br>
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h3>
+<br>
+<p>Use a <i>for loop</i> and the `birdHabits` data frame to calculate the number species in each diet guild.</p>
+<br>
+</blockquote>
+<br>
+<hr>
   
   
-  <!--Using for loops for subsetting-->
-  <h2><i>For loops</i> across data objects</h2>
-  
-  <p><i>For loops</i> can be used to perform powerful data queries. To illustrate how this works, we will use `birdCounts` data frame and calculate the total number of omnivorous birds that were observed at each of the sites. Take a moment to explore the data:</p>
-  <br>
+<!--Using for loops for subsetting-->
+<h2><i>For loops</i> across data objects</h2>
+
+<p><i>For loops</i> can be used to perform powerful data queries. To illustrate how this works, we will use `birdCounts` data frame and calculate the total number of omnivorous birds that were observed at each of the sites. Take a moment to explore the data:</p>
+<br>
   
 ```{r birdCounts0, eval = FALSE}
 # Explore the bird count data:
@@ -643,8 +613,75 @@ str(birdHabits)
 ```
 
 <br>
-  <p>Our first goal will be to get a vector of birds that are ground foragers from the `birdHabits` data frame:</p>
-  <br>
+<p>Before we construct a <i>for loop</i> to address this problem, we should explore how to sum omnivore counts for a single site. Let's start by addressing how we might subset `birdCounts` to omnivores. The below calculates the total omnivore counts across sites.  </p>
+<br>
+
+```{r eval = FALSE}
+# Extract vector of omnivorous species:
+
+omnivores <- birdHabits[birdHabits$diet == 'omnivore',]$species
+
+# Subset the counts to omnivores:
+
+birdCounts[birdCounts$species %in% omnivores, ]$count
+
+# Calculate the sum of counts:
+
+sum(birdCounts[birdCounts$species %in% omnivores, ]$count)
+```
+
+<br>
+<p>Recall that subsetting `birdCounts` to a single site (example `site == apple`) can be accomplished using:</p>
+<br>
+
+```{r eval = FALSE}
+birdCounts[birdCounts$site == 'apple', ]
+```
+<br>
+
+<p>To calculate omnivore counts for a given site, we use `&` to subset by the omnivore and site logic statements (example `site == apple`):</p>
+<br>
+
+```{r eval = FALSE}
+# Subset the omnivore counts to site apple:
+
+birdCounts[birdCounts$species %in% omnivores &
+             birdCounts$site == 'apple', ]
+
+# Extract the count column:
+
+birdCounts[birdCounts$species %in% omnivores &
+             birdCounts$site == 'apple', ]$count
+
+# Calculate the sum:
+
+sum(birdCounts[birdCounts$species %in% omnivores &
+             birdCounts$site == 'apple', ]$count)
+```
+<br>
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Four:</h3>
+<br>
+<p>Using the `birdHabits` and `birdCounts` data frames, modify the function below such that it will calculate the <b>number of species</b> of a given guild at a selected site.</p>
+<br>
+```{r exercise 4, eval = FALSE}
+richnessSiteGuild <- function(site, guild){
+  guildSpp <- birdHabits[birdHabits$foraging # COMPLETE
+  countSppSubset <- birdCounts[birdCounts$ # COMPLETE
+  countSppSiteSubset <- countSppSubset[# COMPLETE
+  nSpp <- # COMPLETE
+  return(nSpp)
+}
+
+richnessSiteGuild('apple', 'ground')
+```
+<br>
+</blockquote>
+<br>
+
+
+<p>Using the code we generated prior to Exercise Four, we should be able to develop a <i>for loop</i> to count omnivores at each site. Our first goal will be to get a vector of birds that are omnivores in the `birdHabits` data frame:</p>
+<br>
   
 ```{r birdCounts1, eval = FALSE}
 # Extract vector of omnivorous species:
@@ -654,8 +691,8 @@ omnivores <- birdHabits[birdHabits$diet == 'omnivore',]$species
 ```
 
 <br>
-  <p><b>Split</b>: To evaluate the number of omnivores per site, we will <b>split</b> the data into individual sites. To do so, we generate a vector of unique sites and query the data frame by the site at a given position in the site vector.</p>
-  <br>
+<p><b>Split</b>: To evaluate the number of omnivores per site, we <b>split</b> the data into individual sites. To do so, we generate a vector of unique sites and query the data frame by the site at a given position in the site vector.</p>
+<br>
   
 ```{r birdCounts split, eval = FALSE}
 # Generate a vector of unique sites:
@@ -677,14 +714,21 @@ birdCounts_siteSubset
 ```
 
 <br>
-  <p><b>Apply</b>: We then apply a function to each individual part. In this case, we will use `%in%` to extract only records associated with omnivores and sum the `count` field.</p>
-  <br>
-  
-```{r birdCounts apply, eval = FALSE}
+<p>We then use `%in%` to subset to just omnivores and `$` to subset to just the count field:
+<br>
+```{r eval = FALSE}
 # Just a vector of omnivore counts:
 
-countVector <- birdCounts_siteSubset[birdCounts_siteSubset$species %in% omnivores, ]$count
+countVector <-
+  birdCounts_siteSubset[birdCounts_siteSubset$species %in%
+  omnivores,]$count
 
+```
+
+<p><b>Apply</b>: We then apply a function to each individual part.</p>
+<br>
+  
+```{r birdCounts apply, eval = FALSE}
 # Get total number of omnivores at the site:
 
 nOmnivores <- sum(countVector)
@@ -692,8 +736,8 @@ nOmnivores <- sum(countVector)
 ```
 
 <br>
-  <p><b>Combine</b>: Output may be combined together as we have with previous <i>for loop</i> statements in this lesson. In the code below, I have combined the `sites` and `nOmnivore` vectors into a tibble data frame:</p>
-  <br>
+<p><b>Combine</b>: Output may be combined together as we have with previous <i>for loop</i> statements in this lesson. In the code below, I have combined the `sites` and `nOmnivore` vectors into a tibble data frame:</p>
+<br>
   
 ```{r birdCounts combine1, eval = FALSE}
 # Generate a vector of unique sites:
@@ -703,8 +747,10 @@ sites <- unique(birdCounts$site)
 outVector <- vector('numeric', length = length(unique(sites)))
 
 for(i in seq_along(sites)){
+  # Split:
   birdCounts_siteSubset <- birdCounts[birdCounts$site == sites[i],]
   countVector <- birdCounts_siteSubset[birdCounts_siteSubset$species %in% omnivores, ]$count
+  # Apply:
   outVector[i] <- sum(countVector)
 }
 
@@ -714,8 +760,8 @@ data_frame(site = sites, nOmnivores = outVector)
 ```
 
 <br>
-  <p>An alternative to combining vectors that I often find useful is combining a list of data frames using the `tidyverse` function `bind_rows`:</p>
-  <br>
+<p>An alternative to combining vectors that I often find useful is combining a list of data frames using the `tidyverse` function `bind_rows`:</p>
+<br>
   
 ```{r birdCounts combine2, eval = FALSE}
 # Generate a vector of unique sites:
@@ -734,15 +780,36 @@ for(i in seq_along(sites)){
 
 bind_rows(outList)
 ```
+<br>
+
+<blockquote>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Five:</h2>
+<hr>
+<p>Using the richnessSiteGuild function you created in Exercies Four and the `birdHabits` and `birdCounts` data frames, modify the <i>for loop</i> code below to count the number of species that are ground foragers at each site.</p>
+<br>
+```{r exercise 5, eval = FALSE}
+sites <- unique(# COMPLETE 
+
+outList <- vector('list', length = # COMPLETE 
+
+for(i in # COMPLETE 
+  outList[[i]] <- data_frame(site = sites[i],
+  # COMPLETE 
+}
+
+bind_rows(# COMPLETE 
+```
+<br>
+</blockquote>
 
 <hr>
-  <h2><i>For loops</i> for simulation</h2>
-  <br>
-  <p>We may also be interested in using a  <i>for loop</i> to generate a vector of numbers based on some mathematical function. For example, consider we have a value, 10, and want to calculate the mathematical expression:</p>
+<h2>Simulation with <i>for loops</i></h2>
+<br>
+<p>We may also be interested in using a  <i>for loop</i> to generate a vector of numbers based on some mathematical function. For example, consider we have a value, 10, and want to calculate the mathematical expression:</p>
   
-  $$n_t = 2(n_{t-1})$$
-  <br>
-  <p>Let's start by creating a vector of length 5 for our <b>output</b>:</p>
+$$n_t = 2(n_{t-1})$$
+<br>
+<p>Let's start by creating a vector of length 5 for our <b>output</b>:</p>
 <br>
 
 ```{r number series 0, eval=FALSE}
@@ -768,7 +835,7 @@ n
 
 <br>
 <p>Let's calculate the first five values in this series. Because our  <i>for loop</i> starts with our seed value, we are only interested in the second through fifth positions of this vector. Thus, our for loop <b>sequence</b> statement is (<b>DO NOT RUN</b>):</p>
-  <br>
+<br>
   
 ```{r number series 2, eval=FALSE}
 # For loop sequence:
@@ -777,8 +844,8 @@ n
 ```
 
 <br>
-  <p>For each iteration, the following <b>body</b> statement will be evaluated (the example is at position 2):</p>
-  <br>
+<p>For each iteration, the following <b>body</b> statement will be evaluated (the example is at position 2):</p>
+<br>
   
 ```{r number series 3, eval=FALSE}
 
@@ -796,9 +863,9 @@ n
 ```
 
 <br>
-  <p>And our complete  <i>for loop</i> statement becomes:</p>
-  <br>
-  
+<p>And our complete  <i>for loop</i> statement becomes:</p>
+<br>
+
 ```{r number series 4, eval=FALSE}
 # Output:
 
@@ -816,31 +883,63 @@ for(i in 2:5){
 ```
 
 <br>
-  <blockquote>
-  <h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Five:</h3>
-  <br>
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Six:</h3>
+<br>
   
-  <img src="rWorkshop/images/rabbit.jpg" 
-title="Iris setosa"
-alt = "picture of the flower Iris setosa"
+<img src="rWorkshop/images/rabbit.jpg" 
+title="European rabbit"
+alt = "picture of a rabbit"
 border="0"
 style= "float: right; 
 padding-left: 10px;
 padding-right: 0px;
 width: 25%;"/>
   
-  <p>One of my favorite <i>for loops</i> was created by Leonardo Bonacci (Fibonacci). He created the first known population model, from which the famous Fibonacci number series was created. He described a population (N) of rabbits at time t as the sum of the population at the previous time step plus the time step before that:</p>
+<p>One of my favorite <i>for loops</i> was created by Leonardo Bonacci (Fibonacci). He created the first known population model, from which the famous Fibonacci number series was created. He described a population (N) of rabbits at time t as the sum of the population at the previous time step plus the time step before that:</p>
   
-  $$N_t = N_{t-1} + N_{t-2}$$
-  <ol>
-  <li>Use the combine function to create a seed vector of two values, zero and one.</li>
-  <li>Use the formula above and your seed vector to generate the first 20 numbers of the Fibonacci number sequence. <i><b>Hint</b>: The for loop initialization will begin at third position -- it will <b>NOT</b> include all of 1:20!</i></li>
-  </ol>
-  </blockquote>
-  <br>
-  <hr>
+$$N_t = N_{t-1} + N_{t-2}$$
+<ol>
+<li>Use the combine function to create a seed vector of two values, zero and one.</li>
+<li>Use the formula above and your seed vector to generate the first 20 numbers of the Fibonacci number sequence. <i><b>Hint</b>: The for loop initialization will begin at third position -- it will <b>NOT</b> include all of 1:20!</i></li>
+</ol>
+</blockquote>
+<br>
+<hr>
+<div class = "roundBorderBlack">
+<br>
+<p><i class="fa fa-user-secret" aria-hidden="true" style = "font-size: 150%"></i> We specify the length of the vector to provide R with stopping rules -- without this  <i>for loops</i> can become very memory hungry when running over large datasets</p>
+<hr>
+<p><i class="fa fa-user-secret" aria-hidden="true" style = "font-size: 150%"></i> The following two sections of code are equivalent, but the latter much easier to read. As writing code is both a tool and a method of communication, you should ensure that your code is as readable as possible.</p>
+<br>
   
-  <br>
+```{r, eval = FALSE}
+
+for(i in 1:length(v)) vNew[i] <- v[i] + 1
+
+for(i in 1:length(v)){
+  vNew[i] <- v[i] + 1
+}
+```
+<hr>
+
+<p><i class="fa fa-user-secret" aria-hidden="true" style = "font-size: 150%"></i> When writing  <i>for loops</i>, it is necessary to ensure that the loop is doing what you expect it to do. A simple way to ensure that this is the case is to specify <i>i</i> and run the <i>instructions</i> on just that value. For example, to observe the behavior of the  <i>for loop</i> at position 3:</p>
+<br>
+  
+```{r, eval=FALSE}
+
+i = 3
+
+vNew[i] <- v[i] + 1
+
+vNew[i]
+
+v[i]
+
+```
+</div>
+<br>
+<br>
 
 
 
