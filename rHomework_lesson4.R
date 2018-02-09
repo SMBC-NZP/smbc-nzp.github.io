@@ -99,29 +99,39 @@ measurements
 origins
 
 # 3.1 Complete the function below to calculate the average mass of a given 
-# species in the Star Wars universe. Use the function to calculate the average
-# mass of Droid characters.
+# species in the Star Wars universe and the sample size for this calculation (i.e.,
+# the number of characters of this species). This function should return a data frame
+# with the fields (columns) species, nCharacters, and meanMass. Use the function to 
+# calculate the average mass and number of Droid characters.
 
 sppMass <- function(spp){
+  # Subset data (split):
   namesSubset <- origins[origins$species == spp, ]$name
   measuresSubset <- measurements[measurements$name %in% namesSubset,]
-  mean(measuresSubset$mass)
+  # Define output (apply):
+  species <- spp
+  nCharacters <- length(unique(measuresSubset$name))
+  meanMass <- mean(measuresSubset$mass)
+  # Combine output:
+  outFrame <- data_frame(species, nCharacters, meanMass)
+  return(outFrame)
 }
 
 sppMass('Droid')
 
 # 3.2 Use the function you created above to write a for loop that will calculate
 # the average mass of each species in the Star Wars universe. Return your
-# results as a data frame with the columns "species" and "meanMass".
+# results as a data frame with the columns species, nCharacters, and meanMass.
 
 speciesVector <- unique(origins$species)
 
 massVector <- vector('numeric', length = length(speciesVector))
 
+outList <- vector('list', length = length(speciesVector))
+
 for(i in seq_along(speciesVector)){
-  massVector[i] <- sppMass(speciesVector[i])
+  outList[[i]] <- sppMass(speciesVector[i])
 }
 
-data_frame(species = speciesVector, meanMass = massVector)
-
+bind_rows(outList)
 
