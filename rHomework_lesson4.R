@@ -86,14 +86,6 @@ data_frame(region = regions, populationDensity = densityVector)
 # measurements. The other dataset, origins, describes characters by homeworld and
 # species. Please take a moment to explore these datasets.
 
-measurements <- starwars %>%
-  select(name, height, mass) %>%
-  filter(!is.na(mass))
-
-origins <- starwars %>%
-  select(name, homeworld, species) %>%
-  filter(name %in% measurements$name)
-
 measurements
 
 origins
