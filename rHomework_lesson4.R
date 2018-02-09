@@ -1,6 +1,6 @@
-#=================================================================================*
+#=========================================================================================*
 # ---- Set up ----
-#=================================================================================*
+#=========================================================================================*
 
 # Load RCurl library:
 
@@ -19,12 +19,12 @@ eval(parse(text = script))
 
 rm(script)
 
-#---------------------------------------------------------------------------------*
+#-----------------------------------------------------------------------------------------*
 # ---- Question 1 ----
-#---------------------------------------------------------------------------------*
+#-----------------------------------------------------------------------------------------*
 
 # 1.1 Complete the for loop below to calculate the population of the Bahamas from
-# 1995 and 2013. 
+# 1995 to 2013. 
 
 # For loop to calculate the population of the Bahamas across years:
 
@@ -46,15 +46,19 @@ populationVector
 
 data_frame(year = yrs, population = populationVector)
 
-#---------------------------------------------------------------------------------*
+#-----------------------------------------------------------------------------------------*
 # ---- Question 2 ----
-#---------------------------------------------------------------------------------*
+#-----------------------------------------------------------------------------------------*
 
 # 2.1 The states1975 dataset contains the fields (columns) region, division, state
 # name, area(square miles), and population of each state in 1975. Complete the for
 # loop below to calculate the population density of each region (population per 
 # square mile). Save your results in a two column data frame with the column names 
 # region and populationDensity.
+
+states1975
+
+str(states1975)
 
 regions <- unique(states1975$region)
 
@@ -69,13 +73,55 @@ for(i in seq_along(outVector)){
 
 # 2.2 Use the densityVector you created above to create a two column data
 # frame where each record (row) contains the region (column 1) and population 
-# density (column 2).
+# density for that region (column 2).
 
 data_frame(region = regions, populationDensity = densityVector)
 
-#---------------------------------------------------------------------------------*
+#-----------------------------------------------------------------------------------------*
 # ---- Question 3 ----
-#---------------------------------------------------------------------------------*
+#-----------------------------------------------------------------------------------------*
 
+# You are given two datasets that describe characters of the Star Wars movies. One
+# dataset, measurements, provides character names, heights, and body mass 
+# measurements. The other dataset, origins, describes characters by homeworld and
+# species. Please take a moment to explore these datasets.
+
+measurements <- starwars %>%
+  select(name, height, mass) %>%
+  filter(!is.na(mass))
+
+origins <- starwars %>%
+  select(name, homeworld, species) %>%
+  filter(name %in% measurements$name)
+
+measurements
+
+origins
+
+# 3.1 Complete the function below to calculate the average mass of a given 
+# species in the Star Wars universe. Use the function to calculate the average
+# mass of Droid characters.
+
+sppMass <- function(spp){
+  namesSubset <- origins[origins$species == spp, ]$name
+  measuresSubset <- measurements[measurements$name %in% namesSubset,]
+  mean(measuresSubset$mass)
+}
+
+sppMass('Droid')
+
+# 3.2 Use the function you created above to write a for loop that will calculate
+# the average mass of each species in the Star Wars universe. Return your
+# results as a data frame with the columns "species" and "meanMass".
+
+speciesVector <- unique(origins$species)
+
+massVector <- vector('numeric', length = length(speciesVector))
+
+for(i in seq_along(speciesVector)){
+  massVector[i] <- sppMass(speciesVector[i])
+}
+
+data_frame(species = speciesVector, meanMass = massVector)
 
 
