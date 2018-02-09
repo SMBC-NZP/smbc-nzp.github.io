@@ -298,9 +298,7 @@ v[i] + 1
 
 <hr>
 <h2><i>For loops</i>, simple example</h2>
-<hr>
 
-  
 <p>We would like to modify the values in vector `v` by adding one to each value. This might be written mathematically as:<br>
   
 $$V_{new, i} = V_{i} + 1$$
@@ -462,7 +460,7 @@ $$y = mx + b$$
 </ol>
 </blockquote>
 
-  
+<hr>  
 <!--Using for loops for subsetting-->
 <h2>Subsetting with <i>For loops</i>: Split-apply-combine</h2>
 <br>
@@ -592,7 +590,7 @@ petalLengthFrame
   
   
 <!--Using for loops for subsetting-->
-<h2><i>For loops</i> across data objects</h2>
+<h2><i>For loops</i> <b>across</b> data objects</h2>
 
 <p><i>For loops</i> can be used to perform powerful data queries. To illustrate how this works, we will use `birdCounts` data frame and calculate the total number of omnivorous birds that were observed at each of the sites. Take a moment to explore the data:</p>
 <br>
