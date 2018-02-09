@@ -1,0 +1,287 @@
+---
+output:
+ html_document:
+  theme: yeti
+---
+
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<style>
+
+code{
+  background-color:#f2f2f2;
+  border-radius: 25px;
+}
+ 
+span.co{
+  color:#000080;
+  font-weight: bold;
+}
+ 
+img{
+  display: block;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+p{
+  text-align: left;
+  font-size: 18px;
+}
+
+ul, ol{
+  line-height: 27px;
+  text-align: left;
+  font-size: 18px;
+  margin-left: 0px;
+}
+ 
+blockquote{
+  font-size: 18px;
+  border-left: 8px solid #292093;
+  background-color: #e6ffff;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+ 
+.row{
+  margin: auto;
+}
+ 
+table {
+  border-collapse: collapse;
+}
+
+table, td, th {
+  border: 1px solid black;
+  padding: 5px;
+  text-align: center;
+  vertical-align: middle;
+}
+ 
+ /* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.roundBorder {
+  border-radius: 25px;
+  border: 5px solid #30288C;
+  background: #D6EAF8;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.roundBorderBlack {
+  border-radius: 25px;
+  border: 10px solid #D3D3D3;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.roundBorderBlackEx {
+  border-radius: 5px;
+  border: 5px solid #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+}
+
+.roundBorderEx {
+  border-radius: 3px;
+  border: 5px solid #30288C;
+  background: #D6EAF8;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+}
+
+.tt {
+    position: relative;
+    display: inline-block;
+    class: inline; 
+    font-weight: bold;
+    font-family: "Avenir";
+    font-size: 18px;
+    border-bottom: 1px black;
+}
+
+/* Tooltip text */
+.tt .ttText {
+    visibility: hidden;
+    font-weight: normal;
+    font-size: 18px;
+    width: 200px;
+    background-color: black;
+    border: 1px solid black;
+    color: white;
+    text-align: left;
+    padding: 5px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tt:hover .ttText {
+    visibility: visible;
+}
+
+</style>
+
+<h2>R Homework, Lesson 4: <i>For loops</i></h2>
+<hr>
+<p>Please use the file `rWorksheet4_Questions.R` to complete this assignment. You may find some of the questions in this assignment very easy and some prohibitively challenging. Just do what you can. This exercise is to help give you more practice with R and to help me evaluate the level of understanding of workshop participants and isolate current weak points in understanding. I am also curious the length of time it takes to complete this assignment. Please estimate the total time you spend with the assignment (even if you are unable to complete all of the questions). Please be sure to:</p>
+
+<ul>
+<li>Complete all steps in the space provided on the script.</li>
+<li>You must run the complete set up section of the script prior to answering questions!</li>
+<li>Each question can be answered using tools that we have covered thus far in the workshop. Please use only these tools to answer questions.</li>
+<li>Complete all steps in one line of code unless you are instructed otherwise.</li>
+<li>Do not assign any object names unless you are instructed otherwise.</li> 
+</ul>
+<br>
+<p>Once completed, please save your rScript as `rHomework4_[your last name]-[your first name].R` (for example, my homework would be titled `rHomework4_Evans-Brian.R`) and <a href="mailto:evansbr@si.edu">email it to me</a>. Please use the subject line "rWorkshop, assignment 2" in your email. In the body of your email, please include the amount of time the assignment took to complete.</p>
+<hr>
+<h3><b>Set up:</b></h3>
+<br>
+```{r setup, eval = FALSE}
+# Load RCurl library:
+
+library(RCurl)
+
+# Load a source script:
+
+script <-
+  getURL(
+    "https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode.R"
+  )
+
+# Evaluate then remove the source script:
+
+eval(parse(text = script))
+
+rm(script)
+```
+<hr>
+
+<ol>
+<li><h3><b>The population of the Bahamas</b>:</h3>
+<br>
+<ol type = "a">
+<li>Complete the <i>for loop</i> below to calculate the population of the Bahamas from 1995 to 2013.
+<br><br>
+```{r q1a, eval = FALSE}
+yrs <- unique(population[## COMPLETE
+
+populationVector <- vector('numeric', length = ## COMPLETE
+
+for(i in ## COMPLETE
+  whoCountrySubset <- whoPopulation[whoPopulation$country## COMPLETE
+  whoYrSubset <- whoCountrySubset[whoCountrySubset## COMPLETE
+  populationVector[i] <- whoYrSubset$## COMPLETE
+}
+
+populationVector
+```
+</li>
+<br><br>
+<li>Use the population vector you created above to create a two column data frame where each record (row) contains the year (column 1) and population (column 2).
+<br>
+<br>
+</li>
+</ol>
+<hr>
+<li><h3><b>The population density of US regions:</b></h3>
+<br>
+<ol type = "a">
+<li>The states1975 dataset contains the fields (columns) region, division, state name, area (in square miles), and population of each state in 1975. Complete the <i>for loop</i> below to calculate the population density of each region (population per square mile). Save your results in a two column data frame with the column names region and populationDensity.
+<br><br>
+```{r q2a, eval = FALSE}
+states1975
+
+str(states1975)
+
+regions <- unique(## COMPLETE
+
+densityVector <- vector('numeric', ## COMPLETE
+
+for(i in ## COMPLETE
+  regionSubset <- states1975[states1975$## COMPLETE
+  totalArea <- sum(regionSubset$## COMPLETE
+  totalPopulation <- sum(## COMPLETE
+  densityVector[i] <- ## COMPLETE
+}
+```
+</li>
+<br><br>
+<li>Use the densityVector you created above to create a two column data frame where each record (row) contains the region (column 1) and population density for that region (column 2).</li>
+</ol>
+<br><hr>
+<li><h3><b>The mass of Star Wars characters:</b></h3></br> You have been provided with two datasets that describe characters of the Star Wars movies. One dataset, measurements, provides character names, heights, and body mass measurements. The other dataset, origins, describes characters by home world and species. Please take a moment to explore these datasets.
+<br><br>
+```{r q3, eval = FALSE}
+
+measurements
+
+origins
+
+```
+<br><br>
+<ol type = "a">
+<li>Complete the function below to calculate the average mass of a given species in the Star Wars universe and the sample size for this calculation (i.e., the number of characters of this species). This function should return a data frame with the fields (columns) species, nCharacters, and meanMass. Use the function to calculate the average mass and number of Droid characters.
+<br><br>
+```{r q3a, eval = FALSE}
+sppMass <- function(## COMPLETE
+  # Subset data (split):
+  namesSubset <- origins[origins$species## COMPLETE
+  measuresSubset <- measurements[## COMPLETE
+  # Define output (apply):
+  species <- spp
+  nCharacters <- length(## COMPLETE
+  meanMass <- mean(## COMPLETE
+  # Combine output:
+  outFrame <- data_frame(species, ## COMPLETE
+  return(## COMPLETE
+}
+
+sppMass('Droid')
+```
+<br><br>
+</li>
+<li>Use the function you created above to write a <i>for loop</i> that will calculate the average mass of each species in the Star Wars universe. Return your results as a data frame with the columns species, nCharacters, and meanMass.
+<br><br>
+```{r q3b, eval = FALSE}
+
+speciesVector <- unique(## COMPLETE
+
+outList <- vector('list', ## COMPLETE
+
+for(i in ## COMPLETE
+  outList[[i]] <- sppMass(## COMPLETE
+}
+
+bind_rows(## COMPLETE
+```
+<br><br>
+</li>
+</ol>
+</li>
+</ol>
