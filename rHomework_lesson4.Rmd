@@ -186,10 +186,12 @@ rm(script)
 <li><h3><b>The population of the Bahamas</b>:</h3>
 <br>
 <ol type = "a">
-<li>Complete the <i>for loop</i> below to calculate the population of the Bahamas from 1995 to 2013.
+<li>Using the `whoPopulation` dataset, complete the <i>for loop</i> below to calculate the population of the Bahamas from 1995 to 2013.
 <br><br>
 ```{r q1a, eval = FALSE}
-yrs <- unique(population[## COMPLETE
+whoPopulation
+
+yrs <- unique(whoPopulation[## COMPLETE
 
 populationVector <- vector('numeric', length = ## COMPLETE
 
@@ -212,7 +214,7 @@ populationVector
 <li><h3><b>The population density of US regions:</b></h3>
 <br>
 <ol type = "a">
-<li>The states1975 dataset contains the fields (columns) region, division, state name, area (in square miles), and population of each state in 1975. Complete the <i>for loop</i> below to calculate the population density of each region (population per square mile). Save your results in a two column data frame with the column names region and populationDensity.
+<li>The `states1975` dataset contains the fields (columns) region, division, state name, area (in square miles), and population of each state in 1975. Complete the <i>for loop</i> below to calculate the population density of each region (population per square mile). Save your results in a two column data frame with the column names region and populationDensity.
 <br><br>
 ```{r q2a, eval = FALSE}
 states1975
@@ -245,7 +247,7 @@ for(i in ## COMPLETE
 	      border-width: 10px;
 	      border-color: white;
 	      width: 30%;"/>
-<li><h3><b>The mass of Star Wars characters:</b></h3></br> You have been provided with two datasets that describe characters of the Star Wars movies. One dataset, measurements, provides character names, heights, and body mass measurements. The other dataset, origins, describes characters by home world and species. Please take a moment to explore these datasets.
+<li><h3><b>The mass of Star Wars characters:</b></h3></br> You have been provided with two datasets that describe characters of the Star Wars movies. One dataset, `measurements`, provides character names, heights, and body mass measurements. The other dataset, `origins`, describes characters by home world and species. Please take a moment to explore these datasets.
 <br><br>
 ```{r q3, eval = FALSE}
 

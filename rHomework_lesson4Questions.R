@@ -23,12 +23,14 @@ rm(script)
 # ---- Question 1 ----
 #-----------------------------------------------------------------------------------------*
 
-# 1.a Complete the for loop below to calculate the population of the Bahamas from
-# 1995 to 2013. 
+# 1.a Using the whoPopulation dataset, complete the for loop below to calculate the 
+# population of the Bahamas from 1995 to 2013. 
+
+whoPopulation
 
 # For loop to calculate the population of the Bahamas across years:
 
-yrs <- unique(population[## COMPLETE
+yrs <- unique(whoPopulation[## COMPLETE
 
 populationVector <- vector('numeric', length = ## COMPLETE
 
