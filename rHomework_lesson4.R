@@ -1,3 +1,23 @@
+#=================================================================================*
+# ---- Set up ----
+#=================================================================================*
+
+# Load RCurl library:
+
+library(RCurl)
+
+# Load a source script:
+
+script <-
+  getURL(
+    "https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode.R"
+  )
+
+# Evaluate then remove the source script:
+
+eval(parse(text = script))
+
+rm(script)
 
 #---------------------------------------------------------------------------------*
 # ---- Question 1 ----
@@ -38,13 +58,20 @@ data_frame(year = yrs, population = populationVector)
 
 regions <- unique(states1975$region)
 
-outVector <- vector('numeric', length = length(regions))
+densityVector <- vector('numeric', length = length(regions))
 
 for(i in seq_along(outVector)){
-  statesSubset <- states1975[states1975$region == regions[i],]
-  totalArea <- su
-  outVector[i] <- regions
+  regionSubset <- states1975[states1975$region == regions[i],]
+  totalArea <- sum(regionSubset$area)
+  totalPopulation <- sum(regionSubset$population)
+  densityVector[i] <- totalPopulation/totalArea
 }
+
+# 2.2 Use the densityVector you created above to create a two column data
+# frame where each record (row) contains the region (column 1) and population 
+# density (column 2).
+
+data_frame(region = regions, populationDensity = densityVector)
 
 #---------------------------------------------------------------------------------*
 # ---- Question 3 ----
