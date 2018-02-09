@@ -235,6 +235,16 @@ for(i in ## COMPLETE
 <li>Use the densityVector you created above to create a two column data frame where each record (row) contains the region (column 1) and population density for that region (column 2).</li>
 </ol>
 <br><hr>
+<img src="rWorkshop/images/darthFairUse.png" 
+	title="Darth"
+	alt = "picture of darth"
+	border="0"
+		style= "float: right; 
+	      padding-right: 0px;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 30%;"/>
 <li><h3><b>The mass of Star Wars characters:</b></h3></br> You have been provided with two datasets that describe characters of the Star Wars movies. One dataset, measurements, provides character names, heights, and body mass measurements. The other dataset, origins, describes characters by home world and species. Please take a moment to explore these datasets.
 <br><br>
 ```{r q3, eval = FALSE}
