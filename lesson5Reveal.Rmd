@@ -1,0 +1,318 @@
+---
+output:
+  revealjs::revealjs_presentation:
+    theme: simple
+    highlight: pygments
+    center: false
+    transition: none
+    progress: true
+    font-family: Verdana
+---
+
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<style>
+
+code{
+  background-color:#f2f2f2;
+  border-radius: 25px;
+}
+ 
+span.co{
+  color:#000080;
+  font-weight: bold;
+}
+ 
+img{
+  display: block;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+p{
+  text-align: left;
+  font-size: 18px;
+}
+
+ul, ol{
+  line-height: 27px;
+  text-align: left;
+  font-size: 18px;
+  margin-left: 0px;
+}
+ 
+blockquote{
+  font-size: 18px;
+  border-left: 8px solid #292093;
+  background-color: #e6ffff;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+ 
+.row{
+  margin: auto;
+}
+ 
+table {
+  border-collapse: collapse;
+}
+
+table, td, th {
+  border: 1px solid black;
+  padding: 5px;
+  text-align: center;
+  vertical-align: middle;
+}
+ 
+ /* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.roundBorder {
+  border-radius: 25px;
+  border: 5px solid #30288C;
+  background: #D6EAF8;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.roundBorderBlack {
+  border-radius: 25px;
+  border: 10px solid #D3D3D3;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.roundBorderBlackEx {
+  border-radius: 5px;
+  border: 5px solid #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+}
+
+.roundBorderEx {
+  border-radius: 3px;
+  border: 5px solid #30288C;
+  background: #D6EAF8;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+}
+
+.tt {
+    position: relative;
+    display: inline-block;
+    class: inline; 
+    font-weight: bold;
+    font-family: "Avenir";
+    font-size: 18px;
+    border-bottom: 1px black;
+}
+
+/* Tooltip text */
+.tt .ttText {
+    visibility: hidden;
+    font-weight: normal;
+    font-size: 18px;
+    width: 200px;
+    background-color: black;
+    border: 1px solid black;
+    color: white;
+    text-align: left;
+    padding: 5px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tt:hover .ttText {
+    visibility: visible;
+}
+
+</style>
+
+<h2 style="text-align: center;">Introduction to data science in R</br>Lesson 5: Welcome to the <b>tidyverse</b>!</h2>
+<br>
+<p style = "text-align: center; font-size: 24px;">Brian S. Evans, Ph.D.<br />
+Migratory Bird Center<br />
+Smithsonian Conservation Biology Institute</p>
+<br>
+<img style="display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      padding: 9px;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;" src="nzpLogo.png" width="300" />
+
+##
+<h2>Setup for the lesson</h2>
+<hr>
+```{r eval = FALSE}
+# Load RCurl library:
+
+library(RCurl)
+
+# Load a source script:
+
+script <-
+  getURL(
+    "https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode.R"
+  )
+
+# Evaluate then remove the source script:
+
+eval(parse(text = script))
+
+rm(script)
+
+```
+
+##
+<h2>What is the tidyverse?</h2>
+<hr>
+
+<ul>
+<li>Principles of tidy data</li>
+<li>Functions to manipulate data from messy to tidy</li>
+<li>Tools for tidy wrangling</li>
+<li>Tidy functions to filter, summarize, and modify data (<i>Lesson 6</i>)</li>
+</ul>
+
+##
+<h2>What are tidy data?</h2>
+<hr>
+
+<p>From data science: The three normal forms (Codd et al.)</p>
+<ol>
+<li><b>First normal</b>:
+<ul>
+<li>All rows represent a unique record (primary key)</li>
+<li>All values are atomic</li>
+<li>Columns are not grouped</li>
+</ul>
+</li>
+<li><b>Second normal</b>: All columns are unique to the primary key (observation)</li>
+<li><b>Third normal</b>: All columns are non-transitively dependent.
+<ul><li>Column values are <b>only </b>directly dependent on the column that defines the observation</ul></li>
+</li>
+</ol>
+
+##
+<h2>What are tidy data?</h2>
+<hr>
+
+<p>In statistical language (Wickham):</p>
+<ul>
+<li>Each variable forms a column</li>
+<li>Each observation forms a row</li>
+<li>Each level of observation forms a table</li>
+</ul>
+<p>Each tidy dataset arranging values into the <b>same</b> structure.</p>
+<p>The best way to understand these rules is to look at examples of when they are broken.</p>
+
+##
+<h2>Tidy data: Each variable forms a column</h2>
+<hr>
+
+<h3>Untidy version</h3>
+<p>Problem: More than one variable in a column</p>
+<p>Problem: One variable split into multiple columns</p>
+
+<h3>Tidy version</h3>
+
+##
+<h2>Tidy data: Each observation forms a row</h2>
+<hr>
+
+<h3>Untidy version</h3>
+<p>Problem: More than one observation in a row</p>
+<p>Problem: One observation split into multiple rows</p>
+
+<h3>Tidy version</h3>
+
+
+##
+<h2>Tidy data: Each level of observation forms a table</h2>.
+<hr>
+
+
+<h3>Untidy version</h3>
+<p>Problem: More than observational unit in a table (most common)</p>
+<p>Problem: One observational split provided in multiple tables</p>
+
+
+<h3>Tidy version</h3>
+
+##
+<h2>Some <b>more</b> rules for tidy data</h2>
+<hr>
+
+<h3>Value format matters</h3>
+<p>Why not use standard date formats?</p>
+<h3>Why on Earth would you use row names for a data frame?</h3>
+
+##
+<h2>Why use tidy data?</h2>
+<hr>
+
+<p>The same functions and steps can be applied across datasets</p>
+<p>Modifications can be applied without modifying each table</p>
+<p>Easy filtering and summarizing</p>
+<p>Analysist can choose the level of analysis</p>
+
+##
+<h2>Why would you create untidy data?</h2>
+<hr>
+
+<ol>
+<li>You like to look at your data</li>
+<li>Ease of data entry (Excel?)</li>
+<li>You complete a step of wrangling in Excel</li>
+<li>Planned redundancy (aka trust issues)</li>
+<li>Structuring data for a planned analysis</li>
+</ol>
+
+
+##
+<h2>Functions to tidy data:</h2>
+<hr>
+
+<h3>tidyr functions</h3>
+
+<p><b>gather</b>:</p>
+
+<p><b>spread</b>:</p>
+
+<p><b>separate</b>:</p>
+
+<p><b>unite</b>:</p>
+
+##
+<h2>Tools for tidy wrangling:</br>Tibbles and pipes, oh my!</h2>
+<hr>
+
+<p><b>The tibble</b>:</p>
+
+<p><b>The pipe</b>:</p>
+
