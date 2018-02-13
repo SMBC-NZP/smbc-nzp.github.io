@@ -166,7 +166,7 @@ Smithsonian Conservation Biology Institute</p>
 
 <hr>
 <h2>What are tidy data?</h2>
-<p><b>In the formal language of data science</b>: The three normal forms (Codd et al.)<p>
+<p><b>In the language of data science</b>: The three normal forms (Codd et al.)<p>
 <ol>
 <li>First normal (Post-hoc):
 <ul>
@@ -176,12 +176,13 @@ Smithsonian Conservation Biology Institute</p>
 </ul>
 </li>
 <li>All columns are unique to the observation event (primary key) -- i.e., do each of the column values describe the observation event? If not, put them in another table.</li>
-<li>All columns are non-transitively dependent: No column values are directly dependent on any column except that which defines the observation</li>
+<li>All columns are non-transitively dependent: No colum
+n values are directly dependent on any column except that which defines the observation</li>
 </ol>
 
 <h2>What are tidy data?</h2>
 
-<p>In less formal language:</p>
+<p>In statistical language (Wickham):</p>
 <ul>
 <li>Each variable forms a column</li>
 <li>Each observation forms a row</li>
