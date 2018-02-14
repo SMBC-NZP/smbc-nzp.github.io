@@ -188,6 +188,161 @@ rm(script)
 
 ```
 
+```{r, eval = TRUE, include  = FALSE}
+# Load RCurl library:
+
+library(RCurl)
+
+# Load a source script:
+
+script <-
+  getURL(
+    "https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode.R"
+  )
+
+# Evaluate then remove the source script:
+
+eval(parse(text = script))
+
+rm(script)
+
+#---------------*
+# ---- tables ----
+#
+
+library(knitr)
+library(kableExtra)
+
+options(knitr.table.format = "html")
+
+options(stringsAsFactors = FALSE)
+
+generateObservationID <- function(){
+  n1 <- sample(100:999,1)
+  l1 <- sample(letters,1)
+  n2 <- sample(1000:9999, 1)
+  l2 <- sample(letters, 1)
+  paste0(l1, n1, '-', n2, l2)
+}
+
+obs1 <- generateObservationID()
+obs2 <- generateObservationID()
+obs3 <- generateObservationID()
+obs4 <- generateObservationID()
+obs5 <- generateObservationID()
+obs6 <- generateObservationID()
+
+# 1NF:  Each row is an observation:
+
+messy1NFa <- data.frame(id = obs1,
+           birdID = rep('1123-58132', 3), 
+           observationDate = rep('2016-05-16', 3),
+           measurement = c('mass', 'wing', 'tail'),
+           value = c(34.5, 96.7, 107)
+           )
+
+tidy1NFa <-
+  data.frame(id = rep(obs1, 3),
+             birdID = rep('1123-58132', 3),
+             observationDate = rep('2016-05-16', 3),
+             measurement = c('mass', 'wing', 'tail'),
+             value = c(34.5, 96.7, 107)
+  ) %>%
+  spread(measurement, value)
+
+# 1NF: All values are atomic
+
+messy1NFb <- data.frame(birdID = c('1123-58132', '1123-58133','1123-58134'), 
+           observationDate = c('2016-05-16, 2017-07-12', '2016-05-26', '2016-06-02, 2017-05-12')
+)
+
+# Fixed, but breaks the first rule
+
+tidy1NFb0 <- data.frame(birdID = c('1123-58132', '1123-58133','1123-58134'), 
+           observationDate = c('2016-05-16,2017-07-12', '2016-05-26', '2016-06-02,2017-05-12')
+) %>% 
+  separate(observationDate, into = c('date1', 'date2'), sep = ',')
+
+tidy1NFb <- data.frame(birdID = c('1123-58132', '1123-58133','1123-58134'), 
+           observationDate = c('2016-05-16,2017-07-12', '2016-05-26', '2016-06-02,2017-05-12')
+) %>% 
+  separate(observationDate, into = c('date1', 'date2'), sep = ',') %>%
+  gather(key = date, value = observationDate, -birdID, na.rm = TRUE) %>%
+  select(birdID, observationDate) %>%
+  mutate(id = c(obs1, obs2, obs3, obs4, obs5)) %>%
+  select(id, birdID:observationDate)
+
+# 1NF: No repeated groupings of columns
+
+messy1NFc <- data.frame(
+  id = c(obs1, obs2, obs3),
+  birdID = c('1123-58132', '1123-58133','1123-58134'), 
+  observationDate1 = c('2016-05-16', '2016-05-16', '2016-06-02'),
+  observationDate2 = c('2017-07-12', NA, '2017-05-12'),
+  mass1 = c(34.5, 35.7, 38.0),
+  mass2 = c(36.2, NA, 37.6)
+)
+
+exampleTidy1 <- data.frame(birdID = c('1123-58132', '1123-58133','1123-58134'), 
+           observationDate1 = c('2016-05-16', '2016-05-16', '2016-06-02'),
+           observationDate2 = c('2017-07-12', NA, '2017-05-12')) %>%
+  gather(date, observationDate, -birdID, na.rm = TRUE) %>%
+  select(-date) %>%
+  bind_cols(
+    data.frame(birdID = c('1123-58132', '1123-58133','1123-58134'), 
+               mass1 = c(34.5, 35.7, 38.0),
+               mass2 = c(36.2, NA, 37.6)
+  ) %>%
+    gather(massMeasure, mass, -birdID, na.rm = TRUE) %>%
+    select(-c(birdID, massMeasure))
+  ) %>%
+  mutate(id = c(obs1, obs2, obs3, obs4, obs5)) %>%
+  select(id, birdID:mass)
+
+# 2NF: All columns are unique to the primary key:
+
+messy2NF <- exampleTidy1 %>%
+  mutate(
+    site = c('apple','apple', 'avocado', 'apple', 'avocado'),
+    canopyCover = c(32.5, 32.5, 78.4, 32.5, 78.4)
+    ) %>%
+  select(id, birdID, observationDate, site, canopyCover, mass)
+
+tidy2NFobsLevel <- messy2NF %>%
+  select(id, birdID, site, observationDate, mass)
+
+siteId1 <- generateObservationID()
+siteId2 <- generateObservationID()
+
+tidy2NFsiteLevel <- messy2NF %>%
+  select(site, canopyCover) %>%
+  distinct %>%
+  transmute(id = c(siteId1, siteId2), site, canopyCover)
+
+# 3NF: 
+
+messy3NF1 <- exampleTidy1 %>%
+  mutate(yearBanded = c(2016, 2015, 2016, 2016, 2016))
+
+exampleTidy1
+
+# Putting it all together (exercise):
+
+exercise1messy <- messy2NF %>%
+  mutate(
+    hTemp = c(22.2, 22.2, 26.8, 31.0, 18.7),
+    siteXY = case_when(
+      site == 'apple' ~ '-77.048, 38.925',
+      site == 'avocado' ~ '-77.053, 38.929'
+    ),
+    species = case_when(
+      birdID %in% c('1123-58132', '1123-58133') ~ 'NOCA',
+      birdID %in% '1123-58134' ~ 'GRCA'
+    )
+    ) %>%
+  rename(date = observationDate, canopy = canopyCover, spp = species)
+```
+
 ##
 <h2>What is the tidyverse?</h2>
 <hr>
@@ -196,8 +351,26 @@ rm(script)
 <li>Principles of tidy data</li>
 <li>Functions to manipulate data from messy to tidy</li>
 <li>Tools for tidy wrangling</li>
-<li>Tidy functions to filter, summarize, and modify data (<i>Lesson 6</i>)</li>
+<li>Tidy functions to filter, summarize, and modify data*</li>
 </ul>
+
+##
+<h2>What are tidy data?</h2>
+<hr>
+<p>From data science: The three normal forms (Codd et al.)</p>
+<ol>
+<li><b>First normal</b>:
+<ul>
+<li>All rows represent a unique record (primary key)</li>
+<li>All values are atomic</li>
+<li>Columns do not contain repeated grouping</li>
+</ul>
+</li>
+<li><b>Second normal</b>: All columns are unique to the primary key (observation)</li>
+<li><b>Third normal</b>: All columns are non-transitively dependent.
+<ul><li>Column values are <b>only</b> directly dependent on the column that defines the observation</ul></li>
+</li>
+</ol>
 
 ##
 <h2>What are tidy data?</h2>
@@ -208,13 +381,334 @@ rm(script)
 <li><b>First normal</b>:
 <ul>
 <li>All rows represent a unique record (primary key)</li>
+<li style = "color: #D3D3D3;">All values are atomic</li>
+<li style = "color: #D3D3D3;">Columns do not contain repeated grouping</li>
+</ul>
+</li>
+</ol>
+
+##
+<h2>What are tidy data?</h2>
+<hr>
+
+<p>From data science: The three normal forms (Codd et al.)</p>
+<ol>
+<li><b>First normal</b>:
+<ul>
+<li>All rows represent a unique record (primary key)</li>
+<li style = "color: #D3D3D3;">All values are atomic</li>
+<li style = "color: #D3D3D3;">Columns do not contain repeated grouping</li>
+</ul>
+</li>
+</ol>
+
+```{r echo = FALSE}
+kable(messy1NFa, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+##
+<h2>What are tidy data?</h2>
+<hr>
+
+<p>From data science: The three normal forms (Codd et al.)</p>
+<ol>
+<li><b>First normal</b>:
+<ul>
+<li>All rows represent a unique record (primary key)</li>
+<li style = "color: #D3D3D3;">All values are atomic</li>
+<li style = "color: #D3D3D3;">Columns do not contain repeated grouping</li>
+</ul>
+</li>
+</ol>
+
+```{r tidy1NFa, echo = FALSE}
+kable(tidy1NFa, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+##
+<h2>What are tidy data?</h2>
+<hr>
+<p>From data science: The three normal forms (Codd et al.)</p>
+<ol>
+<li><b>First normal</b>:
+<ul>
+<li style = "color: #D3D3D3;">All rows represent a unique record (primary key)</li>
 <li>All values are atomic</li>
-<li>Columns are not grouped</li>
+<li style = "color: #D3D3D3;">Columns do not contain repeated grouping</li>
+</ul>
+</li>
+</ol>
+
+```{r messy1NFb, echo = FALSE}
+kable(messy1NFb, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+##
+<h2>What are tidy data?</h2>
+<hr>
+<p>From data science: The three normal forms (Codd et al.)</p>
+<ol>
+<li><b>First normal</b>:
+<ul>
+<li style = "color: #D3D3D3;">All rows represent a unique record (primary key)</li>
+<li>All values are atomic</li>
+<li style = "color: #D3D3D3;">Columns do not contain repeated grouping</li>
+</ul>
+</li>
+</ol>
+
+```{r tidy1NFb0, echo = FALSE}
+kable(tidy1NFb0, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+##
+<h2>What are tidy data?</h2>
+<hr>
+<p>From data science: The three normal forms (Codd et al.)</p>
+<ol>
+<li><b>First normal</b>:
+<ul>
+<li style = "color: #D3D3D3;">All rows represent a unique record (primary key)</li>
+<li>All values are atomic</li>
+<li style = "color: #D3D3D3;">Columns do not contain repeated grouping</li>
+</ul>
+</li>
+</ol>
+
+```{r tidy1NFb, echo = FALSE}
+kable(tidy1NFb, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+##
+<h2>What are tidy data?</h2>
+<hr>
+<p>From data science: The three normal forms (Codd et al.)</p>
+<ol>
+<li><b>First normal</b>:
+<ul>
+<li style = "color: #D3D3D3;">All rows represent a unique record (primary key)</li>
+<li  style = "color: #D3D3D3;">All values are atomic</li>
+<li>Columns do not contain repeated grouping</li>
+</ul>
+</li>
+</ol>
+
+```{r messy1NFc, echo = FALSE}
+kable(messy1NFc, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+##
+<h2>What are tidy data?</h2>
+<hr>
+<p>From data science: The three normal forms (Codd et al.)</p>
+<ol>
+<li><b>First normal</b>:
+<ul>
+<li style = "color: #D3D3D3;">All rows represent a unique record (primary key)</li>
+<li  style = "color: #D3D3D3;">All values are atomic</li>
+<li>Columns do not contain repeated grouping</li>
+</ul>
+</li>
+</ol>
+
+```{r tidy1NFc, echo = FALSE}
+kable(exampleTidy1, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+##
+<h2>What are tidy data?</h2>
+<hr>
+<p>From data science: The three normal forms (Codd et al.)</p>
+<ol start = "2">
+<li><b>Second normal</b>: All columns are unique to the primary key (observation)</li>
+</ol>
+```{r messy2NF, echo = FALSE}
+kable(messy2NF, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+##
+<h2>What are tidy data?</h2>
+<hr>
+<p>From data science: The three normal forms (Codd et al.)</p>
+<ol start = "2">
+<li><b>Second normal</b>: All columns are unique to the primary key (observation)</li>
+</ol>
+```{r tidy2NFa, echo = FALSE}
+kable(tidy2NFobsLevel, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+<br>
+```{r tidy2NFb, echo = FALSE}
+kable(tidy2NFsiteLevel, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+##
+<h2>What are tidy data?</h2>
+<hr>
+
+<p>From data science: The three normal forms (Codd et al.)</p>
+<ol start = "3">
+<li><b>Third normal</b>: All columns are non-transitively dependent.
+<ul><li>Column values are <b>only</b> directly dependent on the column that defines the observation</ul></li>
+</li>
+</ol>
+
+<p>Kent: Every non-key attribute must provide a fact about the key, the whole key, and nothing but the key. So help me Codd.</p>
+```{r messy3NF1, echo = FALSE}
+kable(messy3NF1, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+##
+<h2>What are tidy data?</h2>
+<hr>
+
+<p>From data science: The three normal forms (Codd et al.)</p>
+<ol start = "3">
+<li><b>Third normal</b>: All columns are non-transitively dependent.
+<ul><li>Column values are <b>only</b> directly dependent on the column that defines the observation</ul></li>
+</li>
+</ol>
+
+<p>Kent: Every non-key attribute must provide a fact about the key, the whole key, and nothing but the key. So help me Codd.</p>
+```{r tidy3NF1, echo = FALSE}
+kable(exampleTidy1, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h2>
+<hr>
+<p>Consider how to arrange the following dataset using Codd's rules:</p>
+```{r exercise1messy, echo = FALSE}
+kable(exercise1messy %>% select(-id), "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h2>
+<hr>
+<p>Consider how to arrange the following dataset using Codd's rules:</p>
+```{r exercise1cleanSiteXY1, echo = FALSE}
+exercise1cleanSiteXY1 <- exercise1messy %>%
+  separate(siteXY, into = c('x', 'y'), sep = ', ')
+  
+kable(exercise1cleanSiteXY1, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h2>
+<hr>
+<p>Consider how to arrange the following dataset using Codd's rules:</p>
+```{r exercise1cleanSiteXY, echo = FALSE}
+exercise1cleanSiteXY <- exercise1messy %>%
+  separate(siteXY, into = c('x', 'y'), sep = ', ') %>%
+  select(site, canopy, x, y) %>%
+  distinct
+
+kable(exercise1cleanSiteXY, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h2>
+<hr>
+<p>Consider how to arrange the following dataset using Codd's rules:</p>
+```{r exercise1NoSite, echo = FALSE}
+exercise1NoSite <- exercise1messy %>%
+  select(birdID, date, site, mass, hTemp, spp)
+
+kable(exercise1NoSite, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h2>
+<hr>
+<p>Consider how to arrange the following dataset using Codd's rules:</p>
+```{r exercise1Visit, echo = FALSE}
+visitId1 <- generateObservationID()
+visitId2 <- generateObservationID()
+visitId3 <- generateObservationID()
+visitId4 <- generateObservationID()
+
+exercise1Visit <- exercise1messy %>%
+  select(site, date, hTemp) %>%
+  distinct %>%
+  mutate(visitId = c(visitId1, visitId2, visitId3, visitId4)) %>%
+  arrange(date) %>%
+  select(visitId, site:hTemp)
+
+kable(exercise1Visit, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h2>
+<hr>
+<p>Consider how to arrange the following dataset using Codd's rules:</p>
+```{r exercise1NoVisit, echo = FALSE}
+
+exercise1NoVisit <- exercise1messy %>%
+  select(birdID, date, site, mass, hTemp, spp) %>%
+  left_join(exercise1Visit, by = c('site', 'date')) %>%
+  select(birdID, visitId, mass, spp)
+
+kable(exercise1NoVisit, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h2>
+<hr>
+<p>Consider how to arrange the following dataset using Codd's rules:</p>
+```{r exercise1birdId, echo = FALSE}
+birdId1 <- generateObservationID()
+birdId2 <- generateObservationID()
+birdId3 <- generateObservationID()
+
+birdIdTable <- exercise1NoVisit %>%
+  select(birdID, spp) %>% distinct
+
+birdObsTable <- exercise1NoVisit %>%
+  select(birdID, visitId, mass) 
+
+kable(birdIdTable, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+<br>
+```{r exercise1birdObs, echo = FALSE}
+kable(birdObsTable, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+
+```
+
+##
+<h2>What are tidy data?</h2>
+<hr>
+<p>From data science: The three normal forms (Codd et al.)</p>
+<ol>
+<li><b>First normal</b>:
+<ul>
+<li>All rows represent a unique record (primary key)</li>
+<li>All values are atomic</li>
+<li>Columns do not contain repeated grouping</li>
 </ul>
 </li>
 <li><b>Second normal</b>: All columns are unique to the primary key (observation)</li>
 <li><b>Third normal</b>: All columns are non-transitively dependent.
-<ul><li>Column values are <b>only </b>directly dependent on the column that defines the observation</ul></li>
+<ul><li>Column values are <b>only</b> directly dependent on the column that defines the observation</ul></li>
 </li>
 </ol>
 

@@ -682,7 +682,7 @@ Functions to manipulate data from messy to tidy
 Tools for tidy wrangling
 </li>
 <li>
-Tidy functions to filter, summarize, and modify data (<i>Lesson 6</i>)
+Tidy functions to filter, summarize, and modify data*
 </li>
 </ul>
 </section>
@@ -706,24 +706,2117 @@ All rows represent a unique record (primary key)
 All values are atomic
 </li>
 <li>
-Columns are not grouped
+Columns do not contain repeated grouping
 </li>
 </ul>
 </li>
 <li>
-<b>Second normal</b>: All columns are unique to the <b>primary key</b> (observation)
+<b>Second normal</b>: All columns are unique to the primary key (observation)
 </li>
 <li>
 <b>Third normal</b>: All columns are non-transitively dependent.
 <ul>
 <li>
-Column values are <b>only </b>directly dependent on the column that defines the observation
+Column values are <b>only</b> directly dependent on the column that defines the observation
 </ul>
 </li>
 </li>
 </ol>
 </section>
 <section id="section-3" class="slide level2">
+<h1></h1>
+<h2>
+What are tidy data?
+</h2>
+<hr>
+<p>
+From data science: The three normal forms (Codd et al.)
+</p>
+<ol>
+<li>
+<b>First normal</b>:
+<ul>
+<li>
+All rows represent a unique record (primary key)
+</li>
+<li style="color: #D3D3D3;">
+All values are atomic
+</li>
+<li style="color: #D3D3D3;">
+Columns do not contain repeated grouping
+</li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="section-4" class="slide level2">
+<h1></h1>
+<h2>
+What are tidy data?
+</h2>
+<hr>
+<p>
+From data science: The three normal forms (Codd et al.)
+</p>
+<ol>
+<li>
+<b>First normal</b>:
+<ul>
+<li>
+All rows represent a unique record (primary key)
+</li>
+<li style="color: #D3D3D3;">
+All values are atomic
+</li>
+<li style="color: #D3D3D3;">
+Columns do not contain repeated grouping
+</li>
+</ul>
+</li>
+</ol>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+id
+</th>
+<th style="text-align:left;">
+birdID
+</th>
+<th style="text-align:left;">
+observationDate
+</th>
+<th style="text-align:left;">
+measurement
+</th>
+<th style="text-align:right;">
+value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+c811-3926c
+</td>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:left;">
+mass
+</td>
+<td style="text-align:right;">
+34.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c811-3926c
+</td>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:left;">
+wing
+</td>
+<td style="text-align:right;">
+96.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c811-3926c
+</td>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:left;">
+tail
+</td>
+<td style="text-align:right;">
+107.0
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-5" class="slide level2">
+<h1></h1>
+<h2>
+What are tidy data?
+</h2>
+<hr>
+<p>
+From data science: The three normal forms (Codd et al.)
+</p>
+<ol>
+<li>
+<b>First normal</b>:
+<ul>
+<li>
+All rows represent a unique record (primary key)
+</li>
+<li style="color: #D3D3D3;">
+All values are atomic
+</li>
+<li style="color: #D3D3D3;">
+Columns do not contain repeated grouping
+</li>
+</ul>
+</li>
+</ol>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+id
+</th>
+<th style="text-align:left;">
+birdID
+</th>
+<th style="text-align:left;">
+observationDate
+</th>
+<th style="text-align:right;">
+mass
+</th>
+<th style="text-align:right;">
+tail
+</th>
+<th style="text-align:right;">
+wing
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+c811-3926c
+</td>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:right;">
+34.5
+</td>
+<td style="text-align:right;">
+107
+</td>
+<td style="text-align:right;">
+96.7
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-6" class="slide level2">
+<h1></h1>
+<h2>
+What are tidy data?
+</h2>
+<hr>
+<p>
+From data science: The three normal forms (Codd et al.)
+</p>
+<ol>
+<li>
+<b>First normal</b>:
+<ul>
+<li style="color: #D3D3D3;">
+All rows represent a unique record (primary key)
+</li>
+<li>
+All values are atomic
+</li>
+<li style="color: #D3D3D3;">
+Columns do not contain repeated grouping
+</li>
+</ul>
+</li>
+</ol>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+birdID
+</th>
+<th style="text-align:left;">
+observationDate
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2016-05-16, 2017-07-12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58133
+</td>
+<td style="text-align:left;">
+2016-05-26
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+2016-06-02, 2017-05-12
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-7" class="slide level2">
+<h1></h1>
+<h2>
+What are tidy data?
+</h2>
+<hr>
+<p>
+From data science: The three normal forms (Codd et al.)
+</p>
+<ol>
+<li>
+<b>First normal</b>:
+<ul>
+<li style="color: #D3D3D3;">
+All rows represent a unique record (primary key)
+</li>
+<li>
+All values are atomic
+</li>
+<li style="color: #D3D3D3;">
+Columns do not contain repeated grouping
+</li>
+</ul>
+</li>
+</ol>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+birdID
+</th>
+<th style="text-align:left;">
+date1
+</th>
+<th style="text-align:left;">
+date2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:left;">
+2017-07-12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58133
+</td>
+<td style="text-align:left;">
+2016-05-26
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+2016-06-02
+</td>
+<td style="text-align:left;">
+2017-05-12
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-8" class="slide level2">
+<h1></h1>
+<h2>
+What are tidy data?
+</h2>
+<hr>
+<p>
+From data science: The three normal forms (Codd et al.)
+</p>
+<ol>
+<li>
+<b>First normal</b>:
+<ul>
+<li style="color: #D3D3D3;">
+All rows represent a unique record (primary key)
+</li>
+<li>
+All values are atomic
+</li>
+<li style="color: #D3D3D3;">
+Columns do not contain repeated grouping
+</li>
+</ul>
+</li>
+</ol>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+id
+</th>
+<th style="text-align:left;">
+birdID
+</th>
+<th style="text-align:left;">
+observationDate
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+c811-3926c
+</td>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+r767-1277f
+</td>
+<td style="text-align:left;">
+1123-58133
+</td>
+<td style="text-align:left;">
+2016-05-26
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+z138-4617c
+</td>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+2016-06-02
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+w898-1014w
+</td>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2017-07-12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q848-3734g
+</td>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+2017-05-12
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-9" class="slide level2">
+<h1></h1>
+<h2>
+What are tidy data?
+</h2>
+<hr>
+<p>
+From data science: The three normal forms (Codd et al.)
+</p>
+<ol>
+<li>
+<b>First normal</b>:
+<ul>
+<li style="color: #D3D3D3;">
+All rows represent a unique record (primary key)
+</li>
+<li style="color: #D3D3D3;">
+All values are atomic
+</li>
+<li>
+Columns do not contain repeated grouping
+</li>
+</ul>
+</li>
+</ol>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+id
+</th>
+<th style="text-align:left;">
+birdID
+</th>
+<th style="text-align:left;">
+observationDate1
+</th>
+<th style="text-align:left;">
+observationDate2
+</th>
+<th style="text-align:right;">
+mass1
+</th>
+<th style="text-align:right;">
+mass2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+c811-3926c
+</td>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:left;">
+2017-07-12
+</td>
+<td style="text-align:right;">
+34.5
+</td>
+<td style="text-align:right;">
+36.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+r767-1277f
+</td>
+<td style="text-align:left;">
+1123-58133
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+35.7
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+z138-4617c
+</td>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+2016-06-02
+</td>
+<td style="text-align:left;">
+2017-05-12
+</td>
+<td style="text-align:right;">
+38.0
+</td>
+<td style="text-align:right;">
+37.6
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-10" class="slide level2">
+<h1></h1>
+<h2>
+What are tidy data?
+</h2>
+<hr>
+<p>
+From data science: The three normal forms (Codd et al.)
+</p>
+<ol>
+<li>
+<b>First normal</b>:
+<ul>
+<li style="color: #D3D3D3;">
+All rows represent a unique record (primary key)
+</li>
+<li style="color: #D3D3D3;">
+All values are atomic
+</li>
+<li>
+Columns do not contain repeated grouping
+</li>
+</ul>
+</li>
+</ol>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+id
+</th>
+<th style="text-align:left;">
+birdID
+</th>
+<th style="text-align:left;">
+observationDate
+</th>
+<th style="text-align:right;">
+mass
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+c811-3926c
+</td>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:right;">
+34.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+r767-1277f
+</td>
+<td style="text-align:left;">
+1123-58133
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:right;">
+35.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+z138-4617c
+</td>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+2016-06-02
+</td>
+<td style="text-align:right;">
+38.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+w898-1014w
+</td>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2017-07-12
+</td>
+<td style="text-align:right;">
+36.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q848-3734g
+</td>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+2017-05-12
+</td>
+<td style="text-align:right;">
+37.6
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-11" class="slide level2">
+<h1></h1>
+<h2>
+What are tidy data?
+</h2>
+<hr>
+<p>
+From data science: The three normal forms (Codd et al.)
+</p>
+<ol start="2">
+<li>
+<b>Second normal</b>: All columns are unique to the primary key (observation)
+</li>
+</ol>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+id
+</th>
+<th style="text-align:left;">
+birdID
+</th>
+<th style="text-align:left;">
+observationDate
+</th>
+<th style="text-align:left;">
+site
+</th>
+<th style="text-align:right;">
+canopyCover
+</th>
+<th style="text-align:right;">
+mass
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+c811-3926c
+</td>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:left;">
+apple
+</td>
+<td style="text-align:right;">
+32.5
+</td>
+<td style="text-align:right;">
+34.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+r767-1277f
+</td>
+<td style="text-align:left;">
+1123-58133
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:left;">
+apple
+</td>
+<td style="text-align:right;">
+32.5
+</td>
+<td style="text-align:right;">
+35.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+z138-4617c
+</td>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+2016-06-02
+</td>
+<td style="text-align:left;">
+avocado
+</td>
+<td style="text-align:right;">
+78.4
+</td>
+<td style="text-align:right;">
+38.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+w898-1014w
+</td>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2017-07-12
+</td>
+<td style="text-align:left;">
+apple
+</td>
+<td style="text-align:right;">
+32.5
+</td>
+<td style="text-align:right;">
+36.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q848-3734g
+</td>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+2017-05-12
+</td>
+<td style="text-align:left;">
+avocado
+</td>
+<td style="text-align:right;">
+78.4
+</td>
+<td style="text-align:right;">
+37.6
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-12" class="slide level2">
+<h1></h1>
+<h2>
+What are tidy data?
+</h2>
+<hr>
+<p>
+From data science: The three normal forms (Codd et al.)
+</p>
+<ol start="2">
+<li>
+<b>Second normal</b>: All columns are unique to the primary key (observation)
+</li>
+</ol>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+id
+</th>
+<th style="text-align:left;">
+birdID
+</th>
+<th style="text-align:left;">
+site
+</th>
+<th style="text-align:left;">
+observationDate
+</th>
+<th style="text-align:right;">
+mass
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+c811-3926c
+</td>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+apple
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:right;">
+34.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+r767-1277f
+</td>
+<td style="text-align:left;">
+1123-58133
+</td>
+<td style="text-align:left;">
+apple
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:right;">
+35.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+z138-4617c
+</td>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+avocado
+</td>
+<td style="text-align:left;">
+2016-06-02
+</td>
+<td style="text-align:right;">
+38.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+w898-1014w
+</td>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+apple
+</td>
+<td style="text-align:left;">
+2017-07-12
+</td>
+<td style="text-align:right;">
+36.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q848-3734g
+</td>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+avocado
+</td>
+<td style="text-align:left;">
+2017-05-12
+</td>
+<td style="text-align:right;">
+37.6
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+id
+</th>
+<th style="text-align:left;">
+site
+</th>
+<th style="text-align:right;">
+canopyCover
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+k534-2388b
+</td>
+<td style="text-align:left;">
+apple
+</td>
+<td style="text-align:right;">
+32.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+y521-6520j
+</td>
+<td style="text-align:left;">
+avocado
+</td>
+<td style="text-align:right;">
+78.4
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-13" class="slide level2">
+<h1></h1>
+<h2>
+What are tidy data?
+</h2>
+<hr>
+<p>
+From data science: The three normal forms (Codd et al.)
+</p>
+<ol start="3">
+<li>
+<b>Third normal</b>: All columns are non-transitively dependent.
+<ul>
+<li>
+Column values are <b>only</b> directly dependent on the column that defines the observation
+</ul>
+</li>
+</li>
+</ol>
+<p>
+Kent: Every non-key attribute must provide a fact about the key, the whole key, and nothing but the key. So help me Codd.
+</p>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+id
+</th>
+<th style="text-align:left;">
+birdID
+</th>
+<th style="text-align:left;">
+observationDate
+</th>
+<th style="text-align:right;">
+mass
+</th>
+<th style="text-align:right;">
+yearBanded
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+c811-3926c
+</td>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:right;">
+34.5
+</td>
+<td style="text-align:right;">
+2016
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+r767-1277f
+</td>
+<td style="text-align:left;">
+1123-58133
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:right;">
+35.7
+</td>
+<td style="text-align:right;">
+2015
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+z138-4617c
+</td>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+2016-06-02
+</td>
+<td style="text-align:right;">
+38.0
+</td>
+<td style="text-align:right;">
+2016
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+w898-1014w
+</td>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2017-07-12
+</td>
+<td style="text-align:right;">
+36.2
+</td>
+<td style="text-align:right;">
+2016
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q848-3734g
+</td>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+2017-05-12
+</td>
+<td style="text-align:right;">
+37.6
+</td>
+<td style="text-align:right;">
+2016
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-14" class="slide level2">
+<h1></h1>
+<h2>
+What are tidy data?
+</h2>
+<hr>
+<p>
+From data science: The three normal forms (Codd et al.)
+</p>
+<ol start="3">
+<li>
+<b>Third normal</b>: All columns are non-transitively dependent.
+<ul>
+<li>
+Column values are <b>only</b> directly dependent on the column that defines the observation
+</ul>
+</li>
+</li>
+</ol>
+<p>
+Kent: Every non-key attribute must provide a fact about the key, the whole key, and nothing but the key. So help me Codd.
+</p>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+id
+</th>
+<th style="text-align:left;">
+birdID
+</th>
+<th style="text-align:left;">
+observationDate
+</th>
+<th style="text-align:right;">
+mass
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+c811-3926c
+</td>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:right;">
+34.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+r767-1277f
+</td>
+<td style="text-align:left;">
+1123-58133
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:right;">
+35.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+z138-4617c
+</td>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+2016-06-02
+</td>
+<td style="text-align:right;">
+38.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+w898-1014w
+</td>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2017-07-12
+</td>
+<td style="text-align:right;">
+36.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q848-3734g
+</td>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+2017-05-12
+</td>
+<td style="text-align:right;">
+37.6
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-15" class="slide level2">
+<h1></h1>
+<h2>
+<i class="fa fa-user-circle-o" style="font-size: 150%;"></i> Exercise One:
+</h2>
+<hr>
+<p>
+Consider how to arrange the following dataset using Codd’s rules:
+</p>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+birdID
+</th>
+<th style="text-align:left;">
+date
+</th>
+<th style="text-align:left;">
+site
+</th>
+<th style="text-align:right;">
+canopy
+</th>
+<th style="text-align:right;">
+mass
+</th>
+<th style="text-align:right;">
+hTemp
+</th>
+<th style="text-align:left;">
+siteXY
+</th>
+<th style="text-align:left;">
+spp
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:left;">
+apple
+</td>
+<td style="text-align:right;">
+32.5
+</td>
+<td style="text-align:right;">
+34.5
+</td>
+<td style="text-align:right;">
+22.2
+</td>
+<td style="text-align:left;">
+-77.048, 38.925
+</td>
+<td style="text-align:left;">
+NOCA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58133
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:left;">
+apple
+</td>
+<td style="text-align:right;">
+32.5
+</td>
+<td style="text-align:right;">
+35.7
+</td>
+<td style="text-align:right;">
+22.2
+</td>
+<td style="text-align:left;">
+-77.048, 38.925
+</td>
+<td style="text-align:left;">
+NOCA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+2016-06-02
+</td>
+<td style="text-align:left;">
+avocado
+</td>
+<td style="text-align:right;">
+78.4
+</td>
+<td style="text-align:right;">
+38.0
+</td>
+<td style="text-align:right;">
+26.8
+</td>
+<td style="text-align:left;">
+-77.053, 38.929
+</td>
+<td style="text-align:left;">
+GRCA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2017-07-12
+</td>
+<td style="text-align:left;">
+apple
+</td>
+<td style="text-align:right;">
+32.5
+</td>
+<td style="text-align:right;">
+36.2
+</td>
+<td style="text-align:right;">
+31.0
+</td>
+<td style="text-align:left;">
+-77.048, 38.925
+</td>
+<td style="text-align:left;">
+NOCA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+2017-05-12
+</td>
+<td style="text-align:left;">
+avocado
+</td>
+<td style="text-align:right;">
+78.4
+</td>
+<td style="text-align:right;">
+37.6
+</td>
+<td style="text-align:right;">
+18.7
+</td>
+<td style="text-align:left;">
+-77.053, 38.929
+</td>
+<td style="text-align:left;">
+GRCA
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-16" class="slide level2">
+<h1></h1>
+<h2>
+<i class="fa fa-user-circle-o" style="font-size: 150%;"></i> Exercise One:
+</h2>
+<hr>
+<p>
+Consider how to arrange the following dataset using Codd’s rules:
+</p>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+id
+</th>
+<th style="text-align:left;">
+birdID
+</th>
+<th style="text-align:left;">
+date
+</th>
+<th style="text-align:left;">
+site
+</th>
+<th style="text-align:right;">
+canopy
+</th>
+<th style="text-align:right;">
+mass
+</th>
+<th style="text-align:right;">
+hTemp
+</th>
+<th style="text-align:left;">
+x
+</th>
+<th style="text-align:left;">
+y
+</th>
+<th style="text-align:left;">
+spp
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+c811-3926c
+</td>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:left;">
+apple
+</td>
+<td style="text-align:right;">
+32.5
+</td>
+<td style="text-align:right;">
+34.5
+</td>
+<td style="text-align:right;">
+22.2
+</td>
+<td style="text-align:left;">
+-77.048
+</td>
+<td style="text-align:left;">
+38.925
+</td>
+<td style="text-align:left;">
+NOCA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+r767-1277f
+</td>
+<td style="text-align:left;">
+1123-58133
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:left;">
+apple
+</td>
+<td style="text-align:right;">
+32.5
+</td>
+<td style="text-align:right;">
+35.7
+</td>
+<td style="text-align:right;">
+22.2
+</td>
+<td style="text-align:left;">
+-77.048
+</td>
+<td style="text-align:left;">
+38.925
+</td>
+<td style="text-align:left;">
+NOCA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+z138-4617c
+</td>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+2016-06-02
+</td>
+<td style="text-align:left;">
+avocado
+</td>
+<td style="text-align:right;">
+78.4
+</td>
+<td style="text-align:right;">
+38.0
+</td>
+<td style="text-align:right;">
+26.8
+</td>
+<td style="text-align:left;">
+-77.053
+</td>
+<td style="text-align:left;">
+38.929
+</td>
+<td style="text-align:left;">
+GRCA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+w898-1014w
+</td>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2017-07-12
+</td>
+<td style="text-align:left;">
+apple
+</td>
+<td style="text-align:right;">
+32.5
+</td>
+<td style="text-align:right;">
+36.2
+</td>
+<td style="text-align:right;">
+31.0
+</td>
+<td style="text-align:left;">
+-77.048
+</td>
+<td style="text-align:left;">
+38.925
+</td>
+<td style="text-align:left;">
+NOCA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+q848-3734g
+</td>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+2017-05-12
+</td>
+<td style="text-align:left;">
+avocado
+</td>
+<td style="text-align:right;">
+78.4
+</td>
+<td style="text-align:right;">
+37.6
+</td>
+<td style="text-align:right;">
+18.7
+</td>
+<td style="text-align:left;">
+-77.053
+</td>
+<td style="text-align:left;">
+38.929
+</td>
+<td style="text-align:left;">
+GRCA
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-17" class="slide level2">
+<h1></h1>
+<h2>
+<i class="fa fa-user-circle-o" style="font-size: 150%;"></i> Exercise One:
+</h2>
+<hr>
+<p>
+Consider how to arrange the following dataset using Codd’s rules:
+</p>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+site
+</th>
+<th style="text-align:right;">
+canopy
+</th>
+<th style="text-align:left;">
+x
+</th>
+<th style="text-align:left;">
+y
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+apple
+</td>
+<td style="text-align:right;">
+32.5
+</td>
+<td style="text-align:left;">
+-77.048
+</td>
+<td style="text-align:left;">
+38.925
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+avocado
+</td>
+<td style="text-align:right;">
+78.4
+</td>
+<td style="text-align:left;">
+-77.053
+</td>
+<td style="text-align:left;">
+38.929
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-18" class="slide level2">
+<h1></h1>
+<h2>
+<i class="fa fa-user-circle-o" style="font-size: 150%;"></i> Exercise One:
+</h2>
+<hr>
+<p>
+Consider how to arrange the following dataset using Codd’s rules:
+</p>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+birdID
+</th>
+<th style="text-align:left;">
+date
+</th>
+<th style="text-align:left;">
+site
+</th>
+<th style="text-align:right;">
+mass
+</th>
+<th style="text-align:right;">
+hTemp
+</th>
+<th style="text-align:left;">
+spp
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:left;">
+apple
+</td>
+<td style="text-align:right;">
+34.5
+</td>
+<td style="text-align:right;">
+22.2
+</td>
+<td style="text-align:left;">
+NOCA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58133
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:left;">
+apple
+</td>
+<td style="text-align:right;">
+35.7
+</td>
+<td style="text-align:right;">
+22.2
+</td>
+<td style="text-align:left;">
+NOCA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+2016-06-02
+</td>
+<td style="text-align:left;">
+avocado
+</td>
+<td style="text-align:right;">
+38.0
+</td>
+<td style="text-align:right;">
+26.8
+</td>
+<td style="text-align:left;">
+GRCA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+2017-07-12
+</td>
+<td style="text-align:left;">
+apple
+</td>
+<td style="text-align:right;">
+36.2
+</td>
+<td style="text-align:right;">
+31.0
+</td>
+<td style="text-align:left;">
+NOCA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+2017-05-12
+</td>
+<td style="text-align:left;">
+avocado
+</td>
+<td style="text-align:right;">
+37.6
+</td>
+<td style="text-align:right;">
+18.7
+</td>
+<td style="text-align:left;">
+GRCA
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-19" class="slide level2">
+<h1></h1>
+<h2>
+<i class="fa fa-user-circle-o" style="font-size: 150%;"></i> Exercise One:
+</h2>
+<hr>
+<p>
+Consider how to arrange the following dataset using Codd’s rules:
+</p>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+visitId
+</th>
+<th style="text-align:left;">
+site
+</th>
+<th style="text-align:left;">
+date
+</th>
+<th style="text-align:right;">
+hTemp
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+n850-1534q
+</td>
+<td style="text-align:left;">
+apple
+</td>
+<td style="text-align:left;">
+2016-05-16
+</td>
+<td style="text-align:right;">
+22.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+k759-5172t
+</td>
+<td style="text-align:left;">
+avocado
+</td>
+<td style="text-align:left;">
+2016-06-02
+</td>
+<td style="text-align:right;">
+26.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+z664-1978u
+</td>
+<td style="text-align:left;">
+avocado
+</td>
+<td style="text-align:left;">
+2017-05-12
+</td>
+<td style="text-align:right;">
+18.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+o501-3695w
+</td>
+<td style="text-align:left;">
+apple
+</td>
+<td style="text-align:left;">
+2017-07-12
+</td>
+<td style="text-align:right;">
+31.0
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-20" class="slide level2">
+<h1></h1>
+<h2>
+<i class="fa fa-user-circle-o" style="font-size: 150%;"></i> Exercise One:
+</h2>
+<hr>
+<p>
+Consider how to arrange the following dataset using Codd’s rules:
+</p>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+birdID
+</th>
+<th style="text-align:left;">
+visitId
+</th>
+<th style="text-align:right;">
+mass
+</th>
+<th style="text-align:left;">
+spp
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+n850-1534q
+</td>
+<td style="text-align:right;">
+34.5
+</td>
+<td style="text-align:left;">
+NOCA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58133
+</td>
+<td style="text-align:left;">
+n850-1534q
+</td>
+<td style="text-align:right;">
+35.7
+</td>
+<td style="text-align:left;">
+NOCA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+k759-5172t
+</td>
+<td style="text-align:right;">
+38.0
+</td>
+<td style="text-align:left;">
+GRCA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+o501-3695w
+</td>
+<td style="text-align:right;">
+36.2
+</td>
+<td style="text-align:left;">
+NOCA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+z664-1978u
+</td>
+<td style="text-align:right;">
+37.6
+</td>
+<td style="text-align:left;">
+GRCA
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-21" class="slide level2">
+<h1></h1>
+<h2>
+<i class="fa fa-user-circle-o" style="font-size: 150%;"></i> Exercise One:
+</h2>
+<hr>
+<p>
+Consider how to arrange the following dataset using Codd’s rules:
+</p>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+birdID
+</th>
+<th style="text-align:left;">
+spp
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+NOCA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58133
+</td>
+<td style="text-align:left;">
+NOCA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+GRCA
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+birdID
+</th>
+<th style="text-align:left;">
+visitId
+</th>
+<th style="text-align:right;">
+mass
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+n850-1534q
+</td>
+<td style="text-align:right;">
+34.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58133
+</td>
+<td style="text-align:left;">
+n850-1534q
+</td>
+<td style="text-align:right;">
+35.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+k759-5172t
+</td>
+<td style="text-align:right;">
+38.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58132
+</td>
+<td style="text-align:left;">
+o501-3695w
+</td>
+<td style="text-align:right;">
+36.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1123-58134
+</td>
+<td style="text-align:left;">
+z664-1978u
+</td>
+<td style="text-align:right;">
+37.6
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-22" class="slide level2">
 <h1></h1>
 <h2>
 What are tidy data?
@@ -750,7 +2843,7 @@ Each tidy dataset arranging values into the <b>same</b> structure.
 The best way to understand these rules is to look at examples of when they are broken.
 </p>
 </section>
-<section id="section-4" class="slide level2">
+<section id="section-23" class="slide level2">
 <h1></h1>
 <h2>
 Tidy data: Each variable forms a column
@@ -769,7 +2862,7 @@ Problem: One variable split into multiple columns
 Tidy version
 </h3>
 </section>
-<section id="section-5" class="slide level2">
+<section id="section-24" class="slide level2">
 <h1></h1>
 <h2>
 Tidy data: Each observation forms a row
@@ -788,7 +2881,7 @@ Problem: One observation split into multiple rows
 Tidy version
 </h3>
 </section>
-<section id="section-6" class="slide level2">
+<section id="section-25" class="slide level2">
 <h1></h1>
 <h2>
 Tidy data: Each level of observation forms a table
@@ -808,7 +2901,7 @@ Problem: One observational split provided in multiple tables
 Tidy version
 </h3>
 </section>
-<section id="section-7" class="slide level2">
+<section id="section-26" class="slide level2">
 <h1></h1>
 <h2>
 Some <b>more</b> rules for tidy data
@@ -824,7 +2917,7 @@ Why not use standard date formats?
 Why on Earth would you use row names for a data frame?
 </h3>
 </section>
-<section id="section-8" class="slide level2">
+<section id="section-27" class="slide level2">
 <h1></h1>
 <h2>
 Why use tidy data?
@@ -843,7 +2936,7 @@ Easy filtering and summarizing
 Analysist can choose the level of analysis
 </p>
 </section>
-<section id="section-9" class="slide level2">
+<section id="section-28" class="slide level2">
 <h1></h1>
 <h2>
 Why would you create untidy data?
@@ -867,7 +2960,7 @@ Structuring data for a planned analysis
 </li>
 </ol>
 </section>
-<section id="section-10" class="slide level2">
+<section id="section-29" class="slide level2">
 <h1></h1>
 <h2>
 Functions to tidy data:
@@ -889,7 +2982,7 @@ tidyr functions
 <b>unite</b>:
 </p>
 </section>
-<section id="section-11" class="slide level2">
+<section id="section-30" class="slide level2">
 <h1></h1>
 <h2>
 Tools for tidy wrangling:</br>Tibbles and pipes, oh my!
