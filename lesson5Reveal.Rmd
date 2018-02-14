@@ -241,6 +241,13 @@ messy1NFa <- data.frame(id = obs1,
            value = c(34.5, 96.7, 107)
            )
 
+dfTooLong <- data.frame(id = obs1,
+           birdID = rep('1123-58132', 3), 
+           observationDate = rep('2016-05-16', 3),
+           measurement = c('mass', 'wing', 'tail'),
+           value = c(34.5, 96.7, 107)
+           )
+
 tidy1NFa <-
   data.frame(id = rep(obs1, 3),
              birdID = rep('1123-58132', 3),
@@ -341,6 +348,33 @@ exercise1messy <- messy2NF %>%
     )
     ) %>%
   rename(date = observationDate, canopy = canopyCover, spp = species)
+
+
+dfWide <- data.frame(
+  subject = c('A', 'B', 'C'),
+  mass2016 = c(13.2, 14.6, 27.1),
+  mass2017 = c(26.4, 15.2, 31.3)
+)
+
+dfLong <- dfWide %>%
+  gather(key = year,
+         value = value,
+         mass2016:mass2017) %>%
+  mutate(year = str_replace_all(year, 'mass', ''))
+
+messyBander <- exampleTidy1 %>%
+  mutate(
+    site = c('apple','apple', 'avocado', 'apple', 'avocado'),
+    canopyCover = c(32.5, 32.5, 78.4, 32.5, 78.4)
+  ) %>%
+  select(id, birdID, observationDate, site, canopyCover, mass)
+
+
+
+someMessyData <- exercise1messy %>%
+  select(-hTemp)
+
+
 ```
 
 ##
@@ -585,6 +619,25 @@ kable(exampleTidy1, "html") %>%
   kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
+
+##
+<h2>What are tidy data?</h2>
+<hr>
+<p>From data science: The three normal forms (Codd et al.)</p>
+<ol>
+<li><b>First normal</b>:
+<ul>
+<li>All rows represent a unique record (primary key)</li>
+<li>All values are atomic</li>
+<li>Columns do not contain repeated grouping</li>
+</ul>
+</li>
+<li><b>Second normal</b>: All columns are unique to the primary key (observation)</li>
+<li><b>Third normal</b>: All columns are non-transitively dependent.
+<ul><li>Column values are <b>only</b> directly dependent on the column that defines the observation</ul></li>
+</li>
+</ol>
+
 ##
 <h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h2>
 <hr>
@@ -593,6 +646,24 @@ kable(exampleTidy1, "html") %>%
 kable(exercise1messy %>% select(-id), "html") %>%
   kable_styling(bootstrap_options = c("striped", "hover"))
 ```
+
+##
+<h2>What are tidy data?</h2>
+<hr>
+<p>From data science: The three normal forms (Codd et al.)</p>
+<ol>
+<li><b>First normal</b>:
+<ul>
+<li>All rows represent a unique record (primary key)</li>
+<li>All values are atomic</li>
+<li>Columns do not contain repeated grouping</li>
+</ul>
+</li>
+<li><b>Second normal</b>: All columns are unique to the primary key (observation)</li>
+<li><b>Third normal</b>: All columns are non-transitively dependent.
+<ul><li>Column values are <b>only</b> directly dependent on the column that defines the observation</ul></li>
+</li>
+</ol>
 
 ##
 <h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h2>
@@ -695,6 +766,134 @@ kable(birdObsTable, "html") %>%
 ```
 
 ##
+<h2>The tidyverse: Tibbles and pipes oh my!</h2>
+<hr>
+
+<img src="rWorkshop/images/tidyverseComponents.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "float: center; 
+	      padding-right: 0px;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 80%;"/>
+
+##
+<h2>The tidyverse: Tibbles and pipes oh my!</h2>
+<hr>
+
+**A typical data frame**:  
+```{r, echo = FALSE}
+dfLong
+```
+
+##
+<h2>The tidyverse: Tibbles and pipes oh my!</h2>
+<hr>
+
+**Summary data on a typical data frame**:  
+```{r}
+class(dfLong$subject)
+str(dfLong)
+```
+
+##
+<h2>The tidyverse: Tibbles and pipes oh my!</h2>
+<hr>
+
+**Summary data on a typical data frame**:  
+```{r}
+nrow(dfLong)
+ncol(dfLong)
+dim(dfLong)
+```
+
+##
+<h2>The tidyverse: Tibbles and pipes oh my!</h2>
+<hr>
+
+**Tibbles**:  
+- Show a reduced number of rows and columns, if necessary  
+- Provide the dimensions of the data table
+- Provide the class of fields in a data frame
+
+```{r, echo = FALSE}
+dfLong %>% tbl_df
+dataFrame <- dfLong
+```
+
+##
+<h2>The tidyverse: Tibbles and pipes oh my!</h2>
+<hr>
+
+<img style="float: right; margin: 0px 15px 15px 0px;" src="http://revolution-computing.typepad.com/.a/6a010534b1db25970b01a3fd380b67970b-600wi">
+
+The **Pipe operator (%>%)** allows you to pass output from an argument on the left to an argument on the right without assigning a name or nesting functions. 
+
+For example, we can make use the _tbl_df_ function and a _pipe_ to turn a regular data frame to a tibble:
+
+<br style="clear:both" />
+
+```{r, eval = FALSE}
+dataFrame %>%
+  tbl_df
+```
+
+##
+<h2>The tidyverse: Tibbles and pipes oh my!</h2>
+<hr>
+
+
+<img style="float: right; margin: 0px 15px 15px 0px;" src="http://revolution-computing.typepad.com/.a/6a010534b1db25970b01a3fd380b67970b-600wi">
+
+The **Pipe operator (%>%)** allows you to pass output from an argument on the left to an argument on the right without assigning a name or nesting functions. 
+
+For example, we can make use the _tbl_df_ function and a _pipe_ to turn a regular data frame to a tibble:
+
+<br style="clear:both" />
+
+```{r, eval = FALSE}
+dataFrame %>%
+  tbl_df
+```
+
+##
+<h2>The tidyverse: Tibbles and pipes oh my!</h2>
+<hr>
+
+
+<img style="float: right; margin: 0px 15px 15px 0px;" src="http://revolution-computing.typepad.com/.a/6a010534b1db25970b01a3fd380b67970b-600wi">
+
+The **Pipe operator (%>%)** allows you to pass output from an argument on the left to an argument on the right without assigning a name or nesting functions. 
+
+Note the convention to start a new line after each pipe. This is to make your code more readable.
+
+<br style="clear:both" />
+
+```{r, eval = FALSE}
+dataFrame %>%
+  tbl_df
+```
+
+
+##
+<h2>The tidyverse: Tibbles and pipes oh my!</h2>
+<hr>
+
+We can read a data table into R directly as a tibble using the **readr** function _read_csv_. 
+
+```{r, eval = FALSE}
+read_csv(dataFrame.csv)
+```
+
+```{r, echo = FALSE}
+dfLong %>% 
+  tbl_df
+```
+
+##
 <h2>What are tidy data?</h2>
 <hr>
 <p>From data science: The three normal forms (Codd et al.)</p>
@@ -729,51 +928,128 @@ kable(birdObsTable, "html") %>%
 <h2>Tidy data: Each variable forms a column</h2>
 <hr>
 
-<h3>Untidy version</h3>
-<p>Problem: More than one variable in a column</p>
-<p>Problem: One variable split into multiple columns</p>
+<p><b>Untidy problem</b>: More than one variable in a column</p>
+<br>
+```{r untidy HW1a, echo = FALSE}
+kable(messy1NFb, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
 
-<h3>Tidy version</h3>
+##
+<p><b>Tidy solution</b>: `separate`</p>
+
+```{r untidy HW1c, eval = FALSE}
+badDate
+
+str(badDate)
+
+badDate %>%
+  separate(observationDate, into = c('date1', 'date2'), sep = ', ')
+```
+
+```{r untidy HW1d, echo = FALSE, warning = FALSE}
+badDate %>%
+  separate(observationDate, into = c('date1', 'date2'), sep = ', ')
+```
+
+##
+<h2>Tidy data: Each variable forms a column</h2>
+<hr>
+
+<p><b>Untidy problem</b>: One variable split into multiple columns</p>
+<br>
+```{r untidy HW1e, echo = FALSE, warning = FALSE}
+kable(dfWide, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+##
+<h2>Tidy data: Each variable forms a column</h2>
+<hr>
+
+<p><b>Tidy solution</b>: `gather`</p>
+<br>
+```{r untidy HW1f, eval = FALSE}
+dfWide
+
+str(dfWide)
+
+dfWide %>%
+  gather(mass, year, mass2016:mass2017)
+```
+
+```{r untidy HW1g, echo = FALSE, warning = FALSE}
+dfWide %>%
+  gather(mass, year, mass2016:mass2017)
+```
 
 ##
 <h2>Tidy data: Each observation forms a row</h2>
 <hr>
+<p><b>Untidy problem</b>: More than one observation in a row</p>
 
-<h3>Untidy version</h3>
-<p>Problem: More than one observation in a row</p>
-<p>Problem: One observation split into multiple rows</p>
-
-<h3>Tidy version</h3>
-
-
-##
-<h2>Tidy data: Each level of observation forms a table</h2>.
-<hr>
-
-
-<h3>Untidy version</h3>
-<p>Problem: More than observational unit in a table (most common)</p>
-<p>Problem: One observational split provided in multiple tables</p>
-
-
-<h3>Tidy version</h3>
+```{r untidy HW2a, echo = FALSE, warning = FALSE}
+kable(dfTooLong, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
 
 ##
-<h2>Some <b>more</b> rules for tidy data</h2>
+<h2>Tidy data: Each observation forms a row</h2>
 <hr>
+<p><b>Tidy solution</b>: `spread`</p>
 
-<h3>Value format matters</h3>
-<p>Why not use standard date formats?</p>
-<h3>Why on Earth would you use row names for a data frame?</h3>
+```{r untidy HW2b, eval = FALSE}
+dfTooLong
+
+str(dfTooLong)
+
+dfTooLong %>% 
+  spread(measurement, value)
+```
+
+```{r untidy HW2c, echo = FALSE, warning = FALSE}
+kable(dfTooLong %>% 
+  spread(measurement, value), "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+##
+<h2>Tidy data: Each level of observation forms a table</h2>
+<hr>
+<p><b>Untidy problem</b>: More than level of observation in a table</p>
+
+```{r untidy HW3a, echo = FALSE, warning = FALSE}
+kable(messyBander, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+##
+<h2>Tidy data: Each level of observation forms a table</h2>
+<hr>
+<p><b>Tidy solution</b>: `select`</p>
+
+```{r untidy HW3b, eval = FALSE}
+messyBander
+
+str(messyBander)
+
+messyBander %>% 
+  select(site, canopyCover)
+
+messyBander %>%
+  select(id, site, birdID, observationDate, mass)
+```
 
 ##
 <h2>Why use tidy data?</h2>
 <hr>
 
-<p>The same functions and steps can be applied across datasets</p>
-<p>Modifications can be applied without modifying each table</p>
-<p>Easy filtering and summarizing</p>
-<p>Analysist can choose the level of analysis</p>
+<ol>
+<li>The same functions and steps can be applied across datasets</li>
+<li>Modifications can be applied without modifying each table</li>
+<li>Easy filtering and summarizing</li>
+<li>Analysist can choose the level of analysis</li>
+</ol>
 
 ##
 <h2>Why would you create untidy data?</h2>
@@ -787,26 +1063,38 @@ kable(birdObsTable, "html") %>%
 <li>Structuring data for a planned analysis</li>
 </ol>
 
+##
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
+<p>Arrange the dataset `someMessyData` using Codd & Wickham's rules:</p>
+
+```{r exercise2b, echo = FALSE}
+kable(someMessyData, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+<p>Note: use the function `distinct` to remove duplicate records. See `?distinct`.</p>
 
 ##
-<h2>Functions to tidy data:</h2>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
 <hr>
+<p>Arrange the dataset `someMessyData` using Codd & Wickham's rules:</p>
+```{r exercise2c, eval = FALSE}
+# Separate latitude and longitude:
 
-<h3>tidyr functions</h3>
+someMessyData %>%
+  separate(siteXY, into = c('x', 'y'), sep = ', ') %>%
+  select(site, canopy, x, y) %>%
+  distinct
 
-<p><b>gather</b>:</p>
+# Site-level data with latitude and longitude:
 
-<p><b>spread</b>:</p>
+someMessyData %>%
+  separate(siteXY, into = c('x', 'y'), sep = ', ') %>%
+  select(site, canopy, x, y) %>%
+  distinct
 
-<p><b>separate</b>:</p>
+# Observation-level data:
 
-<p><b>unite</b>:</p>
+someMessyData %>%
+  select(birdID, date, site, mass, spp)
 
-##
-<h2>Tools for tidy wrangling:</br>Tibbles and pipes, oh my!</h2>
-<hr>
-
-<p><b>The tibble</b>:</p>
-
-<p><b>The pipe</b>:</p>
-
+```
