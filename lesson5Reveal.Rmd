@@ -206,175 +206,9 @@ eval(parse(text = script))
 
 rm(script)
 
-#---------------*
-# ---- tables ----
-#
-
-library(knitr)
-library(kableExtra)
+library(knitr) ; library(kableExtra)
 
 options(knitr.table.format = "html")
-
-options(stringsAsFactors = FALSE)
-
-generateObservationID <- function(){
-  n1 <- sample(100:999,1)
-  l1 <- sample(letters,1)
-  n2 <- sample(1000:9999, 1)
-  l2 <- sample(letters, 1)
-  paste0(l1, n1, '-', n2, l2)
-}
-
-obs1 <- generateObservationID()
-obs2 <- generateObservationID()
-obs3 <- generateObservationID()
-obs4 <- generateObservationID()
-obs5 <- generateObservationID()
-obs6 <- generateObservationID()
-
-# 1NF:  Each row is an observation:
-
-messy1NFa <- data.frame(id = obs1,
-           birdID = rep('1123-58132', 3), 
-           observationDate = rep('2016-05-16', 3),
-           measurement = c('mass', 'wing', 'tail'),
-           value = c(34.5, 96.7, 107)
-           )
-
-dfTooLong <- data.frame(id = obs1,
-           birdID = rep('1123-58132', 3), 
-           observationDate = rep('2016-05-16', 3),
-           measurement = c('mass', 'wing', 'tail'),
-           value = c(34.5, 96.7, 107)
-           )
-
-tidy1NFa <-
-  data.frame(id = rep(obs1, 3),
-             birdID = rep('1123-58132', 3),
-             observationDate = rep('2016-05-16', 3),
-             measurement = c('mass', 'wing', 'tail'),
-             value = c(34.5, 96.7, 107)
-  ) %>%
-  spread(measurement, value)
-
-# 1NF: All values are atomic
-
-messy1NFb <- data.frame(birdID = c('1123-58132', '1123-58133','1123-58134'), 
-           observationDate = c('2016-05-16, 2017-07-12', '2016-05-26', '2016-06-02, 2017-05-12')
-)
-
-# Fixed, but breaks the first rule
-
-tidy1NFb0 <- data.frame(birdID = c('1123-58132', '1123-58133','1123-58134'), 
-           observationDate = c('2016-05-16,2017-07-12', '2016-05-26', '2016-06-02,2017-05-12')
-) %>% 
-  separate(observationDate, into = c('date1', 'date2'), sep = ',')
-
-tidy1NFb <- data.frame(birdID = c('1123-58132', '1123-58133','1123-58134'), 
-           observationDate = c('2016-05-16,2017-07-12', '2016-05-26', '2016-06-02,2017-05-12')
-) %>% 
-  separate(observationDate, into = c('date1', 'date2'), sep = ',') %>%
-  gather(key = date, value = observationDate, -birdID, na.rm = TRUE) %>%
-  select(birdID, observationDate) %>%
-  mutate(id = c(obs1, obs2, obs3, obs4, obs5)) %>%
-  select(id, birdID:observationDate)
-
-# 1NF: No repeated groupings of columns
-
-messy1NFc <- data.frame(
-  id = c(obs1, obs2, obs3),
-  birdID = c('1123-58132', '1123-58133','1123-58134'), 
-  observationDate1 = c('2016-05-16', '2016-05-16', '2016-06-02'),
-  observationDate2 = c('2017-07-12', NA, '2017-05-12'),
-  mass1 = c(34.5, 35.7, 38.0),
-  mass2 = c(36.2, NA, 37.6)
-)
-
-exampleTidy1 <- data.frame(birdID = c('1123-58132', '1123-58133','1123-58134'), 
-           observationDate1 = c('2016-05-16', '2016-05-16', '2016-06-02'),
-           observationDate2 = c('2017-07-12', NA, '2017-05-12')) %>%
-  gather(date, observationDate, -birdID, na.rm = TRUE) %>%
-  select(-date) %>%
-  bind_cols(
-    data.frame(birdID = c('1123-58132', '1123-58133','1123-58134'), 
-               mass1 = c(34.5, 35.7, 38.0),
-               mass2 = c(36.2, NA, 37.6)
-  ) %>%
-    gather(massMeasure, mass, -birdID, na.rm = TRUE) %>%
-    select(-c(birdID, massMeasure))
-  ) %>%
-  mutate(id = c(obs1, obs2, obs3, obs4, obs5)) %>%
-  select(id, birdID:mass)
-
-# 2NF: All columns are unique to the primary key:
-
-messy2NF <- exampleTidy1 %>%
-  mutate(
-    site = c('apple','apple', 'avocado', 'apple', 'avocado'),
-    canopyCover = c(32.5, 32.5, 78.4, 32.5, 78.4)
-    ) %>%
-  select(id, birdID, observationDate, site, canopyCover, mass)
-
-tidy2NFobsLevel <- messy2NF %>%
-  select(id, birdID, site, observationDate, mass)
-
-siteId1 <- generateObservationID()
-siteId2 <- generateObservationID()
-
-tidy2NFsiteLevel <- messy2NF %>%
-  select(site, canopyCover) %>%
-  distinct %>%
-  transmute(id = c(siteId1, siteId2), site, canopyCover)
-
-# 3NF: 
-
-messy3NF1 <- exampleTidy1 %>%
-  mutate(yearBanded = c(2016, 2015, 2016, 2016, 2016))
-
-exampleTidy1
-
-# Putting it all together (exercise):
-
-exercise1messy <- messy2NF %>%
-  mutate(
-    hTemp = c(22.2, 22.2, 26.8, 31.0, 18.7),
-    siteXY = case_when(
-      site == 'apple' ~ '-77.048, 38.925',
-      site == 'avocado' ~ '-77.053, 38.929'
-    ),
-    species = case_when(
-      birdID %in% c('1123-58132', '1123-58133') ~ 'NOCA',
-      birdID %in% '1123-58134' ~ 'GRCA'
-    )
-    ) %>%
-  rename(date = observationDate, canopy = canopyCover, spp = species)
-
-
-dfWide <- data.frame(
-  subject = c('A', 'B', 'C'),
-  mass2016 = c(13.2, 14.6, 27.1),
-  mass2017 = c(26.4, 15.2, 31.3)
-)
-
-dfLong <- dfWide %>%
-  gather(key = year,
-         value = value,
-         mass2016:mass2017) %>%
-  mutate(year = str_replace_all(year, 'mass', ''))
-
-messyBander <- exampleTidy1 %>%
-  mutate(
-    site = c('apple','apple', 'avocado', 'apple', 'avocado'),
-    canopyCover = c(32.5, 32.5, 78.4, 32.5, 78.4)
-  ) %>%
-  select(id, birdID, observationDate, site, canopyCover, mass)
-
-
-
-someMessyData <- exercise1messy %>%
-  select(-hTemp)
-
-
 ```
 
 ##
@@ -475,8 +309,8 @@ kable(tidy1NFa, "html") %>%
 </li>
 </ol>
 
-```{r messy1NFb, echo = FALSE}
-kable(messy1NFb, "html") %>%
+```{r badDate, echo = FALSE}
+kable(badDate, "html") %>%
   kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
@@ -785,7 +619,7 @@ kable(birdObsTable, "html") %>%
 <hr>
 
 **A typical data frame**:  
-```{r, echo = FALSE}
+```{r}
 dfLong
 ```
 
@@ -819,9 +653,8 @@ dim(dfLong)
 - Provide the dimensions of the data table
 - Provide the class of fields in a data frame
 
-```{r, echo = FALSE}
-dfLong %>% tbl_df
-dataFrame <- dfLong
+```{r}
+tbl_df(dfLong)
 ```
 
 ##
@@ -837,43 +670,21 @@ For example, we can make use the _tbl_df_ function and a _pipe_ to turn a regula
 <br style="clear:both" />
 
 ```{r, eval = FALSE}
-dataFrame %>%
+dfLong %>%
   tbl_df
 ```
 
 ##
 <h2>The tidyverse: Tibbles and pipes oh my!</h2>
 <hr>
-
-
 <img style="float: right; margin: 0px 15px 15px 0px;" src="http://revolution-computing.typepad.com/.a/6a010534b1db25970b01a3fd380b67970b-600wi">
-
-The **Pipe operator (%>%)** allows you to pass output from an argument on the left to an argument on the right without assigning a name or nesting functions. 
-
-For example, we can make use the _tbl_df_ function and a _pipe_ to turn a regular data frame to a tibble:
-
-<br style="clear:both" />
-
-```{r, eval = FALSE}
-dataFrame %>%
-  tbl_df
-```
-
-##
-<h2>The tidyverse: Tibbles and pipes oh my!</h2>
-<hr>
-
-
-<img style="float: right; margin: 0px 15px 15px 0px;" src="http://revolution-computing.typepad.com/.a/6a010534b1db25970b01a3fd380b67970b-600wi">
-
-The **Pipe operator (%>%)** allows you to pass output from an argument on the left to an argument on the right without assigning a name or nesting functions. 
 
 Note the convention to start a new line after each pipe. This is to make your code more readable.
 
 <br style="clear:both" />
 
 ```{r, eval = FALSE}
-dataFrame %>%
+dfLong %>%
   tbl_df
 ```
 
@@ -931,7 +742,7 @@ dfLong %>%
 <p><b>Untidy problem</b>: More than one variable in a column</p>
 <br>
 ```{r untidy HW1a, echo = FALSE}
-kable(messy1NFb, "html") %>%
+kable(badDate, "html") %>%
   kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
@@ -975,7 +786,7 @@ dfWide
 str(dfWide)
 
 dfWide %>%
-  gather(mass, year, mass2016:mass2017)
+  gather(year, mass, mass2016:mass2017)
 ```
 
 ```{r untidy HW1g, echo = FALSE, warning = FALSE}
@@ -986,7 +797,7 @@ dfWide %>%
 ##
 <h2>Tidy data: Each observation forms a row</h2>
 <hr>
-<p><b>Untidy problem</b>: More than one observation in a row</p>
+<p><b>Untidy problem</b>: An observation occupies multiple rows</p>
 
 ```{r untidy HW2a, echo = FALSE, warning = FALSE}
 kable(dfTooLong, "html") %>%
@@ -1065,13 +876,14 @@ messyBander %>%
 
 ##
 <h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
+<hr>
 <p>Arrange the dataset `someMessyData` using Codd & Wickham's rules:</p>
 
 ```{r exercise2b, echo = FALSE}
 kable(someMessyData, "html") %>%
   kable_styling(bootstrap_options = c("striped", "hover"))
 ```
-<p>Note: use the function `distinct` to remove duplicate records. See `?distinct`.</p>
+<p style = "font-size: 24px;"><i>Note: use the function `distinct` to remove duplicate records. See `?distinct`.</i></p>
 
 ##
 <h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
