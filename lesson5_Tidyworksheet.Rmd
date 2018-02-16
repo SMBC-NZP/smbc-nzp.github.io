@@ -28,15 +28,20 @@ img{
   padding-bottom: 10px;
 }
 
+h4{
+  text-align: left;
+  font-size: 20px;
+}
+
 p{
   text-align: left;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 ul, ol{
   line-height: 27px;
   text-align: left;
-  font-size: 18px;
+  font-size: 16px;
   margin-left: 0px;
 }
  
@@ -340,8 +345,15 @@ kable(exampleTidy1, "html") %>%
 
 <br>
 <div class = "row">
-```{r messy2NF, echo = FALSE}
-kable(messy2NF, "html") %>%
+```{r messy second normal, echo = FALSE}
+badBandingRecord <- exampleTidy1 %>%
+  mutate(
+    site = c('apple','apple', 'avocado', 'apple', 'avocado'),
+    canopyCover = c(32.5, 32.5, 78.4, 32.5, 78.4)
+  ) %>%
+  select(id, birdID, observationDate, site, canopyCover, mass)
+
+kable(badBandingRecord, "html") %>%
  kable_styling(
   bootstrap_options = c("striped", "hover"),
   full_width = FALSE,
@@ -356,13 +368,13 @@ kable(messy2NF, "html") %>%
 <div class = "row">
 <p>Bird observation table:</p>
 ```{r tidy2NF_obs, echo = FALSE}
-siteTable <- messy2NF %>%
+siteTable <- badBandingRecord %>%
   select(site, canopyCover) %>%
   distinct %>%
   mutate(id = siteIds) %>%
   select(id, site, canopyCover)
 
-birdObservationTable <- messy2NF %>%
+birdObservationTable <- badBandingRecord %>%
   select(-canopyCover) %>%
   left_join(
     siteTable %>%
@@ -394,9 +406,9 @@ kable(siteTable, "html") %>%
 ```
 </div>
 <br>
-<p>In the above table the site field in the observation table has been replaced by `siteId`. This is what is called a <b>foreign key</b>. A foreign key is a field that links to the primary key in a different table. The foreign key is a way to link the two tables so that they can share information with one another. This is described as a one-to-many relationship (if a row from one table can have multiple matching rows in another -- for example, there are multiple observations associated with each site).</p>
+<p>In the above table the site field in the observation table has been replaced by `siteId`. This is what is called a <b>foreign key</b>. A foreign key is a field that links to the primary key in a different table. The foreign key is a way to link the two tables so that they can share information with one another. This is described as a one-to-many relationship (a row from one table can have multiple matching rows in another -- for example, there are multiple observations associated with each site).</p>
 
-<p>There can be a bit of a gray area here remaining in the observation table. Mass is certainly an attribute of the observation of a bird but, considering that multiple birds were observed at a given site, is site really an attribute of the observation? You could make a case (and I would agree) that this table should be divided even further, as below:</p>
+<p>There is a bit of a gray area here remaining in the observation table -- should it remain one table or split into two? Mass is certainly an attribute of the observation of a bird but, considering that multiple birds were observed at a given site, is site really an attribute of the observation? You could make a case (and I would agree) that this table should be divided even further, as below:</p>
 <br>
 <div class = "row">
 <p>Bird observation table:</p>
@@ -453,41 +465,189 @@ kable(siteTable, "html") %>%
 ```
 </div>
 <br>
+<h3>The third normal rule</h3>
+<br>
+<p>Kent: Every non-key attribute must provide a fact about the key, the whole key, and nothing but the key. So help me Codd.</p>
+<p>The third normal rule states that, in addition to first and second normal rules being met, columns cannot be directly dependent on any other column. Thus columns are attributes of the primary key and only the primary key. The easiest example for this condition is date -- many data managers will include a year field in a data table, as below.</p>
+<br>
+<div class = "row">
+```{r tidy3messy, echo = FALSE}
 
+badYear <- exampleTidy1 %>%
+  mutate(observationYear = lubridate::year(observationDate))
+
+kable(badYear, "html") %>%
+ kable_styling(
+  bootstrap_options = c("striped", "hover"),
+  full_width = FALSE,
+  font_size = 16,
+  position = "float_left"
+  )
+```
+</div>
+<p>Because year can directly be derived from date, this column should not be included. Instead the dataset should be:
+<br>
+<div class = "row">
+```{r tidy3clean, echo = FALSE}
+kable(exampleTidy1, "html") %>%
+ kable_styling(
+  bootstrap_options = c("striped", "hover"),
+  full_width = FALSE,
+  font_size = 16,
+  position = "float_left"
+  )
+```
+</div>
+<br>
+<br>
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h3>
+<br>
+<p>Consider how to arrange the following dataset using Codd's rules:</p>
+```{r exercise1cleanSiteXY1, echo = FALSE}
+exercise1cleanSiteXY1 <- exercise1messy %>%
+  separate(siteXY, into = c('x', 'y'), sep = ', ')
+  
+kable(exercise1cleanSiteXY1, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  row_spec(c(0, 2, 4), background = 'white') %>%
+  row_spec(c(1, 3, 5), background = 'gray80')
+```
+<br>
+</blockquote>
+
+<br>
+<hr>
+<br>
 <h2>The rules of tidy data in statistical language</h2>
-
-<p>In the statistical language, a tidy dataset has three qualities:</p>
+<br>
+<p>For the creation of the tidyverse, Hadley Wickham re-framed the three normalization rules into statistical language -- the language of most R users. In the statistical language, a tidy dataset has three qualities:</p>
 <ol>
 <li>Each variable forms a column</li>
 <li>Each observation forms a row</li>
 <li>Each level of observation forms a table</li>
 </ol>
+<p>To illustrate these rules, we will explore the process of making untidy data tidy.</p>
+<br>
+<h3><b>Tidy rule: Each variable forms a column</b></h3>
+<br>
+<h4><b>Untidy problem</b>: Multiple variables in a single column</h4>
+<p>This problem relates to the first normal rule "all values are atomic". We illustrated this previously using a dataset in which there where multiple dates stored in a single date column, repeated below, with the dataset `badDate`.</p>
+```{r eval = FALSE}
+badDate
+```
+<div class = "row">
+```{r separate0, echo = FALSE}
+kable(badDate, "html") %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover"),
+    full_width = FALSE,
+    font_size = 16,
+    position = "float_left"
+  )
+```
+</div>
+<p>This type of rule violation can easily be dealt with using the `tidyverse` <b>separate</b> function. Arguments of `separate` include:</p>
+<ul>
+<li><b>data</b>: The data frame that contains the columns you wish to separate</li>
+<li><b>col</b>: The name of the column you wish to separate</li>
+<li><b>into</b>: A vector providing the names of the new columns</li>
+<li><b>sep</b>: The character that defines where to split the columns</li>
+</ul>
+<p>To separate the above into a tidier (but still not tidy) dataset, code the following:</p>
+```{r separate, eval = FALSE}
+separate(
+  data = badDate,
+  col = observationDate,
+  into = c('date1', 'date2'),
+  sep = ", "
+  )
+```
+<br>
+<h4><b>Untidy problem</b>: A single variable split into multiple columns</h4>
 
-<hr>
-
-
-<h2>Fixing violations of the rules for tidy data</h2>
-
-<h3>Wide to long and long to wide</h3>
-
-<p>Below is a typical example in which  the influence of a treatment was measured on three test subjects and the results were stored as:</p>
-
-```{r, eval = T}
-untidyFrame
+<p>A common mistake is to derive the value in one column using information from another column. This is a violation of the third normal rule. Above, we used the example of a dataset that included a year and date column. These columns are called <b>transitive</b> because year can be derived from date. A <b>transitive</b> variable contains no further information, so is untidy. Let's take a look at the data again, with the dataset `badYear`, before addressing the problem:</p>
+<div class = "row">
+```{r, eval = FALSE}
+badYear
 ```
 
-<p>Tidy? Nope. In this case, each subject has its own row, not each observation. This is a violation of the second rule of tidy data (each observation forms a row). We would have to do some awkward wrangling in base R to get this into a tidy format. Luckily, Hadley Wickham and his team created the `tidyr` package in R with the specific aim of turning messy datasets into tidy ones.</p>
+```{r badYear, echo = FALSE}
+kable(badYear, "html") %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover"),
+    full_width = FALSE,
+    font_size = 16,
+    position = "float_left"
+  )
+```
+</div>
+<br>
+<p>To address this, we must <b>subset data by columns</b>. In our previous lessons we learned how to select columns from a data frame using indexing. Indexing allows us select columns based on their position within the data frame or by name:</p>
+```{r eval = F}
+
+# By position: 
+
+badYear[,1:4]
+
+badYear[,-5]
+
+# By name:
+
+badYear[, c('id', 'birdID', 'observationDate', 'mass')]
+
+```
+
+<br>
+<p>We can use the `tidyverse` <b>select</b> function to subset a data frame by column much more easily. Arguments of `select` include the data frame that contains the columns you wish to select and the names (unquoted) or positions of the columns.</p>
+
+```{r eval = F}
+
+# By position: 
+
+select(badYear, 1:4)
+
+select(badYear, -5)
+
+# By name:
+
+select(badYear, id:mass)
+
+select(badYear, -observationYear)
+
+```
+<br>
+<h3><b>Tidy rule: Each observation forms a row</b></h3>
+<br>
+<h4><b>Untidy problem</b>: Multiple observations in a row (i.e., more than one observation per row)</h4>
+<br>
+<p>This type of problem is usually related to a violation of the first normalization rule (columns do not contain repeated groupings). For this problem, we will use the dataset `untidyFrame`. In this typical example a researcher is assessing the influence of a treatment measured on three test subjects:</p>
+```{r, eval = FALSE}
+untidyFrame
+```
+<div class = "row">
+```{r untidyFrameTable, echo = FALSE}
+kable(untidyFrame, "html") %>%
+ kable_styling(
+  bootstrap_options = c("striped", "hover"),
+  full_width = FALSE,
+  font_size = 16,
+  position = "float_left"
+  )
+```
+</div>
+<p>It's easy to look at -- it's very easy to visually compare treatment A with treatment B -- but is it tidy? Nope, not at all. We would have to do some awkward wrangling in base R to get this into a tidy format. Luckily, Hadley Wickham and his team created the `tidyverse` package in R with the aim of turning messy datasets like these into tidy ones.</p>
 
 <p>With the `tidyr` function `gather`, we collapse multiple columns into "key-value pairs". In the above example, we are interested in the treatment "values" for each of our "key" values. To do so, we provide:</p>
 
-<ol>
+<ul>
 <li>The data frame ("untidyFrame") we will be reshaping</li>
 <li>The name of the new "key" field for which we are gathering the data ("treatment")</li>
 <li>The name of the new "value" field where the values for that field will be stored</li>
 <li>The columns for which the values will be restructured (these may be referred to by name or column number)</li>
-</ol>
+</ul>
 
-```{r, eval = T, echo=TRUE}
+```{r gather, eval = FALSE}
 gather(
   data = untidyFrame,
   key = treatment,
@@ -496,7 +656,26 @@ gather(
   )
 ```
 
-<p>Let's give a more bird-y example. I collected bird point count data from sites in Washington, D.C. For each bird, I calculated the distance between myself and the observed birds, in units of 10 meters. On my datasheet I recorded the following:</p>
+<div class = "row">
+```{r gatherTable, echo = FALSE}
+gatherTable <- gather(
+  data = untidyFrame,
+  key = treatment,
+  value = value,
+  treatmentA:treatmentB
+  )
+
+kable(gatherTable, "html") %>%
+ kable_styling(
+  bootstrap_options = c("striped", "hover"),
+  full_width = FALSE,
+  font_size = 16,
+  position = "float_left"
+  )
+```
+</div>
+
+<p>Let's give another example (and a more bird-y one at that). I collected bird point count data from sites in Washington, D.C. For each bird, I calculated the distance between myself and the observed birds, in units of 10 meters. On my datasheet I recorded the following:</p>
 <br>
 <div class = "row">
 ```{r, eval = T, echo=F, warning=FALSE}
@@ -512,19 +691,23 @@ kable(wideFrame, "html") %>%
 
 <p>In the above, each observation is of a given species at a given distance class. The grouping of the distance columns is a clear sign that these data are not in tidy format. In the language of the tidyverse, I have split one variable (the count of birds) into multiple columns. As such, we are compelled to tidy our data by collapsing the distances into a single column. In the script below we use the `tidyr` function `gather` as:
 
-```{r, eval = TRUE, echo=TRUE}
-tidyCounts <- gather(data = wideFrame, 
+```{r gatherCounts, eval = FALSE}
+gather(data = wideFrame, 
   key = distance,
   value = obs, 
   d10:d30)
-
-tidyCounts
 ```
 
-<p>The above is what is often called a "<b>long</b>" data frame. Are all tidy data frames long? Not necessarily! That depends on the observational unit of your study.</p> 
+<p>This generated what is often called a "<b>long</b>" data frame. Are all tidy data frames long? Not necessarily! It depends on the observational unit of your study.</p>
 <br>
-<p>While it is more typical that untidy data frames are shaped in wide format, there are some instances when the opposite is the case. Take a moment to consider the following data frame of bird measurement data:</p>
-<br>
+<h4><b>Untidy problem</b>: Multiple rows per observation</h4>
+
+<p>Take a moment to consider the following data frame of bird measurement data that we used in the first section (`dfTooLong`):</p>
+
+```{r, eval = FALSE}
+dfTooLong
+```
+
 <div class = "row">
 ```{r untidy HW2a, echo = FALSE, warning = FALSE}
 kable(dfTooLong, "html") %>%
@@ -537,42 +720,35 @@ kable(dfTooLong, "html") %>%
 ```
 </div>
 
-<p>In this instance the level of observation is the measurements associated with a given bird on a given date. Here, we see three measurements (mass, wing, and tail), have been recorded as three separate observations and multiple variables have been recorded in the same row. To fix this, we must convert from long to wide form. To do so, we use the `spread` function in `tidyr`. <i>Note that usage of the key-value pair is essentially the opposite of the usage within the gather function!</i>
+<p>In this instance the measurements (mass, tail, and wing) are all attributes associated with the level of observation, the bird on a given date, but the observation has been split into one row for each value. This is a violation of the first normal rule (all rows represent a unique record). To fix this, we must convert from long to wide form. To do so, we use the `spread` function in `tidyr`. <i>Note that usage of the key-value pair is essentially the opposite of the usage within the gather function!</i> The arguments for `spread` include:</p>
+<ul>
+<li>data: The data frame ("dfTooLong") we will be reshaping</li>
+<li>key: The name of the "key" field to be used as column names ("measurement")</li>
+<li>value: The name of the "value" field which will be distributed into the columns</li>
+<li>fill: If no match is found, the value to fill (e.g., NA or 0 -- the default is NA)</li>
+</ul>
 
-```{r, eval = T, warning=FALSE}
-spread(data = dfTooLong, 
-  key = measurement, 
-  value = value)
+```{r spread, eval = FALSE}
+spread(
+  data = dfTooLong,
+  key = measurement,
+  value = value,
+  fill = NA
+  )
 ```
-
-<p>Like all functions, the `tidyverse` functions above can be <b>nested</b> within the other. Nesting helps avoid assigning intermediate objects -- this can (occasionally) make your scripts easier to read, reduce naming conventions that can be difficult to remember or follow, and reduces the number of objects that need to be stored in your R environment. Let's take a look at non-nested and nested versions of our spread and gather functions using the point count observervations:</p>
-
-```{r, eval = T, warning=FALSE}
-
-# Non-nested functions:
-
-wideFrame <- spread(longFrame, species, count, fill = 0)
-
-longFrame2 <- gather(wideFrame, species, count, amro:grca)
-
-# Nested functions:
-
-longFrame2 <- gather(spread(longFrame, species, count, fill = 0),
-  species, count, amro:grca)
-```
-
-<i>Be sure that you can successfully read the non-nested and nested versions of these functions!</i>
-
-<p><i class= "fa fa-user-circle-o" style = "font-size: 100%;"></i> Notice that I added an argument above, `fill = 0`. Repeat the above without the `fill` argument. How do the two results differ? Have a look at the `spread` help file (`?spread`) for more information.</p>
-
-
-<h3>Separating variables</h3>
-
-<p>Oftentimes, multiple variables are stored in a single column of a data frame. This is easily dealt with using the `separate` function in tidyr. The dataset `birdCounts` is located in your global environment. These data are a subset of point counts taken throughout greater Washington D.C. The first few rows of this data frame are:</p>
 <br>
+<h3><b>Tidy rule: Each level of observation forms a table</b></h3>
+<br>
+<h4><b>Untidy problem</b>: Multiple levels of observation in a table</h4>
+
+<p>This problem, which is a violation of the second normal rule, occurs when a single table is created to store data collected across multiple observational levels. It is probably the most common issue in data management. Let's look once again at the data table that violated the second normal rule above (`badBandingRecord`):</p>
+
+```{r, eval = FALSE}
+badBandingRecord
+```
 <div class = "row">
-```{r, eval = T, echo=F, warning=FALSE}
-kable(head(birdCounts, 5), "html") %>%
+```{r badBandingRecordTable, echo = FALSE, warning = FALSE}
+kable(badBandingRecord, "html") %>%
   kable_styling(
   bootstrap_options = c("striped", "hover"),
   full_width = FALSE,
@@ -581,205 +757,180 @@ kable(head(birdCounts, 5), "html") %>%
   )
 ```
 </div>
+<p>To re-iterate, the table above contains:</p>
+<ul>
+<li>Site-level observations: Canopy cover is an attribute of the site</li>
+<li>Bird-level observations: birdID, observationDate, site, and mass are all attributes of a bird's capture event</li>
+</ul>
+
+<p>Above we used the function `separate` to remove columns from tables. We can use this function to restructure the banding record into two data frames representing two levels of observations (Note: I am using two levels to avoid the primary and foreign keys here, for simplicity):</p>
+```{r, eval = FALSE}
+birdRecord <- select(badBandingRecord, birdID, observationDate, site, mass)
+
+siteRecord <- select(badBandingRecord, site, canopyCover)
+```
+
+<p>The above is a great start, but notice that the `siteRecord` table has duplicate rows. This is a direct violation of the first normal rule. You can use the tidyverse function <b>distinct</b> to remove any rows that are exact duplicates of one another. The our purposes here, only relevant argument of `distinct` is the data frame. Let's use distinct to remove duplicate site records:</p>
+
+```{r, eval = FALSE}
+distinct(siteRecord)
+```
+
+<br>
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h3>
+<br>
+<p>The dataset `birdCounts` is located in your global environment. Following the rules outlined above, convert this dataset to tidy-formatted data.</p>
+<br>
+</blockquote>
+<br>
+<hr>
 <br>
 
-<p>Take a moment to see how the data are structured:</p>
+<h2>The <b>pipe</b> operator</h2>
 
-```{r eval=F}
-birdCounts
-levels(birdCounts$site)
+<h3>The nested function</h3>
+<p>Like all functions, the `tidyverse` functions above can be <b>nested</b> within the other. Nesting helps avoid assigning intermediate objects -- this reduces the number of objects that are stored in your R environment. An advantage of this is that it also reduces the number of names you have to assign to objects, and, of course, the number of names that you have to remember ("What did I call that ... ?"). We've used nested functions quite a bit throughout this workshop thus far. Let's take a moment to review nested and non-nested versions of functions.</p>
+
+<p>To illustrate nested and non-nested code-writing, we will generate a set of numbers from 1-5, multiple each value by 2, and add one to the output. We will then write two silly functions: one that multiplies some value `x` by two and the next that calculates `x+1`. Using these functions we will:</p>
+<ol>
+<li>Create a vector, `z`, and complete this process by assigning a new object for each step</li>
+<li>Create a vector, `z`, and complete  this process first by overwriting an existing object for each step</li>
+<li>Write a nested function that completes this process in one step</li>
+</ol>
+
+```{r, eval = FALSE}
+# Some very silly functions for illustration:
+
+multiplyByTwo <- function(x){
+  x*2
+}
+
+addOne <- function(x){
+  x+1
+}
+
+# Non-nested, new object for each step:
+
+z <- 1:5
+
+z1 <- multiplyByTwo(z)
+
+addOne(z1)
+
+# Non-nested, overwrite object for each step:
+
+z <- 1:5
+
+z <- multiplyByTwo(z)
+
+addOne(z)
+
+# Nested:
+
+addOne(multiplyByTwo(1:5))
 ```
 
-The site column represents up to three numbered subsamples located within sites labelled from "a" to "o". We'll use `separate` to split this into two columns, "site" and "subsite".
 
-```{r eval=F}
-separate(birdCounts, site, into = c('site','subsite'), sep = '_')
+<p>Take a moment to consider the nested and non-nested versions of the process above. Each has its strengths and weaknesses:</p>
+<ul>
+<li><b>Non-nested with new object</b>:
+<ul>
+<li>Strength: Easy to read.</li>
+<li>Weaknesses: Takes up a lot of script space. Includes an intermediate object assignment (`z1`) that may be hard to remember.</li>
+</ul>
+</li>
+<li><b>Non-nested with overwritten object</b>:
+<ul>
+<li>Strengths: Easy to read. No new names.</li>
+<li>Weaknesses: Takes up a lot of script space. Loss of the initial value of `z` (<i>never, never, never overwrite assigned objects!</i>).</li>
+</ul>
+</li>
+<li><b>Nested</b>:
+<ul>
+<li>Strengths: Concise. No new names.</li>
+<li>Weaknesses: It is very difficult to read -- the object of the line of code is `1:5` therefore the code is read from the inside out.</li>
+</ul>
+</li>
+</ul>
+
+<br>
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h3>
+<br>
+<p>The dataset `longFrame` contains a subset of bird point count observations. Take a moment to explore these data:</p>
+
+```{r, eval = FALSE}
+longFrame
 ```
 
-That's pretty much all there is to "separate", pretty easy. For the sake of brevity, we'll leave tidying data behind for now. I strongly suggest reading Wickham's [Tidy Data](http://www.jstatsoft.org/v59/i10/paper) (2014) paper for further information on this powerful package.
+<p>You may have noticed that the data lack zeros! This could end up being a really big problem for some analyses. To counter this, you can `spread` the data using the argument `fill = 0`:</p>
 
-----
-
-> <b>Exercise 1</b>    
-> The dataset "birdCounts" is located in your global environment. Using these data:
->
-> 1. Convert birdCounts to a wide format dataset, setting NA values to 0. Assign the name "wideBirds" to this data frame.
->
-> 2. Convert wideBirds to a tidy long format dataset. Assign the name "longBirds" to this data frame. _How do the birdCounts and longBirds data frames differ?_
->
-> 3. Complete steps one and two using <b>nested</b> functions.
-
-----
-
-## dplyr
-
-<b>dplyr</b> makes data manipulation simple by using just a few basic functions that satisfy most data manipulation tasks. It is considerably faster than most other data manipulation, which can be quite important when analyzing big data.
-
-* <b>filter</b>: Remove rows that do not match a certain criteria
-
-* <b>select</b>: Remove or maintain columns in a data set
-
-* <b>arrange</b>: Reorder rows
-
-* <b>mutate</b>: Create new variables
-
-* <b>summarize</b>: Calculate a summary statistic -- this is most useful (or, perhaps, only useful) in combination with the function `group_by`.
-
-### Subset data by observations
-
-In our Introduction to R lesson, we subset the bird count rows using indexing. For example to view the counts of just foliage foraging species we enter:
-
-```{r eval = F}
-birdCounts[birdCounts$foraging == 'foliage',]
+```{r, eval = FALSE}
+longFrameWide <- spread(
+  data = longFrame,
+  key = species,
+  value = count,
+  fill = 0
+  )
 ```
 
-The `filter` fuction in `dplyr` works similarly, but the script is more concise:
+<p>To bring your data back to a "tidy" dataset, you will want to gather the species columns you've just generated:</p>
 
-```{r eval = F}
-filter(birdCounts, foraging == 'foliage')
+```{r, eval = FALSE}
+gather(data = longFrameWide,
+  key = species,
+  value = count,
+  amro:grca)
 ```
 
-Note that the left side of the argument above is the data frame we are subsetting and the right hand of the argument is the logical condition. Because we have already specified the data frame from which we are filtering, it is not necessary to provide the name of the data frame within the logical condition. The advantage of this becomes readily apparent when we are filtering based on multiple conditions. Consider we would like to subset our birdCounts frame to foliage foraging species with an omnivorous diet. Let's compare the indexing and `dplyr` solution.
+<p>You have now generated a tidy data frame that includes 0 counts for each species.</p>
+<hr>
+<ul><li>Complete the process above using nested functions.</li></ul>
+<br>
+</blockquote>
+<br>
 
-```{r eval = F}
+<h3>The pipe</h3>
+<p>One of the greatest recent advancements in the world of R is the implementation of the <b>pipe operator</b>. A pipe operator allows you to set the output of one process as the input of another -- thus sequences of calculations are chained together without having to define intermediate steps as R objects (_Note: Piping is sometimes called chaining_). Piping was first implemented in R by ecologist and R guru Ben Bolker, in an answer to a question on stackoverflow. <img style="PADDING-LEFT:25px; PADDING-TOP: 5px" align = "right" src="https://upload.wikimedia.org/wikipedia/en/b/b9/MagrittePipe.jpg" height="300px" width = "300"/>  Hadley Wickham introduced his version of piping to his `dplyr` package in 2013 while concurrently Stefan Milton Bache developed a more flexible version for his package `magrittr` (named after Magritte's painting, <i>The Treachery of Images</i>). In 2014, Wickham and Bache teamed up and Bache's pipe was incorporated into the `tidyverse`.</p>
 
-birdCounts[birdCounts$foraging == 'foliage' & birdCounts$diet == 'omnivore',]
+<p>Piping makes scripts more readable and easier to write. Moreover, if you didn't do a great job naming your R objects, you may have a hard time remembering what each was. The alternative, nested functions, can be problematically complicated to read. Piping avoids the necessity to assign intermediate objects and makes scripts legible by conducting analyses in sequence.</p>
 
-filter(birdCounts, foraging == 'foliage' & diet == 'omnivore')
-
-```
-
-And the advantage builds as we increase the number of selection criteria:
-
-
-```{r eval = F}
-
-birdCounts[birdCounts$foraging == 'foliage' & birdCounts$diet == 'omnivore' & birdCounts$count > 1,]
-
-filter(birdCounts, foraging == 'foliage' & diet == 'omnivore' & count > 1)
-
-```
-
-----
-
-> <img style="PADDING-LEFT:45px; PADDING-TOP: 0px; PADDING-BOTTOM: 5px" align = "right" src="http://www.allaboutbirds.org/guide/PHOTO/LARGE/carolina_chickadee_4.jpg" height="225px" width = "225px" title="Michael Drummond">
-> <b>Exercise 2</b>    
-Subset the birdCounts data frame to observations of Carolina Chickadee (_Poecile carolinensis_) in which two or more individuals were observed using:
->
-> 1. Indexing
->    
-> 2. dplyr's `filter` command  
-    
-----
-    
-### Subset data by columns
-
-In our Introduction to R lesson we learned how to select columns from a data frame using indexing. We can select columns based on their position within the data frame or by name:
-
-```{r eval = F}
-
-# By position: 
-
-birdCounts[,3:4]
-
-# By name:
-
-birdCounts[, c('count', 'foraging')]
-
-```
-
-We can use the `select` function in `dplyr` to select columns as well:
-
-```{r eval = F}
-
-# By position: 
-
-select(birdCounts, 3:4)
-
-# By name:
-
-select(birdCounts, count, foraging)
-```
-
-The `select` function is more flexible than indexing, in that column names can be used in place of numbers to select a range of columns:
-
-```{r eval = F}
-select(birdCounts, count:diet)
-
-```
-
-To remove a column, you would use a minus sign:
-
-```{r eval = F}
-select(birdCounts, -site)
-
-```
-
-<h2>Arrange data in ascending or descending order</h2>
-
-`dplyr` contains a handy function, `arrange` to sort data frames in ascending (low-to-high) or descending (high-to-low) order.
-For example, if you wanted to arrange the birdCounts data frame by count:
-
-```{r eval = F}
-
-# Ascending:
-
-arrange(birdCounts, count)
-
-# Descending:
-
-arrange(birdCounts, desc(count))
-
-```
-
-`arrange` also works with characters and factors to arrange alphabetically:
+<p>To illustrate how piping works, let's look again at the nested and non-nested processes that we completed at the start of this section:</p>
 
 ```{r, eval = F}
-arrange(birdCounts, species)
-```
+# Non-nested, new object for each step:
 
+z <- 1:5
 
-## The **pipe** operator
+z1 <- multiplyByTwo(z)
 
-One of the greatest recent advancements in the world of R is the implementation of the **pipe operator**. A pipe operator allows you to set the output of one process as the input of another -- thus sequences of calculations are chained together without having to define intermediate steps as R objects (_Note: Piping is sometimes called chaining_). Piping was first implemented in R by ecologist and R guru Ben Bolker, in an answer to a question on stackoverflow. <img style="PADDING-LEFT:25px; PADDING-TOP: 5px" align = "right" src="https://upload.wikimedia.org/wikipedia/en/b/b9/MagrittePipe.jpg" height="300px" width = "300"/>  Hadley Wickham introduced his version of piping to his `dplyr` package in 2013 while concurrently Stefan Milton Bache developed a more flexible version for his package `magrittr` (named after Magritte's painting, _The Treachery of Images_). In 2014, Wickham and Bache teamed up and Bache's pipe was incorporated into `dplyr`.
+addOne(z1)
 
-Piping makes scripts more readable (see a pattern here?) and saves system memory by reducing the amount of data stored in R's Global Environment. Take a moment to look at your Global Environment (upper right-hand pane in R Studio). You've got lots of objects in there. Likewise, if you didn't do a great job naming your R objects, you may have a hard time remembering what each was. An alternative, nested functions, are problematically complicated to read. Piping avoids the necessity to assign intermediate objects and makes scripts legible by conducting analyses in sequence. Let's look at our `dplyr` summarizing operation above.
+# Nested:
 
-```{r, eval = F}
-birdCountsForaging <- group_by(birdCounts, foraging)
-
-summarize(birdCountsForaging, N = sum(count))
+addOne(multiplyByTwo(1:5))
 ``` 
 
-To nest these functions, we would write:
+<p>To pipe this operation, we use the pipe symbol, `%>%`,  to separate arguments. The pipe represents the word "then". In piping, the output on the left side of the pipe becomes the first argument in the function on the right. We structure our piped statement similar to that of the non-nested version: "multiply `z` by two <i>then</i> add one to this value". Piping the above, our code would read as:</p> 
 
 ```{r, eval = F}
-summarize(group_by(birdCounts, foraging), N = sum(count))
+z %>%
+  multiplyByTwo %>%
+  addOne
 ``` 
 
-To pipe this operation, we use the `%>%` symbol to separate arguments. Our first argument is the name of the data frame we are evaluating. This allowed us to omit the name of the data frame in the functions that follow. For each subsequent step, functions are carried out on the data frame reduced by the step to the left (or up).
+<p>Isn't it lovely? Like the nested code, it does not create intermediate obects, and like the non-nested versions of the code it reads from left-to-right (or top-to-bottom).</p>
 
-```{r, eval = F}
-birdCounts %>% 
-  group_by(foraging) %>%
-  summarize(N = sum(count))
-```
+<p>Notice that I used multiple indented lines of code. For maximal readibility, it is <b>highly recommended</b> that any multi-step operation should be formatted as such (this is considered <b>best management practices</b> for programmers across languages).
 
-The piping symbol, `%>%`, represents the word "then". We would read the above as "use the data frame bird counts _then_ group by foraging _then_ calculate the sum for each group".
+<p>You should consider <b>every</b> script you write to be a <b>communication</b> between you and your future self and yourself and fellow scientists. Make sure your scripts communicate clearly -- future you and your fellow scientists will appreciate it greatly!</p>
 
-Notice that I used multiple indented lines of code. For maximal readibility, it is **highly recommended** that any multi-step operation should be formatted as such (this is considered **best management practices** for programmers across languages).
-
-Take a moment to think of the difference between the piped and nested-function versions of the operation above. You'll notice that the piped version reads from left-to-right (or up-to-down). The dataset becomes progressively smaller with each step to the right (or down). Conversely, the summarize function reads from the inside out. In the nested functions, `group_by` is actually the first step in the sequence, but it is instead nested in the middle of the `summarize` function! This is what makes nested functions, especially if data analyses are complex, so difficult to read.
-
-----
-
-> **Exercise 7**    
-> Give another try to Exercises 1-6 above, this time using **piping** to complete each exercise in one step.
->
-
-----
-
-_**A final note**: You should consider **every** script you write to be a **communication** between you and your future self and yourself and fellow scientists. Make sure your scripts communicate clearly -- future you and your fellow scientists will appreciate it greatly!_
-
-----
+<br>
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Four:</h3>
+<br>
+<p>Repeat Exercise Three above, this time using piped rather than nested functions.</p>
+<br>
+</blockquote>
 
