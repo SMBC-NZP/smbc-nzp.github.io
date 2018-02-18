@@ -190,7 +190,7 @@ As a result, researchers in fields outside of data science rarely follow formal 
 
 <p>The goal of this lesson is to introduce you to the structure of tidy data. Tidy data are datasets that follow the convention of database design. This is the preferable format for data in that:</p>
 <ul>
-<li><b>Tidy data are not platform-specific</b>: This not just the preferred data formatting for working in R or using <i>tidyverse</i> packages, this is the preferred format for data as a whole. Considerable research, and really an entire field of study, has gone into the rules that determine what consitutes tidy data.</li>
+<li><b>Tidy data are not platform-specific</b>: This is not just the preferred data formatting for working in R or using <i>tidyverse</i> packages, this is the preferred format for data as a whole. Considerable research, and really an entire field of study, has gone into the rules that determine what consitutes tidy data.</li>
 <li><b>Tidy data are durable and avoid data entry and modification errors</b>: Tidy data avoids generating and working with duplicate values in data tables and databases. This streamlines the data entry and management processes.</li>
 <li><b>All tidy datasets are the same</b>: Tidy datasets lead to fast and flexible analysis because they are all formatted in the same way. Messy datasets can be messy in a multitude of ways and therefore may require considerable wrangling to prepare them for statistical analysis.</li>
 </ul>
@@ -200,7 +200,7 @@ As a result, researchers in fields outside of data science rarely follow formal 
 <hr>
 
 <h2>Before you begin</h2>
-<p>Copy-paste-and run the following code in R Studio to load the packages and read in the data we will be using for this lesson:</p>
+<p>Copy, paste, and run the following code in R Studio to load the packages and read in the data that we will be using for this lesson:</p>
 <br>
 
 ```{r, eval=FALSE}
