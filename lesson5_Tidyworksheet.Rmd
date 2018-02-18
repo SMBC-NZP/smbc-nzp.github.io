@@ -174,7 +174,7 @@ library(knitr) ; library(kableExtra)
 options(knitr.table.format = "html")
 ```
 
-<h1 style="text-align: center;">Introduction to data science in R, Lesson 3:<br/>Writing functions</h1>
+<h1 style="text-align: center;">Introduction to data science in R, Lesson 5:<br/>Welcome to the tidyverse!</h1>
 <br>
 <!img style="float: left; margin: 0px 0px 15px 15px;" src="nzpLogo.jpg" width="150" />
 <p style = "text-align: center; font-size: 14px;">Brian S. Evans, Ph.D.<br />
@@ -184,20 +184,21 @@ Smithsonian Conservation Biology Institute</p>
 
 <h2>Introduction</h2>
 <br>
-<p>It is estimated that the process of preparing data for analysis, <b>data manipulation</b> or, as it is often called, <b>data wrangling</b>, consumes up to 80 percent of total analysis time (Dasu and Johnson 2003).
-<img style="PADDING-RIGHT:20px; PADDING-TOP: 10px; PADDING-BOTTOM: 10px; padding-left: 0px" align = "left" src="http://images.nationalgeographic.com/wpf/media-live/photos/000/183/cache/upside-down-bird_18378_990x742.jpg" height="400px" width = "400px" title=" Hideta Nagai, National Geographic"/>
-In classes on statistics and applied data analysis, emphasis is generally placed on the analysis of data and, historically, comparatively little attention is paid to how to prepare one's data to be analyzed. With increasing calls for reproducibility, however, this is beginning to change. More and more, reviewers are asking authors to publish both data and R code as supplemental information for their manuscripts. This helps advance scientific knowledge, as researchers do not have to reinvent the wheel every time they conduct a similar analysis, and ensures replicability, as interested parties (e.g., reviewers) can repeat your every step in your data analysis with the exception of the collection of field data! Considering this, it is in all of our best interest that data manipulation be simple, that our scripts are legible and easy-to-follow, and that we can avoid "script bloat" by using methods (such as functions and occasionally <i>for loops</i>!) to reduce the length of our scripts. It is highly recommended that you take a "cradle-to-grave" approach to data manipulation and analysis:</p>
-<br>
+<p>It is estimated that the process of summarizing and preparing data for statistical analysis, <b>data wrangling</b>, consumes roughly 80 percent of total analysis time (Dasu and Johnson 2003). Despite this, researchers are rarely given much, if any, training on properly managing their data. 
+<img style="PADDING-RIGHT:10px; PADDING-TOP: 10px; PADDING-BOTTOM: 10px; padding-right: 0px" align = "right" src="http://images.nationalgeographic.com/wpf/media-live/photos/000/183/cache/upside-down-bird_18378_990x742.jpg" height="400px" width = "380px" title=" Hideta Nagai, National Geographic"/>
+As a result, researchers in fields outside of data science rarely follow formal data management conventions and tend to format their data for a given analyis, ease of data entry, or for some now-potentially-defunct computer program. This leads to messy, inflexible datasets that are difficult to work with for anything but their initial intention.</p>
+
+<p>The goal of this lesson is to introduce you to the structure of tidy data. Tidy data are datasets that follow the convention of database design. This is the preferable format for data in that:</p>
 <ul>
-<li>Collect and store your data in well-constructed spreadsheets and <b>databases</b>.</li>
-<li>DO NOT complete ANY step in the data manipulation process in Excel! Doing so makes it difficult for others to truly replicate your analyses.</li>
-<li>Basic formatting steps to prepare your data for analysis, <b>data tidying</b>, should be completed prior to any summarizing, further cleaning, or analysis of data.</li>
-<li>Clean data, including removing "bad" records, such as NA values (i.e., "Not Available") and extreme outliers, prior to (not during) analysis.</li>
-<li>Group and summarize data as a final step the final data exploration and formatting processes -- prior to more complex statistical analyses.</li>
+<li><b>Tidy data are not platform-specific</b>: This not just the preferred data formatting for working in R or using <i>tidyverse</i> packages, this is the preferred format for data as a whole. Considerable research, and really an entire field of study, has gone into the rules that determine what consitutes tidy data.</li>
+<li><b>Tidy data are durable and avoid data entry and modification errors</b>: Tidy data avoids generating and working with duplicate values in data tables and databases. This streamlines the data entry and management processes.</li>
+<li><b>All tidy datasets are the same</b>: Tidy datasets lead to fast and flexible analysis because they are all formatted in the same way. Messy datasets can be messy in a multitude of ways and therefore may require considerable wrangling to prepare them for statistical analysis.</li>
 </ul>
+
 <br>
-    
+
 <hr>
+
 <h2>Before you begin</h2>
 <p>Copy-paste-and run the following code in R Studio to load the packages and read in the data we will be using for this lesson:</p>
 <br>
@@ -323,7 +324,7 @@ kable(messy1NFc, "html") %>%
 ```
 </div>
 
-<p>Because the mass measurement varies by date, is an attribute of the bird as it relates only to a given the observation date. Therefore each measurement, and each bird measured on a given date, should be given its own row, as below.</p>
+<p>Because the mass measurement varies by date, it is an attribute of the observation of the bird on that date. Therefore, the primary key of this table should relate to both the date of the observation and the identity of the bird observed. Each measurement, and each bird measured on a given date, is given its own row, as below.</p>
 <br>
 <div class = "row">
 ```{r tidy1NFc, echo = FALSE}
@@ -467,8 +468,15 @@ kable(siteTable, "html") %>%
 <br>
 <h3>The third normal rule</h3>
 <br>
+<img src="rWorkshop/images/transitive.png" 
+	title="transitive objects"
+	alt = "objects of different sizes display transitive properties"
+	style= "float: left; width: 200px; padding-left: 0px"/>
 <p>Kent: Every non-key attribute must provide a fact about the key, the whole key, and nothing but the key. So help me Codd.</p>
-<p>The third normal rule states that, in addition to first and second normal rules being met, columns cannot be directly dependent on any other column. Thus columns are attributes of the primary key and only the primary key. The easiest example for this condition is date -- many data managers will include a year field in a data table, as below.</p>
+
+<p>The third normal rule states that, in addition to first and second normal rules being met, columns cannot be <b>transitively dependent</b>. The figure on the right displays transitive dependence -- if object A is greater in size than object C and object C is larger than object B, then object A must be larger than object B. Because of the first two comparisons between objects A and C and object C and B, directly comparing objects A and B is not necessary. In the realm of data tables, if the value of some column can be directly derived from the value of any non-key column, then this column should not be included in a data table because it provides no new information.</p> 
+
+<p>The easiest example of violations of the third normal rule, and one of the most common, is the inclusion of both a year and date field in a data table, as illustrated below.</p>
 <br>
 <div class = "row">
 ```{r tidy3messy, echo = FALSE}
@@ -503,7 +511,7 @@ kable(exampleTidy1, "html") %>%
 <blockquote>
 <h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h3>
 <br>
-<p>Consider how to arrange the following dataset using Codd's rules:</p>
+<p>Consider how to structure the following dataset using the three rules of normalizing data:</p>
 ```{r exercise1cleanSiteXY1, echo = FALSE}
 exercise1cleanSiteXY1 <- exercise1messy %>%
   separate(siteXY, into = c('x', 'y'), sep = ', ')
@@ -636,9 +644,9 @@ kable(untidyFrame, "html") %>%
   )
 ```
 </div>
-<p>It's easy to look at -- it's very easy to visually compare treatment A with treatment B -- but is it tidy? Nope, not at all. We would have to do some awkward wrangling in base R to get this into a tidy format. Luckily, Hadley Wickham and his team created the `tidyverse` package in R with the aim of turning messy datasets like these into tidy ones.</p>
+<p>It's easy to look at -- it's very easy to visually compare treatment A with treatment B -- but is it tidy? Nope, not at all. We would have to do some awkward wrangling in base R to get this into a tidy format. Luckily, Hadley Wickham and his team created the `tidyverse` with the aim of reshaping messy datasets like these into tidy ones.</p>
 
-<p>With the `tidyr` function `gather`, we collapse multiple columns into "key-value pairs". In the above example, we are interested in the treatment "values" for each of our "key" values. To do so, we provide:</p>
+<p>With the function `gather`, we can collapse multiple columns into "key-value pairs". In the above example, we are interested in the treatment "values" for each of our "key" values. To do so, we provide:</p>
 
 <ul>
 <li>The data frame ("untidyFrame") we will be reshaping</li>
@@ -785,152 +793,5 @@ distinct(siteRecord)
 </blockquote>
 <br>
 <hr>
-<br>
 
-<h2>The <b>pipe</b> operator</h2>
-
-<h3>The nested function</h3>
-<p>Like all functions, the `tidyverse` functions above can be <b>nested</b> within the other. Nesting helps avoid assigning intermediate objects -- this reduces the number of objects that are stored in your R environment. An advantage of this is that it also reduces the number of names you have to assign to objects, and, of course, the number of names that you have to remember ("What did I call that ... ?"). We've used nested functions quite a bit throughout this workshop thus far. Let's take a moment to review nested and non-nested versions of functions.</p>
-
-<p>To illustrate nested and non-nested code-writing, we will generate a set of numbers from 1-5, multiple each value by 2, and add one to the output. We will then write two silly functions: one that multiplies some value `x` by two and the next that calculates `x+1`. Using these functions we will:</p>
-<ol>
-<li>Create a vector, `z`, and complete this process by assigning a new object for each step</li>
-<li>Create a vector, `z`, and complete  this process first by overwriting an existing object for each step</li>
-<li>Write a nested function that completes this process in one step</li>
-</ol>
-
-```{r, eval = FALSE}
-# Some very silly functions for illustration:
-
-multiplyByTwo <- function(x){
-  x*2
-}
-
-addOne <- function(x){
-  x+1
-}
-
-# Non-nested, new object for each step:
-
-z <- 1:5
-
-z1 <- multiplyByTwo(z)
-
-addOne(z1)
-
-# Non-nested, overwrite object for each step:
-
-z <- 1:5
-
-z <- multiplyByTwo(z)
-
-addOne(z)
-
-# Nested:
-
-addOne(multiplyByTwo(1:5))
-```
-
-
-<p>Take a moment to consider the nested and non-nested versions of the process above. Each has its strengths and weaknesses:</p>
-<ul>
-<li><b>Non-nested with new object</b>:
-<ul>
-<li>Strength: Easy to read.</li>
-<li>Weaknesses: Takes up a lot of script space. Includes an intermediate object assignment (`z1`) that may be hard to remember.</li>
-</ul>
-</li>
-<li><b>Non-nested with overwritten object</b>:
-<ul>
-<li>Strengths: Easy to read. No new names.</li>
-<li>Weaknesses: Takes up a lot of script space. Loss of the initial value of `z` (<i>never, never, never overwrite assigned objects!</i>).</li>
-</ul>
-</li>
-<li><b>Nested</b>:
-<ul>
-<li>Strengths: Concise. No new names.</li>
-<li>Weaknesses: It is very difficult to read -- the object of the line of code is `1:5` therefore the code is read from the inside out.</li>
-</ul>
-</li>
-</ul>
-
-<br>
-<blockquote>
-<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h3>
-<br>
-<p>The dataset `longFrame` contains a subset of bird point count observations. Take a moment to explore these data:</p>
-
-```{r, eval = FALSE}
-longFrame
-```
-
-<p>You may have noticed that the data lack zeros! This could end up being a really big problem for some analyses. To counter this, you can `spread` the data using the argument `fill = 0`:</p>
-
-```{r, eval = FALSE}
-longFrameWide <- spread(
-  data = longFrame,
-  key = species,
-  value = count,
-  fill = 0
-  )
-```
-
-<p>To bring your data back to a "tidy" dataset, you will want to gather the species columns you've just generated:</p>
-
-```{r, eval = FALSE}
-gather(data = longFrameWide,
-  key = species,
-  value = count,
-  amro:grca)
-```
-
-<p>You have now generated a tidy data frame that includes 0 counts for each species.</p>
-<hr>
-<ul><li>Complete the process above using nested functions.</li></ul>
-<br>
-</blockquote>
-<br>
-
-<h3>The pipe</h3>
-<p>One of the greatest recent advancements in the world of R is the implementation of the <b>pipe operator</b>. A pipe operator allows you to set the output of one process as the input of another -- thus sequences of calculations are chained together without having to define intermediate steps as R objects (_Note: Piping is sometimes called chaining_). Piping was first implemented in R by ecologist and R guru Ben Bolker, in an answer to a question on stackoverflow. <img style="PADDING-LEFT:25px; PADDING-TOP: 5px" align = "right" src="https://upload.wikimedia.org/wikipedia/en/b/b9/MagrittePipe.jpg" height="300px" width = "300"/>  Hadley Wickham introduced his version of piping to his `dplyr` package in 2013 while concurrently Stefan Milton Bache developed a more flexible version for his package `magrittr` (named after Magritte's painting, <i>The Treachery of Images</i>). In 2014, Wickham and Bache teamed up and Bache's pipe was incorporated into the `tidyverse`.</p>
-
-<p>Piping makes scripts more readable and easier to write. Moreover, if you didn't do a great job naming your R objects, you may have a hard time remembering what each was. The alternative, nested functions, can be problematically complicated to read. Piping avoids the necessity to assign intermediate objects and makes scripts legible by conducting analyses in sequence.</p>
-
-<p>To illustrate how piping works, let's look again at the nested and non-nested processes that we completed at the start of this section:</p>
-
-```{r, eval = F}
-# Non-nested, new object for each step:
-
-z <- 1:5
-
-z1 <- multiplyByTwo(z)
-
-addOne(z1)
-
-# Nested:
-
-addOne(multiplyByTwo(1:5))
-``` 
-
-<p>To pipe this operation, we use the pipe symbol, `%>%`,  to separate arguments. The pipe represents the word "then". In piping, the output on the left side of the pipe becomes the first argument in the function on the right. We structure our piped statement similar to that of the non-nested version: "multiply `z` by two <i>then</i> add one to this value". Piping the above, our code would read as:</p> 
-
-```{r, eval = F}
-z %>%
-  multiplyByTwo %>%
-  addOne
-``` 
-
-<p>Isn't it lovely? Like the nested code, it does not create intermediate obects, and like the non-nested versions of the code it reads from left-to-right (or top-to-bottom).</p>
-
-<p>Notice that I used multiple indented lines of code. For maximal readibility, it is <b>highly recommended</b> that any multi-step operation should be formatted as such (this is considered <b>best management practices</b> for programmers across languages).
-
-<p>You should consider <b>every</b> script you write to be a <b>communication</b> between you and your future self and yourself and fellow scientists. Make sure your scripts communicate clearly -- future you and your fellow scientists will appreciate it greatly!</p>
-
-<br>
-<blockquote>
-<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Four:</h3>
-<br>
-<p>Repeat Exercise Three above, this time using piped rather than nested functions.</p>
-<br>
-</blockquote>
 
