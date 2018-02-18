@@ -1,0 +1,352 @@
+---
+output:
+ html_document:
+  theme: yeti
+---
+
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<style>
+
+code{
+  background-color:#f2f2f2;
+  border-radius: 25px;
+}
+ 
+span.co{
+  color:#000080;
+  font-weight: bold;
+}
+ 
+img{
+  display: block;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+h4{
+  text-align: left;
+  font-size: 20px;
+}
+
+p{
+  text-align: left;
+  font-size: 16px;
+}
+
+ul, ol{
+  line-height: 27px;
+  text-align: left;
+  font-size: 16px;
+  margin-left: 0px;
+}
+ 
+blockquote{
+  font-size: 18px;
+  border-left: 8px solid #292093;
+  background-color: #e6ffff;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+ 
+.row{
+  margin: auto;
+}
+ 
+table {
+  border-collapse: collapse;
+}
+
+table, td, th {
+  border: 1px solid black;
+  padding: 5px;
+  text-align: center;
+  vertical-align: middle;
+}
+ 
+ /* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.roundBorder {
+  border-radius: 25px;
+  border: 5px solid #30288C;
+  background: #D6EAF8;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.roundBorderBlack {
+  border-radius: 25px;
+  border: 10px solid #D3D3D3;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.roundBorderBlackEx {
+  border-radius: 5px;
+  border: 5px solid #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+}
+
+.roundBorderEx {
+  border-radius: 3px;
+  border: 5px solid #30288C;
+  background: #D6EAF8;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+}
+
+.tt {
+    position: relative;
+    display: inline-block;
+    class: inline; 
+    font-weight: bold;
+    font-family: "Avenir";
+    font-size: 18px;
+    border-bottom: 1px black;
+}
+
+/* Tooltip text */
+.tt .ttText {
+    visibility: hidden;
+    font-weight: normal;
+    font-size: 18px;
+    width: 200px;
+    background-color: black;
+    border: 1px solid black;
+    color: white;
+    text-align: left;
+    padding: 5px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tt:hover .ttText {
+    visibility: visible;
+}
+
+</style>
+
+```{r, eval = TRUE, include  = FALSE}
+# Load RCurl library:
+
+library(RCurl)
+
+# Load a source script:
+
+script <-
+  getURL(
+    "https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode.R"
+  )
+
+# Evaluate then remove the source script:
+
+eval(parse(text = script))
+
+rm(script)
+
+library(knitr) ; library(kableExtra)
+
+options(knitr.table.format = "html")
+```
+
+<h1 style="text-align: center;">Introduction to data science in R, Lesson 6:<br/>Working with tidy data</h1>
+<br>
+<!img style="float: left; margin: 0px 0px 15px 15px;" src="nzpLogo.jpg" width="150" />
+<p style = "text-align: center; font-size: 14px;">Brian S. Evans, Ph.D.<br />
+Migratory Bird Center<br/>
+Smithsonian Conservation Biology Institute</p>
+<hr>
+
+<h2>Introduction</h2>
+
+<p>With increasing calls for openness and reproducibility in science, the need is emerging for better data management practices. With the movement towards open science, data and scripts become part of the data reporting process. This helps advance scientific knowledge, as researchers do not have to reinvent the wheel every time they conduct a similar analysis, and ensures replicability, as interested parties (e.g., reviewers) can repeat every step in your data analysis. Considering this, it is in all of our best interest that our data be formatted correctly, that wrangling steps are clear and easy-to-follow, and that we can avoid "script bloat" by using methods (such as functions and occasionally <i>for loops</i>!) to reduce the length of our scripts. It is highly recommended that you take a "cradle-to-grave" approach to data manipulation and analysis:</p>
+<br>
+<img src="rWorkshop/images/dsWorkflowOverview.png" 
+	title="data science workflow"
+	alt = "data science diagram"
+	style= "float: right; width: 360px; padding-right: 0px"/>
+<ul>
+<li>Collect and store your data in tidy spreadsheets and (better yet) <b>databases</b>.</li>
+<li>DO NOT complete ANY step in the data manipulation process in Excel! Doing so makes it difficult for others to truly replicate your analyses.</li>
+<li>Basic formatting steps to prepare your data for analysis, <b>data tidying</b>, should be completed prior to any summarizing, further cleaning, or analysis of data.</li>
+<li>Clean data, including removing "bad" records, such as NA values (i.e., "Not Available") and extreme outliers, prior to (not during) statistical analysis.</li>
+</ul>
+<br>
+<hr>
+
+<h2>Review</h2>
+
+<br>
+
+<h2>The <b>pipe</b> operator</h2>
+
+<h3>The nested function</h3>
+<p>Like all functions, the `tidyverse` functions above can be <b>nested</b> within the other. Nesting helps avoid assigning intermediate objects -- this reduces the number of objects that are stored in your R environment. An advantage of this is that it also reduces the number of names you have to assign to objects, and, of course, the number of names that you have to remember ("What did I call that ... ?"). We've used nested functions quite a bit throughout this workshop thus far. Let's take a moment to review nested and non-nested versions of functions.</p>
+
+<p>To illustrate nested and non-nested code-writing, we will generate a set of numbers from 1-5, multiple each value by 2, and add one to the output. We will then write two silly functions: one that multiplies some value `x` by two and the next that calculates `x+1`. Using these functions we will:</p>
+<ol>
+<li>Create a vector, `z`, and complete this process by assigning a new object for each step</li>
+<li>Create a vector, `z`, and complete  this process first by overwriting an existing object for each step</li>
+<li>Write a nested function that completes this process in one step</li>
+</ol>
+
+```{r, eval = FALSE}
+# Some very silly functions for illustration:
+
+multiplyByTwo <- function(x){
+  x*2
+}
+
+addOne <- function(x){
+  x+1
+}
+
+# Non-nested, new object for each step:
+
+z <- 1:5
+
+z1 <- multiplyByTwo(z)
+
+addOne(z1)
+
+# Non-nested, overwrite object for each step:
+
+z <- 1:5
+
+z <- multiplyByTwo(z)
+
+addOne(z)
+
+# Nested:
+
+addOne(multiplyByTwo(1:5))
+```
+
+
+<p>Take a moment to consider the nested and non-nested versions of the process above. Each has its strengths and weaknesses:</p>
+<ul>
+<li><b>Non-nested with new object</b>:
+<ul>
+<li>Strength: Easy to read.</li>
+<li>Weaknesses: Takes up a lot of script space. Includes an intermediate object assignment (`z1`) that may be hard to remember.</li>
+</ul>
+</li>
+<li><b>Non-nested with overwritten object</b>:
+<ul>
+<li>Strengths: Easy to read. No new names.</li>
+<li>Weaknesses: Takes up a lot of script space. Loss of the initial value of `z` (<i>never, never, never overwrite assigned objects!</i>).</li>
+</ul>
+</li>
+<li><b>Nested</b>:
+<ul>
+<li>Strengths: Concise. No new names.</li>
+<li>Weaknesses: It is very difficult to read -- the object of the line of code is `1:5` therefore the code is read from the inside out.</li>
+</ul>
+</li>
+</ul>
+
+<br>
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h3>
+<br>
+<p>The dataset `longFrame` contains a subset of bird point count observations. Take a moment to explore these data:</p>
+
+```{r, eval = FALSE}
+longFrame
+```
+
+<p>You may have noticed that the data lack zeros! This could end up being a really big problem for some analyses. To counter this, you can `spread` the data using the argument `fill = 0`:</p>
+
+```{r, eval = FALSE}
+longFrameWide <- spread(
+  data = longFrame,
+  key = species,
+  value = count,
+  fill = 0
+  )
+```
+
+<p>To bring your data back to a "tidy" dataset, you will want to gather the species columns you've just generated:</p>
+
+```{r, eval = FALSE}
+gather(data = longFrameWide,
+  key = species,
+  value = count,
+  amro:grca)
+```
+
+<p>You have now generated a tidy data frame that includes 0 counts for each species.</p>
+<hr>
+<ul><li>Complete the process above using nested functions.</li></ul>
+<br>
+</blockquote>
+<br>
+
+<h3>The pipe</h3>
+<p>One of the greatest recent advancements in the world of R is the implementation of the <b>pipe operator</b>. A pipe operator allows you to set the output of one process as the input of another -- thus sequences of calculations are chained together without having to define intermediate steps as R objects (_Note: Piping is sometimes called chaining_). Piping was first implemented in R by ecologist and R guru Ben Bolker, in an answer to a question on stackoverflow. <img style="PADDING-LEFT:25px; PADDING-TOP: 5px" align = "right" src="https://upload.wikimedia.org/wikipedia/en/b/b9/MagrittePipe.jpg" height="300px" width = "300"/>  Hadley Wickham introduced his version of piping to his `dplyr` package in 2013 while concurrently Stefan Milton Bache developed a more flexible version for his package `magrittr` (named after Magritte's painting, <i>The Treachery of Images</i>). In 2014, Wickham and Bache teamed up and Bache's pipe was incorporated into the `tidyverse`.</p>
+
+<p>Piping makes scripts more readable and easier to write. Moreover, if you didn't do a great job naming your R objects, you may have a hard time remembering what each was. The alternative, nested functions, can be problematically complicated to read. Piping avoids the necessity to assign intermediate objects and makes scripts legible by conducting analyses in sequence.</p>
+
+<p>To illustrate how piping works, let's look again at the nested and non-nested processes that we completed at the start of this section:</p>
+
+```{r, eval = F}
+# Non-nested, new object for each step:
+
+z <- 1:5
+
+z1 <- multiplyByTwo(z)
+
+addOne(z1)
+
+# Nested:
+
+addOne(multiplyByTwo(1:5))
+``` 
+
+<p>To pipe this operation, we use the pipe symbol, `%>%`,  to separate arguments. The pipe represents the word "then". In piping, the output on the left side of the pipe becomes the first argument in the function on the right. We structure our piped statement similar to that of the non-nested version: "multiply `z` by two <i>then</i> add one to this value". Piping the above, our code would read as:</p> 
+
+```{r, eval = F}
+z %>%
+  multiplyByTwo %>%
+  addOne
+``` 
+
+<p>Isn't it lovely? Like the nested code, it does not create intermediate obects, and like the non-nested versions of the code it reads from left-to-right (or top-to-bottom).</p>
+
+<p>Notice that I used multiple indented lines of code. For maximal readibility, it is <b>highly recommended</b> that any multi-step operation should be formatted as such (this is considered <b>best management practices</b> for programmers across languages).
+
+<p>You should consider <b>every</b> script you write to be a <b>communication</b> between you and your future self and yourself and fellow scientists. Make sure your scripts communicate clearly -- future you and your fellow scientists will appreciate it greatly!</p>
+
+<br>
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h3>
+<br>
+<p>Repeat Exercise Three above, this time using piped rather than nested functions.</p>
+<br>
+</blockquote>
+
