@@ -224,6 +224,10 @@ birdCounts %>%
   transmute(site = site,
             year = year(date))
 
+#=================================================================================*
+# ---- renaming columns ----
+#=================================================================================*
+
 # Rename a column using select:
 
 select(birdCounts, site, date, spp = species, count)
