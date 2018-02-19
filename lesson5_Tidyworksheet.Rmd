@@ -397,7 +397,7 @@ kable(birdObservationTable, "html") %>%
 <div class = "row">
 <p>Site table:</p>
 ```{r tidy2NF_site, echo = FALSE}
-kable(siteTable, "html") %>%
+kable(siteTable %>% rename(siteId = id), "html") %>%
  kable_styling(
   bootstrap_options = c("striped", "hover"),
   full_width = FALSE,
@@ -443,7 +443,7 @@ kable(birdObservationTable, "html") %>%
 <div class = "row">
 <p>Visit table:</p>
 ```{r tidy2NFb_visit, echo = FALSE}
-kable(visitTable, "html") %>%
+kable(visitTable %>% rename(visitId = id), "html") %>%
  kable_styling(
   bootstrap_options = c("striped", "hover"),
   full_width = FALSE,
@@ -456,7 +456,7 @@ kable(visitTable, "html") %>%
 <div class = "row">
 <p>Site table:</p>
 ```{r tidy2NFb_site, echo = FALSE}
-kable(siteTable, "html") %>%
+kable(siteTable %>% rename(siteId = id), "html") %>%
  kable_styling(
   bootstrap_options = c("striped", "hover"),
   full_width = FALSE,
@@ -516,7 +516,7 @@ kable(exampleTidy1, "html") %>%
 exercise1cleanSiteXY1 <- exercise1messy %>%
   separate(siteXY, into = c('x', 'y'), sep = ', ')
   
-kable(exercise1cleanSiteXY1, "html") %>%
+kable(exercise1messy, "html") %>%
   kable_styling(bootstrap_options = c("striped", "hover")) %>%
   row_spec(c(0, 2, 4), background = 'white') %>%
   row_spec(c(1, 3, 5), background = 'gray80')
@@ -771,14 +771,15 @@ kable(badBandingRecord, "html") %>%
 <li>Bird-level observations: birdID, observationDate, site, and mass are all attributes of a bird's capture event</li>
 </ul>
 
-<p>Above we used the function `separate` to remove columns from tables. We can use this function to restructure the banding record into two data frames representing two levels of observations (Note: I am using two levels to avoid the primary and foreign keys here, for simplicity):</p>
+<p>Above we used the function `select` to remove columns from tables. We can use this function to restructure the banding record into two data frames representing two levels of observations (Note: I am using two levels to avoid the primary and foreign keys here, for simplicity):</p>
+
 ```{r, eval = FALSE}
 birdRecord <- select(badBandingRecord, birdID, observationDate, site, mass)
 
 siteRecord <- select(badBandingRecord, site, canopyCover)
 ```
 
-<p>The above is a great start, but notice that the `siteRecord` table has duplicate rows. This is a direct violation of the first normal rule. You can use the tidyverse function <b>distinct</b> to remove any rows that are exact duplicates of one another. The our purposes here, only relevant argument of `distinct` is the data frame. Let's use distinct to remove duplicate site records:</p>
+<p>The above is a great start, but notice that the `siteRecord` table has duplicate rows. This is a violation of the first normal rule. You can use the tidyverse function <b>distinct</b> to remove any rows that are exact duplicates of one another. The our purposes here, only relevant argument of `distinct` is the data frame. Let's use distinct to remove duplicate site records:</p>
 
 ```{r, eval = FALSE}
 distinct(siteRecord)
