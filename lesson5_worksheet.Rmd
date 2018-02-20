@@ -13,7 +13,6 @@ output:
 code{
   background-color:#f2f2f2;
   border-radius: 25px;
-  
 }
  
 span.co{
@@ -29,15 +28,20 @@ img{
   padding-bottom: 10px;
 }
 
+h4{
+  text-align: left;
+  font-size: 20px;
+}
+
 p{
   text-align: left;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 ul, ol{
   line-height: 27px;
   text-align: left;
-  font-size: 18px;
+  font-size: 16px;
   margin-left: 0px;
 }
  
@@ -147,7 +151,30 @@ table, td, th {
 
 </style>
 
-<h1 style="text-align: center;">Introduction to data science in R, Lesson 5:<br/>Welcome to the <b>tidyverse</b>!</h1>
+```{r, eval = TRUE, include  = FALSE}
+# Load RCurl library:
+
+library(RCurl)
+
+# Load a source script:
+
+script <-
+  getURL(
+    "https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode.R"
+  )
+
+# Evaluate then remove the source script:
+
+eval(parse(text = script))
+
+rm(script)
+
+library(knitr) ; library(kableExtra)
+
+options(knitr.table.format = "html")
+```
+
+<h1 style="text-align: center;">Introduction to data science in R, Lesson 5:<br/>Welcome to the tidyverse!</h1>
 <br>
 <!img style="float: left; margin: 0px 0px 15px 15px;" src="nzpLogo.jpg" width="150" />
 <p style = "text-align: center; font-size: 14px;">Brian S. Evans, Ph.D.<br />
@@ -155,104 +182,617 @@ Migratory Bird Center<br/>
 Smithsonian Conservation Biology Institute</p>
 <hr>
 
-<h2>What is the tidyverse?</h2>
+<h2>Introduction</h2>
+<br>
+<p>It is estimated that the process of summarizing and preparing data for statistical analysis, <b>data wrangling</b>, consumes roughly 80 percent of total analysis time (Dasu and Johnson 2003). Despite this, researchers are rarely given much, if any, training on properly managing their data. 
+<img style="PADDING-RIGHT:10px; PADDING-TOP: 10px; PADDING-BOTTOM: 10px; padding-right: 0px" align = "right" src="http://images.nationalgeographic.com/wpf/media-live/photos/000/183/cache/upside-down-bird_18378_990x742.jpg" height="400px" width = "380px" title=" Hideta Nagai, National Geographic"/>
+As a result, researchers in fields outside of data science rarely follow formal data management conventions and tend to format their data for a given analyis, ease of data entry, or for some now-potentially-defunct computer program. This leads to messy, inflexible datasets that are difficult to work with for anything but their initial intention.</p>
 
+<p>The goal of this lesson is to introduce you to the structure of tidy data. Tidy data are datasets that follow the convention of database design. This is the preferable format for data in that:</p>
 <ul>
-<li>Principles of tidy data</li>
-<li>Functions to manipulate data from messy to tidy</li>
-<li>Tools for tidy wrangling</li>
-<li>Tidy functions to filter, summarize, and modify data (<i>Lesson 6</i>)</li>
+<li><b>Tidy data are not platform-specific</b>: This is not just the preferred data formatting for working in R or using <i>tidyverse</i> packages, this is the preferred format for data as a whole. Considerable research, and really an entire field of study, has gone into the rules that determine what consitutes tidy data.</li>
+<li><b>Tidy data are durable and avoid data entry and modification errors</b>: Tidy data avoids generating and working with duplicate values in data tables and databases. This streamlines the data entry and management processes.</li>
+<li><b>All tidy datasets are the same</b>: Tidy datasets lead to fast and flexible analysis because they are all formatted in the same way. Messy datasets can be messy in a multitude of ways and therefore may require considerable wrangling to prepare them for statistical analysis.</li>
 </ul>
 
+<br>
+
 <hr>
-<h2>What are tidy data?</h2>
-<p><b>In the language of data science</b>: The three normal forms (Codd et al.)<p>
+
+<h2>Before you begin</h2>
+<p>Copy, paste, and run the following code in R Studio to load the packages and read in the data that we will be using for this lesson:</p>
+<br>
+
+```{r, eval=FALSE}
+# Load RCurl library:
+
+library(RCurl)
+
+# Load a source script:
+
+script <-
+  getURL(
+    "https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode.R"
+  )
+
+# Evaluate then remove the source script:
+
+eval(parse(text = script))
+
+rm(script)
+```
+
+<hr>
+
+<h2>The rules of tidy data in the language of data science</h2>
+<br>
+<p>At the core of the <b>Tidyverse</b> is the notion of tidy data. Tidy data are easy to modify, summarize, model, and communicate to others. At each step in our data science process, we should be thinking about the structure of our data and taking every step we can to ensure that they are tidy.</p>
+
+<p>The three normalization rules of database design (Codd) form the backbone of much of the field of data science and define a tidy dataset. These rules are:</p>
+
 <ol>
-<li>First normal (Post-hoc):
+<li><b>First normal</b>:
 <ul>
 <li>All rows represent a unique record (primary key)</li>
 <li>All values are atomic</li>
-<li>Columns are not grouped</li>
+<li>Columns do not contain repeated grouping</li>
 </ul>
 </li>
-<li>All columns are unique to the observation event (primary key) -- i.e., do each of the column values describe the observation event? If not, put them in another table.</li>
-<li>All columns are non-transitively dependent: No colum
-n values are directly dependent on any column except that which defines the observation</li>
+<li><b>Second normal</b>: All columns are unique to the primary key (observation)</li>
+<li><b>Third normal</b>: All columns are non-transitively dependent.
+<ul><li>Column values are <b>only</b> directly dependent on the column that defines the observation</ul></li>
+</li>
 </ol>
 
-<h2>What are tidy data?</h2>
+<p>Before proceeding to working with Tidy data, let's look at the normalization rules more in depth:</p>
 
-<p>In statistical language (Wickham):</p>
+<h3>The first normal rule</h3>
 <ul>
+<li>All rows represent a unique record (<b>primary key</b>):</li>
+<br>
+<p>The <b>primary key</b> is a data base field that defines a unique record in the database. Note that primary keys are rarely used in R tables, but I will use it in many of the tables of this section to illustrate the rules of database normalization.</p>
+
+<p>The table below illustrates the measurement data for a bird that was captured on a given date. We can see that the level of observation, as shown by the primary key, defined by the bird observed (`birdID`) and date (`observationDate`). Because there are multiple records associated with this observation level, this is a violation of the first normal rule.</p>
+<br>
+<div class = "row">
+```{r first normal start, echo = FALSE}
+kable(messy1NFa, "html") %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover"),
+    full_width = FALSE,
+    font_size = 16,
+    position = "float_left"
+  )
+```
+</div>
+
+<p>Why? Mass, wing, and tail are attributes (variables) associated with the observation of the bird and thus deserve their own columns of the table, as below.</p>
+<br>
+<div class = "row">
+```{r tidy1NFa, echo = FALSE}
+kable(tidy1NFa, "html") %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover"),
+    full_width = FALSE,
+    font_size = 16,
+    position = "float_left"
+  )
+```
+</div>
+<br>
+<li>All values are atomic:</li>
+<br>
+<p>An <b>atomic value</b> is a value that cannot be divided. In the table below, multiple dates are provided in a single column, a clear violation of this rule of the first normal.</p>
+<br>
+<div class = "row">
+```{r badDate, echo = FALSE}
+kable(badDate, "html") %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover"),
+    full_width = FALSE,
+    font_size = 16,
+    position = "float_left"
+  )
+```
+</div>
+<p>To fix this, we separate date into multiple columns, as below (<i>Note: The table below is still not tidy!</i>).</p>
+<br>
+<div class = "row">
+```{r tidy1NFb0, echo = FALSE}
+kable(tidy1NFb0, "html") %>%
+ kable_styling(
+  bootstrap_options = c("striped", "hover"),
+  full_width = FALSE,
+  font_size = 16,
+  position = "float_left"
+  )
+```
+</div>
+<li>Columns do not contain repeated grouping:</li>
+<br>
+<p>The table below contains mass measurements taken of birds on a given date. While mass is an attribute of a bird, we can see that the mass measurement varies by date.</p>
+<br>
+<div class = "row">
+```{r messy1NFc, echo = FALSE}
+kable(messy1NFc, "html") %>%
+ kable_styling(
+  bootstrap_options = c("striped", "hover"),
+  full_width = FALSE,
+  font_size = 16,
+  position = "float_left"
+  )
+```
+</div>
+
+<p>Because the mass measurement varies by date, it is an attribute of the observation of the bird on that date. Therefore, the primary key of this table should relate to both the date of the observation and the identity of the bird observed. Each measurement, and each bird measured on a given date, is given its own row, as below.</p>
+<br>
+<div class = "row">
+```{r tidy1NFc, echo = FALSE}
+kable(exampleTidy1, "html") %>%
+ kable_styling(
+  bootstrap_options = c("striped", "hover"),
+  full_width = FALSE,
+  font_size = 16,
+  position = "float_left"
+  )
+```
+</div>
+</li>
+</ul>
+<br>
+<h3>The second normal rule</h3>
+<br>
+<p>The second normal rule, that all columns are unique to the observation, is a rule that can be used to test whether the values in a single table should be split into multiple tables (or, conversely, that multiple tables can be merged into a single table). This rule can be restated as "every column must be an attribute of the observation that defines the row". When working with the second normal rule, we need to ask ourselves what the level of observation is for the record. The table below contains measurements of birds taken at a given site on a given date and the proportional canopy cover (leaf cover) at the site.</p>
+
+<br>
+<div class = "row">
+```{r messy second normal, echo = FALSE}
+badBandingRecord <- exampleTidy1 %>%
+  mutate(
+    site = c('apple','apple', 'avocado', 'apple', 'avocado'),
+    canopyCover = c(32.5, 32.5, 78.4, 32.5, 78.4)
+  ) %>%
+  select(id, birdID, observationDate, site, canopyCover, mass)
+
+kable(badBandingRecord, "html") %>%
+ kable_styling(
+  bootstrap_options = c("striped", "hover"),
+  full_width = FALSE,
+  font_size = 16,
+  position = "float_left"
+  )
+```
+</div>
+
+<p>Mass is an attribute of the measurement of the bird on a given date. Site is an attribute of this record, because it describes the observation. Canopy cover, however, is an attribute of site. The repeated canopy cover values is a big clue that something is awry. To deal with this, the data are split into two tables, one describing the observation and the other a table describing the site, as below.</p>
+<br>
+<div class = "row">
+<p>Bird observation table:</p>
+```{r tidy2NF_obs, echo = FALSE}
+siteTable <- badBandingRecord %>%
+  select(site, canopyCover) %>%
+  distinct %>%
+  mutate(id = siteIds) %>%
+  select(id, site, canopyCover)
+
+birdObservationTable <- badBandingRecord %>%
+  select(-canopyCover) %>%
+  left_join(
+    siteTable %>%
+      rename(siteId = id),
+    by  = 'site'
+  ) %>%
+  select(id, siteId, birdID, observationDate, mass)
+
+kable(birdObservationTable, "html") %>%
+ kable_styling(
+  bootstrap_options = c("striped", "hover"),
+  full_width = FALSE,
+  font_size = 16,
+  position = "float_left"
+  )
+```
+</div>
+<br>
+<div class = "row">
+<p>Site table:</p>
+```{r tidy2NF_site, echo = FALSE}
+kable(siteTable %>% rename(siteId = id), "html") %>%
+ kable_styling(
+  bootstrap_options = c("striped", "hover"),
+  full_width = FALSE,
+  font_size = 16,
+  position = "float_left"
+  )
+```
+</div>
+<br>
+<p>In the above table the site field in the observation table has been replaced by `siteId`. This is what is called a <b>foreign key</b>. A foreign key is a field that links to the primary key in a different table. The foreign key is a way to link the two tables so that they can share information with one another. This is described as a one-to-many relationship (a row from one table can have multiple matching rows in another -- for example, there are multiple observations associated with each site).</p>
+
+<p>There is a bit of a gray area here remaining in the observation table -- should it remain one table or split into two? Mass is certainly an attribute of the observation of a bird but, considering that multiple birds were observed at a given site, is site really an attribute of the observation? You could make a case (and I would agree) that this table should be divided even further, as below:</p>
+<br>
+<div class = "row">
+<p>Bird observation table:</p>
+```{r tidy2NFa_obs, echo = FALSE}
+visitIds <- vector('character', length = 4)
+
+for(i in seq_along(visitIds)){
+  visitIds[i] <- generateObservationID()
+}
+
+visitTable <- birdObservationTable %>%
+  select(siteId, observationDate) %>%
+  distinct %>%
+  mutate(id = visitIds) %>%
+  select(id, siteId, observationDate)
+  
+birdObservationTable <- birdObservationTable %>%
+  left_join(visitTable %>% rename(visitId = id), by = c('siteId', 'observationDate')) %>%
+  select(id, visitId, birdID, mass)
+
+kable(birdObservationTable, "html") %>%
+ kable_styling(
+  bootstrap_options = c("striped", "hover"),
+  full_width = FALSE,
+  font_size = 16,
+  position = "float_left"
+  )
+```
+</div>
+<br>
+<div class = "row">
+<p>Visit table:</p>
+```{r tidy2NFb_visit, echo = FALSE}
+kable(visitTable %>% rename(visitId = id), "html") %>%
+ kable_styling(
+  bootstrap_options = c("striped", "hover"),
+  full_width = FALSE,
+  font_size = 16,
+  position = "float_left"
+  )
+```
+</div>
+<br>
+<div class = "row">
+<p>Site table:</p>
+```{r tidy2NFb_site, echo = FALSE}
+kable(siteTable %>% rename(siteId = id), "html") %>%
+ kable_styling(
+  bootstrap_options = c("striped", "hover"),
+  full_width = FALSE,
+  font_size = 16,
+  position = "float_left"
+  )
+```
+</div>
+<br>
+<h3>The third normal rule</h3>
+<br>
+<img src="rWorkshop/images/transitive.png" 
+	title="transitive objects"
+	alt = "objects of different sizes display transitive properties"
+	style= "float: left; width: 200px; padding-left: 0px"/>
+<p>Kent: Every non-key attribute must provide a fact about the key, the whole key, and nothing but the key. So help me Codd.</p>
+
+<p>The third normal rule states that, in addition to first and second normal rules being met, columns cannot be <b>transitively dependent</b>. The figure on the right displays transitive dependence -- if object A is greater in size than object C and object C is larger than object B, then object A must be larger than object B. Because of the first two comparisons between objects A and C and object C and B, directly comparing objects A and B is not necessary. In the realm of data tables, if the value of some column can be directly derived from the value of any non-key column, then this column should not be included in a data table because it provides no new information.</p> 
+
+<p>The easiest example of violations of the third normal rule, and one of the most common, is the inclusion of both a year and date field in a data table, as illustrated below.</p>
+<br>
+<div class = "row">
+```{r tidy3messy, echo = FALSE}
+
+badYear <- exampleTidy1 %>%
+  mutate(observationYear = lubridate::year(observationDate))
+
+kable(badYear, "html") %>%
+ kable_styling(
+  bootstrap_options = c("striped", "hover"),
+  full_width = FALSE,
+  font_size = 16,
+  position = "float_left"
+  )
+```
+</div>
+<p>Because year can directly be derived from date, this column should not be included. Instead the dataset should be:
+<br>
+<div class = "row">
+```{r tidy3clean, echo = FALSE}
+kable(exampleTidy1, "html") %>%
+ kable_styling(
+  bootstrap_options = c("striped", "hover"),
+  full_width = FALSE,
+  font_size = 16,
+  position = "float_left"
+  )
+```
+</div>
+<br>
+<br>
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h3>
+<br>
+<p>Consider how to structure the following dataset using the three rules of normalizing data:</p>
+```{r exercise1cleanSiteXY1, echo = FALSE}
+exercise1cleanSiteXY1 <- exercise1messy %>%
+  separate(siteXY, into = c('x', 'y'), sep = ', ')
+  
+kable(exercise1messy, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  row_spec(c(0, 2, 4), background = 'white') %>%
+  row_spec(c(1, 3, 5), background = 'gray80')
+```
+<br>
+</blockquote>
+
+<br>
+<hr>
+<br>
+<h2>The rules of tidy data in statistical language</h2>
+<br>
+<p>For the creation of the tidyverse, Hadley Wickham re-framed the three normalization rules into statistical language -- the language of most R users. In the statistical language, a tidy dataset has three qualities:</p>
+<ol>
 <li>Each variable forms a column</li>
 <li>Each observation forms a row</li>
-<li>Each type of observational unit forms a table</li>
-</ul>
-<p>Each tidy dataset arranging values into the <b>same</b> structure.</p>
-<p>The best way to understand these rules is to look at examples of when they are broken.</p>
-
-<h2>Tidy data: Each variable forms a column</h2>
-<h3>Untidy version</h3>
-<p>Problem: More than one variable in a column</p>
-<p>Problem: One variable split into multiple columns</p>
-
-<h3>Tidy version</h3>
-
-<h2>Tidy data: Each observation forms a row</h2>
-<h3>Untidy version</h3>
-<p>Problem: More than one observation in a row</p>
-<p>Problem: One observation split into multiple rows</p>
-
-<h3>Tidy version</h3>
-
-<h2>Tidy data: Each type of observational unit forms a table</h2>
-
-<h3>Untidy version</h3>
-<p>Problem: More than observational unit in a table (most common)</p>
-<p>Problem: One observational split provided in multiple tables</p>
-
-
-<h3>Tidy version</h3>
-
-<h2>Some more rules for tidy data</h2>
-<h3>Value format matters</h3>
-<p>Why not use standard date formats?</p>
-<h3>Why on Earth would you use row names for a data frame?</h3>
-
-<h2>Why use tidy data?</h2>
-<p>The same functions and steps can be applied across datasets</p>
-<p>Modifications can be applied without modifying each table</p>
-<p>Easy filtering and summarizing</p>
-<p>Analysist can choose the level of analysis</p>
-
-<h2>Why would you create untidy data?</h2>
-
-<ol>
-<li>You like to look at your data</li>
-<li>Ease of data entry (Excel?)</li>
-<li>You complete a step of wrangling in Excel</li>
-<li>Planned redundancy (aka trust issues)</li>
-<li>Structuring data for a planned analysis</li>
+<li>Each level of observation forms a table</li>
 </ol>
+<p>To illustrate these rules, we will explore the process of making untidy data tidy.</p>
+<br>
+<h3><b>Tidy rule: Each variable forms a column</b></h3>
+<br>
+<h4><b>Untidy problem</b>: Multiple variables in a single column</h4>
+<p>This problem relates to the first normal rule "all values are atomic". We illustrated this previously using a dataset in which there where multiple dates stored in a single date column, repeated below, with the dataset `badDate`.</p>
+```{r eval = FALSE}
+badDate
+```
+<div class = "row">
+```{r separate0, echo = FALSE}
+kable(badDate, "html") %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover"),
+    full_width = FALSE,
+    font_size = 16,
+    position = "float_left"
+  )
+```
+</div>
+<p>This type of rule violation can easily be dealt with using the `tidyverse` <b>separate</b> function. Arguments of `separate` include:</p>
+<ul>
+<li><b>data</b>: The data frame that contains the columns you wish to separate</li>
+<li><b>col</b>: The name of the column you wish to separate</li>
+<li><b>into</b>: A vector providing the names of the new columns</li>
+<li><b>sep</b>: The character that defines where to split the columns</li>
+</ul>
+<p>To separate the above into a tidier (but still not tidy) dataset, code the following:</p>
+```{r separate, eval = FALSE}
+separate(
+  data = badDate,
+  col = observationDate,
+  into = c('date1', 'date2'),
+  sep = ", "
+  )
+```
+<br>
+<h4><b>Untidy problem</b>: A single variable split into multiple columns</h4>
 
+<p>A common mistake is to derive the value in one column using information from another column. This is a violation of the third normal rule. Above, we used the example of a dataset that included a year and date column. These columns are called <b>transitive</b> because year can be derived from date. A <b>transitive</b> variable contains no further information, so is untidy. Let's take a look at the data again, with the dataset `badYear`, before addressing the problem:</p>
+<div class = "row">
+```{r, eval = FALSE}
+badYear
+```
+
+```{r badYear, echo = FALSE}
+kable(badYear, "html") %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover"),
+    full_width = FALSE,
+    font_size = 16,
+    position = "float_left"
+  )
+```
+</div>
+<br>
+<p>To address this, we must <b>subset data by columns</b>. In our previous lessons we learned how to select columns from a data frame using indexing. Indexing allows us select columns based on their position within the data frame or by name:</p>
+```{r eval = F}
+
+# By position: 
+
+badYear[,1:4]
+
+badYear[,-5]
+
+# By name:
+
+badYear[, c('id', 'birdID', 'observationDate', 'mass')]
+
+```
+
+<br>
+<p>We can use the `tidyverse` <b>select</b> function to subset a data frame by column much more easily. Arguments of `select` include the data frame that contains the columns you wish to select and the names (unquoted) or positions of the columns.</p>
+
+```{r eval = F}
+
+# By position: 
+
+select(badYear, 1:4)
+
+select(badYear, -5)
+
+# By name:
+
+select(badYear, id:mass)
+
+select(badYear, -observationYear)
+
+```
+<br>
+<h3><b>Tidy rule: Each observation forms a row</b></h3>
+<br>
+<h4><b>Untidy problem</b>: Multiple observations in a row (i.e., more than one observation per row)</h4>
+<br>
+<p>This type of problem is usually related to a violation of the first normalization rule (columns do not contain repeated groupings). For this problem, we will use the dataset `untidyFrame`. In this typical example a researcher is assessing the influence of a treatment measured on three test subjects:</p>
+```{r, eval = FALSE}
+untidyFrame
+```
+<div class = "row">
+```{r untidyFrameTable, echo = FALSE}
+kable(untidyFrame, "html") %>%
+ kable_styling(
+  bootstrap_options = c("striped", "hover"),
+  full_width = FALSE,
+  font_size = 16,
+  position = "float_left"
+  )
+```
+</div>
+<p>It's easy to look at -- it's very easy to visually compare treatment A with treatment B -- but is it tidy? Nope, not at all. We would have to do some awkward wrangling in base R to get this into a tidy format. Luckily, Hadley Wickham and his team created the `tidyverse` with the aim of reshaping messy datasets like these into tidy ones.</p>
+
+<p>With the function `gather`, we can collapse multiple columns into "key-value pairs". In the above example, we are interested in the treatment "values" for each of our "key" values. To do so, we provide:</p>
+
+<ul>
+<li>The data frame ("untidyFrame") we will be reshaping</li>
+<li>The name of the new "key" field for which we are gathering the data ("treatment")</li>
+<li>The name of the new "value" field where the values for that field will be stored</li>
+<li>The columns for which the values will be restructured (these may be referred to by name or column number)</li>
+</ul>
+
+```{r gather, eval = FALSE}
+gather(
+  data = untidyFrame,
+  key = treatment,
+  value = value,
+  treatmentA:treatmentB
+  )
+```
+
+<div class = "row">
+```{r gatherTable, echo = FALSE}
+gatherTable <- gather(
+  data = untidyFrame,
+  key = treatment,
+  value = value,
+  treatmentA:treatmentB
+  )
+
+kable(gatherTable, "html") %>%
+ kable_styling(
+  bootstrap_options = c("striped", "hover"),
+  full_width = FALSE,
+  font_size = 16,
+  position = "float_left"
+  )
+```
+</div>
+
+<p>Let's give another example (and a more bird-y one at that). I collected bird point count data from sites in Washington, D.C. For each bird, I calculated the distance between myself and the observed birds, in units of 10 meters. On my datasheet I recorded the following:</p>
+<br>
+<div class = "row">
+```{r, eval = T, echo=F, warning=FALSE}
+kable(wideFrame, "html") %>%
+  kable_styling(
+  bootstrap_options = c("striped", "hover"),
+  full_width = FALSE,
+  font_size = 16,
+  position = "float_left"
+  )
+```
+</div>
+
+<p>In the above, each observation is of a given species at a given distance class. The grouping of the distance columns is a clear sign that these data are not in tidy format. In the language of the tidyverse, I have split one variable (the count of birds) into multiple columns. As such, we are compelled to tidy our data by collapsing the distances into a single column. In the script below we use the `tidyr` function `gather` as:
+
+```{r gatherCounts, eval = FALSE}
+gather(data = wideFrame, 
+  key = distance,
+  value = obs, 
+  d10:d30)
+```
+
+<p>This generated what is often called a "<b>long</b>" data frame. Are all tidy data frames long? Not necessarily! It depends on the observational unit of your study.</p>
+<br>
+<h4><b>Untidy problem</b>: Multiple rows per observation</h4>
+
+<p>Take a moment to consider the following data frame of bird measurement data that we used in the first section (`dfTooLong`):</p>
+
+```{r, eval = FALSE}
+dfTooLong
+```
+
+<div class = "row">
+```{r untidy HW2a, echo = FALSE, warning = FALSE}
+kable(dfTooLong, "html") %>%
+  kable_styling(
+  bootstrap_options = c("striped", "hover"),
+  full_width = FALSE,
+  font_size = 16,
+  position = "float_left"
+  )
+```
+</div>
+
+<p>In this instance the measurements (mass, tail, and wing) are all attributes associated with the level of observation, the bird on a given date, but the observation has been split into one row for each value. This is a violation of the first normal rule (all rows represent a unique record). To fix this, we must convert from long to wide form. To do so, we use the `spread` function in `tidyr`. <i>Note that usage of the key-value pair is essentially the opposite of the usage within the gather function!</i> The arguments for `spread` include:</p>
+<ul>
+<li>data: The data frame ("dfTooLong") we will be reshaping</li>
+<li>key: The name of the "key" field to be used as column names ("measurement")</li>
+<li>value: The name of the "value" field which will be distributed into the columns</li>
+<li>fill: If no match is found, the value to fill (e.g., NA or 0 -- the default is NA)</li>
+</ul>
+
+```{r spread, eval = FALSE}
+spread(
+  data = dfTooLong,
+  key = measurement,
+  value = value,
+  fill = NA
+  )
+```
+<br>
+<h3><b>Tidy rule: Each level of observation forms a table</b></h3>
+<br>
+<h4><b>Untidy problem</b>: Multiple levels of observation in a table</h4>
+
+<p>This problem, which is a violation of the second normal rule, occurs when a single table is created to store data collected across multiple observational levels. It is probably the most common issue in data management. Let's look once again at the data table that violated the second normal rule above (`badBandingRecord`):</p>
+
+```{r, eval = FALSE}
+badBandingRecord
+```
+<div class = "row">
+```{r badBandingRecordTable, echo = FALSE, warning = FALSE}
+kable(badBandingRecord, "html") %>%
+  kable_styling(
+  bootstrap_options = c("striped", "hover"),
+  full_width = FALSE,
+  font_size = 16,
+  position = "float_left"
+  )
+```
+</div>
+<p>To re-iterate, the table above contains:</p>
+<ul>
+<li>Site-level observations: Canopy cover is an attribute of the site</li>
+<li>Bird-level observations: birdID, observationDate, site, and mass are all attributes of a bird's capture event</li>
+</ul>
+
+<p>Above we used the function `select` to remove columns from tables. We can use this function to restructure the banding record into two data frames representing two levels of observations (Note: I am using two levels to avoid the primary and foreign keys here, for simplicity):</p>
+
+```{r, eval = FALSE}
+birdRecord <- select(badBandingRecord, birdID, observationDate, site, mass)
+
+siteRecord <- select(badBandingRecord, site, canopyCover)
+```
+
+<p>The above is a great start, but notice that the `siteRecord` table has duplicate rows. This is a violation of the first normal rule. You can use the tidyverse function <b>distinct</b> to remove any rows that are exact duplicates of one another. The our purposes here, only relevant argument of `distinct` is the data frame. Let's use distinct to remove duplicate site records:</p>
+
+```{r, eval = FALSE}
+distinct(siteRecord)
+```
+
+<br>
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h3>
+<br>
+<p>The dataset `birdCounts` is located in your global environment. Following the rules outlined above, convert this dataset to tidy-formatted data.</p>
+<br>
+</blockquote>
+<br>
 <hr>
 
-<h2>Functions to tidy data:</h2>
-
-<h3>tidyr functions</h3>
-
-<p><b>gather<b>:</p>
-
-<p><b>spread<b>:</p>
-
-<p><b>separate<b>:</p>
-
-<p><b>unite<b>:</p>
-
-<hr>
-<h3>Tools for tidy wrangling: Tibbles and pipes, oh my!</h2>
-
-<p><b>The tibble</b>:</p>
-
-<p><b>The pipe</b>:</p>
 
