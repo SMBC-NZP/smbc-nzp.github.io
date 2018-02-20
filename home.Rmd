@@ -161,7 +161,7 @@ table, td, th {
   width: 350px;">
 Through this process, participants are expected to develop a flexible skillset for managing and exploring data.</p>
 
-<p>The web page will act as a clearinghouse for the lessons of this workshop. Each lesson has accompanying hyperlinks. The links are divided into the following types:</p>
+<p>This web page will act as a clearinghouse for the lessons of this workshop. Each lesson has accompanying hyperlinks. The links are divided into the following types:</p>
 <ul>
 <li><b>Presentation website</b>: Website that accompanies the video or in-person presentation.</li>
 <li><b>Worksheet website</b>: Website with written-out instructions and exercises associated with a presentation. These are made available after the presentation is given.</li>
