@@ -168,6 +168,8 @@ Smithsonian Conservation Biology Institute</p>
 <li><b>Homework code</b>: The R code that accompanies a homework assignment (<i>Note: This link will download the file</i>).</li>
 </ul>
 
+<hr>
+
 <h2>Preliminary lesson</h2>
 <ul>
 <li><a href = "https://smbc-nzp.github.io/introToWorkshop2018.html">Worksheet website</a></li>
@@ -175,7 +177,7 @@ Smithsonian Conservation Biology Institute</p>
 
 <h2>Lesson One</h2>
 <ul>
-<li><a href = "https://smbc-nzp.github.io/lesson1_worksheet.html#/data-science-workflow">Worksheet website</a></li>
+<li><a href = "https://smbc-nzp.github.io/lesson1_workheet.html">Worksheet website</a></li>
 <li><a href = "https://smbc-nzp.github.io/lesson1_code.R" download>Lesson code</a></li>
 </ul>
 
