@@ -1,0 +1,210 @@
+---
+output:
+ html_document:
+  theme: yeti
+---
+
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<style>
+
+code{
+  background-color:#f2f2f2;
+  border-radius: 25px;
+}
+ 
+span.co{
+  color:#000080;
+  font-weight: bold;
+}
+ 
+img{
+  display: block;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+h4{
+  text-align: left;
+  font-size: 20px;
+}
+
+p{
+  text-align: left;
+  font-size: 16px;
+}
+
+ul, ol{
+  line-height: 27px;
+  text-align: left;
+  font-size: 16px;
+  margin-left: 0px;
+}
+ 
+blockquote{
+  font-size: 18px;
+  border-left: 8px solid #292093;
+  background-color: #e6ffff;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+ 
+.row{
+  margin: auto;
+}
+ 
+table {
+  border-collapse: collapse;
+}
+
+table, td, th {
+  border: 1px solid black;
+  padding: 5px;
+  text-align: center;
+  vertical-align: middle;
+}
+ 
+ /* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.roundBorder {
+  border-radius: 25px;
+  border: 5px solid #30288C;
+  background: #D6EAF8;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.roundBorderBlack {
+  border-radius: 25px;
+  border: 10px solid #D3D3D3;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.roundBorderBlackEx {
+  border-radius: 5px;
+  border: 5px solid #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+}
+
+.roundBorderEx {
+  border-radius: 3px;
+  border: 5px solid #30288C;
+  background: #D6EAF8;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+}
+
+.tt {
+    position: relative;
+    display: inline-block;
+    class: inline; 
+    font-weight: bold;
+    font-family: "Avenir";
+    font-size: 18px;
+    border-bottom: 1px black;
+}
+
+/* Tooltip text */
+.tt .ttText {
+    visibility: hidden;
+    font-weight: normal;
+    font-size: 18px;
+    width: 200px;
+    background-color: black;
+    border: 1px solid black;
+    color: white;
+    text-align: left;
+    padding: 5px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tt:hover .ttText {
+    visibility: visible;
+}
+
+</style>
+
+<h1 style="text-align: center;">Introduction to data science in R</h1>
+<br>
+<!img style="float: left; margin: 0px 0px 15px 15px;" src="nzpLogo.jpg" width="150" />
+<p style = "text-align: center; font-size: 14px;">Brian S. Evans, Ph.D.<br />
+Migratory Bird Center<br/>
+Smithsonian Conservation Biology Institute</p>
+<hr>
+
+<p>The web page will act as a clearinghouse for the lessons of this workshop. Each lesson has accompanying hyperlinks. The links are divided into the following types:</p>
+<ul>
+<li><b>Presentation website</b>: Website that accompanies the video or in-person presentation.</li>
+<li><b>Worksheet website</b>: Website with written-out instructions and exercises associated with a presentation. These are made available after the presentation is given.</li>
+<li><b>Lesson code</b>: The R code that accompanies a lesson (<i>Note: This link will download the file</i>).</li>
+<li><b>Homework website</b>: Website with instructions for the homework.</li>
+<li><b>Homework code</b>: The R code that accompanies a homework assignment (<i>Note: This link will download the file</i>).</li>
+</ul>
+
+<h2>Preliminary lesson</h2>
+<ul>
+<li><a href = "https://smbc-nzp.github.io/introToWorkshop2018.html">Worksheet website</a></li>
+</ul>
+
+<h2>Lesson One</h2>
+<ul>
+<li><a href = "https://smbc-nzp.github.io/lesson1_worksheet.html#/data-science-workflow">Worksheet website</a></li>
+<li><a href = "https://smbc-nzp.github.io/lesson1_code.R" download>Lesson code</a></li>
+</ul>
+
+<h2>Lesson Two</h2>
+<ul>
+<li><a href = "https://smbc-nzp.github.io/lesson2_pres.html">Presentation website</a></li>
+<li><a href = "https://smbc-nzp.github.io/lesson2_worksheet.html">Worksheet website</a></li>
+<li><a href = "https://smbc-nzp.github.io/lesson2_code.R" download>Lesson code</a></li>
+</ul>
+
+<h2>Lesson Three</h2>
+<ul>
+<li><a href = "https://smbc-nzp.github.io/lesson3_pres.html">Presentation website</a></li>
+<li><a href = "https://smbc-nzp.github.io/lesson3_worksheet.html">Worksheet website</a></li>
+<li><a href = "https://smbc-nzp.github.io/lesson3_code.R" download>Lesson code</a></li>
+</ul>
+
+<h2>Lesson Four</h2>
+<ul>
+<li><a href = "https://smbc-nzp.github.io/lesson4_pres.html">Presentation website</a></li>
+<li><a href = "https://smbc-nzp.github.io/lesson4_worksheet.html">Worksheet website</a></li>
+<li><a href = "https://smbc-nzp.github.io/lesson4_code.R" download>Lesson code</a></li>
+<li><a href = "https://smbc-nzp.github.io/rHomework_lessons1-4.html">Homework website</a></li>
+<li><a href = "https://smbc-nzp.github.io/lesson4_code.R" download>Lesson code</a></li>
+</ul>
+
+<h2>Lesson Five</h2>
+<ul>
+<li><a href = "https://smbc-nzp.github.io/lesson5_worksheet.html">Worksheet website</a></li>
+</ul>
+
+<hr>
