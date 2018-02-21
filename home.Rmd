@@ -220,6 +220,13 @@ Through this process, participants are expected to develop a flexible skillset f
 <li><a href = "https://smbc-nzp.github.io/lesson5_worksheet.html">Worksheet website</a></li>
 </ul>
 
+<h3>Lesson Six: Working with tidy data</h3>
+<p><b>Goal</b>: Learn how to write tidy scripts and complete fundamental wrangling tasks, including: joining, subsetting, adding and modifying columns, grouping, and summarizing data.</p>
+<ul>
+<li><a href = "https://smbc-nzp.github.io/lesson6_pres.html">Presentation website</a></li>
+<li><a href = "https://smbc-nzp.github.io/lesson6_code.R" download>Lesson code</a></li>
+</ul>
+
 <hr>
 <div class = "row">
 <img src = "rWorkshop/images/robotBird.jpg"
