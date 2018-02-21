@@ -20,13 +20,39 @@ eval(parse(text = script))
 
 rm(script)
 
-library(knitr) ; library(kableExtra)
+library(lubridate)
 
 options(knitr.table.format = "html")
 
 #=================================================================================*
 # ---- nested functions (review) ----
 #=================================================================================*
+
+#---------------------------------------------------------------------------------*
+# --- Compare simple example of nested and non-nested forms ----
+#---------------------------------------------------------------------------------*
+
+# Non-nested form:
+
+v <- c(1, 1, 2)
+
+mean(v)
+
+# Nested form:
+
+mean(c(1,1,2))
+
+# Check equivalence:
+
+mean(v) == mean(c(1,1,2))
+
+#---------------------------------------------------------------------------------*
+# --- Nested and non-nested forms with custom functions ----
+#---------------------------------------------------------------------------------*
+
+# Generate an object, z, containing the numbers 1 through 5:
+
+z <- 1:5
 
 # Some very silly functions for illustration:
 
@@ -39,8 +65,6 @@ addOne <- function(x){
 }
 
 # Non-nested, new object for each step:
-
-z <- 1:5
 
 z1 <- multiplyByTwo(z)
 
@@ -76,7 +100,7 @@ addOne(multiplyByTwo(1:5))
 
 # Piped version:
 
-z %>%
+1:5 %>%
   multiplyByTwo %>%
   addOne
 
@@ -94,10 +118,9 @@ birdHabits
 
 left_join(x = birdCounts, y = birdHabits, by = 'species')
 
-# Join tables using a pipe operator:
+# Now you! Join birdHabits to birdCounts using a pipe:
 
-birdCounts %>%
-  left_join(y = birdHabits, by = 'species')
+
 
 #=================================================================================*
 # ---- subsetting data: select (review) ----
@@ -113,16 +136,47 @@ birdHabits[,1:2]
 
 select(birdHabits, species, foraging)
 
-# Subset columns using select (piped):
+# Now you! Select columns using a pipe:
 
-birdHabits %>%
-  select(species, foraging)
+
+
+#=================================================================================*
+# ---- subsetting data: slice ----
+#=================================================================================*
+
+birdHabits
+
+# Subset rows using indexing:
+
+birdHabits[1:4,]
+
+# Subset rows using slice:
+
+slice(birdHabits, 1:4)
+
+# Now you! Slice rows using a pipe:
+
+
+
+#=================================================================================*
+# ---- subsetting data: distinct ----
+#=================================================================================*
+
+select(birdCounts, site, date)
+
+# Subset birdCounts to distinct records of site and date:
+
+distinct(select(birdCounts, site, date))
+
+# Now you! Subset to unique site and date records using a pipe:
+
+
 
 #=================================================================================*
 # ---- subsetting data: filter ----
 #=================================================================================*
 
-# Subset rows by condition using indexing:
+# Subset rows by condition in base R:
 
 birdHabits[birdHabits$diet == 'omnivore',]
 
@@ -130,175 +184,148 @@ birdHabits[birdHabits$diet == 'omnivore',]
 
 filter(birdHabits, diet == 'omnivore')
 
-# Subset rows by condition using filter (piped):
+# Now you! Filter rows using a pipe:
 
-birdHabits %>%
-  filter(diet == 'omnivore')
 
-#---------------------------------------------------------------------------------*
-# --- Example process, subset counts to ground foraging birds ----
-#---------------------------------------------------------------------------------*
 
-# In base:
+#=================================================================================*
+# --- Exercise One ----
+#=================================================================================*
 
-omnivores <- birdHabits[birdHabits$diet == 'omnivore',]$species
-
-birdCounts[birdCounts$species %in% omnivores,]
-
-# In tidyverse (with filter, nested):
-
-filter(birdCounts, species %in% omnivores)
-
-# In tidyverse (with filter, piped):
+# Subset birdCounts to ground foraging birds:
 
 birdCounts %>%
-  filter(species %in% omnivores)
-
-# In tidyverse (with join, nested):
-
-select(filter(
-  left_join(birdCounts, birdHabits, by = 'species'),
-  diet == 'omnivore'
-), site:count)
-
-# In tidyverse (with join, piped):
-
-birdCounts %>%
-  left_join(birdHabits, by = 'species') %>%
-  filter(diet == 'omnivore') %>%
-  select(site:count)
+  left_join(birdHabits # COMPLETE
+  filter(foraging # COMPLETE
+  select(s # COMPLETE  
 
 #=================================================================================*
 # ---- adding and modifying columns: mutate ----
 #=================================================================================*
 
-# Add a year column:
-
-mutate(birdCounts, year = year(date))
-
-# Add a year column (piped):
-
-birdCounts %>%
-  mutate(year = year(date))
-
 #---------------------------------------------------------------------------------*
-# --- Example process, mutate then subset counts to a given year ----
+# --- Modify an existing column ----
 #---------------------------------------------------------------------------------*
 
-# Using indexing:
+# Mutate species column in base R:
 
-birdCounts[year(birdCounts$date) == 2009,]
+birdCounts
 
-# Filter without mutation:
+birdCounts$species <- toupper(species)
 
-filter(birdCounts, year(date) == 2009)
+birdCount$species <- tolower(species)
 
-# Filter without mutation (piped):
+# Mutate species column using mutate:
 
-birdCounts %>%
-  filter(year(date) == 2009)
+mutate(birdCounts, species  = toupper(species))
 
-# Filter, using mutated year:
+# Now you! Mutate using a pipe:
 
-filter(mutate(birdCounts, year = year(date)), year == 2009)
 
-# Filter, using mutated year (piped):
 
-birdCounts %>%
-  mutate(year = year(date)) %>%
-  filter(year == 2009)
+#---------------------------------------------------------------------------------*
+# --- Add a new column ----
+#---------------------------------------------------------------------------------*
 
-#=================================================================================*
-# ---- adding and modifying columns: transmute ----
-#=================================================================================*
+# Add a year column in base R:
 
-# Add a year column, subset to site and year:
+birdCounts$year <- year(birdCounts$date)
+
+birdCounts
+
+birdCounts <- birdCounts[,-5]
+
+# Mutate year column using mutate:
+
+mutate(birdCounts, year  = year(date))
+
+# Now you! Mutate using a pipe:
+
+
+
+#---------------------------------------------------------------------------------*
+# ---- transmute ----
+#---------------------------------------------------------------------------------*
+
+# Add a year column, subset to site and year in base R:
+
+newFrame <- data_frame(
+  site = birdCounts$site,
+  year = year(birdCounts$date)
+)
+
+# Transmute to add a year column, subset to site and year:
 
 transmute(birdCounts,
-          site = site,
+          site,
           year = year(date))
 
-# Add a year column, subset to site and year (piped):
+# Now you! Transmute using a pipe:
 
-birdCounts %>%
-  transmute(site = site,
-            year = year(date))
 
-#=================================================================================*
-# ---- renaming columns ----
-#=================================================================================*
 
-# Rename a column using select:
+#---------------------------------------------------------------------------------*
+# ---- select and rename ----
+#---------------------------------------------------------------------------------*
+
+# Rename the species column using select:
 
 select(birdCounts, site, date, spp = species, count)
 
-# Rename a column using select (piped):
-
-birdCounts %>%
-  select(site, date, spp = species, count)
-
-# Rename a column using rename:
+# Rename the species column using rename:
 
 rename(birdCounts, spp = species)
 
-# Rename a column using rename (piped):
+# Now you! Rename the species column to spp using rename and a pipe:
+
+
+
+#=================================================================================*
+# --- Exercise 2 ----
+#=================================================================================*
+
+# Subset birdCounts to point counts from 2009:
 
 birdCounts %>%
-  rename(spp = species)
+  mutate(year # COMPLETE
+  filter(year # COMPLETE
 
 #=================================================================================*
 # ---- grouping data ----
 #=================================================================================*
 
-# birdCounts grouped by site:
+# Group birdCounts by site:
 
 group_by(birdCounts, site)
 
-# birdCounts grouped by site (piped):
+# Now you! Group birdCounts by site using a pipe:
 
-birdCounts %>%
-  group_by(site)
-
-# birdCounts grouped by site and year:
-
-group_by(mutate(birdCounts, year = year(date)), site, year)
-
-# birdCounts grouped by site and year (piped):
-
-birdCounts %>%
-  mutate(year = year(date)) %>%
-  group_by(site, year)
-
-#=================================================================================*
-# ---- using grouped data with mutate ----
-#=================================================================================*
-
-# Note: In base R this would require a for loop!
-
-# Mutate works on groups:
-
-# Species richness by site, across years:
+# Species richness by site (across years):
 
 birdCounts %>%
   group_by(site) %>%
   mutate(nSpecies = length(unique(species)))
 
-birdCounts %>%
-  group_by(site) %>%
-  mutate(nSpecies = length(unique(species))) %>%
-  ungroup %>%
-  select(site, nSpecies) %>%
-  distinct
+# Group birdCounts by site and year:
 
-# Species richness by site and year:
+group_by(mutate(birdCounts, year = year(date)), site, year)
+
+# Now you! Group birdCounts by site and year using a pipe:
+
+
+
+#=================================================================================*
+# ---- exercise three ----
+#=================================================================================*
+
+# Calculate the species richness for each site and year:
 
 birdCounts %>%
-  mutate(year = year(date)) %>%
-  group_by(site, year) %>%
-  mutate(nSpecies = length(unique(species))) %>%
-  ungroup %>%
-  select(site, year, nSpecies) %>%
-  distinct
+  mutate(year = # COMPLETE
+  group_by(site, # COMPLETE
+  mutate(nSpecies = # COMPLETE
+  select(site, year, # COMPLETE
+  # COMPLETE
 
 #=================================================================================*
 # ---- summarizing data ----
@@ -308,13 +335,20 @@ birdCounts %>%
 
 # Species richness by site, across years:
 
-birdCounts %>%
-  group_by(site) %>%
-  summarize(nSpecies = length(unique(species)))
+summarize(group_by(birdCounts, site),
+          nSpecies = length(unique(species)))
 
-# Species richness by site and year:
+# Now you! Calculate species richness by site using a pipe:
+
+
+
+#=================================================================================*
+# ---- exercise four ----
+#=================================================================================*
+
+# Calculate the species richness for each site and year:
 
 birdCounts %>%
-  mutate(year = year(date)) %>%
-  group_by(site, year) %>%
-  summarize(nSpecies = length(unique(species)))
+  mutate(year # COMPLETE
+  group_by(site, # COMPLETE 
+  summarize(nSpecies = # COMPLETE
