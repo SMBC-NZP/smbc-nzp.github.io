@@ -1167,7 +1167,7 @@ summarize(group_by(birdCounts, site),
 # Now you! Calculate species richness by site using a pipe:
 
 birdCounts %>%
-  group_by(birdCounts, site) %>%
+  group_by(site) %>%
   summarize(nSpecies = length(unique(species)))
 
 ```
