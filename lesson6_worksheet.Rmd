@@ -198,7 +198,7 @@ Smithsonian Conservation Biology Institute</p>
 <li>Clean data, including removing "bad" records, such as NA values (i.e., "Not Available") and extreme outliers, prior to (not during) statistical analysis.</li>
 </ul>
 <br>
-<p>In this lesson we will explore creating a tidy workflow by diving deeper into data wrangling in the <i>tidyverse</i>. Our agenda for this lesson includes:</p>
+<p>In this lesson we will explore creating a tidy workflow by diving deeper into data wrangling in the <i>tidyverse</i>. Our learning goals for this lesson include:</p>
 
 <ol>
 <li>Nested functions and code (<i>review</i>)</li>
@@ -218,8 +218,6 @@ Smithsonian Conservation Biology Institute</p>
 
 <h2>Before we begin</h2>
 <p>Copy, paste, and run the following code in R Studio to load the packages and read in the data that we will be using for this lesson:</p>
-<br>
-
 ```{r, eval=FALSE}
 # Load RCurl library:
 
@@ -238,19 +236,27 @@ eval(parse(text = script))
 
 rm(script)
 ```
+<br>
 <hr>
 
 <h2>The nested function</h2>
 <br>
 <p>Like all functions, the `tidyverse` functions above can be <b>nested</b> within the other. Nesting helps avoid assigning intermediate objects -- this reduces the number of objects that are stored in your R environment. An advantage of this is that it also reduces the number of names you have to assign to objects, and, of course, the number of names that you have to remember ("What did I call that ... ?"). We've used nested functions quite a bit throughout this workshop thus far. Let's take a moment to review nested and non-nested versions of functions.</p>
 
-<p>To illustrate nested and non-nested code-writing, we will generate a set of numbers from 1-5, multiple each value by 2, and add one to the output. We will then write two silly functions: one that multiplies some value `x` by two and the next that calculates `x+1`. Using these functions we will:</p>
-<ol>
-<li>Create a vector, `z`, and complete this process by assigning a new object for each step</li>
-<li>Create a vector, `z`, and complete  this process first by overwriting an existing object for each step</li>
-<li>Write a nested function that completes this process in one step</li>
-</ol>
+<p>To illustrate nested and non-nested code-writing, we will conduct the following analysis:</p>
 
+$$Z_{1} = [1,2,3,4,5]$$
+$$Z_{2} = 2(Z_{1})$$
+$$Z_{3} = Z_{2}+1$$
+
+<p>Note that the steps in this analysis are <b>chained</b> -- each step is dependent on output from the previous step. Let's begin to evaluate these statements by first defining the values for vector Z1:</p>
+```{r nested functions define z1, eval = FALSE}
+# Initial values:
+
+Z1 <- 1:5
+```
+<br>
+<p>Next, let's write functions for the second and third steps of this process:</p>
 ```{r nested functions, eval = FALSE}
 # Some very silly functions for illustration:
 
@@ -262,19 +268,19 @@ addOne <- function(x){
   x+1
 }
 ```
-
-
+<br>
+<p>To carry out this chained analysis, one non-nested option is to complete the process by assigning a new object for each step. What are the advantages and disadvantages of the below?</p>
 ```{r nested nonnest new object, eval = FALSE}
 # Non-nested, new object for each step:
 
-z <- 1:5
+z1 <- 1:5
 
-z1 <- multiplyByTwo(z)
+z2 <- multiplyByTwo(z1)
 
-addOne(z1)
+addOne(z2)
 ```
-
-
+<br>
+<p>Another non-nested option is to complete the process by overwriting the origin object for each step. What are the advantages and disadvantages of the below?</p>
 ```{r nested nonnest overwrite object, eval = FALSE}
 # Non-nested, overwrite object for each step:
 
@@ -284,14 +290,14 @@ z <- multiplyByTwo(z)
 
 addOne(z)
 ```
-
-
+<br>
+<p>We can also write the process as nested functions. What are the advantages and disadvantages of the below?</p> 
 ```{r nested version, eval = FALSE}
 # Nested:
 
 addOne(multiplyByTwo(1:5))
 ```
-
+<br>
 <p>Take a moment to consider the nested and non-nested versions of the process above. Each has its strengths and weaknesses:</p>
 <ul>
 <li><b>Non-nested with new object</b>:
@@ -314,43 +320,6 @@ addOne(multiplyByTwo(1:5))
 </li>
 </ul>
 
-<br>
-<blockquote>
-<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h3>
-<br>
-<p>The dataset `longFrame` contains a subset of bird point count observations. Take a moment to explore these data:</p>
-
-```{r longFrame show, eval = FALSE}
-longFrame
-```
-
-<p>You may have noticed that the data lack zeros! This could end up being a really big problem for some analyses. To counter this, you can `spread` the data using the argument `fill = 0`:</p>
-
-```{r longFrame make wide, eval = FALSE}
-longFrameWide <- spread(
-  data = longFrame,
-  key = species,
-  value = count,
-  fill = 0
-  )
-```
-
-<p>To bring your data back to a "tidy" dataset, you will want to gather the species columns you've just generated:</p>
-
-```{r longFrame make long, eval = FALSE}
-gather(data = longFrameWide,
-  key = species,
-  value = count,
-  amro:grca)
-```
-
-<p>You have now generated a tidy data frame that includes 0 counts for each species.</p>
-<hr>
-<ul><li>Complete the process above using nested functions.</li></ul>
-<br>
-</blockquote>
-<br>
-
 <hr>
 <h2>The pipe</h2>
 <br>
@@ -359,82 +328,133 @@ gather(data = longFrameWide,
 <p>Piping makes scripts more readable and easier to write. Moreover, if you didn't do a great job naming your R objects, you may have a hard time remembering what each was. The alternative, nested functions, can be problematically complicated to read. Piping avoids the necessity to assign intermediate objects and makes scripts legible by conducting analyses in sequence.</p>
 
 <p>To illustrate how piping works, let's look again at the nested and non-nested processes that we completed at the start of this section:</p>
-
 ```{r pipe reiterate nest, eval = F}
 # Non-nested, new object for each step:
 
-z <- 1:5
+z1 <- 1:5
 
-z1 <- multiplyByTwo(z)
+z2 <- multiplyByTwo(1)
 
-addOne(z1)
+addOne(z2)
 
 # Nested:
 
 addOne(multiplyByTwo(1:5))
 ``` 
-
+<br>
 <p>To pipe this operation, we use the pipe symbol, `%>%`,  to separate arguments. The pipe represents the word "then". In piping, the output on the left side of the pipe becomes the first argument in the function on the right. We structure our piped statement similar to that of the non-nested version: "multiply `z` by two <i>then</i> add one to this value". Piping the above, our code would read as:</p> 
-
 ```{r pipe version, eval = F}
-z %>%
+1:5 %>%
   multiplyByTwo %>%
   addOne
 ``` 
-
+<br>
 <p>Isn't it lovely? Like the nested code, it does not create intermediate obects, and like the non-nested versions of the code it reads from left-to-right (or top-to-bottom).</p>
 
 <p>Notice that I used multiple indented lines of code. For maximal readibility, it is <b>highly recommended</b> that any multi-step operation should be formatted as such (this is considered <b>best management practices</b> for programmers across languages).
 
 <p>You should consider <b>every</b> script you write to be a <b>communication</b> between you and your future self and yourself and fellow scientists. Make sure your scripts communicate clearly -- future you and your fellow scientists will appreciate it greatly!</p>
 
-<br>
-<blockquote>
-<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h3>
-<br>
-<p>Repeat Exercise One above using piped rather than nested functions.</p>
-<br>
-</blockquote>
-
+<hr>
 <h2>Joining data</h2>
-<br>
-<p>Lorem ipsum</p>
 
+<p>Rules of tidy data: Each level of observation forms a table</p>
+<p>The table below displays bird banding records at a set of sites.</p> 
+```{r messy2NF, echo = FALSE}
+kable(messy2NF %>% slice(1:5), "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
 <br>
-
-<h3>Left join</h3>
-<ul>
-<li><b>x</b>: The target table</li>
-<li><b>y</b>: The table to be joined to the target</li>
-<li><b>by</b>: A character vector of the columns to join by</li>
-</ul>
+<p>In the above, canopy cover is a condition of site-level observations rather than bird-level observations. Therefore, these sets of values should be divided into two (or more) tables.</p>
 <br>
-```{r left_join, eval = FALSE}
+<div class = "row">
+<div class = "column">
+<p>Bird-level observations</p>
+```{r tidy2NFa, echo = FALSE}
+kable(tidy2NFobsLevel %>% slice(1:5), "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+<br>
+</div>
+<div class = "column">
+<p>Site-level observations</p>
+```{r tidy2NFb, echo = FALSE}
+kable(tidy2NFsiteLevel %>% rename(siteId = id), "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+<br>
+</div>
+</div>
+<br>
+<p>The above is considerably more tidy but presents a potential problem -- how can we explore variables across tables? To address this, let's look at another example table. The table below provides bird point count and life history data.</p>
+```{r messy habits, echo = FALSE}
+birdCounts %>%
+  left_join(birdHabits, by = 'species') %>%
+  select(site, date, species, foraging, diet, count) %>%
+  slice(1:10) %>%
+  kable("html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+<br>
+<p>Note in the table above that count data are bird-level observations while life history traits are species-level observations. To address this, the data need to be separated into individual tables. These tables are provided below (showing just the first 5 records of each table).</p>
+```{r tables to join, eval = FALSE}
 # Tables to join:
 
 birdCounts
 
 birdHabits
+```
+<br>
 
+<div class = "row">
+<div class = "column">
+<p>Bird-level observations (birdCounts)</p>
+```{r birdCounts display, echo = FALSE}
+kable(birdCounts %>% slice(1:5), "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+<br>
+</div>
+<div class = "column">
+<p>Species-level observations (birdHabits)</p>
+```{r birdHabits display, echo = FALSE}
+kable(birdHabits %>% slice(1:5), "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+<br>
+</div>
+</div>
+
+<p>To bring information from the two tables together, we use "join" operations. Below we will explore using a "left-join" but there are several joins available. See `?left_join` for more information.</p>
+
+<p><b>left_join</b>: Join table y to table x using matching value in a column or columns.</p>
+<p>
+<b>x</b>: The target table</br>
+<b>y</b>: The table to be joined to the target</br>
+<b>by</b>: A character vector of the columns to join by
+</p>
+```{r left_join pipe, eval = FALSE}
 # Join tables:
 
 left_join(x = birdCounts, y = birdHabits, by = 'species')
 
-# Join tables using a pipe operator:
+# Join birdHabits to birdCounts using a pipe:
 
 birdCounts %>%
-  left_join(y = birdHabits, by = 'species')
+  left_join(birdHabits, by = 'species')
+
 ```
-
+<br>
 <hr>
-
-<h2>Subsetting data</h2>
+<h2>Subsetting data</h3>
 <br>
-<p>Lorem ipsum</p>
-
-<h3>Subset columns: Select</h3>
+<h3>Columns (review)</h3>
 <br>
-```{r select, eval = FALSE}
+<p>In the previous lesson, we used `select` to subset a data frame by column or index (column number). This is accomplished as below.</p>
+
+<p><b>select</b>: Subset a column of a table by column name or index.</p>
+```{r select indexing, eval = FALSE}
+birdHabits
 
 # Subset columns using indexing:
 
@@ -446,18 +466,74 @@ birdHabits[,1:2]
 
 select(birdHabits, species, foraging)
 
-# Subset columns using select (piped):
+# Now you! Select columns using a pipe:
 
 birdHabits %>%
   select(species, foraging)
+
 ```
+<br>
+<h3>Rows</h3>
+<br>
+<h4>slice</h4>
+<p>Rows can be subset by position (index) using the `slice` function, as below.</p>
+```{r slice pipe, eval = FALSE}
+birdHabits
 
+# Subset rows using indexing:
 
-<h3>Subset rows: Filter</h3>
-</ul>
-```{r filter, eval = FALSE}
+birdHabits[1:4,]
 
-# Subset rows by condition using indexing:
+# Subset rows using slice:
+
+slice(birdHabits, 1:4)
+
+# Now you! Slice rows using a pipe:
+
+birdHabits %>%
+  slice(1:4)
+
+```
+<br>
+<h4>distinct</h4>
+<br>
+<p>If we were interested in generating a visit table for point counts (the site visited and the date the visit occured), we can use `select` to subset the `birdCounts` frame to just those columns, as below.</p>
+```{r distinct 0 , eval = FALSE}
+# Subset birdCounts to site and date columns:
+
+select(birdCounts, site, date)
+```
+<br>
+```{r display table distinct 0, echo = FALSE}
+kable(select(birdCounts, site, date) %>% slice(1:5), "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+<br>
+<p>Doing so, however, breaks one of the <b>rules of tidy data</b> -- "Each observation forms a row". To address this, we can use the function `distinct`, which will remove duplicate records.</p>
+```{r distinct pipe, eval = FALSE}
+# Subset birdCounts to distinct records of site and date:
+
+distinct(select(birdCounts, site, date))
+
+# Subset to unique site and date records using a pipe:
+
+birdCounts %>%
+  select(site, date) %>%
+  distinct
+```
+<br>
+<img style="float: right;
+	      padding: 9px;
+	      padding-right: 0px;
+	      border-style: solid;
+	      border-width: 10px;
+	      box-shadow: 0px 0px 0px 0px;
+	      border-color: white;" src="rWorkshop/images/logicalOperators.png" width="40%" />
+<h4>filter</h4>
+<br>
+<p>Throughout this workshop we've done considerable filtering using conditional statements (logic). As you've likely observed, these statements can get very complicated very quickly. The `tidyverse` function `filter` simlifies the process considerably, as diplayed below.</p>
+```{r filter pipe, eval = FALSE}
+# Subset rows by condition in base R:
 
 birdHabits[birdHabits$diet == 'omnivore',]
 
@@ -465,183 +541,232 @@ birdHabits[birdHabits$diet == 'omnivore',]
 
 filter(birdHabits, diet == 'omnivore')
 
-# Subset rows by condition using filter (piped):
+# Filter rows using a pipe:
 
 birdHabits %>%
   filter(diet == 'omnivore')
+
 ```
-
-<h3>Example process</h3>
-<p>Subset birdCounts to ground foraging birds</p>
-
-```{r filter complex example base, eval = FALSE}
-# In base:
-
-omnivores <- birdHabits[birdHabits$diet == 'omnivore',]$species
-
-birdCounts[birdCounts$species %in% omnivores,]
-```
-
-
-```{r filter complex example tidy, eval = FALSE}
-# In tidyverse (with filter, nested):
-
-filter(birdCounts, species %in% omnivores)
-
-# In tidyverse (with filter, piped):
-
-birdCounts %>%
-  filter(species %in% omnivores)
-```
-
-
-```{r filter complex example tidy join, eval = FALSE}
-# In tidyverse (with join, nested):
-
-select(filter(
-  left_join(birdCounts, birdHabits, by = 'species'),
-  diet == 'omnivore'
-), site:count)
-
-# In tidyverse (with join, piped):
-
-birdCounts %>%
-  left_join(birdHabits, by = 'species') %>%
-  filter(diet == 'omnivore') %>%
-  select(site:count)
-```
-
-<h2>Adding and modifying columns</h2>
 <br>
-<p>Lorem ipsum</p>
+<p>The `filter` function allows you to apply multiple conditional filters to a data frame in a much more straight-forward fashion:</p>
+```{r filter multiple, eval = FALSE}
+# Subset rows by multiple conditions in base R:
 
-<h3>Mutate</h3>
+birdHabits[birdHabits$diet == 'omnivore' &
+             birdHabits$foraging == 'ground',]
 
-```{r mutate, eval = FALSE}
-# Add a year column:
+# Subset rows by multiple conditions using filter:
 
-mutate(birdCounts, year = year(date))
+filter(birdHabits,
+       diet == 'omnivore',
+       foraging == 'ground')
 
-# Add a year column (piped):
+# Filter rows using a pipe:
+
+birdHabits %>%
+  filter(diet == 'omnivore',
+         foraging == 'ground')
+
+# or:
+
+birdHabits %>%
+  filter(diet == 'omnivore') %>%
+  filter(foraging == 'ground')
+```
+
+<br>
+<blockquote>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h2>
+<hr>
+<p>Complete the following code to subset `birdCounts` to ground foraging birds!</p>
+```{r exercise one, eval = FALSE}
+# Subset birdCounts to ground foraging birds:
+
+birdCounts %>%
+  left_join(birdHabits # COMPLETE
+  filter(foraging # COMPLETE
+  select(s # COMPLETE  
+         
+```
+</blockquote>
+<br>
+
+<hr>
+<h2>Adding & modifying columns</h2>
+
+<h4>transmute</h4>
+<p>The function `mutate` can be used to modify an existing column or add a new one.</p>
+
+<p>Modify an existing column:</p>
+```{r mutate existing, eval = FALSE}
+# Mutate species column in base R:
+
+birdCounts
+
+birdCounts$species <- toupper(birdCounts$species)
+
+birdCount$species <- tolower(birdCount$species)
+
+# Mutate species column using mutate:
+
+mutate(birdCounts, species  = toupper(species))
+
+# Mutate using a pipe:
+
+birdCounts %>%
+  mutate(species = toupper(species))
+         
+```
+<br>
+<p>Note in the above that the base R version actually overwrote the original species column. This is a big problem that we want to avoid at all costs.</p>
+
+<p>To add a new column using `mutate`, you provide the new column's name:</p>
+```{r mutate new pipe, eval = FALSE}
+# Add a year column in base R:
+
+birdCounts$year <- year(birdCounts$date)
+
+birdCounts
+
+birdCounts <- birdCounts[,-5]
+
+# Mutate year column using mutate:
+
+mutate(birdCounts, year  = year(date))
+
+# Mutate using a pipe:
 
 birdCounts %>%
   mutate(year = year(date))
+         
 ```
-
-<h3>Example process</h3>
-<p>Mutate then subset counts to a given year</p>
-
-```{r filter without mutate example, eval = FALSE}
-# Using indexing:
-
-birdCounts[year(birdCounts$date) == 2009,]
-
-# Filter without mutation:
-
-filter(birdCounts, year(date) == 2009)
-
-# Filter without mutation (piped):
-
-birdCounts %>%
-  filter(year(date) == 2009)
-```
-
-```{r filter with mutate example, eval = FALSE}
-# Filter, using mutated year:
-
-filter(mutate(birdCounts, year = year(date)), year == 2009)
-
-# Filter, using mutated year (piped):
-
-birdCounts %>%
-  mutate(year = year(date)) %>%
-  filter(year == 2009)
-```
+<br>
+<p>Again, the base R version added the column to the data frame and is stored in memory. The `mutate` version is considerably safer because nothing is being overwritten.</p>
 
 
-<h3>Transmute</h3>
+<h4>transmute</h4>
 
-```{r transmute, eval = FALSE}
-# Add a year column, subset to site and year:
+<p>The function <b>transmute</b> is similar to `mutate` in that it can be used to calculate or modify a new or existing column. If differs in that it will subset the data frame to only the specified columns (similar to select):</p>
+```{r transmute pipe, eval = FALSE}
+# Add a year column, subset to site and year in base R:
+
+newFrame <- data_frame(
+  site = birdCounts$site,
+  year = year(birdCounts$date)
+)
+
+# Transmute to add a year column, subset to site and year:
 
 transmute(birdCounts,
-          site = site,
+          site,
           year = year(date))
 
-# Add a year column, subset to site and year (piped):
+# Transmute using a pipe:
 
 birdCounts %>%
-  transmute(site = site,
-            year = year(date))
+  transmute(site, year = year(date))
 
 ```
-
-
-<h3>Rename using select</h3>
-
-```{r rename with select, eval = FALSE}
-# Rename a column using select:
+<br>
+<h3>Renaming columns</h3>
+<h4>select and rename</h4>
+<p>Finally, we may be interested in maintaining the values of a column but changing its name. To do so, we use the function `select` if we would like to subset the columns along the way or `rename` if we would like to change a name without subsetting the data frame.</p>
+```{r select and rename pipe, eval = FALSE}
+# Rename the species column using select:
 
 select(birdCounts, site, date, spp = species, count)
 
-# Rename a column using select (piped):
+# Select using a pipe:
 
 birdCounts %>%
   select(site, date, spp = species, count)
-```
 
-
-<h3>Rename using rename</h3>
-
-```{r rename, eval = FALSE}
-# Rename a column using rename:
+# Rename the species column using rename:
 
 rename(birdCounts, spp = species)
 
-# Rename a column using rename (piped):
+# Rename the species column to spp using rename and a pipe:
 
 birdCounts %>%
   rename(spp = species)
+
 ```
 
-<hr>
-<h2>Grouping data</h2>
 <br>
-<p>Single group variable</p>
+<blockquote>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
+<hr>
+<p>Filter `birdCounts` to point counts that took place in 2009.</p>
+```{r exercise two, eval = FALSE}
+# Subset birdCounts to point counts from 2009:
 
-```{r group_by single, eval = FALSE}
-# birdCounts grouped by site:
+birdCounts %>%
+  mutate(year # COMPLETE
+  filter(year # COMPLETE
+```
+<br>
+</blockquote>
+<br>
+
+<h2>Grouping data</h2>
+<hr>
+<p>The `tidyverse` function `group_by` allows you to assign groups to a data frame based on a variable in that table. This is equivalent to <b>splitting</b> a data object during a <i>for loop</i> iteration. As an example, let's group `birdCounts` by the `site` variable:</p>
+```{r one group pipe, eval = FALSE}
+# Group birdCounts by site:
 
 group_by(birdCounts, site)
 
-# birdCounts grouped by site (piped):
+# Now you! Group birdCounts by site using a pipe:
 
 birdCounts %>%
   group_by(site)
 ```
+<br>
+<p><i>What did it do</i>? If you look closely at the output you will see that your tibble now contains "Groups: site [30]". This tells you that your tibble has been split into groups. Functions will be applied to each group separately. For example, let's calculate the species richness (`length(unique(species))`) observed at each site by grouping the data frame and using `mutate` to apply the function:</p>
+```{r species richness, eval = FALSE}
+# Species richness by site (across years):
 
-<p>Multiple group variables:</p>
+birdCounts %>%
+  group_by(site) %>%
+  mutate(nSpecies = length(unique(species))) %>%
+  select(site, nSpecies) %>%
+  distinct
+```
+<br>
+<p>To conduct the above operation using a <i>for loop</i>, you would use:</p>
+```{r species richness site for loop, eval = FALSE}
+# Species richness by site (across years), for loop:
 
-```{r group_by multiple, eval = FALSE}
-# birdCounts grouped by site and year:
+sites <- unique(birdCounts$site)
+
+nSpecies <- vector('numeric', length = length(sites))
+  
+for(i in seq_along(sites)){
+  birdCountSubset <- birdCounts[birdCounts$site == sites[i],]
+  nSpecies[i] <- length(unique(birdCountSubset$species))
+}
+
+data_frame(site = sites, nSpecies)
+```
+<br>
+<p>It is hopefully easy to see that using `tidyverse` functions is a vast improvement over <i>for loops</i>!</p>
+
+<p>`group_by` can be used to split the data frame into multiple groups as well. The following example calculates the species richness for each site and year of observation:</p>
+```{r two groups pipe, eval = FALSE}
+# Group birdCounts by site and year:
 
 group_by(mutate(birdCounts, year = year(date)), site, year)
 
-# birdCounts grouped by site and year (piped):
+# Group birdCounts by site and year using a pipe:
 
 birdCounts %>%
   mutate(year = year(date)) %>%
   group_by(site, year)
 ```
-
-<p>Using grouped data with mutate:</p>
-```{r group_by with mutate, eval = FALSE}
-# Species richness by site, across years:
-
-birdCounts %>%
-  group_by(site) %>%
-  mutate(nSpecies = length(unique(species))) %>%
-  ungroup
+<br>
+<p><i>Note: If you intend to modify your script after using `group_by` be sure to chain the function `ungroup` in a later line. For example, we might want to use `ungroup` within our species richness-by-site calculation:</i></p>
+```{r ungroup, eval = FALSE}
+# Calculate species richness by site (across years), then ungroup:
 
 birdCounts %>%
   group_by(site) %>%
@@ -651,46 +776,54 @@ birdCounts %>%
   distinct
 ```
 
-<p>Using grouped data with mutate, multiple group variables:</p>
-
-```{r group_by with mutate multigroup, eval = FALSE}
-# Species richness by site and year:
-
-birdCounts %>%
-  mutate(year = year(date)) %>%
-  group_by(site, year) %>%
-  mutate(nSpecies = length(unique(species))) %>%
-  ungroup
-
-birdCounts %>%
-  mutate(year = year(date)) %>%
-  group_by(site, year) %>%
-  mutate(nSpecies = length(unique(species))) %>%
-  ungroup %>%
-  select(site, year, nSpecies) %>%
-  distinct
-```
-
-<hr>
-<h2>Summarizing data</h2>
 <br>
-<p>Summarize by one group variable:</p>
-```{r summarize one group, eval = FALSE}
+<blockquote>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h2>
+<hr>
+<p>Complete the following to calculate the species richness for each site and year. Ensure that the resulting table is tidy.</p>
+```{r exercise three, eval = FALSE}
+# Calculate the species richness for each site and year:
+
+birdCounts %>%
+  mutate(year = # COMPLETE
+  group_by(site, # COMPLETE
+  mutate(nSpecies = # COMPLETE
+  select(site, year, # COMPLETE
+  # COMPLETE
+```
+<br>
+</blockquote>
+<br>
+
+<h2>Summarizing data</h2>
+
+<p>The `tidyverse` provides use with the function `summarize` that can be used to calculate a summary function across grouped variables. For example<b>summarize</b>: Calculates a summary function for a grouped variable.</p>
+```{r summarize pipe, eval = FALSE}
 # Species richness by site, across years:
+
+summarize(group_by(birdCounts, site),
+          nSpecies = length(unique(species)))
+
+# Calculate species richness by site using a pipe:
 
 birdCounts %>%
   group_by(site) %>%
   summarize(nSpecies = length(unique(species)))
-```
 
-<p>Summarize by multiple group variables:</p>
-```{r summarize multigroup, eval = FALSE}
-# Species richness by site and year:
+```
+<br>
+<blockquote>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Four:</h2>
+<hr>
+<p>Complete the following to calculate the species richness for each site and year. Ensure that the resulting table is tidy.</p>
+```{r exercise four, eval = FALSE}
+# Calculate the species richness for each site and year:
 
 birdCounts %>%
-  mutate(year = year(date)) %>%
-  group_by(site, year) %>%
-  summarize(nSpecies = length(unique(species)))
-
+  mutate(year # COMPLETE
+  group_by(site, # COMPLETE 
+  summarize(nSpecies = # COMPLETE
 ```
-
+<br>
+</blockquote>
+<br>
