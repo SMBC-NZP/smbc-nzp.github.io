@@ -806,9 +806,9 @@ birdCounts %>%
 
 birdCounts
 
-birdCounts$species <- toupper(species)
+birdCounts$species <- toupper(birdCounts$species)
 
-birdCount$species <- tolower(species)
+birdCount$species <- tolower(birdCount$species)
 
 # Mutate species column using mutate:
 
@@ -828,9 +828,9 @@ mutate(birdCounts, species  = toupper(species))
 
 birdCounts
 
-birdCounts$species <- toupper(species)
+birdCounts$species <- toupper(birdCounts$species)
 
-birdCount$species <- tolower(species)
+birdCount$species <- tolower(birdCount$species)
 
 # Mutate species column using mutate:
 
