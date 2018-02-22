@@ -294,17 +294,50 @@ birdCounts %>%
 # ---- grouping data ----
 #=================================================================================*
 
+#---------------------------------------------------------------------------------*
+# ---- group by individual variable ----
+#---------------------------------------------------------------------------------*
+
 # Group birdCounts by site:
 
 group_by(birdCounts, site)
 
 # Now you! Group birdCounts by site using a pipe:
 
+
+
+#---------------------------------------------------------------------------------*
+# ---- group by individual variable, with mutate ----
+#---------------------------------------------------------------------------------*
+
 # Species richness by site (across years):
 
 birdCounts %>%
   group_by(site) %>%
-  mutate(nSpecies = length(unique(species)))
+  mutate(nSpecies = length(unique(species))) %>%
+  select(site, nSpecies) %>%
+  distinct
+
+#---------------------------------------------------------------------------------*
+# ---- how the above would appear in a for loop context ----
+#---------------------------------------------------------------------------------*
+
+# Species richness by site (across years), for loop:
+
+sites <- unique(birdCounts$site)
+
+nSpecies <- vector('numeric', length = length(sites))
+
+for(i in seq_along(sites)){
+  birdCountSubset <- birdCounts[birdCounts$site == sites[i],]
+  nSpecies[i] <- length(unique(birdCountSubset$species))
+}
+
+data_frame(site = sites, nSpecies)
+
+#---------------------------------------------------------------------------------*
+# ---- group by multiple variables ----
+#---------------------------------------------------------------------------------*
 
 # Group birdCounts by site and year:
 
@@ -326,6 +359,19 @@ birdCounts %>%
   mutate(nSpecies = # COMPLETE
   select(site, year, # COMPLETE
   # COMPLETE
+  
+#=================================================================================*
+# ---- exercise three, answer ----
+#=================================================================================*
+
+# Calculate the species richness for each site and year:
+
+birdCounts %>%
+  mutate(year = year(date)) %>%
+  group_by(site, year) %>%
+  mutate(nSpecies = length(unique(species))) %>%
+  select(site, year, nSpecies) %>%
+  distinct
 
 #=================================================================================*
 # ---- summarizing data ----
