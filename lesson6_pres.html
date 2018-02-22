@@ -999,7 +999,7 @@ mass
 <tbody>
 <tr>
 <td style="text-align:left;">
-r710-3452r
+h472-3534v
 </td>
 <td style="text-align:left;">
 1123-58132
@@ -1019,7 +1019,7 @@ apple
 </tr>
 <tr>
 <td style="text-align:left;">
-t567-2615j
+k322-2109a
 </td>
 <td style="text-align:left;">
 1123-58133
@@ -1039,7 +1039,7 @@ apple
 </tr>
 <tr>
 <td style="text-align:left;">
-a957-2687r
+i620-9251a
 </td>
 <td style="text-align:left;">
 1123-58134
@@ -1059,7 +1059,7 @@ avocado
 </tr>
 <tr>
 <td style="text-align:left;">
-g394-7482t
+x723-2186l
 </td>
 <td style="text-align:left;">
 1123-58132
@@ -1079,7 +1079,7 @@ apple
 </tr>
 <tr>
 <td style="text-align:left;">
-l794-8554a
+v117-1119k
 </td>
 <td style="text-align:left;">
 1123-58134
@@ -1133,7 +1133,7 @@ mass
 <tbody>
 <tr>
 <td style="text-align:left;">
-r710-3452r
+h472-3534v
 </td>
 <td style="text-align:left;">
 1123-58132
@@ -1150,7 +1150,7 @@ apple
 </tr>
 <tr>
 <td style="text-align:left;">
-t567-2615j
+k322-2109a
 </td>
 <td style="text-align:left;">
 1123-58133
@@ -1167,7 +1167,7 @@ apple
 </tr>
 <tr>
 <td style="text-align:left;">
-a957-2687r
+i620-9251a
 </td>
 <td style="text-align:left;">
 1123-58134
@@ -1184,7 +1184,7 @@ avocado
 </tr>
 <tr>
 <td style="text-align:left;">
-g394-7482t
+x723-2186l
 </td>
 <td style="text-align:left;">
 1123-58132
@@ -1201,7 +1201,7 @@ apple
 </tr>
 <tr>
 <td style="text-align:left;">
-l794-8554a
+v117-1119k
 </td>
 <td style="text-align:left;">
 1123-58134
@@ -1236,7 +1236,7 @@ canopyCover
 <tbody>
 <tr>
 <td style="text-align:left;">
-k182-2361x
+z714-1478y
 </td>
 <td style="text-align:left;">
 apple
@@ -1247,7 +1247,7 @@ apple
 </tr>
 <tr>
 <td style="text-align:left;">
-j904-2067j
+f895-8701x
 </td>
 <td style="text-align:left;">
 avocado
@@ -2410,22 +2410,24 @@ Grouping data
 
 birdCounts %&gt;%
 <span class="st">  </span><span class="kw">group_by</span>(site) %&gt;%
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">nSpecies =</span> <span class="kw">length</span>(<span class="kw">unique</span>(species)))</code></pre></div>
-<pre><code>## # A tibble: 567 x 5
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">nSpecies =</span> <span class="kw">length</span>(<span class="kw">unique</span>(species))) %&gt;%
+<span class="st">  </span><span class="kw">select</span>(site, nSpecies) %&gt;%
+<span class="st">  </span>distinct</code></pre></div>
+<pre><code>## # A tibble: 30 x 2
 ## # Groups:   site [30]
-##     site       date species count nSpecies
-##    &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt; &lt;int&gt;    &lt;int&gt;
-##  1 apple 2009-05-28    amcr     2        9
-##  2 apple 2009-05-28    cach     1        9
-##  3 apple 2009-05-28    carw     1        9
-##  4 apple 2009-05-28    dowo     1        9
-##  5 apple 2009-05-28    eato     2        9
-##  6 apple 2009-05-28    howr     1        9
-##  7 apple 2009-05-28    noca     3        9
-##  8 apple 2010-07-20    amgo     2        9
-##  9 apple 2010-07-20    cach     2        9
-## 10 apple 2010-07-20    tuti     2        9
-## # ... with 557 more rows</code></pre>
+##            site nSpecies
+##           &lt;chr&gt;    &lt;int&gt;
+##  1        apple        9
+##  2      apricot       13
+##  3      avocado       12
+##  4       banana       19
+##  5  bell_pepper       14
+##  6     bilberry       18
+##  7   blackberry        9
+##  8 blackcurrant       16
+##  9 blood_orange       10
+## 10    blueberry       17
+## # ... with 20 more rows</code></pre>
 </section>
 <section id="section-48" class="slide level2">
 <h1></h1>

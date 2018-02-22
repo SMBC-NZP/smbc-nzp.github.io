@@ -1073,7 +1073,9 @@ birdCounts %>%
 
 birdCounts %>%
   group_by(site) %>%
-  mutate(nSpecies = length(unique(species)))
+  mutate(nSpecies = length(unique(species))) %>%
+  select(site, nSpecies) %>%
+  distinct
 ```
 
 ##
