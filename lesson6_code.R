@@ -52,7 +52,7 @@ mean(v) == mean(c(1,1,2))
 
 # Generate an object, z, containing the numbers 1 through 5:
 
-z <- 1:5
+Z1 <- 1:5
 
 # Some very silly functions for illustration:
 
@@ -66,17 +66,17 @@ addOne <- function(x){
 
 # Non-nested, new object for each step:
 
-z1 <- multiplyByTwo(z)
+Z2 <- multiplyByTwo(Z1)
 
-addOne(z1)
+addOne(Z2)
 
 # Non-nested, overwrite object for each step:
 
-z <- 1:5
+Z1 <- 1:5
 
-z <- multiplyByTwo(z)
+Z2 <- multiplyByTwo(Z1)
 
-addOne(z)
+addOne(Z2)
 
 # Nested:
 
@@ -88,11 +88,11 @@ addOne(multiplyByTwo(1:5))
 
 # Non-nested, new object for each step:
 
-z <- 1:5
+Z1 <- 1:5
 
-z1 <- multiplyByTwo(z)
+Z2 <- multiplyByTwo(Z1)
 
-addOne(z1)
+addOne(Z2)
 
 # Nested:
 
