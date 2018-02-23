@@ -51,8 +51,9 @@ birdCounts
 
 birdHabits
 
-# Calculate the total number of each diet class observed at site "apple" in  2009.
-# Return your results as a two-column data frame with the columns diet and count.
+# Calculate the total number of individuals of each diet class observed at site
+# "apple" in 2009. Return your results as a two-column data frame with the 
+# columns diet and count.
 
 
 
@@ -76,10 +77,18 @@ origins
 
 irisTbl
 
-# You have developed a derived variable, "petalShape" to describe Iris flowers. 
-# This variable is defined as the ratio of petalLength to petalWidth 
-# (petalLength/petalWidth). Calculate the average (mean) shape of petals in the
-# iris dataset. Return your results as a two-column data frame with the columns 
-# species and petalShape_mean.
+# 5a. Calculate a derived variable, "petalShape" to describe Iris flowers. This 
+# variable is defined as the ratio of petalLength to petalWidth 
+# (petalLength/petalWidth). Use transmute to calculate the petalShape for each 
+# Iris observation. Return your results as a two-column data frame with the 
+# columns species and petalShape.
+
+
+
+# 5b. Calculate the average (mean) petalShape of each species. Return your results
+# as a two-column data frame with the columns species and meanPetalShape.
+
+
+
 
 
