@@ -226,7 +226,6 @@ Through this process, participants are expected to develop a flexible skillset f
 <li><a href = "https://smbc-nzp.github.io/lesson6_pres.html">Presentation website</a></li>
 <li><a href = "https://smbc-nzp.github.io/lesson6_worksheet.html">Worksheet website</a></li>
 <li><a href = "https://smbc-nzp.github.io/lesson6_code.R" download>Lesson code</a></li>
-<li><a href = "https://smbc-nzp.github.io/lesson6_homework.html">Homework website</a></li>
 <li><a href = "https://smbc-nzp.github.io/lesson6_homeworkQuestions.R" download>Homework code</a></li>
 </ul>
 
