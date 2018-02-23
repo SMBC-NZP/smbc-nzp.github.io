@@ -224,6 +224,7 @@ Through this process, participants are expected to develop a flexible skillset f
 <p><b>Goal</b>: Learn how to write tidy scripts and complete fundamental wrangling tasks, including: joining, subsetting, adding and modifying columns, grouping, and summarizing data.</p>
 <ul>
 <li><a href = "https://smbc-nzp.github.io/lesson6_pres.html">Presentation website</a></li>
+<li><a href = "https://smbc-nzp.github.io/lesson6_worksheet.html">Worksheet website</a></li>
 <li><a href = "https://smbc-nzp.github.io/lesson6_code.R" download>Lesson code</a></li>
 </ul>
 
