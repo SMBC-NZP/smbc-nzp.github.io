@@ -180,10 +180,6 @@ script <-
 eval(parse(text = script))
 
 rm(script)
-
-library(lubridate)
-
-options(knitr.table.format = "html")
 ```
 <hr>
 

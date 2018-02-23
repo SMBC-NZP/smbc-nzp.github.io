@@ -20,10 +20,6 @@ eval(parse(text = script))
 
 rm(script)
 
-library(lubridate)
-
-options(knitr.table.format = "html")
-
 #=================================================================================*
 # 1. The population of the Bahamas ----
 #=================================================================================*
