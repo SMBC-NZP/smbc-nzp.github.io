@@ -172,7 +172,7 @@ library(lubridate)
 
 script <-
   getURL(
-    "https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode.R"
+    "https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode_lesson6.R"
   )
 
 # Evaluate then remove the source script:
