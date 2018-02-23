@@ -358,8 +358,7 @@ addOne(multiplyByTwo(1:5))
 <hr>
 <h2>Joining data</h2>
 
-<p>Rules of tidy data: Each level of observation forms a table</p>
-<p>The table below displays bird banding records at a set of sites.</p> 
+<p>Recall that one of the rules of tidy data states that "each level of observation forms a table". The table below displays bird banding records at a set of sites.</p> 
 ```{r messy2NF, echo = FALSE}
 kable(messy2NF %>% slice(1:5), "html") %>%
   kable_styling(bootstrap_options = c("striped", "hover"))
@@ -466,7 +465,7 @@ birdHabits[,1:2]
 
 select(birdHabits, species, foraging)
 
-# Now you! Select columns using a pipe:
+# Select columns using a pipe:
 
 birdHabits %>%
   select(species, foraging)
@@ -488,7 +487,7 @@ birdHabits[1:4,]
 
 slice(birdHabits, 1:4)
 
-# Now you! Slice rows using a pipe:
+# Slice rows using a pipe:
 
 birdHabits %>%
   slice(1:4)
@@ -716,7 +715,7 @@ birdCounts %>%
 
 group_by(birdCounts, site)
 
-# Now you! Group birdCounts by site using a pipe:
+# Group birdCounts by site using a pipe:
 
 birdCounts %>%
   group_by(site)
@@ -826,4 +825,63 @@ birdCounts %>%
 ```
 <br>
 </blockquote>
+<br>
+<hr>
+<h2>Answers to exercises</h2>
+
+<h3><b>Exercise One</b></h3>
+<p>Complete the following code to subset `birdCounts` to ground foraging birds!</p>
+```{r exercise one answer, eval = FALSE}
+# Subset birdCounts to ground foraging birds:
+
+birdCounts %>%
+  left_join(birdHabits, by = 'species') %>%
+  filter(foraging == 'ground') %>%
+  select(site:count)
+         
+```
+<br>
+<h3><b>Exercise Two</b></h3>
+<p>Filter `birdCounts` to point counts that took place in 2009.</p>
+```{r exercise two answer a, eval = FALSE}
+# Subset birdCounts to point counts from 2009:
+
+birdCounts %>%
+  mutate(year = year(date)) %>%
+  filter(year == 2009)
+```
+<br>
+<p>Note: Assigning a new column "year" in this exercise is really not necessary here, because we do not use the year column further. This would have been better written as:</p>
+```{r exercise two answer b, eval = FALSE}
+# Subset birdCounts to point counts from 2009:
+
+birdCounts %>%
+  filter(year(date) == 2009)
+```
+
+<br>
+<h3><b>Exercise Three</b></h3>
+<p>Complete the following to calculate the species richness for each site and year. Ensure that the resulting table is tidy.</p>
+```{r exercise three answer, eval = FALSE}
+# Calculate the species richness for each site and year:
+
+birdCounts %>%
+  mutate(year = year(date)) %>%
+  group_by(site, year) %>%
+  mutate(nSpecies = length(unique(species))) %>%
+  select(site, year, nSpecies) %>%
+  distinct
+```
+
+<br>
+<h3><b>Exercise Four</b></h3>
+<p>Complete the following to calculate the species richness for each site and year. Ensure that the resulting table is tidy.</p>
+```{r exercise four answer, eval = FALSE}
+# Calculate the species richness for each site and year:
+
+birdCounts %>%
+  mutate(year = year(date)) %>%
+  group_by(site, year) %>% 
+  summarize(nSpecies = length(unique(species)))
+```
 <br>
