@@ -1,0 +1,540 @@
+---
+output:
+ html_document:
+  theme: yeti
+---
+
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<style>
+
+code{
+  background-color:#f2f2f2;
+  border-radius: 25px;
+}
+ 
+span.co{
+  color:#000080;
+  font-weight: bold;
+}
+ 
+img{
+  display: block;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+h4{
+  text-align: left;
+  font-size: 20px;
+}
+
+p{
+  text-align: left;
+  font-size: 16px;
+}
+
+ul, ol{
+  line-height: 27px;
+  text-align: left;
+  font-size: 16px;
+  margin-left: 0px;
+}
+ 
+blockquote{
+  font-size: 18px;
+  border-left: 8px solid #292093;
+  background-color: #e6ffff;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+ 
+.row{
+  margin: auto;
+}
+ 
+table {
+  border-collapse: collapse;
+}
+
+table, td, th {
+  border: 1px solid black;
+  padding: 5px;
+  text-align: center;
+  vertical-align: middle;
+}
+ 
+ /* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.roundBorder {
+  border-radius: 25px;
+  border: 5px solid #30288C;
+  background: #D6EAF8;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.roundBorderBlack {
+  border-radius: 25px;
+  border: 10px solid #D3D3D3;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.roundBorderBlackEx {
+  border-radius: 5px;
+  border: 5px solid #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+}
+
+.roundBorderEx {
+  border-radius: 3px;
+  border: 5px solid #30288C;
+  background: #D6EAF8;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+}
+
+.tt {
+    position: relative;
+    display: inline-block;
+    class: inline; 
+    font-weight: bold;
+    font-family: "Avenir";
+    font-size: 18px;
+    border-bottom: 1px black;
+}
+
+/* Tooltip text */
+.tt .ttText {
+    visibility: hidden;
+    font-weight: normal;
+    font-size: 18px;
+    width: 200px;
+    background-color: black;
+    border: 1px solid black;
+    color: white;
+    text-align: left;
+    padding: 5px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tt:hover .ttText {
+    visibility: visible;
+}
+
+</style>
+
+```{r, eval = TRUE, include  = FALSE}
+# Load libraries:
+
+library(RCurl)
+library(lubridate)
+
+# Load a source script:
+
+script <-
+  getURL(
+    "https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode_lesson6.R"
+  )
+
+# Evaluate then remove the source script:
+
+eval(parse(text = script))
+
+rm(script)
+
+library(knitr) ; library(kableExtra)
+
+options(knitr.table.format = "html")
+```
+
+<h1 style="text-align: center;">Introduction to data science in R, Lesson 7:<br/>Introduction to ggplot</h1>
+<br>
+<!img style="float: left; margin: 0px 0px 15px 15px;" src="nzpLogo.jpg" width="150" />
+<p style = "text-align: center; font-size: 14px;">Brian S. Evans, Ph.D.<br />
+Migratory Bird Center<br/>
+Smithsonian Conservation Biology Institute</p>
+<hr>
+
+<h2>Introduction</h2>
+
+<p>Lorem ipsum</p>
+
+<hr>
+
+<h2>Before we begin</h2>
+<p>Copy, paste, and run the following code in R Studio to load the packages and read in the data that we will be using for this lesson:</p>
+```{r, eval=FALSE}
+# Load libraries:
+
+library(RCurl)
+library(lubridate)
+
+# Load a source script:
+
+script <-
+  getURL(
+    "https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode_lesson6.R"
+  )
+
+# Evaluate then remove the source script:
+
+eval(parse(text = script))
+
+rm(script)
+```
+<br>
+<hr>
+<h2>Initiating a plot</h2>
+
+<p>To illustrate how to use ggplot, we will walk through the generation of a plot. Plotting is an iterative process in which we add plot elements one at a time to a plot</p>
+
+<p>Have a look at `birdMeasures` before we begin:</p>
+
+```{r birdMeasures, eval = FALSE}
+ggplot(birdMeasures)
+```
+
+<p>The first function that we will learn is `ggplot`. Run the code below and observe the output:</p>
+```{r gg0}
+ggplot(birdMeasures)
+```
+
+<br>
+<h2>Aesthetics</h2>
+<p>The <b>aesthetic</b> of a plot element describes how variables are mapped and is called using the function `aes` from within the plot element function. For example, if we wish to set the x of our plot, we call `aes` from within the `ggplot` function:</p>
+
+```{r aes}
+ggplot(birdMeasures, aes(x = spp))
+```
+
+<p>Still don't see anything? That's to be expected, because we have yet to tell `ggplot` what we wish to plot.</p>
+
+<h2>Geometries</h2>
+<p>A <b>geometry</b> plot element provides a visible representation of observations. They are called using the function `geom_[geometry]`. Geometries that we will use in this workshop include:
+<ul>
+<li>`geom_bar`: Bars for bar plots</li>
+<li>`geom_histogram`: Histogram plot for observing distributions</li>
+<li>`geom_violin`: Violin (or bean) plot for observing distributions</li>
+<li>`geom_density`: Density plot for observing distributions</li>
+<li>`geom_point`: Point plot for observing raw data</li>
+</ul>
+
+<p>We will start with a bar plot in which we count the number of observations for each species. Note that plot elements are connected using `+` and each element start on a new line:</p>
+<br>
+
+```{r geom_bar}
+ggplot(birdMeasures, aes(x = spp)) +
+  geom_bar()
+```
+
+<p>Note that `birdMeasures` is the data frame and the first argument of `ggplot`. This allows us to use a pipe (and we should):</p>
+<br>
+
+```{r pipe}
+
+birdMeasures %>%
+  ggplot(aes(x = spp)) +
+  geom_bar()
+```
+
+<p>The above makes what is being plotted considerably clearer and allows us modify the data going in. For example, let's remove the species "NOCA" (Northern cardinal) prior to plotting:</p>
+<br>
+
+```{r removeNoca}
+birdMeasures %>%
+  filter(spp != 'NOCA') %>%
+  ggplot(aes(x = spp)) +
+  geom_bar()
+```
+
+<p>Piping can also be useful for changing labels. For example, not many people outside of ornithology know the four-letter alpha code for birds. We can map the codes to species names using the `labels` argument of the `factor` function (from lesson one):</p>
+<br>
+
+```{r species labels}
+birdMeasures %>%
+  filter(spp != 'NOCA') %>%
+  mutate(spp = factor(
+    spp,
+    labels = c(
+      'American robin',
+      'Black-capped chickadee',
+      'Carolina chickadee',
+      'Gray catbird'
+    )
+  )) %>%
+  ggplot(aes(x = spp)) +
+  geom_bar()
+```
+<br>
+
+<blockquote>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h2>
+<hr>
+<p>The functions `geom_histogram` and `geom_density` can be used to diplay distributional data. Using the <b>aesthetic</b> `x = mass`:</p>
+<ol type = "a">
+<li>Use `geom_histogram` to display the distribution of Chickadee mass measurements:</li>
+```{r exercise 1a histogram, eval = FALSE}
+# Subset birdCounts to ground foraging birds:
+
+birdMeasures %>%
+  filter(spp %in% c('BCCH', 'CACH')) %>%
+  ggplot(aes(x = mass)) +
+  geom_histogram()
+```
+<br>
+<li>Use `geom_density` to display the distribution of Chickadee mass measurements:</li>
+<br>
+```{r exercise 1b density, eval = FALSE}
+# Subset birdCounts to ground foraging birds:
+
+birdMeasures %>%
+  filter(spp %in% c('BCCH', 'CACH')) %>%
+  ggplot(aes(x = mass)) +
+  geom_density()
+```
+<br>
+</ol>
+</blockquote>
+<br>
+<h3>Adding aesthetics to a geometry</h3>
+
+<p>Additional <b>aesthetics</b> can be added to our geometry. For example, we may want to see the number of observations by region. To do so, let's color the bars such that each region is represented by a color using the argument `fill`:</p>
+
+```{r fill}
+birdMeasures %>%
+  filter(spp != 'NOCA') %>%
+  mutate(spp = factor(
+    spp,
+    labels = c(
+      'American robin',
+      'Black-capped chickadee',
+      'Carolina chickadee',
+      'Gray catbird'
+    )
+  )) %>%
+  ggplot(aes(x = spp)) +
+  geom_bar(aes(fill = region))
+```
+<br>
+
+<p>Note that the argument is `fill` not `color` -- `color` defines the outline of the bars. If we want to map a separately colored border for each region we would specify `color` inside of the `aes` argument. If we want all of the borders to be the same color, we specify a color outside of the `aes` argument. Let's do the latter, giving the bars a black border:</p>
+
+```{r colorBlack}
+birdMeasures %>%
+  filter(spp != 'NOCA') %>%
+  mutate(spp = factor(
+    spp,
+    labels = c(
+      'American robin',
+      'Black-capped chickadee',
+      'Carolina chickadee',
+      'Gray catbird'
+    )
+  )) %>%
+  ggplot(aes(x = spp)) +
+  geom_bar(aes(fill = region),
+           color = 'black')
+```
+<br>
+
+<p>Note that it's best practice in coding that each argument in a function (i.e. arguments separated by a comma) be written on its own line.</p> 
+
+<p>There are a number of additional arguments that can be used with `geom_bar`. For example, we can specify the size of the borders using the `size` argument:</p>
+```{r size1}
+birdMeasures %>%
+  filter(spp != 'NOCA') %>%
+  mutate(spp = factor(
+    spp,
+    labels = c(
+      'American robin',
+      'Black-capped chickadee',
+      'Carolina chickadee',
+      'Gray catbird'
+    )
+  )) %>%
+  ggplot(aes(x = spp)) +
+  geom_bar(aes(fill = region),
+           color = 'black',
+           size = .7)
+```
+<br>
+
+<p>You may have noticed that `ggplot` code can get unwieldly because of all of the arguments. Once you are happy with the basic elements of your plot (data in, plot aesthetics, and geometry), it's a good idea to assign a name to the plot.</p>
+
+```{r assign name}
+birdCaptures_basicPlot <- birdMeasures %>%
+  filter(spp != 'NOCA') %>%
+  mutate(spp = factor(
+    spp,
+    labels = c(
+      'American robin',
+      'Black-capped chickadee',
+      'Carolina chickadee',
+      'Gray catbird'
+    )
+  )) %>%
+  ggplot(aes(x = spp)) +
+  geom_bar(aes(fill = region),
+           color = 'black',
+           size = .7)
+```
+<br>
+
+<p>You can call the plot by simply typing its name:</p>
+
+```{r call name}
+birdCaptures_basicPlot
+```
+<br>
+
+<blockquote>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
+<hr>
+<ol type = 'a'>
+<li>Using the histogram and density plots you generated above, add a `fill` aesthetic to each such that each species is represented by a different color.</li>
+<br>
+```{r exercise 2a histogram fill, eval = FALSE}
+# Histogram, filled by species
+birdMeasures %>%
+  filter(spp %in% c('BCCH', 'CACH')) %>%
+  ggplot(aes(x = mass)) +
+  geom_histogram(aes(fill = spp))
+```
+
+```{r exercise 2a density fill, eval = FALSE}
+# Density plot, filled by species
+birdMeasures %>%
+  filter(spp %in% c('BCCH', 'CACH')) %>%
+  ggplot(aes(x = mass)) +
+  geom_density(aes(fill = spp))
+```
+<br>
+<li>Assign the names "mass_histogram" and "mass_density" to the distribution plots you generate above.</li>
+<br>
+```{r exercise 2b histogram name, eval = FALSE}
+# Histogram, with assigned name
+mass_histogram <- birdMeasures %>%
+  filter(spp %in% c('BCCH', 'CACH')) %>%
+  ggplot(aes(x = mass)) +
+  geom_histogram(aes(fill = spp))
+```
+
+```{r exercise 2b density name, eval = FALSE}
+# Histogram, with assigned name
+mass_histogram <- birdMeasures %>%
+  filter(spp %in% c('BCCH', 'CACH')) %>%
+  ggplot(aes(x = mass)) +
+  geom_density(aes(fill = spp))
+```
+<br>
+<ul>
+</blockquote>
+<hr>
+
+<h2>Labels</h2>
+
+<p>Even the best-looking plot can be marred by using unattractive labels. Let's modify the plot above, changing the x-axis title "spp" to "Species" using the `xlab` function:</p>
+
+```{r xlab}
+birdCaptures_basicPlot +
+  xlab('Species')
+```
+<br>
+
+<p><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> <b>Now you!</b>  Adding to the plot above, use the function `ylab` to title the y-axis "Count":</p>
+```{r ylab, echo = FALSE}
+birdCaptures_basicPlot +
+  xlab('Species') +
+  ylab('Count')
+```
+<br>
+
+<p>The function `ggtitle` adds a title to the plot:</p>
+```{r ggtitle}
+birdCaptures_basicPlot +
+  xlab('Species') +
+  ylab('Count') +
+  ggtitle('Birds banded and recaptured 2000-2017')
+```
+<br>
+
+<p>The plot title and x- and y-axis titles can also be added in one step:</p>
+```{r labs}
+birdCaptures_basicPlot +
+  labs(title = 'Birds banded and recaptured 2000-2017',
+       x = 'Species',
+       y = 'Count')
+```
+<br>
+<h3>Scaling axes</h3>
+<p>The default choice of scale for the axes are typically not very professional looking. Let's rescale our y axis. By default, there is additional space at the bottom and top of the axis. This is known as <b>axis expansion</b>. We can remove this using the function `scale_y_continuous` with the argument `expand`:</p>
+
+```{r scale expand 0 0}
+birdCaptures_basicPlot +
+  labs(title = 'Birds banded and recaptured 2000-2017',
+       x = 'Species',
+       y = 'Count') +
+       scale_y_continuous(expand = c(0,0))
+```
+<br>
+<p>The vector `c(0,0)` above sets the amount of expansion between the limits of values and ends of the axes.</p>
+
+<p>The above is still not very aesthetically pleasing, because we've run out of y-axis labels (tick marks) above 1000 and the Gray catbird bar touches the top of the plot. We can use `scale_y_continuous` to manually set the beginning and end points of the y axis. To determine the appropriate point, let's first take a look at the values we will be plotting:</p>
+
+```{r summary}
+birdMeasures %>%
+  filter(spp != 'NOCA') %>%
+  group_by(spp) %>%
+  summarize(n = n())
+```
+<br>
+<p>We can see in the above that the count of Gray catbirds is 1395. A y-axis that spans from 0 to 1500 would probably be appropriate. We can use the `limits` argument with a vector representing the bottom and top value (`c([bottom], [top])`) to manually set the axis limits:</p>
+```{r scale limits}
+birdCaptures_basicPlot +
+  labs(title = 'Birds banded and recaptured 2000-2017',
+       x = 'Species',
+       y = 'Count') +
+  scale_y_continuous(expand = c(0, 0),
+                     limits = c(0, 1500))
+```
+<br>
+<p>We can also manually set the breaks (tick marks) between the limits. For example, perhaps we want tick marks on the y-axis every 250 birds. We use the `breaks` argument of the `scale_y_continuous` function:</p>
+
+```{r scale breaks}
+birdCaptures_basicPlot +
+  labs(title = 'Birds banded and recaptured 2000-2017',
+       x = 'Species',
+       y = 'Count') +
+  scale_y_continuous(expand = c(0, 0),
+                     limits = c(0, 1500),
+                     breaks = seq(0, 1500, by = 250))
+```
+<br>
