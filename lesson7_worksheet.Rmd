@@ -358,7 +358,7 @@ birdMeasures %>%
 <blockquote>
 <h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
 <hr>
-<ol>
+<ol start = "a">
 <li>Modify your histogram plot from Exercise One. Use the `fill` argument of the function `geom_histogram` to assign a different fill color to females and males.</li>
 <br>
 ```{r exercise 2a histogram fill}
@@ -552,28 +552,13 @@ birdCaptures_basicPlot
 <blockquote>
 <h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Four:</h2>
 <hr>
-<ol start = "a">
-<li>Modify the density plot that you created in Exercise Three. Using the piping method, change the names "BCCH" and "CACH" to "Black-capped" and "Carolina" and plot the output:</li>
-<br>
-```{r exercise 4 factor levels}
-birdMeasures %>%
-  filter(spp %in% c('BCCH', 'CACH')) %>%
-  mutate(spp = factor(
-    spp,
-    labels = c(
-      'Black-capped',
-      'Carolina'
-    )
-  )) %>%
-  ggplot(aes(x = mass)) +
-  geom_density(aes(fill = spp), alpha = 0.7) +
-  facet_wrap(~spp, nrow = 2) +
-  labs(title = "Mass of Carolina and Black-capped chickadees",
-       x = 'Mass', 
-       y = 'Density')
-```
-<br>
-<li>Modify the density plot that you created in Exercise Three. Add the title "Mass of Carolina and Black-capped chickadees" and capitalize the x- and y-axis titles. Assign the name `massDensity` to the plot.</li>
+<p>Modify the density plot that you generated in Exercise Three, as follows:</p>
+<ul start = "a">
+<li>Using the piping method, change the names "BCCH" and "CACH" to "Black-capped" and "Carolina"</li>
+<li>Add the title "Mass of Carolina and Black-capped chickadees"</li>
+<li>Capitalize the x- and y-axis titles</li>
+<li>Assign the name `massDensity` to the plot</li>
+</ul>
 <br>
 ```{r exercise 4 titles}
 # Labels for massDensity:
@@ -588,14 +573,15 @@ massDensity <- birdMeasures %>%
     )
   )) %>%
   ggplot(aes(x = mass)) +
-  geom_density(aes(fill = spp), alpha = 0.7) +
+  geom_density(aes(fill = sex), alpha = 0.7) +
   facet_wrap(~spp, nrow = 2) +
   labs(title = "Mass of Carolina and Black-capped chickadees",
        x = 'Mass', 
        y = 'Density')
+
+massDensity
 ```
 <br>
-</ol>
 </blockquote>
 
 <hr>
