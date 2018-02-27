@@ -174,15 +174,17 @@ library(knitr) ; library(kableExtra)
 
 options(knitr.table.format = "html")
 
-mass_histogram <- birdMeasures %>%
+massHistogram <- birdMeasures %>%
   filter(spp %in% c('BCCH', 'CACH')) %>%
   ggplot(aes(x = mass)) +
   geom_histogram(aes(fill = spp))
 
-mass_density <- birdMeasures %>%
+massDensity <- birdMeasures %>%
   filter(spp %in% c('BCCH', 'CACH')) %>%
   ggplot(aes(x = mass)) +
   geom_density(aes(fill = spp))
+
+zPalette <- c('#9EB8C5', '#F32017')
 ```
 
 <h1 style="text-align: center;">Introduction to data science in R, Lesson 7:<br/>Introduction to ggplot</h1>
@@ -329,7 +331,7 @@ birdMeasures %>%
 ```
 <br>
 
-<p>Note that the argument is `fill` not `color` -- `color` defines the outline of the bars. If we want to map a separately colored border for each region we would specify `color` inside of the `aes` argument. If we want all of the borders to be the same color, we specify a color outside of the `aes` argument. Let's do the latter, giving the bars a black border:</p>
+<p>Note that the argument is `fill` rather than `color`. `color` defines the outline of the bars. If we want to map a separately colored border for each region we would specify `color` inside of the `aes` argument. If we want all of the borders to be the same color, we specify a color outside of the `aes` argument. Let's do the latter, giving the bars a black border:</p>
 
 ```{r colorBlack}
 birdMeasures %>%
@@ -397,7 +399,7 @@ birdMeasures %>%
 <hr>
 <h2>Facets</h2>
 
-<p>Facets allow you to display multiple plots, which can be very useful to show differences between groups. Let's use the `facet_wrap` function and your histogram to compare differences in mass between Black-capped and Carolina chickadees.</p> 
+<p>Facets allow you to display multiple plots, which can be very useful to show differences between groups. Let's use the `facet_wrap` function and your histogram from Exercise Two to compare mass differences between Black-capped and Carolina chickadees.</p> 
 
 ```{r facet}
 birdMeasures %>%
@@ -419,9 +421,27 @@ birdMeasures %>%
 ```
 
 
+<blockquote>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h2>
+<hr>
+<p>Modify your density plot from Exercise Two. Use the function `facet_wrap` and the argument `nrow = 2` to assign Black-capped (BCCH) and Carolina chickadees (CACH) to separate, vertically aligned facets.</p>
+<br>
+
+```{r exercise 3 facet}
+birdMeasures %>%
+  filter(spp %in% c('BCCH', 'CACH')) %>%
+  ggplot(aes(x = mass)) +
+  geom_density(
+    aes(fill = sex),
+    alpha = 0.7) +
+  facet_wrap(~spp, nrow = 2)
+```
+<br>
+</blockquote>
+
 <h2>Labels</h2>
 
-<p>Even the best-looking plot can be marred by using unattractive titles. Let's modify the plot above, changing the x-axis title "spp" to "Species" using the `xlab` function:</p>
+<p>Even the best-looking plot can be marred by using unattractive titles. Let's modify the bar plot we've been working on, changing the x-axis title "spp" to "Species" using the `xlab` function:</p>
 
 ```{r xlab}
 birdMeasures %>%
@@ -530,12 +550,12 @@ birdCaptures_basicPlot
 <br>
 
 <blockquote>
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h2>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Four:</h2>
 <hr>
 <ol start = "a">
-<li>Using the piping method, change the names "BCCH" and "CACH" to "Black-capped" and "Carolina" and plot the output:</li>
+<li>Modify the density plot that you created in Exercise Three. Using the piping method, change the names "BCCH" and "CACH" to "Black-capped" and "Carolina" and plot the output:</li>
 <br>
-```{r exercise 3 factor levels}
+```{r exercise 4 factor levels}
 birdMeasures %>%
   filter(spp %in% c('BCCH', 'CACH')) %>%
   mutate(spp = factor(
@@ -546,18 +566,19 @@ birdMeasures %>%
     )
   )) %>%
   ggplot(aes(x = mass)) +
-  geom_density(aes(fill = spp), alpha = 0.6) +
+  geom_density(aes(fill = spp), alpha = 0.7) +
+  facet_wrap(~spp, nrow = 2) +
   labs(title = "Mass of Carolina and Black-capped chickadees",
        x = 'Mass', 
        y = 'Density')
 ```
 <br>
-<li>Using the density plot you created above, add the title "Mass of Carolina and Black-capped chickadees", and capitalize the x- and y-axis titles. Assign the name `mass_density` to the plot.</li>
+<li>Modify the density plot that you created in Exercise Three. Add the title "Mass of Carolina and Black-capped chickadees" and capitalize the x- and y-axis titles. Assign the name `massDensity` to the plot.</li>
 <br>
-```{r exercise 3 titles}
-# Labels for mass_density:
+```{r exercise 4 titles}
+# Labels for massDensity:
 
-mass_density <- birdMeasures %>%
+massDensity <- birdMeasures %>%
   filter(spp %in% c('BCCH', 'CACH')) %>%
   mutate(spp = factor(
     spp,
@@ -567,7 +588,8 @@ mass_density <- birdMeasures %>%
     )
   )) %>%
   ggplot(aes(x = mass)) +
-  geom_density(aes(fill = spp), alpha = 0.6) +
+  geom_density(aes(fill = spp), alpha = 0.7) +
+  facet_wrap(~spp, nrow = 2) +
   labs(title = "Mass of Carolina and Black-capped chickadees",
        x = 'Mass', 
        y = 'Density')
@@ -614,14 +636,14 @@ birdCaptures_basicPlot +
 ```
 <br>
 <blockquote>
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Four:</h2>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Five:</h2>
 <hr>
-<p>Plot `mass_density`. Use the `expand`, `limits`, and `breaks` arguments of the function `scale_y_continuous` to scale the y-axis such that the scale ranges from 0 to 0.7 and breaks occur at intervals of 0.1.</p>
+<p>Modify the `massDensity` plot that you created in Excercies Four. Use the `expand`, `limits`, and `breaks` arguments of the function `scale_y_continuous` to scale the y-axis such that the scale ranges from 0 to 0.7 and breaks occur at intervals of 0.1.</p>
 <br>
-```{r exercise 4}
-# Labels for mass_density:
+```{r exercise 5 scale axis}
+# Labels for massDensity:
 
-mass_density +
+massDensity +
   scale_y_continuous(expand = c(0, 0),
                      limits = c(0, 0.7),
                      breaks = seq(0, 0.7, by = 0.1))
@@ -631,9 +653,82 @@ mass_density +
 </ol>
 </blockquote>
 <hr>
-<h2>Facets</h2>
 
-<h2>Legends</h2>
+<h2>Colors</h2>
 
-<p>Legends can be rather cumbersome. I suggest making any modifications to legend items, with exception to a legend title, to the data frame being plotted (as we had with the Black-capped and Carolina Chickadess, above).</p>
+<p>The default colors that ggplot uses are just plain ugly. Luckily it's easy to modify the colors to those of your choosing. Here we'll use the `values` attribute of the function `scale_fill_manual` on the histogram plot to specify the colors for the fill:</p>
+
+```{r color base}
+birdMeasures %>%
+  filter(spp %in% c('BCCH', 'CACH')) %>%
+  ggplot(aes(x = mass)) +
+  geom_histogram(aes(fill = sex), bins = 20) +
+  facet_wrap(~spp, nrow = 2) +
+  scale_fill_manual(values = c('blue', 'red'))
+```
+
+
+<p>There really wasn't much improvement here. My preference is to hunt around for colors I like and grab their hex codes. For example, I used a "color-picker" app to extract the colors of Team Zissou's uniforms in movie The Life Aquatic.</p>
+
+
+<div class = "row">
+<img style="display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      padding: 9px;
+	      border-style: solid;
+	      border-width: 10px;
+	      box-shadow: 0px 0px 0px 0px;
+	      border-color: white;" src="rWorkshop/images/lifeAquatic.jpg" width="600" />
+</div>
+
+<p>My color-picker provided me with the values `#9EB8C5`, for the shirts, and `#F32017` for the hats. Using these values:</p>
+
+```{r color aquatic}
+birdMeasures %>%
+  filter(spp %in% c('BCCH', 'CACH')) %>%
+  ggplot(aes(x = mass)) +
+  geom_histogram(aes(fill = sex), bins = 20) +
+  facet_wrap(~spp, nrow = 2) +
+  scale_fill_manual(values = c('#9EB8C5', '#F32017'))
+```
+<br>
+
+<p>It's a good idea to save the colors that you like for future use. For example, I could have have saved my colors as:</p>
+
+```{r aquatic palette define, eval = FALSE}
+zPalette <- c('#9EB8C5', '#F32017')
+```
+<br>
+
+<p>You can then apply your color palette using:<p>
+
+```{r aquatic palette use}
+birdMeasures %>%
+  filter(spp %in% c('BCCH', 'CACH')) %>%
+  ggplot(aes(x = mass)) +
+  geom_histogram(aes(fill = sex), bins = 20) +
+  facet_wrap(~spp, nrow = 2) +
+  scale_fill_manual(values = zPalette)
+```
+
+<br>
+<blockquote>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Six:</h2>
+<hr>
+<p>Continue to modify the `massDensity` plot from Exercise Five. Use the `values` argument of the function `scale_fill_manual` to set the colors (<i>Note: You may use zPalette or any other colors of your choosing</i>).</p>
+<br>
+```{r exercise 6 colors}
+# Labels for massDensity:
+
+massDensity +
+  scale_y_continuous(expand = c(0, 0),
+                     limits = c(0, 0.7),
+                     breaks = seq(0, 0.7, by = 0.1))
+
+```
+<br>
+</ol>
+</blockquote>
+<hr>
 
