@@ -229,6 +229,13 @@ Through this process, participants are expected to develop a flexible skillset f
 <li><a href = "https://smbc-nzp.github.io/lesson6_homeworkQuestions.R" download>Homework code</a></li>
 </ul>
 
+<h3>Lesson Seven: Introduction to visualizing data</h3>
+<p><b>Goal</b>: Learn how to use ggplot to write tidy scripts for visualizing data.</p>
+<ul>
+<li><a href = "https://smbc-nzp.github.io/lesson7_pres.html">Presentation website</a></li>
+<li><a href = "https://smbc-nzp.github.io/lesson7_code.R" download>Lesson code</a></li>
+</ul>
+
 <hr>
 <div class = "row">
 <img src = "rWorkshop/images/robotBird.jpg"
