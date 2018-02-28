@@ -174,7 +174,7 @@ library(knitr) ; library(kableExtra)
 
 options(knitr.table.format = "html")
 
-massHistogram <- birdMeasures %>%
+mass_histogram <- birdMeasures %>%
   filter(spp %in% c('BCCH', 'CACH')) %>%
   ggplot(aes(x = mass)) +
   geom_histogram(aes(fill = spp))
@@ -272,7 +272,6 @@ ggplot(birdMeasures, aes(x = spp)) +
 <br>
 
 ```{r pipe}
-
 birdMeasures %>%
   ggplot(aes(x = spp)) +
   geom_bar()
@@ -291,19 +290,7 @@ birdMeasures %>%
 <blockquote>
 <h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h2>
 <hr>
-<p>The functions `geom_histogram` and `geom_density` can be used to diplay distributional data. Using the <b>aesthetic</b> `x = mass`:</p>
-<ol type = "a">
-<li>Use `geom_histogram` with the argument `bins = 20` to display the distribution of Black-capped and Carolina chickadee mass measurements:</li>
-```{r exercise 1a histogram}
-# Subset birdCounts to ground foraging birds:
-
-birdMeasures %>%
-  filter(spp %in% c('BCCH', 'CACH')) %>%
-  ggplot(aes(x = mass)) +
-  geom_histogram(bins = 20)
-```
-<br>
-<li>Use `geom_density` to display the distribution of Black-capped and Carolina chickadee mass measurements:</li>
+<p>The function `geom_density` can be used to display the density distribution of a vector. Using the <b>aesthetic</b> `x = mass`, display the distribution of Black-capped and Carolina chickadee mass measurements:</li>
 <br>
 ```{r exercise 1b density}
 # Subset birdCounts to ground foraging birds:
@@ -317,11 +304,103 @@ birdMeasures %>%
 </ol>
 </blockquote>
 
+<h3>Geometry: Adding arguments</h3>
+<p>The functions `geom_histogram` can be used to diplay distributional data as a histogram. The code below can be used to generate a histogram plot of the mass distribution of Black-capped and Carolina chickadees:</p>
+```{r histogram}
+# Subset birdCounts to ground foraging birds:
 
+birdMeasures %>%
+  filter(spp %in% c('BCCH', 'CACH')) %>%
+  ggplot(aes(x = mass)) +
+  geom_histogram()
+```
 <br>
-<h3>Adding aesthetics to a geometry</h3>
+<p>Notice that the above produced a warning message that the default bins may not be the best choice. We can modify this in one of two ways. One method is to add a `binwidth` argument to the `geom_histogram`:</p>
+```{r histogram binwidth}
+# Subset birdCounts to ground foraging birds:
 
-<p>Additional <b>aesthetics</b> can be added to our geometry. For example, we may want to see the number of observations by region. To do so, let's color the bars such that each region is represented by a color using the argument `fill`:</p>
+birdMeasures %>%
+  filter(spp %in% c('BCCH', 'CACH')) %>%
+  ggplot(aes(x = mass)) +
+  geom_histogram(binwidth = 1)
+```
+<br>
+
+<p>You may also provide the number of bins, `bins`, to specify the number of bins to be drawn</p>
+`binwidth` argument to the `geom_histogram`:</p>
+```{r histogram bins}
+# Subset birdCounts to ground foraging birds:
+
+birdMeasures %>%
+  filter(spp %in% c('BCCH', 'CACH')) %>%
+  ggplot(aes(x = mass)) +
+  geom_histogram(bins = 20)
+```
+<br>
+
+<p>Several features can be added to a geometry to improve the look of your plot. For example, let's return to our bar plot of the number of birds captured per species and change the `fill` color of the bars to "gray":</p>
+
+```{r bar plot gray fill}
+# Subset birdCounts to ground foraging birds:
+
+birdMeasures %>%
+  filter(spp != 'NOCA') %>%
+  ggplot(aes(x = spp)) +
+  geom_bar(fill = 'gray')
+```
+<br>
+
+<p>Note that the argument is `fill` not `color` -- `color` defines the outline of the bars:</p>
+
+```{r bar plot black color}
+# Subset birdCounts to ground foraging birds:
+
+birdMeasures %>%
+  filter(spp != 'NOCA') %>%
+  ggplot(aes(x = spp)) +
+  geom_bar(fill = 'gray', 
+           color = 'black')
+```
+<br>
+
+<p>We can adjust the size of the borders using the `size` argument of the `geom_bar` function:</p>
+
+```{r bar plot border width}
+# Subset birdCounts to ground foraging birds:
+
+birdMeasures %>%
+  filter(spp != 'NOCA') %>%
+  ggplot(aes(x = spp)) +
+  geom_bar(fill = 'gray', 
+           color = 'black',
+           size = 0.7)
+```
+<br>
+<p>Note that it's best practice in coding that each argument in a function (i.e. arguments separated by a comma) be written on its own line.</p> 
+
+<blockquote>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
+<hr>
+<p>Modify your density plot from Exercise One:</p>
+<ul>
+<li>Use the `fill` argument to fill your density shape with the color "gray":</li>
+<li>The argument `alpha` can be applied to a geometry to adjust its transparency. Adjust the density shape to `alpha =  0.7`</li>
+</ul>
+<br>
+```{r exercise 2}
+# Density, filled by species
+birdMeasures %>%
+  filter(spp %in% c('BCCH', 'CACH')) %>%
+  ggplot(aes(x = mass)) +
+  geom_density(fill = 'gray', alpha = 0.7)
+```
+<br>
+</blockquote>
+<br>
+
+<h3>Geometry: Adding aesthetics</h3>
+
+<p>Additional <b>aesthetics</b> can be added to a geometry statement. Recall that aesthetics refer to mapping the value of some variable to an observable feature. For example, we may want to see the number of observations by region. To do so, let's color the bars such that each region is represented by a color using the argument `fill`:</p>
 
 ```{r fill}
 birdMeasures %>%
@@ -331,86 +410,61 @@ birdMeasures %>%
 ```
 <br>
 
-<p>Note that the argument is `fill` rather than `color`. `color` defines the outline of the bars. If we want to map a separately colored border for each region we would specify `color` inside of the `aes` argument. If we want all of the borders to be the same color, we specify a color outside of the `aes` argument. Let's do the latter, giving the bars a black border:</p>
-
-```{r colorBlack}
-birdMeasures %>%
-  filter(spp != 'NOCA') %>%
-  ggplot(aes(x = spp)) +
-  geom_bar(aes(fill = region),
-           color = 'black')
-```
-<br>
-
-<p>Note that it's best practice in coding that each argument in a function (i.e. arguments separated by a comma) be written on its own line.</p> 
-
-<p>There are a number of additional arguments that can be used with `geom_bar`. For example, we can specify the size of the borders using the `size` argument:</p>
-```{r size1}
-birdMeasures %>%
-  filter(spp != 'NOCA') %>%
-  ggplot(aes(x = spp)) +
-  geom_bar(aes(fill = region),
-           color = 'black',
-           size = .7)
-```
-<br>
-
-<blockquote>
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
-<hr>
-<ol start = "a">
-<li>Modify your histogram plot from Exercise One. Use the `fill` argument of the function `geom_histogram` to assign a different fill color to females and males.</li>
-<br>
-```{r exercise 2a histogram fill}
+<p>Let's repeat the above with our histogram of chickadee mass measurements. We can add an aesthetics argument to the function `geom_histogram` to plot separate distributions for male and female chickadees:</p>
+```{r histogram fill}
 # Density, filled by species
 birdMeasures %>%
   filter(spp %in% c('BCCH', 'CACH')) %>%
   ggplot(aes(x = mass)) +
-  geom_histogram(aes(fill = sex), bins = 20)
+  geom_histogram(aes(fill = sex),
+                 bins = 20)
 ```
 <br>
-<li>Modify your density plot from Exercise One. Use the `fill` argument of the function `geom_density` to assign a different fill color to females and males.</li>
+
+<p>Arguments that you might not want to map to a variable, such as `color`, are defined outside of the `aes` argument:</p>
+```{r histogram fill color}
+birdMeasures %>%
+  filter(spp %in% c('BCCH', 'CACH')) %>%
+  ggplot(aes(x = mass)) +
+  geom_histogram(aes(fill = sex),
+                 bins = 20,
+                 color = 'black')
+```
 <br>
-<br>
-```{r exercise 2b density fill}
+
+<blockquote>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h2>
+<hr>
+<p>Modify your density plot from Exercise Two. Use the `fill` argument of the function `geom_density` to assign a different fill color to females and males.</p>
+```{r exercise 3 density fill}
 # Density plot, filled by sex:
 
 birdMeasures %>%
   filter(spp %in% c('BCCH', 'CACH')) %>%
   ggplot(aes(x = mass)) +
-  geom_density(aes(fill = sex))
+  geom_density(aes(fill = sex),
+               alpha = 0.7)
 ```
 <br>
-<li>The function `geom_density` has an argument, `alpha`, that allows you to control the transparency of the fill color. Modify the density plot above such that `alpha = 0.7`.</li>
-<br>
-```{r exercise 2c density alpha}
-# Density plot, filled by sex: 
-
-birdMeasures %>%
-  filter(spp %in% c('BCCH', 'CACH')) %>%
-  ggplot(aes(x = mass)) +
-  geom_density(
-    aes(fill = sex),
-    alpha = 0.7)
-```
-<br>
-</ol>
 </blockquote>
 <hr>
+
 <h2>Facets</h2>
 
-<p>Facets allow you to display multiple plots, which can be very useful to show differences between groups. Let's use the `facet_wrap` function and your histogram from Exercise Two to compare mass differences between Black-capped and Carolina chickadees.</p> 
+<p>Facets allow you to display multiple plots, which can be very useful to show differences between groups. Let's use the `facet_wrap` function and your histogram to compare differences in mass between Black-capped and Carolina chickadees.</p> 
 
 ```{r facet}
 birdMeasures %>%
   filter(spp %in% c('BCCH', 'CACH')) %>%
   ggplot(aes(x = mass)) +
-  geom_histogram(aes(fill = sex), bins = 20) +
+  geom_histogram(aes(fill = sex), 
+                 bins = 20,
+                 color = 'black') +
   facet_wrap(~spp)
 ```
 <br>
 
-<p>By separating Black-capped and Carolina chickadee by mass, their size difference is apparent. Your eyes still have to do too much work to compare them though. We can use the `nrow` argument of the `facet_wrap` function to move the plots on top of one another:</p>
+<p>By separating Black-capped and Carolina chickadees, the difference between mass measurements is apparent. Your eyes still have to do too much work to compare them though. We can use the `nrow` argument of the `facet_wrap` function to move the plots on top of one another:</p>
 
 ```{r facet nrow}
 birdMeasures %>%
@@ -420,69 +474,29 @@ birdMeasures %>%
   facet_wrap(~spp, nrow = 2)
 ```
 
-
 <blockquote>
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h2>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Four:</h2>
 <hr>
-<p>Modify your density plot from Exercise Two. Use the function `facet_wrap` and the argument `nrow = 2` to assign Black-capped (BCCH) and Carolina chickadees (CACH) to separate, vertically aligned facets.</p>
-<br>
+<p>Modify your density plot from Exercise Three. Use the `facet_wrap` function with the argument `nrow = 2` to generate separate plots of Black-capped and Carolina chickadees.</p>
+```{r exercise 4 facet_wrap}
+# Density plot, filled by sex:
 
-```{r exercise 3 facet}
 birdMeasures %>%
   filter(spp %in% c('BCCH', 'CACH')) %>%
   ggplot(aes(x = mass)) +
-  geom_density(
-    aes(fill = sex),
-    alpha = 0.7) +
+  geom_density(aes(fill = sex),
+               alpha = 0.7) +
   facet_wrap(~spp, nrow = 2)
 ```
 <br>
 </blockquote>
+<hr>
 
 <h2>Labels</h2>
 
-<p>Even the best-looking plot can be marred by using unattractive titles. Let's modify the bar plot we've been working on, changing the x-axis title "spp" to "Species" using the `xlab` function:</p>
+<p>Even the best-looking plot can be marred by using unattractive titles. Let's modify the bar plot of captures by species and region above. To change the axis titles and add a title to the plot, we can use the `labs` function:</p>
 
-```{r xlab}
-birdMeasures %>%
-  filter(spp != 'NOCA') %>%
-  ggplot(aes(x = spp)) +
-  geom_bar(aes(fill = region),
-           color = 'black',
-           size = .7) +
-  xlab('Species')
-```
-<br>
-
-<p><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> <b>Now you!</b>  Adding to the plot above, use the function `ylab` to title the y-axis "Count":</p>
-```{r ylab, echo = FALSE}
-birdMeasures %>%
-  filter(spp != 'NOCA') %>%
-  ggplot(aes(x = spp)) +
-  geom_bar(aes(fill = region),
-           color = 'black',
-           size = .7) +
-  xlab('Species') +
-  ylab('Count')
-```
-<br>
-
-<p>The function `ggtitle` adds a title to the plot:</p>
-```{r ggtitle}
-birdMeasures %>%
-  filter(spp != 'NOCA') %>%
-  ggplot(aes(x = spp)) +
-  geom_bar(aes(fill = region),
-           color = 'black',
-           size = .7) +
-  xlab('Species') +
-  ylab('Count') +
-  ggtitle('Birds banded and recaptured 2000-2017')
-```
-<br>
-
-<p>The plot title and x- and y-axis titles can also be added in one step:</p>
-```{r labs}
+```{r bar plot labs}
 birdMeasures %>%
   filter(spp != 'NOCA') %>%
   ggplot(aes(x = spp)) +
@@ -494,7 +508,7 @@ birdMeasures %>%
        y = 'Count')
 ```
 
-<p>Piping can also be useful for changing labels. For example, not many people outside of ornithology know the four-letter alpha code for birds. We can map the codes to species names using the `labels` argument of the `factor` function (from lesson one):</p>
+<p>Piping can be useful for changing labels. For example, not many people outside of ornithology know the four-letter alpha code for birds. We can map the codes to species names using the `labels` argument of the `factor` function (from lesson one):</p>
 <br>
 
 ```{r species labels}
@@ -550,17 +564,16 @@ birdCaptures_basicPlot
 <br>
 
 <blockquote>
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Four:</h2>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Five:</h2>
 <hr>
-<p>Modify the density plot that you generated in Exercise Three, as follows:</p>
-<ul start = "a">
+<p>Modify the density plot you created in Exercise Four:</p>
+<ul>
 <li>Using the piping method, change the names "BCCH" and "CACH" to "Black-capped" and "Carolina"</li>
-<li>Add the title "Mass of Carolina and Black-capped chickadees"</li>
-<li>Capitalize the x- and y-axis titles</li>
-<li>Assign the name `massDensity` to the plot</li>
+<li>Add the title "Mass of Carolina and Black-capped chickadees and capitalize the x and y axis titles</li>
+<li>Assign the name "massDensity" to the plot</li>
 </ul>
 <br>
-```{r exercise 4 titles}
+```{r exercise 5 labels}
 # Labels for massDensity:
 
 massDensity <- birdMeasures %>%
@@ -573,7 +586,8 @@ massDensity <- birdMeasures %>%
     )
   )) %>%
   ggplot(aes(x = mass)) +
-  geom_density(aes(fill = sex), alpha = 0.7) +
+  geom_density(aes(fill = sex),
+               alpha = 0.7) +
   facet_wrap(~spp, nrow = 2) +
   labs(title = "Mass of Carolina and Black-capped chickadees",
        x = 'Mass', 
@@ -622,17 +636,17 @@ birdCaptures_basicPlot +
 ```
 <br>
 <blockquote>
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Five:</h2>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Six:</h2>
 <hr>
-<p>Modify the `massDensity` plot that you created in Excercies Four. Use the `expand`, `limits`, and `breaks` arguments of the function `scale_y_continuous` to scale the y-axis such that the scale ranges from 0 to 0.7 and breaks occur at intervals of 0.1.</p>
+<p>Plot `massDensity`. Use the `expand`, `limits`, and `breaks` arguments of the function `scale_y_continuous` to scale the y-axis such that the scale ranges from 0 to 0.7 and breaks occur at intervals of 0.1.</p>
 <br>
-```{r exercise 5 scale axis}
-# Labels for massDensity:
+```{r exercise 6 scale y axis}
+# new y axis scale for massDensity:
 
 massDensity +
   scale_y_continuous(expand = c(0, 0),
-                     limits = c(0, 0.7),
-                     breaks = seq(0, 0.7, by = 0.1))
+                     limits = c(0, 0.8),
+                     breaks = seq(0, 0.8, by = 0.1))
 
 ```
 <br>
@@ -642,39 +656,41 @@ massDensity +
 
 <h2>Colors</h2>
 
-<p>The default colors that ggplot uses are just plain ugly. Luckily it's easy to modify the colors to those of your choosing. Here we'll use the `values` attribute of the function `scale_fill_manual` on the histogram plot to specify the colors for the fill:</p>
+<p>The default colors that ggplot uses are just plain ugly. Luckily it's easy to modify the colors to those of your choosing. Here we'll use the function `scale_fill_manual` to specify the colors for the fill:</p>
 
-```{r color base}
+```{r scale fill}
 birdMeasures %>%
   filter(spp %in% c('BCCH', 'CACH')) %>%
   ggplot(aes(x = mass)) +
-  geom_histogram(aes(fill = sex), bins = 20) +
+  geom_histogram(aes(fill = sex), 
+                 bins = 20,
+                 color = 'black') +
   facet_wrap(~spp, nrow = 2) +
   scale_fill_manual(values = c('blue', 'red'))
 ```
+<br>
 
-
-<p>There really wasn't much improvement here. My preference is to hunt around for colors I like and grab their hex codes. For example, I used a "color-picker" app to extract the colors of Team Zissou's uniforms in movie The Life Aquatic.</p>
-
-
-<div class = "row">
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
+<p>There really wasn't much improvement here. My preference is to hunt around for colors I like and grab their hex codes. For example, I used a "color-picker" app to extract the colors of Team Zissou's uniforms from the movie The Life Aquatic.</p>
+<br>
+<img src="rWorkshop/images/lifeAquatic.jpg" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "float: center; 
+	      padding-right: 0px;
 	      border-style: solid;
 	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/lifeAquatic.jpg" width="600" />
-</div>
+	      border-color: white;
+	      width: 80%;"/>
+<br>
 
-<p>My color-picker provided me with the values `#9EB8C5`, for the shirts, and `#F32017` for the hats. Using these values:</p>
-
-```{r color aquatic}
+```{r scale fill custom}
 birdMeasures %>%
   filter(spp %in% c('BCCH', 'CACH')) %>%
   ggplot(aes(x = mass)) +
-  geom_histogram(aes(fill = sex), bins = 20) +
+  geom_histogram(aes(fill = sex), 
+                 bins = 20,
+                 color = 'black') +
   facet_wrap(~spp, nrow = 2) +
   scale_fill_manual(values = c('#9EB8C5', '#F32017'))
 ```
@@ -682,39 +698,132 @@ birdMeasures %>%
 
 <p>It's a good idea to save the colors that you like for future use. For example, I could have have saved my colors as:</p>
 
-```{r aquatic palette define, eval = FALSE}
-zPalette <- c('#9EB8C5', '#F32017')
+```{z palette, eval = FALSE}
+zPalette <- c(shirt = '#9EB8C5', hat = '#F32017')
 ```
 <br>
 
-<p>You can then apply your color palette using:<p>
+<p>You can then apply your custom color palette using:</p>
 
-```{r aquatic palette use}
+```{r scale fill zPalette}
 birdMeasures %>%
   filter(spp %in% c('BCCH', 'CACH')) %>%
   ggplot(aes(x = mass)) +
-  geom_histogram(aes(fill = sex), bins = 20) +
+  geom_histogram(aes(fill = sex), 
+                 bins = 20,
+                 color = 'black') +
   facet_wrap(~spp, nrow = 2) +
   scale_fill_manual(values = zPalette)
 ```
+<br>
 
-<br>
 <blockquote>
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Six:</h2>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Seven:</h2>
 <hr>
-<p>Continue to modify the `massDensity` plot from Exercise Five. Use the `values` argument of the function `scale_fill_manual` to set the colors (<i>Note: You may use zPalette or any other colors of your choosing</i>).</p>
+<p>Modify the density plot you created in Exercise Six. Use `scale_fill_manual` to set custom fill colors.</p>
 <br>
-```{r exercise 6 colors}
-# Labels for massDensity:
+```{r exercise 7 colors}
+# Colors for massDensity:
 
 massDensity +
   scale_y_continuous(expand = c(0, 0),
-                     limits = c(0, 0.7),
-                     breaks = seq(0, 0.7, by = 0.1))
-
+                     limits = c(0, 0.8),
+                     breaks = seq(0, 0.8, by = 0.1)) +
+  scale_fill_manual(values = zPalette)
 ```
 <br>
 </ol>
 </blockquote>
 <hr>
 
+
+<h2>Legends</h2>
+
+<p>Legends, also called <b>guides</b> can be rather cumbersome. I suggest making any modifications to legend items, with exception to a legend title, to the data frame being plotted (the piping method described above). For example, we can use piping to modify the legend of the histogram as follows:</p>
+
+```{r legend piped}
+birdMeasures %>%
+  filter(spp %in% c('BCCH', 'CACH')) %>%
+  mutate(sex = factor(sex,
+                      labels = c('Female','Male'))) %>%
+  ggplot(aes(x = mass)) +
+  geom_histogram(aes(fill = sex), 
+                 bins = 20,
+                 color = 'black') +
+  facet_wrap(~spp, nrow = 2) +
+  scale_fill_manual(values = c('#9EB8C5', '#F32017'))
+```
+<br>
+
+<p>An alternative to the piping method is to modify the `scale_fill_manual` function, where the fill colors were defined. Here, we can set a new legend `name` and the `labels`:</p>
+
+```{r legend scale fill}
+birdMeasures %>%
+  filter(spp %in% c('BCCH', 'CACH')) %>%
+  ggplot(aes(x = mass)) +
+  geom_histogram(aes(fill = sex), 
+                 bins = 20,
+                 color = 'black') +
+  facet_wrap(~spp, nrow = 2) +
+  scale_fill_manual(values = c('#9EB8C5', '#F32017'), 
+                    name = 'Sex', 
+                    labels = c('Female', 'Male'))
+```
+
+<blockquote>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Eight:</h2>
+<hr>
+<p>Modify the density plot you created in Exercise Seven. Use `scale_fill_manual` to set the legend title and labels.</p>
+<br>
+```{r exercise 8 legend}
+# Colors for massDensity:
+massDensity +
+  scale_y_continuous(expand = c(0, 0),
+                     limits = c(0, 0.8),
+                     breaks = seq(0, 0.8, by = 0.1)) +
+  scale_fill_manual(values = zPalette,
+                    name = 'Sex', 
+                    labels = c('Female', 'Male')) 
+```
+<br>
+</ol>
+</blockquote>
+<hr>
+
+<h2>Themes</h2>
+
+<p>Plots go from functional to publishable only once you set custom <b>themes</b>. Themes describe how each of the elements of a plot looks. Code tends to get very long very quickly when you start playing with themes, so this is a good time to assign a name your current plot.</p>
+
+<p>The bar plot:</p>
+```{r, eval = FALSE}
+barplot2Theme <- birdCaptures_basicPlot +
+  scale_y_continuous(expand = c(0, 0),
+                     limits = c(0, 1500))
+
+```
+<br>
+<p>The histogram plot:</p>
+```{r, eval = FALSE}
+histogram2Theme <- birdMeasures %>%
+  filter(spp %in% c('BCCH', 'CACH')) %>%
+  ggplot(aes(x = mass)) +
+  geom_histogram(aes(fill = sex), 
+                 bins = 20,
+                 color = 'black') +
+  facet_wrap(~spp, nrow = 2) +
+  scale_fill_manual(values = c('#9EB8C5', '#F32017'), 
+                    name = 'Sex', 
+                    labels = c('Female', 'Male'))
+```
+<br>
+
+```{r, eval = FALSE}
+# Colors for massDensity:
+density2Theme <- massDensity +
+  scale_y_continuous(expand = c(0, 0),
+                     limits = c(0, 0.8),
+                     breaks = seq(0, 0.8, by = 0.1)) +
+  scale_fill_manual(values = zPalette,
+                    name = 'Sex', 
+                    labels = c('Female', 'Male')) 
+```
