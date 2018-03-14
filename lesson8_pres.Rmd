@@ -1,0 +1,788 @@
+---
+output:
+  revealjs::revealjs_presentation:
+    theme: simple
+    highlight: pygments
+    center: false
+    transition: none
+    progress: true
+    font-family: Verdana
+---
+
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<style>
+
+code{
+  background-color:#f2f2f2;
+  border-radius: 25px;
+}
+ 
+span.co{
+  color:#000080;
+  font-weight: bold;
+}
+ 
+img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+	padding: 10px;
+  border: 0px solid white;
+	box-shadow: 0px 0px 0px 0px;
+  text-shadow: 0px 0px;
+}
+
+p{
+  text-align: left;
+  font-size: 24px;
+}
+
+p, ul, ol, h1, h2, blockquote{
+  font-family: "Avenir";
+}
+
+ul, ol{
+  line-height: 27px;
+  text-align: left;
+  font-size: 24px;
+  margin-left: 0px;
+}
+ 
+blockquote{
+  font-size: 24px;
+  border-left: 8px solid #292093;
+  background-color: #e6ffff;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+ 
+.row{
+  margin: auto;
+}
+ 
+table {
+  border-collapse: collapse;
+}
+
+table, td, th {
+  border: 1px solid black;
+  padding: 5px;
+  text-align: center;
+  vertical-align: middle;
+}
+ 
+ /* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+
+pre{
+  border-color: white;
+  background-color: #f2f2f2;
+}
+
+.roundBorder {
+  border-radius: 25px;
+  border: 5px solid #30288C;
+  background: #D6EAF8;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.roundBorderBlack {
+  border-radius: 25px;
+  border: 10px solid #D3D3D3;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.roundBorderBlackEx {
+  border-radius: 5px;
+  border: 5px solid #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+}
+
+.roundBorderEx {
+  border-radius: 3px;
+  border: 5px solid #30288C;
+  background: #D6EAF8;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+}
+
+.tt {
+    position: relative;
+    display: inline-block;
+    class: inline; 
+    font-weight: bold;
+    font-family: "Avenir";
+    font-size: 18px;
+    border-bottom: 1px black;
+}
+
+/* Tooltip text */
+.tt .ttText {
+    visibility: hidden;
+    font-weight: normal;
+    font-size: 18px;
+    width: 200px;
+    background-color: black;
+    border: 1px solid black;
+    color: white;
+    text-align: left;
+    padding: 5px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tt:hover .ttText {
+    visibility: visible;
+}
+
+</style>
+
+<p style="text-align: center; font-size: 32px;">Introduction to data science in R</p>
+<p style="text-align: center; font-size: 40px;"><b>Lesson 8: Putting it all together</b></p>
+<hr>
+<br>
+<br>
+<p style = "text-align: center; font-size: 24px;">Brian S. Evans, Ph.D.<br />
+Migratory Bird Center<br />
+Smithsonian Conservation Biology Institute</p>
+<br><br>
+<img style="display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      padding: 9px;
+	      border-style: solid;
+	      border-width: 10px;
+	      box-shadow: 0px 0px 0px 0px;
+	      border-color: white;" src="rWorkshop/images/nzpLogo.png" width="300" />
+
+##
+<h2>Setup for the lesson</h2>
+<hr>
+```{r setup show, eval = FALSE}
+# Load RCurl library:
+
+library(RCurl)
+
+# Load a source script:
+
+script <-
+  getURL(
+    paste0(
+      'https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/',
+      'sourceCode_workshop.R'
+    )
+  )
+
+# Evaluate then remove the source script:
+
+eval(parse(text = script))
+
+rm(script)
+```
+
+```{r setup eval, eval = TRUE, include  = FALSE}
+# Load libraries:
+
+library(RCurl)
+
+# Load a source script:
+
+script <-
+  getURL(
+    "https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode_workshop.R"
+  )
+
+# Evaluate then remove the source script:
+
+eval(parse(text = script))
+
+rm(script)
+
+library(knitr) ; library(kableExtra)
+
+options(knitr.table.format = "html")
+
+```
+
+##
+<h2>Today's goals</h2>
+<hr>
+<img style="display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      padding: 9px;
+	      border-style: solid;
+	      border-width: 10px;
+	      box-shadow: 0px 0px 0px 0px;
+	      border-color: white;" 
+	      src="rWorkshop/images/dsWorkflowOverview.png" width="800" /img>
+
+##
+<h2>Today's goals</h2>
+<hr>
+
+<div class = "column" style = "width: 55%">
+<ul>
+<li>Bells and whistles in R studio</li>
+<ul>
+<li>Code sections</li>
+<li>R Projects</li>
+<li>R Notebooks and Markdown</li>
+</ul>
+<li>Sourcing code</li>
+<li>Github</li>
+<ul>
+<li>What is version control?</li>
+<li>The bash environment</li>
+<li>gitBash</li>
+</ul>
+</ul>
+</div>
+
+<div class = "column" style = "width: 45%">
+<br>
+<img src="rWorkshop/images/dsWorkflowOverview.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "float: right; 
+		    margin: 0px 15px 15px 0px;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      box-shadow: 0px 0px 0px 0px;
+	      width: 100%;"/>
+</div>
+
+
+
+##
+<h2>R Studio: Code sections</h2>
+<hr>
+<p><b>Code sections</b>: Break larger file into discrete regions</p>
+<ul>
+<li>Improve workflow and readability</li>
+<li>Simplify code navigation</li>
+<li><b>Foldable</b></li>
+</ul>
+<br>
+<p>Insert section head:</p>
+```{r eval = FALSE}
+# Section 1 
+
+# Section 1 -----
+
+# Section 1 ----*
+```
+
+##<!---- code sections ---->
+<h2>R Studio: Code sections</h2>
+<hr>
+<p><b>Code sections</b>: Break larger file into discrete regions</p>
+<ul>
+<li>Improve workflow and readability</li>
+<li>Simplify code navigation</li>
+<li><b>Foldable</b></li>
+</ul>
+<br>
+<p>Insert section head using CTRL(CMD)+SHIFT+R:</p>
+<img src="rWorkshop/images/codeWorkflow/shortcut_sectionHead.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      box-shadow: 0px 0px 0px 0px;
+	      width: 800px;"/>
+	      
+##
+<h2>R Studio: Code sections</h2>
+<hr>
+<p><b>Code sections</b>: Break larger file into discrete regions</p>
+<ul>
+<li>Improve workflow and readability</li>
+<li>Simplify code navigation</li>
+<li><b>Foldable</b></li>
+</ul>
+<br>
+<p><b>Insert section head</b>: Ctrl(Cmd)+Shift+R:</p>
+<img src="rWorkshop/images/codeWorkflow/shortcut_sectionHead2.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: #D3D3D3;
+	      width: 800px;"/>
+	      
+##
+<h2>R Studio: Code sections</h2>
+<hr>
+<p><b>Code sections</b>: Break larger file into discrete regions</p>
+<ul>
+<li>Improve workflow and readability</li>
+<li style = "color: #D3D3D3;">Simplify code navigation</li>
+<li style = "color: #D3D3D3;"><b>Foldable</b></li>
+</ul>
+<img src="rWorkshop/images/codeWorkflow/sections_workflow.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: #D3D3D3;
+	      width: 800px;"/>
+	      
+##
+<h2>R Studio: Code sections</h2>
+<hr>
+<p><b>Code sections</b>: Break larger file into discrete regions</p>
+<ul>
+<li style = "color: #D3D3D3;">Improve workflow and readability</li>
+<li>Simplify code navigation</li>
+<li style = "color: #D3D3D3;"><b>Foldable</b></li>
+</ul>
+<br>
+<img src="rWorkshop/images/codeWorkflow/nav_window.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: #D3D3D3;
+	      width: 800px;"/>
+	      
+##
+<h2>R Studio: Code sections</h2>
+<hr>
+<p><b>Code sections</b>: Break larger file into discrete regions</p>
+<ul>
+<li style = "color: #D3D3D3;">Improve workflow and readability</li>
+<li>Simplify code navigation</li>
+<li style = "color: #D3D3D3;"><b>Foldable</b></li>
+</ul>
+<p><b>Jump to</b>: Shift+Alt+J</p>
+<img src="rWorkshop/images/codeWorkflow/nav_window.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: #D3D3D3;
+	      width: 800px;"/>
+	      
+##
+<h2>R Studio: Code sections</h2>
+<hr>
+<p><b>Code sections</b>: Break larger file into discrete regions</p>
+<ul>
+<li style = "color: #D3D3D3;">Improve workflow and readability</li>
+<li style = "color: #D3D3D3;">Simplify code navigation</li>
+<li><b>Foldable</b></li>
+</ul>
+<br>
+<img src="rWorkshop/images/codeWorkflow/fold1.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: #D3D3D3;
+	      width: 800px;"/>
+	      
+##
+<h2>R Studio: Code sections</h2>
+<hr>
+<p><b>Code sections</b>: Break larger file into discrete regions</p>
+<ul>
+<li style = "color: #D3D3D3;">Improve workflow and readability</li>
+<li style = "color: #D3D3D3;">Simplify code navigation</li>
+<li><b>Foldable</b></li>
+</ul>
+<p><b>Fold all</b>: Alt+O</p>
+<img src="rWorkshop/images/codeWorkflow/foldAll.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: #D3D3D3;
+	      width: 800px;"/>
+	      
+##
+<h2>R Studio: Code sections</h2>
+<hr>
+<p><b>Code sections</b>: Break larger file into discrete regions</p>
+<ul>
+<li style = "color: #D3D3D3;">Improve workflow and readability</li>
+<li style = "color: #D3D3D3;">Simplify code navigation</li>
+<li><b>Foldable</b></li>
+</ul>
+<p><b>Expand</b></p>
+<img src="rWorkshop/images/codeWorkflow/expand1.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: #D3D3D3;
+	      width: 800px;"/>
+	      
+##
+<h2>R Studio: Code sections</h2>
+<hr>
+<p><b>Code sections</b>: Break larger file into discrete regions</p>
+<ul>
+<li style = "color: #D3D3D3;">Improve workflow and readability</li>
+<li style = "color: #D3D3D3;">Simplify code navigation</li>
+<li><b>Foldable</b></li>
+</ul>
+<p><b>Expand all</b>: Shift+Alt+O</p>
+<img src="rWorkshop/images/codeWorkflow/expandAll.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: #D3D3D3;
+	      width: 800px;"/>
+	      
+##<!---- exercise 1 ---->
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h2>
+<hr>
+<p>Explore the code sections of the file `sourceCode_workshop.R`. Use this file to do the following:</p>
+<ol>
+<li>The data frames `birdCounts` and `birdMeasures` are in the same code section. Provide separate code sections for each data frame.</li>
+<li>Explore folding and unfolding these code sections.</li>
+</ol>
+
+
+##<!---- projects ---->
+<h2>R Studio: R Projects</h2>
+<hr>
+<div class = "column" style = "width: 60%">
+<p>If you work on multiple projects, it is useful to separate tasks into <b>R projects</b>. An R project has its own:</p>
+<ul>
+<li>Environment</li>
+<li>Working directory</li>
+<li>History</li>
+</ul>
+</div>
+
+<div class = "column" style = "width: 40%">
+<img src="rWorkshop/images/codeWorkflow/projectMenu.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 60%;"/>
+</div>
+
+##
+<h2>R Studio: R Projects</h2>
+<hr>
+<img src="rWorkshop/images/codeWorkflow/projects_new.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>
+
+##
+<h2>R Studio: R Projects</h2>
+<hr>
+<img src="rWorkshop/images/codeWorkflow/projectDirectory.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>
+
+##
+<h2>R Studio: R Projects</h2>
+<hr>
+<img src="rWorkshop/images/codeWorkflow/projectEnvironment.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 1000px;"/>
+	      
+##<!---- exercise 2 ---->
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
+<hr>
+<br>
+<p>Create a project in the directory where you are running the R files for this class.</p>
+
+##<!---- notebooks and markdown ---->
+<h2>R Studio: R Notebooks and Markdown</h2>
+<hr>
+<p>R <b>Notebooks</b> are digital lab notebooks written in <b>Markdown</b>, a plain text formatting language.</p>
+<img src="rWorkshop/images/codeWorkflow/notebookMenu.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 650px;"/>
+	      
+##
+<h2>R Studio: R Notebooks and Markdown</h2>
+<hr>
+<p>R <b>Notebooks</b> are digital lab notebooks written in <b>Markdown</b>, a plain text formatting language.</p>
+<img src="rWorkshop/images/codeWorkflow/notebookNew.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>
+	      
+##
+<h2>R Studio: R Notebooks and Markdown</h2>
+<hr>
+<p>R <b>Markdown</b> documents</p>
+<img src="rWorkshop/images/codeWorkflow/notebookNew.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>
+	      
+##
+<h2>R Studio: R Notebooks and Markdown</h2>
+<hr>
+<p>R <b>Markdown</b> documents</p>
+<img src="rWorkshop/images/codeWorkflow/markdownFormatting1.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: #D3D3D3;
+	      width: 800px;"/>
+	      
+##
+<h2>R Studio: R Notebooks and Markdown</h2>
+<hr>
+<p>R <b>Markdown</b> documents</p>
+<img src="rWorkshop/images/codeWorkflow/markdownFormatting1a.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>
+	      
+##
+<h2>R Studio: R Notebooks and Markdown</h2>
+<hr>
+<p>R <b>Markdown</b> documents</p>
+<img src="rWorkshop/images/codeWorkflow/markdownFormatting2.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: #D3D3D3;
+	      width: 800px;"/>
+	      
+##
+<h2>R Studio: R Notebooks and Markdown</h2>
+<hr>
+<p>R <b>Markdown</b> documents</p>
+<img src="rWorkshop/images/codeWorkflow/markdownFormatting2a.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>
+	      
+##
+<h2>R Studio: R Notebooks and Markdown</h2>
+<hr>
+<p>R <b>Markdown</b> documents can also be written in html (<i>like all of the presentations in this workshop</i>).</p>
+
+<img src="rWorkshop/images/codeWorkflow/markdownHtml.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>
+	      
+##<!---- exercise 3 ---->
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h2>
+<hr>
+<br>
+<p>Create a new R notebook. Copy-and-paste the code from the `functions` code section of `sourceCodeWorkshop.R` into the notebook document. Replace the comments with markdown text and wrap code sections for evaluation.</p>   
+	      
+##
+<h2>Sourcing code</h2>
+<hr>
+<p>Scripts called <b>source code</b> can be run from within another script.</p>
+<ul>
+<li>Use global source code for steps you run for every project</li>
+<li>Split large, multi-step projects into multiple scripts</li>
+<ol>
+<li>Use project-level source code for long or multi-step projects</li>
+<li>Connect scripts with source code</li>
+</ol>
+</ul>
+	      
+<img src="rWorkshop/images/codeWorkflow/sourceCode1.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 700px;"/>
+	      
+##
+<h2>Sourcing code</h2>
+<hr>
+<p>Scripts called <b>source code</b> can be run from within another script.</p>
+<ul>
+<li>Use global source code for steps you run for every project</li>
+<li>Split large, multi-step projects into multiple scripts</li>
+<ol>
+<li>Use project-level source code for long or multi-step projects</li>
+<li>Connect scripts using sourcing</li>
+</ol>
+</ul>
+
+```{r eval = FALSE}
+source('sourceCode_workshop.R')
+```
+	      
+##<!---- exercise 4 ---->
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Four:</h2>
+<hr>
+<ol>
+<li>Use the keyboard shortcut Ctrl(Cmd)+Shift+N to open a blank worksheet.</li>
+<li>Copy-and-paste the following function into the worksheet:</li>
+```{r eval = FALSE}
+printHw <- function(){
+  "Hello world!"
+}
+```
+<li>Save the worksheet as `sourceFunctions.R` in your current working directory.</li>
+<li>Use the function `printHw` to remove the function from your environment.</li>
+<li>Type the following into your console:</li>
+```{r eval = FALSE}
+source(`sourceFunctions.R`)
+
+printHw()
+```
+</ol>
