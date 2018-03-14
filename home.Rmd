@@ -237,6 +237,12 @@ Through this process, participants are expected to develop a flexible skillset f
 <li><a href = "https://smbc-nzp.github.io/lesson7_code.R" download>Lesson code</a></li>
 </ul>
 
+<h3>Lesson Eight: Some final data steps</h3>
+<p><b>Goal</b>: Learn some tricks for better code management</p>
+<ul>
+<li><a href = "https://smbc-nzp.github.io/lesson8_pres.html">Presentation website</a></li>
+</ul>
+
 <hr>
 <div class = "row">
 <img src = "rWorkshop/images/robotBird.jpg"
