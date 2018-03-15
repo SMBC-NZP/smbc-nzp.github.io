@@ -786,3 +786,179 @@ source(`sourceFunctions.R`)
 printHw()
 ```
 </ol>
+
+
+##<!---- git ---->
+<h2>Github: What is version control?</h2>
+<hr>
+<img src="rWorkshop/images/codeWorkflow/badManagement.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 700px;"/>
+	      
+##
+<h2>Github: What is version control?</h2>
+<hr>
+<img src="rWorkshop/images/codeWorkflow/gitManagement.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 900px;"/>
+	      
+##
+<h2>Github: What is version control?</h2>
+<hr>
+<img src="rWorkshop/images/codeWorkflow/gitHistory.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 900px;"/>
+
+##
+<h2>Github: The bash environment</h2>
+<hr>
+<p>Open Git Bash</p>
+<p>Use `pwd` to print working directory</p>
+<p>Use `ls` to list files in your current working directory</p>
+<img src="rWorkshop/images/codeWorkflow/bash1.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>
+	      
+##
+<h2>Github: The bash environment</h2>
+<hr>
+<p>Use `cd` to change directories</p>
+<ul>
+<li>Navigate down by typing the name of the directory</li>
+<li>Navigate up by typing `cd ..`</li>
+</ul>
+<p>Use `cd` to navigate to your rWorkshop working directory</p>
+
+<img src="rWorkshop/images/codeWorkflow/bash2.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>
+
+##
+<h2>Github: The bash environment</h2>
+<hr>
+<p>Use `mkdir` to make a new folder, name the folder "rWorkshop_example"</p>
+<ul>
+<li>Navigate down by typing the name of the directory</li>
+<li>Navigate up by typing `cd ..`</li>
+</ul>
+<p>Use `cd` to navigate to the new folder</p>
+
+<img src="rWorkshop/images/codeWorkflow/bash3.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>	      
+
+
+##
+<h2>Github: Starting up</h2>
+<hr>
+<p>Use `mkdir` to make a new folder, name the folder "rWorkshop_example"</p>
+<ul>
+<li>Navigate down by typing the name of the directory</li>
+<li>Navigate up by typing `cd ..`</li>
+</ul>
+<p>Use `cd` to navigate to the new folder</p>
+
+<img src="rWorkshop/images/codeWorkflow/myGit.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>	
+	      
+##
+<h2>Github: Starting up</h2>
+<hr>
+<p>On the github webpage, navigate to your repositories and enter a new repository.</p>
+
+<img src="rWorkshop/images/codeWorkflow/myGit.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>	
+	      
+##
+<h2>Github: Starting up</h2>
+<hr>
+<p>Create a new repository</p>
+
+<img src="rWorkshop/images/codeWorkflow/gitSetup2.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>	
+	      
+##
+<h2>Github: gitBash</h2>
+<hr>
+<p>Add "git" ...</p>
+```{r eval = FALSE}
+git pull origin master
+git add [modified file]
+git commit -m "add commit message here"
+git push
+```
