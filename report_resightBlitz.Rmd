@@ -1,0 +1,151 @@
+---
+output:
+  html_document:
+    theme: yeti
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(mongolite)
+library(stringr)
+library(Hmisc)
+library(lubridate)
+library(knitr)
+library(kableExtra)
+
+options(knitr.table.format = 'html')
+
+sites <- read_csv('sites.csv')
+
+partRs <- read_csv('partRs.csv')
+
+blitz <- read_csv('blitz.csv')
+
+siteProjectTable <- read_csv('siteProjectTable.csv')
+
+summarize <- dplyr::summarize
+
+```
+
+<h1>The first Neighborhood Nestwatch resight blitz!</h1>
+<hr>
+<p><b>Overview</b>: Between the 4th and 11th of March, 2018, we implemented the first ever NN-wide resight blitz. During this period, participants really upped their game. Here are some summary stats:</p>
+<br>
+<ul>
+<li><b>Number of resights</b>:
+<ul>
+<li>Blitz: 253</li>
+<li>Previous year, same period: 48 (527 % improvement!)</li>
+<li>Previous week, same year: 76</li>
+</ul>
+</li>
+<br>
+<li><b>Number of resighted birds</b>:
+<ul>
+<li>Blitz: 158</li>
+<li>Previous year, same period: 43 (367 % improvement!)</li>
+<li>Previous week, same year: 68</li>
+</ul>
+</li>
+<br>
+<li><b>Number of participants that resighted birds</b>:
+<ul>
+<li>Blitz: 64</li>
+<li>Previous year, same period: 29 (220 % improvement!)</li>
+<li>Previous week, same year: 36</li>
+</ul>
+</li>
+<br>
+</ul>
+<hr>
+<h2>Some plots</h2>
+<br>
+```{r echo = FALSE}
+blitz %>%
+  group_by(region) %>%
+  summarize(n = n()) %>%
+  ggplot(aes(x = region, y = n)) +
+  geom_bar(stat = 'identity', fill = 'gray60', color = 'black') +
+  theme_bw() +
+  scale_y_continuous(limits = c(0, 100), expand = c(0,0)) +
+  labs(
+    title = 'Number of resights by NN region',
+    x = 'Regional hub',
+    y = 'Number of resights')
+```
+<br>
+<br>
+```{r echo = FALSE}
+blitz %>%
+  select(-date) %>%
+  distinct %>%
+  group_by(region) %>%
+  summarize(n = n()) %>%
+  ggplot(aes(x = region, y = n)) +
+  geom_bar(stat = 'identity', fill = 'gray60', color = 'black') +
+  theme_bw() +
+  scale_y_continuous(limits = c(0, 70), expand = c(0,0)) +
+  labs(
+    title = 'Number of resighted birds by NN region',
+    x = 'Regional hub',
+    y = 'Number of resighted birds')
+```
+<br>
+<br>
+```{r echo = FALSE}
+blitz %>%
+  group_by(region) %>%
+  summarize(n = length(unique(siteID))) %>%
+  ggplot(aes(x = region, y = n)) +
+  geom_bar(stat = 'identity', fill = 'gray60', color = 'black') +
+  theme_bw() +
+  scale_y_continuous(limits = c(0, 20), expand = c(0,0)) +
+  labs(
+    title = 'Number of participants that resighted birds by NN region',
+    x = 'Regional hub',
+    y = 'Number of sites')
+```
+
+<hr>
+<h2>And the stars of the show ...</h2>
+
+<p><b>Participants with the most resights</b>:</p>
+<br>
+<div class = "row">
+<div class = "column">
+```{r echo = FALSE}
+kable(
+  blitz %>%
+  group_by(siteID) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n)) %>%
+    slice(1:10),
+  'html') %>%
+  kable_styling(full_width = FALSE,
+    bootstrap_options = c('striped', 'hover', full_width = F)
+    )
+```
+<br>
+<br>
+</div>
+<div class = "column">
+<p><b>Participants with the most resighted birds</b>:</p>
+```{r echo = FALSE}
+kable(
+  blitz %>%
+    select(-date) %>%
+    distinct %>%
+    group_by(siteID) %>%
+    summarize(n = n()) %>%
+    arrange(desc(n))  %>%
+    slice(1:10),
+  'html') %>%
+  kable_styling(full_width = FALSE,
+    bootstrap_options = c('striped', 'hover')
+  )
+```
+<br>
+</div>
+</div>
