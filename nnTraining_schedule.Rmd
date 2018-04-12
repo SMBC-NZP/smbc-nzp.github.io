@@ -1,5 +1,7 @@
 ---
-output: html_document
+output:
+  html_document:
+    theme: united
 ---
 
 <html>
@@ -17,7 +19,7 @@ output: html_document
                         border-style: solid;
                         border-width: 0px;
                         box-shadow: 0px 0px 0px 0px;
-                        border-color: white;" src="nnLogo.png" width="20%" />
+                        border-color: white;" src="nnLogo.png" width="25%" />
 <br>
 <p><b>Overview:</b> The primary goal of this training is to maximize the experience of Neighborhood Nestwatch (NN) and The Ecology of Urban Songbirds participants and ensure that outreach efforts are equivalent across regional hubs and technicians. Specifically, our objectives include:</p>
 <ul>
@@ -40,7 +42,7 @@ output: html_document
 <hr>
 <iframe src="https://calendar.google.com/calendar/embed?src=bglqinuh5sujgftt0og0sfp07o%40group.calendar.google.com&ctz=America%2FNew_York" style="border: 20px" width="800" height="600" frameborder="0" scrolling="no"></iframe>
 <hr>
-<p><b>Is there anything you should do to prepare yourself for the training?</b> Prior to attending the training, please thoroughly read the <a href = "https://github.com/bsevansunc/Nestwatch/raw/master/nn_protocolDocument.pdf">Neighborhood Nestwatch protocols. Additionally, on Tuesday at 2 pm we will host a paper discussion on some of the foundational papers of Neighborhood Nestwatch. The goal of this discussion is to provide you with an understanding of the science that you will be a part of. Please read at least the abstracts of the following papers by next Tuesday:</p>
+<p><b>Is there anything you should do to prepare yourself for the training?</b> Prior to attending the training, please thoroughly read the <a href = "https://github.com/bsevansunc/Nestwatch/raw/master/nn_protocolDocument.pdf" download>Neighborhood Nestwatch protocols</a>. Additionally, on Tuesday at 2 pm we will host a paper discussion on some of the foundational papers of Neighborhood Nestwatch. The goal of this discussion is to provide you with an understanding of the science that you will be a part of. Please read at least the abstracts of the following papers by next Tuesday:</p>
 <ul>
 <li>Evans, C., Abrams, E., Roux, K., Salmonsen, L., Reitsma, R., & Marra, P. P. (2004). <a href="https://repository.si.edu/handle/10088/6012" target="_blank">The Neighborhood Nestwatch Program: sense of place and science literacy in a citizen-based ecological research project</a>. Conservation Biology, 19(3), 589-594.</li>
 <li>Ryder, T. B., Reitsma, R., Evans, B., & Marra, P. P. (2010). <a href="https://repository.si.edu/handle/10088/16206" target="_blank">Quantifying avian nest survival along an urbanization gradient using citizen- and scientist-generated data</a>. Ecological Applications, 20(2), 419-426. http://doi.org/10.1890/09-0040.1</li>
@@ -55,21 +57,6 @@ output: html_document
 <p><b>What else should you bring?</b> You are not required to bring any field equipment with you. You may want to bring binoculars and a field guide if you plan to bird, though you are more than welcome to use ours during your stay.</p>
 <hr>
 
-<img style="float: left;
-  padding: 9px;
-  padding-right: 0px;
-  border-style: solid;
-  border-width: 10px;
-  box-shadow: 0px 0px 0px 0px;
-  border-color: white;" src="gitLogo.png" height = "70" />
-
- <img style="float: right;
-                                 padding: 9px;
-                                 padding-right: 0px;
-                                 border-style: solid;
-                                 border-width: 10px;
-                                 box-shadow: 0px 0px 0px 0px;
-                                 border-color: white;" src="nzpLogoSideways2.png" height = "70" />
 
 </body>
 </html>
