@@ -35,6 +35,9 @@ summarize <- dplyr::summarize
 <hr>
 
 <p>Click <a href="https://raw.githubusercontent.com/bsevansunc/openData/master/staticBlitz_processedRecords.csv" target="_blank" download="blitz_processedRecords.csv">this link</a> to access the processed Blitz records.</p>
+
+<!-- <br> -->
+<!-- <a href="staticBlitz_processedRecords.csv" target="_blank">this link</a> -->
 <br>
 <h2>Blitz results, summarized across regions</h2>
 <br>
