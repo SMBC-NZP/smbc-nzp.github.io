@@ -17,35 +17,43 @@ library(kableExtra)
 
 options(knitr.table.format = 'html')
 
-sites <- read_csv('sites.csv')
+# sites <- read_csv('sites.csv') %>%
+#   select(siteID, region)
+# 
+# partRs <- read_csv('partRs.csv')
 
-partRs <- read_csv('partRs.csv')
-
-blitz <- read_csv('blitz.csv')
-
-siteProjectTable <- read_csv('siteProjectTable.csv')
+blitz <- read_csv('staticBlitz_processedRecords.csv') %>%
+  mutate(date = as.Date(date))
+# 
+# siteProjectTable <- read_csv('siteProjectTable.csv')
 
 summarize <- dplyr::summarize
 
 ```
 
-<h1>The first Neighborhood Nestwatch resight blitz!</h1>
+<h1>The Neighborhood Nestwatch Resight Blitz<br> March 2018</h1>
 <hr>
-<p><b>Overview</b>: Between the 4th and 11th of March, 2018, we implemented the first ever NN-wide resight blitz. During this period, participants really upped their game. Here are some summary stats:</p>
+
+<p>Click <a href="https://raw.githubusercontent.com/bsevansunc/openData/master/staticBlitz_processedRecords.csv" target="_blank" download="blitz_processedRecords.csv">this link</a> to access the processed Blitz records.</p>
+
+<!-- <br> -->
+<!-- <a href="staticBlitz_processedRecords.csv" target="_blank">this link</a> -->
+<br>
+<h2>Blitz results, summarized across regions</h2>
 <br>
 <ul>
 <li><b>Number of resights</b>:
 <ul>
-<li>Blitz: 253</li>
-<li>Previous year, same period: 48 (527 % improvement!)</li>
+<li>Blitz: 252</li>
+<li>Previous year, same period: 48 (525 % improvement!)</li>
 <li>Previous week, same year: 76</li>
 </ul>
 </li>
 <br>
 <li><b>Number of resighted birds</b>:
 <ul>
-<li>Blitz: 158</li>
-<li>Previous year, same period: 43 (367 % improvement!)</li>
+<li>Blitz: 145</li>
+<li>Previous year, same period: 43 (337 % improvement!)</li>
 <li>Previous week, same year: 68</li>
 </ul>
 </li>
@@ -60,61 +68,108 @@ summarize <- dplyr::summarize
 <br>
 </ul>
 <hr>
-<h2>Some plots</h2>
+<h2>Blitz results, summarized by region</h2>
 <br>
-```{r echo = FALSE}
+<div class = "row">
+<div class = "col-sm-3 col-sm-offset-0">
+<h3>Resights</h3>
+</div>
+<div class = "col-sm-1"></div>
+<div class = "col-sm-3">
+<h3>Resighted birds</h3>
+</div>
+<div class = "col-sm-1"></div>
+<div class = "col-sm-4">
+<h3>Participants that resighted</h3>
+</div>
+</div>
+
+
+<div class = "row">
+<div class = "col-sm-3 col-sm-offset-0">
+```{r 'resights by region', echo = FALSE}
 blitz %>%
   group_by(region) %>%
   summarize(n = n()) %>%
-  ggplot(aes(x = region, y = n)) +
-  geom_bar(stat = 'identity', fill = 'gray60', color = 'black') +
-  theme_bw() +
-  scale_y_continuous(limits = c(0, 100), expand = c(0,0)) +
-  labs(
-    title = 'Number of resights by NN region',
-    x = 'Regional hub',
-    y = 'Number of resights')
+  kable('html') %>%
+  kable_styling(full_width = TRUE,
+                bootstrap_options = c('striped', 'hover', full_width = F)
+  )
 ```
-<br>
-<br>
-```{r echo = FALSE}
+</div>
+<div class = "col-sm-1"></div>
+<div class = "col-sm-3">
+```{r 'resighted birds by region', echo = FALSE}
 blitz %>%
   select(-date) %>%
   distinct %>%
   group_by(region) %>%
   summarize(n = n()) %>%
-  ggplot(aes(x = region, y = n)) +
-  geom_bar(stat = 'identity', fill = 'gray60', color = 'black') +
-  theme_bw() +
-  scale_y_continuous(limits = c(0, 70), expand = c(0,0)) +
-  labs(
-    title = 'Number of resighted birds by NN region',
-    x = 'Regional hub',
-    y = 'Number of resighted birds')
+  kable('html') %>%
+  kable_styling(full_width = TRUE,
+    bootstrap_options = c('striped', 'hover', full_width = F)
+    )
 ```
-<br>
-<br>
-```{r echo = FALSE}
+</div>
+<div class = "col-sm-1"></div>
+<div class = "col-sm-3">
+```{r 'number of participants that resighted birds', echo = FALSE, message = FALSE, warning = FALSE}
 blitz %>%
   group_by(region) %>%
   summarize(n = length(unique(siteID))) %>%
-  ggplot(aes(x = region, y = n)) +
-  geom_bar(stat = 'identity', fill = 'gray60', color = 'black') +
-  theme_bw() +
-  scale_y_continuous(limits = c(0, 20), expand = c(0,0)) +
-  labs(
-    title = 'Number of participants that resighted birds by NN region',
-    x = 'Regional hub',
-    y = 'Number of sites')
+  kable('html') %>%
+  kable_styling(full_width = TRUE,
+                bootstrap_options = c('striped', 'hover', full_width = F)
+  )
 ```
-
-<hr>
-<h2>And the stars of the show ...</h2>
-
-<p><b>Participants with the most resights</b>:</p>
+</div>
+<div class = "col-sm-1"></div>
+</div>
 <br>
 <div class = "row">
-<div class = "column">
+<div class = "col-sm-12">
+<h3>Resighted birds by species and region</h3>
+```{r 'resights by species', echo = FALSE, message = FALSE, warning = FALSE}
+
+blitzSpp <-
+  read_csv('staticBlitz_processedRecords.csv')
+
+blitzBySpp <-
+  blitzSpp %>%
+  group_by(spp) %>%
+  summarize(n = length(unique(bandNumber))) %>%
+  filter(!is.na(spp)) %>%
+  spread(spp, n, fill = 0) %>%
+  mutate_at(
+    c('AMRO', 'BCCH', 'CACH', 'CARW', 'GRCA', 'NOCA', 'NOMO', 'SOSP', 'TUTI'),
+    as.integer) %>%
+  mutate(region = 'Across regions') %>%
+  select(region, AMRO:TUTI)
+
+blitzSpp %>% 
+  group_by(region, spp) %>%
+  summarize(n = length(unique(bandNumber))) %>%
+  filter(!is.na(spp)) %>%
+  spread(spp, n, fill = 0) %>%
+  mutate_at(
+    c('AMRO', 'BCCH', 'CACH', 'CARW', 'GRCA', 'NOCA', 'NOMO', 'SOSP', 'TUTI'),
+    as.integer) %>%
+  bind_rows(blitzBySpp) %>%
+  kable('html') %>%
+  kable_styling(full_width = TRUE,
+                bootstrap_options = c('striped', 'hover', full_width = F)
+  )
+```
+</div>
+</div>
+
+<hr>
+<br>
+<h2>And the participant winners are ...</h2>
+<br>
+<div class = "row">
+<div class = "col-sm-5">
+<p><b>Participants with the most resights</b>:</p>
 ```{r echo = FALSE}
 kable(
   blitz %>%
@@ -123,14 +178,14 @@ kable(
   arrange(desc(n)) %>%
     slice(1:10),
   'html') %>%
-  kable_styling(full_width = FALSE,
+  kable_styling(full_width = TRUE,
     bootstrap_options = c('striped', 'hover', full_width = F)
     )
 ```
-<br>
-<br>
 </div>
-<div class = "column">
+<div class = "col-sm-2"></div>
+
+<div class = "col-sm-5">
 <p><b>Participants with the most resighted birds</b>:</p>
 ```{r echo = FALSE}
 kable(
@@ -142,10 +197,24 @@ kable(
     arrange(desc(n))  %>%
     slice(1:10),
   'html') %>%
-  kable_styling(full_width = FALSE,
+  kable_styling(full_width = TRUE,
     bootstrap_options = c('striped', 'hover')
   )
 ```
+</div>
+</div>
 <br>
-</div>
-</div>
+<hr>
+
+<!-- <br> -->
+<!-- ```{r echo = FALSE} -->
+<!-- blitz %>% -->
+<!--   arrange(region, siteID, spp) %>% -->
+<!--   kable('html') %>% -->
+<!--   kable_styling(full_width = TRUE, -->
+<!--                 bootstrap_options = c('striped', 'hover') -->
+<!--   ) -->
+<!-- ``` -->
+
+
+
