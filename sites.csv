@@ -1,0 +1,1224 @@
+siteID,region,status,long,lat,accuracy,locationMethod,houseNumber,street,city,state,zip,notes
+AINSKYLGA1,Atlanta,discontinued,-84.2851,33.78217,99999,U,118,Hickory St,Decatur,GA,30030,noData
+ALCOKENGA1,Atlanta,active,-84.52753,33.20159,4,GPS,121,Gold Mill Pl,Canton,GA,30114,noData
+ALLERILGA1,Atlanta,active,-84.67711,33.85716,3,GPS,4225,Atlanta St,Powder Springs,GA,30127,noData
+ANDEREBGA1,Atlanta,discontinued,-84.316162,33.770227,99999,map,575,Ridgecrest Rd NE,Atlanta,GA,30307,locationEstimate
+ARABMOUGA1,Atlanta,discontinued,-84.11668,33.68344,99999,U,30038,Klondike Rd,Lithonia,noData,30038,noData
+ARGYLESGA1,Atlanta,resight-only,-84.483595,33.883719,99999,map,2825,Park Rd,Smyrna,GA,30080,locationEstimate
+ASTOLAUGA1,Atlanta,active,-84.45673,33.9891,3,GPS,3264,Lost Mill Trace,Marietta,noData,30062,noData
+BAKEBONGA1,Atlanta,resight-only,-84.12022,33.85665,99999,U,935,Camp Creek Dr SW,Lilburn,noData,30047,noData
+BEARJUSGA1,Atlanta,resight-only,-84.26845,33.81865,99999,U,1317,Atterberry Pl,Decatur,GA,30033,noData
+BELMNIKGA1,Atlanta,active,-84.34275,34.05311,3,GPS,11220,Hembree Springs,Roswell,GA,30076,noData
+BINKJAMGA1,Atlanta,resight-only,-84.219576,33.522311,99999,U,805,Deerwood Dr,Stockbridge,noData,30281,noData
+BLUEHPKGA1,Atlanta,active,-84.38052,33.86631,3,GPS,4055,Roswell Rd,Atlanta,GA,30342,noData
+BONNPATGA1,Atlanta,discontinued,-84.28988,33.76759,99999,U,204,Winnona Dr,Decatur,GA,30030,noData
+BRADVALGA1,Atlanta,active,-84.36773,34.04835,3,GPS,205,Stayman Dr,Roswell,GA,30075,noData
+BRAXBOBGA1,Atlanta,active,-84.40995,33.67027,3,GPS,642,South Gorden Circle,Hapville,noData,30354,noData
+BURNEESGA1,Atlanta,resight-only,-84.061118,34.031695,99999,map,3221,McGinnis Ferry Rd,Suwanee,GA,30024,locationEstimate
+CARTJOYGA1,Atlanta,active,-84.35227,33.73099,3,GPS,863,Woodland Ave SE,Atlanta,GA,30316,noData
+CASSKATGA1,Atlanta,active,-84.63191,33.59491,4,GPS,6000,McClure Rd,Fairburn,noData,30213,noData
+CHALMICGA1,Atlanta,active,-84.35694,34.24292,3,GPS,117,Magnolia Creek Dr,Canton,GA,30115,noData
+CHAMPAUGA1,Atlanta,active,-84.22485,33.81303,3,GPS,4279,Wheaton Lane,Clarkston,noData,30021,noData
+CHANSYLGA1,Atlanta,active,-84.30094,33.79689,4,GPS,693,Densley Drive,Decatur,GA,30033,noData
+CLAYRUSGA1,Atlanta,resight-only,-84.64159,33.91404,99999,U,1647,Kimble Dr SW,Marietta,noData,30064,noData
+CLYDEPKGA1,Atlanta,active,-84.28419,33.80842,99999,noData,noData,noData,noData,GA,99999,noData
+COOKGLOGA1,Atlanta,active,-84.16161,33.83406,3,noData,5568,Silver Ridge Dr,Stone Mountian,GA,30087,noData
+COOPEMSGA1,Atlanta,resight-only,-84.63415,33.84204,99999,U,4605,Ewing Rd,Austell,noData,30106,noData
+CZEBANGGA1,Atlanta,discontinued,-84.36039,33.75824,99999,U,831,Vircil St,Atlanta,GA,30307,noData
+DAVICARGA1,Atlanta,active,-83.98652,33.52598,3,GPS,1215,Bethany Rd,Covington,noData,30016,noData
+DAVIJENGA1,Atlanta,resight-only,-84.59216,34.0334,99999,U,1443,Wimbledon Dr,Kennesaw,noData,30144,noData
+DECKJASGA1,Atlanta,active,-84.35271,33.71491,4,GPS,1375,Metropolitan Ave SE,Atlanta,GA,30316,noData
+DESIELAGA1,Atlanta,active,-84.34097,33.87695,3,GPS,1170,Haven Brook Way NE,Atlanta,GA,30319,Participant has moved 0.8 miles away and will continue as DESIELAGA2. New address forthcoming. Continue resighting around old site. 3/2/18
+DICKEMMGA1,Atlanta,active,-84.32144,33.80961,4,GPS,2815,Ponderosa Circle,Decatur,GA,30033,noData
+DIMMDIAGA1,Atlanta,resight-only,-84.400995,33.662525,99999,U,3360,Old Jonesboro Rd,Hapeville,noData,30354,noData
+DISALINGA1,Atlanta,active,-84.33427,33.75536,5,GPS,31,Lullwater Estate Rd,Atlanta,GA,30307,noData
+DUKTJOHGA1,Atlanta,active,-84.30099,33.79697,3,GPS,1757,Fox Hollow,Lilburn,noData,30047,noData
+DULUADVGA1,Atlanta,resight-only,99999,99999,99999,U,noData,noData,noData,noData,99999,noData
+EDWALINGA1,Atlanta,resight-only,-84.22502,33.97941,99999,U,412,Little Leaf Circle,Peachtree Corners,noData,30092,noData
+ENDRCINGA1,Atlanta,resight-only,-84.6851,33.92953,99999,U,4550,Planters Hill Drive,Roswell,noData,30127,noData
+FALKSTEGA1,Atlanta,active,-84.3544,33.7209,4,GPS,1235,Woodland Ave SE,Atlanta,GA,30316,noData
+FEDRMARGA1,Atlanta,resight-only,-84.63255,33.66298,99999,U,7551,Garland Cir,College Park,MD,30349,noData
+FERNBANGA1,Atlanta,active,-84.32671,33.77383,3,GPS,767,"Clifton Rd, Fernbank Musem",Atlanta,GA,30307,locationEstimate
+FLOWANGGA1,Atlanta,active,-84.55444,34.10582,4,GPS,842,Eagle Glen Crossing,Woodstock,GA,30189,noData
+FLOWPATGA1,Atlanta,active,-84.46074,34.01062,3,GPS,3135,Twin Lakes Ct,Marietta,noData,30062,noData
+FURRMELGA1,Atlanta,active,-84.23009,33.86989,3,GPS,2739,Thornbriar Road,Tucker,noData,30340,locationEstimate
+FUTCROBGA1,Atlanta,resight-only,-84.32144,33.80963,99999,U,124,Clarion Ave,Decatur,noData,30030,noData
+GHILCOLGA1,Atlanta,active,-84.31982,33.82515,3,GPS,1519,Knob Hill Dr,Atlanta,GA,30329,noData
+GITHFRAGA1,Atlanta,resight-only,-84.28365,33.53955,99999,U,208,Reeves Creek Way,Jonesboro,noData,30236,noData
+GORDMARGA1,Atlanta,resight-only,-84.32138,33.80961,99999,U,1654,Rainier Falls Dr NE,Atlanta,GA,30329,noData
+GREERITGA1,Atlanta,resight-only,-84.39997,34.11195,99999,U,582,Devon Brooke Dr,Woodstock,noData,30188,noData
+HAMINANGA1,Atlanta,discontinued,-84.35036,33.78326,99999,U,1126,Los Angeles Ave NE,Atlanta,GA,30306,noData
+HARRMARGA1,Atlanta,active,-84.24995,33.75868,5,GPS,3414,Beech Drive,Decatur,GA,30030,noData
+HARTDELGA1,Atlanta,discontinued,-84.409271,34.150459,99999,map,2275,Jep Wheeler Rd,Woodstock,noData,30188,locationEstimate
+HAWKDIAGA1,Atlanta,active,-84.49458,33.71439,3,GPS,3121,Key Ct SW,Atlanta,GA,30311,noData
+HEADDOTGA1,Atlanta,active,-84.33538,34.15347,3,GPS,800,Colonial Lane,Milton,noData,30004,noData
+HERBMIRGA1,Atlanta,active,-84.33083,33.76257,3,GPS,300,Arizona Ave NE,Atlanta,GA,30307,noData
+HITTJODGA1,Atlanta,resight-only,-84.14588,33.44155,99999,U,222,Macon St,McDonough,GA,30253,noData
+HOGAMELGA1,Atlanta,active,-84.84688,33.90581,3,GPS,307,Remington Place Blvd,Dallas,GA,30157,noData
+HOPKMARGA1,Atlanta,active,-84.47169,34.04821,3,GPS,2693,S Arbor Drive,Marietta,GA,30066,noData
+HORNMARGA1,Atlanta,active,-84.29099,33.79072,3,GPS,651,Oak Hill Cir,Stone Mtn,GA,30083,noData
+HOUSJONGA1,Atlanta,active,-84.38663,33.96825,3,GPS,5671,Aven Rd,Marietta,GA,30068,noData
+HOYTHARGA1,Atlanta,resight-only,-84.28462,33.97786,3,GPS,2585,The Fifth Fairway,Roswell,GA,30076,noData
+JENKANGGA1,Atlanta,discontinued,-84.93509,33.6588,99999,U,2933,Stilesboro Ridge Court,Kennesaw,GA,30152,noData
+JENKANGGA2,Atlanta,active,-84.58447,33.991,4,GPS,1572,Greers Chapel Rd NW,Kennesaw,GA,30152,noData
+JETTMELGA1,Atlanta,resight-only,-84.855,34.17366,99999,U,15,Forest Hill Dr SW,Cartersville,GA,30120,noData
+JOHNSCOGA1,Atlanta,active,-84.36269,33.78105,4,GPS,754,Virginia Circle NE,Atlanta,GA,30306,noData
+JONEFAIGA1,Atlanta,active,-84.29593,33.56562,4,GPS,2878,Preston Dr.,Rex,GA,30273,noData
+KILGJACGA1,Atlanta,active,-84.29817,33.82553,4,GPS,1528,Brianwood Rd,Decatur,GA,30033,noData
+KIMBMARGA1,Atlanta,active,-84.29472,33.82072,3,GPS,1472,Knollwood Ter,Decatur,GA,30033,noData
+KIPPVISGA1,Atlanta,resight-only,-84.36665,33.68874,99999,U,660,McWilliams Rd SE,Atlanta,Ga,30315,noData
+KOTCMELGA1,Atlanta,active,-84.34469,33.35771,5,GPS,313,Marble Ct,Peachtree,GA,30269,noData
+KRENMARGA1,Atlanta,active,-84.33939,33.8207,3,GPS,1224,Citadl Dr NE,Atlanta,GA,30324,noData
+KRIVMAUGA1,Atlanta,active,-84.65132,34.0117,4,GPS,2345,Standing Peachtree Court,Kennesaw,GA,30152,noData
+LANTTOMGA1,Atlanta,resight-only,-84.5062,33.44,99999,U,55,Cynthia Ct,Fayetteville,GA,30215,noData
+LEEDONGA1,Atlanta,active,-84.45055,33.9168,3,GPS,3585,Rivers Call Blvd,Atlanta,GA,30339,noData
+LENTTERGA1,Atlanta,active,-84.44402,33.73845,4,GPS,1720,Westwood Ave SW,Atlanta,GA,30310,noData
+MARIJAYGA1,Atlanta,resight-only,-84.143375,33.712312,99999,U,2801,Hilvale Cove Way,Lithonia,GA,30058,noData
+MAYECINGA1,Atlanta,discontinued,99999,99999,99999,U,6452,North Hampton Drive,Sandy Springs,GA,30328,noData
+MAYECINGA2,Atlanta,active,-84.31365,33.99395,3,GPS,1405,Northcliff Trace,Roswell,GA,30076,noData
+MAYOAMAGA1,Atlanta,discontinued,-84.09571,33.89104,99999,U,299,Willow Cove Court,Lawrenceville,GA,30044,noData
+MCCAANNGA1,Atlanta,active,-84.3033,33.59785,1,GPS,5762,Northspring Dr,Ellenwood,GA,30294,noData
+MCCABARGA1,Atlanta,resight-only,-83.99632,33.98647,99999,U,190,Victoria Station Blvd NE,Lawrenceville,GA,30043,noData
+MILLELLGA1,Atlanta,discontinued,-84.75797,33.33972,99999,U,192,Seven Island Rd,monticello,GA,31064,noData
+MURPMICGA1,Atlanta,resight-only,-84.42864,33.41615,99999,GPS,235,Murphy Creek Lane,Fayetteville,GA,30215,noData
+MURRSANGA1,Atlanta,active,-84.33348,33.88344,3,GPS,3212,Saybrook Dr NE,Atlanta,GA,30319,noData
+NEWMCHRGA1,Atlanta,active,-84.37604,33.74508,3,GPS,354,Grant St SE,Atlanta,GA,30312,noData
+NICKAESGA1,Atlanta,resight-only,99999,99999,99999,U,noData,noData,noData,noData,99999,noData
+NORTLAUGA1,Atlanta,active,-84.34357,33.94921,3,GPS,1107,Winding Branch Cir,Dunwoody,GA,30338,noData
+PAINTOMGA1,Atlanta,resight-only,-84.345379,33.763819,99999,map,339,Candler St NE,Atlanta,GA,30307,locationEstimate
+PAPPLISGA1,Atlanta,resight-only,-84.46776,33.81189,99999,U,2436,Claude Street NW,Atlanta,GA,30318,noData
+PARKDIAGA1,Atlanta,active,-84.30267,33.7789,3,GPS,309,Oakland St,Decatur,GA,30030,noData
+PLANANDGA1,Atlanta,active,-84.31245,33.78206,3,GPS,1010,N Parkwood Rd,Decatur,GA,30030,locationEstimate
+POVEANGGA1,Atlanta,active,-84.41229,33.72437,3,GPS,746,Lexington Ave SW,Atlanta,GA,30310,noData
+PRITANGGA1,Atlanta,active,-84.29494,33.75989,3,GPS,132,East Hill Street,Decatur,GA,30033,noData
+PROCSONGA1,Atlanta,resight-only,-83.97259,33.42324,99999,U,206,Grande Ct,Jackson,noData,99999,noData
+RICHLAUGA1,Atlanta,resight-only,-84.530921,33.715462,99999,U,1474,Niskey Lake Trl,Atlanta,GA,30331,noData
+RICHMSGA1,Atlanta,resight-only,99999,99999,99999,U,noData,noData,noData,noData,99999,noData
+RIVEPATGA1,Atlanta,discontinued,-84.93507,33.6588,99999,U,3370,Lakeside Parkway,Villa Rica,GA,30180,noData
+RIVEPATGA2,Atlanta,active,-85.15521,33.6062,5,GPS,120,Pitts Rd,Carrollton,GA,30117,noData
+RUSHSTEGA1,Atlanta,resight-only,-84.17133,33.46627,99999,U,noData,noData,noData,GA,99999,noData
+RYLAJANGA1,Atlanta,resight-only,-84.71306,33.987414,99999,U,5380,Whitaker Trl,Acworth,GA,30101,noData
+SAPPBILGA1,Atlanta,active,-84.27032,33.82724,3,GPS,1564,Country Squire Court,Decatur,GA,30033,noData
+SARUANJGA1,Atlanta,active,-84.048699,33.880776,3,GPS,2931,Hadrian Drive,Snellville,GA,30078,noData
+SHERNYLGA1,Atlanta,active,-84.4411,34.02265,4,GPS,2989,Meadow Dr,Marietta,GA,30062,noData
+SMOKELEGA1,Atlanta,resight-only,99999,99999,99999,U,noData,noData,noData,noData,99999,noData
+STEPMARGA1,Atlanta,active,-84.33235,34.01572,3,GPS,265,Vickery Way,Roswell,GA,30075,noData
+STOKNITGA1,Atlanta,resight-only,-84.32656,34.00067,99999,U,2050,Riverside Rd,Roswell,GA,30076,noData
+STRAELEGA1,Atlanta,active,-84.35567,33.85633,3,GPS,3734,Narmore Dr NE,Atlanta,GA,30319,noData
+SWALDAWGA1,Atlanta,active,-84.70937,34.01258,3,GPS,5326,Camden Lake Dr,Acworth,GA,30101,noData
+TALEKELGA1,Atlanta,active,-84.21055,34.09291,4,GPS,10,Fieldstone Way,Alpharetta,GA,30005,noData
+TIDMLOUGA1,Atlanta,discontinued,-84.585753,33.853744,99999,map,3921,Brantley Dr,Austell,GA,30106,locationEstimate
+TOTHCARGA1,Atlanta,resight-only,-84.35432,33.72093,99999,U,8760,Creekstone Place,Gainesville,GA,30506,noData
+TRACBRIGA1,Atlanta,active,-84.52555,33.89635,3,GPS,960,Turner Dr SE,Smyrna,GA,30080,noData
+WICHJOHGA1,Atlanta,resight-only,-84.543317,34.059829,99999,map,4403,Lakeside Hills Point NE,Kennesaw,GA,30144,locationEstimate
+WILEKATGA1,Atlanta,active,-84.37242,33.85655,4,GPS,3713,Mayfair Rd,Atlanta,GA,30342,noData
+WILLMARGA1,Atlanta,active,-84.70495,33.83432,3,GPS,5153,Suggs St,Powder Springs,GA,30127,noData
+WINSEMIGA1,Atlanta,active,-84.374,33.8774,3,GPS,410,Valley Brook Dr NE,Atlanta,GA,30342,noData
+WISSSTEGA1,Atlanta,active,-84.36681,33.84367,4,GPS,4,Arc Way NE,Atlanta,GA,30305,noData
+WOODLPKGA1,Atlanta,resight-only,-84.303544,33.786755,99999,U,noData,noData,noData,GA,99999,noData
+WOODMIDGA1,Atlanta,resight-only,99999,99999,99999,U,noData,noData,noData,noData,99999,noData
+ZARYPEGGA1,Atlanta,resight-only,-84.05078,34.20395,99999,U,7980,Lanier Dr,Cumming,GA,30041,noData
+ABBOTOMCO1,Colorado,active,-105.12004,39.7645,99999,GPS,10780,W. 35th Ave,Wheat Ridge,CO,80033,"Back off road, large property/house"
+ANDEMARCO1,Colorado,active,-104.63896,39.99577,99999,GPS,29856,E. 166th Ave,Brighton,CO,80603,1+ acre
+BARNCYNCO1,Colorado,active,-104.69815,39.97645,99999,GPS,25825,E 154th Circle,Brighton,CO,80603,noData
+BERNDIACO1,Colorado,active,-104.9257,40.14916,99999,GPS,10242,Frencrest St.,Firestone,CO,80504,"Neighborhood, Small Yards"
+BIKEPARCO1,Colorado,resight-only,99999,99999,99999,U,noData,noData,noData,CO,99999,noData
+BOHLGEOCO1,Colorado,active,-104.88123,39.95977,99999,GPS,9151,E. 145th Ave,Brighton,CO,80602,noData
+CARRPAGCO1,Colorado,active,-104.95531,39.7395,99999,GPS,2320,Crestmont Lane,Highlands Ranch,CO,80126,noData
+DELMMARCO1,Colorado,active,-105.06352,39.51806,99999,GPS,10761,N Solar Dr.,Littleton,CO,80125,"~2 acres, back property bordered by irrigation ditch and scrub. HOWR, BCCH, & AMRO detected on site"
+DRISMARCO1,Colorado,active,-104.88237,39.67957,99999,GPS,2039,S. Alton Court,Denver,CO,80231,"3-4 feeders, otherwise very sparse landscaping. Active hawk nest nearby."
+FRITDENCO1,Colorado,active,-105.08198,39.93231,99999,GPS,1030,Sage St.,Broomfield,CO,80020,noData
+FROSKATCO1,Colorado,active,-104.79,40.00479,99999,GPS,7148,S. Magnolia Circle,Centennial,CO,80112,noData
+GERKGINCO1,Colorado,active,-104.95447,39.6349,99999,GPS,165,Glengarry Place,Castle Rock,CO,80113,"Hilly property, many feeders"
+GERSREBCO1,Colorado,active,-104.94634,39.7417,99999,GPS,1592,Madison St.,Denver,CO,80206,"Very involved neighborhood, curious & friendly neighbors"
+GORNSARCO1,Colorado,active,-105.14703,39.6904,99999,GPS,1551,S. Zang St.,Lakewood,CO,80228,"Well landscaped yard with native plants, beehive, feeder"
+GRIMSHACO1,Colorado,active,-104.9202,39.15969,99999,GPS,1812,Mountain Ranch Rd.,Larkspur,CO,80118,noData
+HAGGHENCO1,Colorado,active,-105.38077,39.90693,99999,GPS,11656,Coal Creek Heights Dr,Golden,CO,80403,"10+ acres, wooded"
+HEWILORCO1,Colorado,active,-105.14114,40.18069,99999,GPS,2911,Mt. View Ave,Longmont,CO,80503,noData
+HOUSELICO1,Colorado,active,-105.16417,39.97469,99999,GPS,949,Larkspur Ln.,Louisville,CO,80027,noData
+HUTCWAYCO1,Colorado,active,-104.94773,39.71025,99999,GPS,400,S. Steele St.,Denver,CO,80209,Gated Community
+JANTCARCO1,Colorado,active,-105.1336,39.63538,99999,GPS,11855,W. Stanford Pl,Morrison,CO,80465,"Townhouse, backs up to open space, feeder"
+KINGHUGCO1,Colorado,active,-104.78231,39.37036,99999,GPS,751,Willow Lake Drive,Franktown,CO,80116,PO BOX 584
+LEWIADRCO1,Colorado,active,-104.96094,39.68962,99999,GPS,1485,S. York St.,Denver,CO,80210,Only front yrad for nets
+LORYSPKCO1,Colorado,resight-only,99999,99999,99999,noData,NA,NA,NA,NA,NA,NA
+LYBAALICO1,Colorado,active,-104.87647,39.38898,99999,GPS,16143,Hi Land Circle,Brighton,CO,80602,noData
+MARTYVECO1,Colorado,active,-104.79378,39.90514,99999,GPS,11522,Lewistown St,Commerce City,CO,80022,2+ acres
+NICKSHECO1,Colorado,active,-104.79,40.00451,99999,GPS,299,Kelly Lane,Brighton,CO,80603,~2 acres
+PANJARVCO1,Colorado,resight-only,99999,99999,99999,U,noData,noData,noData,CO,99999,noData
+PHENTRACO1,Colorado,active,-105.16404,40.1392,99999,map,1705,Sicily Drive,Longmont,CO,80503,noData
+PINERIDCO1,Colorado,resight-only,99999,99999,99999,U,noData,noData,noData,CO,99999,noData
+RACKTRACO1,Colorado,active,-104.91935,39.74131,99999,GPS,1555,Jasmine St.,Denver,CO,80220,Central Denver
+REIMAMBCO1,Colorado,active,-105.10765,39.89102,99999,GPS,9828,W 107th Dr,Westminster,CO,80021,noData
+RYANKATCO1,Colorado,active,-104.95457,39.6349,99999,GPS,2805,Cherryridge Rd.,Englewood,CO,80113,noData
+SCHRCATCO1,Colorado,active,-105.09423,39.75421,99999,GPS,2565,Dover Ct.,Lakewood,CO,80215,Small yard
+SHARAMACO1,Colorado,active,-105.10289,39.86636,99999,GPS,9110,W 95th Ave,Westminster,CO,80021,noData
+SULLLORCO1,Colorado,active,-104.89843,40.44556,99999,GPS,169,Halibut Dr.,Windsor,CO,80231,"Small yard in new development, yard just starting to be landscaped"
+TREVDENCO1,Colorado,active,-104.75533,39.62342,0,GPS,19958,E. Belleview,Centennial,CO,80015,noData
+WILTALLCO1,Colorado,active,-105.10716,39.98784,99999,GPS,1225,Apollo Dr,Lafayette,CO,80026,noData
+WOHLKENCO1,Colorado,active,-105.09625,39.47033,99999,GPS,11233,W. Yucca,Roxborough,CO,80125,noData
+ADAMELEVA1,DC,discontinued,-77.263149,38.758752,99999,map,noData,noData,noData,noData,99999,locationEstimate
+AHMAFATDC1,DC,active,-77.08712332,38.949320487,99999,GPS,4412,Brandywine St. NW,Washington,DC,20016,noData
+AIPAVJMD1,DC,active,NA,NA,NA,NA,12819,Broadmore Rd,Silver Spring,MD,20904,noData
+ALPEPHIMD1,DC,resight-only,-77.038049613,39.009700343,99999,GPS,9404,Columbia Blvd,Silver Spring,MD,20910,noData
+AMERICOMD1,DC,discontinued,-76.694935,38.911893,99999,map,18504,Queen Anne Bridge Rd,Mitchellville,MD,20716,locationEstimate
+ANACMUSDC1,DC,discontinued,-76.977259,38.856692,99999,map,1901,Fort Place SE,Washington,DC,20020,locationEstimate
+ANDEMIKMD1,DC,discontinued,-76.547451,38.701874,99999,map,8975,St Andrews Dr,Chesapeake Beach,MD,20732,locationEstimate
+ANDRKENVA1,DC,resight-only,-77.344512,38.92377,99999,U,11510,Catalpa Ct,Reston,VA,20191,noData
+ANGEPARVA1,DC,active,-77.074415489,38.810482501,99999,GPS,201,West Taylor Run Pkwy,Alexandria,VA,22314,noData
+ARLINESVA1,DC,active,-77.12201,38.87952,1,GPS,855,N Edison St,Arlington,VA,22205,noData
+ASSMCARMD1,DC,resight-only,-77.05675,38.985856,99999,U,2729,Daniel Rd,Chevy Chase,MD,20815,noData
+BABCSTEDC1,DC,active,NA,NA,NA,NA,3041,Chestnut Street,Washington,DC,20015,noData
+BAILEESVA1,DC,active,-77.1439219,38.851016,3,GPS,6111,Knollwood Dr,Falls Church,VA,22041,noData
+BAINANDMD1,DC,discontinued,-77.053186301,38.994009,99999,U,2602,Spencer Rd,Chevy Chase,MD,20815,noData
+BAKEKYLDC1,DC,discontinued,-77.040834,38.940066,99999,map,1765,Shepherd St,Washington,DC,20011,locationEstimate
+BALAELEMD1,DC,discontinued,-77.14316,38.969369,99999,map,6003,Bryn Mawr Ave,Glen Echo,MD,99999,locationEstimate
+BALASUCMD1,DC,active,-76.95419,39.00645,1,GPS,9320,St Andrews Pl,College Park,MD,20740,noData
+BANCRESDC1,DC,resight-only,-77.040043,38.935573,99999,map,1755,Newton St NW,Washington,DC,20010,locationEstimate
+BANDKENVA1,DC,active,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+BARBJERMD1,DC,active,-76.46323,39.113321,1,GPS,1529,Marco Dr,Pasadena,MD,21122,noData
+BARNDORMD1,DC,discontinued,-77.00135,38.974007,99999,U,419,Elm Ave,Takoma Park,MD,20912,noData
+BAUGSHEVA1,DC,resight-only,-77.35725,38.915614,99999,U,2652,Black Fir Ct,Reston,VA,99999,noData
+BEALTOMMD1,DC,active,-76.7946,38.97406,5,GPS,12204,Guinevere Rd,Glenn Dale,MD,20769,noData
+BECKSUSVA1,DC,resight-only,-77.249359289,38.888506111,99999,GPS,101,Yeonas Cir. SE,Vienna,VA,22180,noData
+BENADEBMD1,DC,resight-only,-77.021594215,39.0133926,99999,GPS,9607,Brunett Ave,Silver Spring,MD,20901,noData
+BENSKATVA1,DC,discontinued,-77.367240714,38.892787897,99999,GPS,3254,Pony Ridge Way,Oakton,VA,22124,noData
+BERGMICMD1,DC,discontinued,-76.952668,39.03227,99999,map,3124,Powder Mill Rd,Hyattsville,MD,20783,locationEstimate
+BERNCHRMD1,DC,discontinued,-76.211544,38.781935,99999,map,909,Riverview Terrace,St. Michael's,MD,21663,locationEstimate
+BILLPAIDC1,DC,active,-77.01364,38.97176,5,GPS,216,Walnut St NW,Washington,DC,20012,noData
+BLADENSDC1,DC,discontinued,-76.937993,38.933174,99999,map,4601,Annapolis Rd,Bladensburg,MD,20710,locationEstimate
+BLADMAUMD1,DC,discontinued,-76.729957342,38.952486848,99999,GPS,2309,Haddon Place Bowie,Bowie,MD,20716,noData
+BLANBETMD1,DC,resight-only,-76.544951998,39.105263,99999,U,247,Old Magothy Bridge Rd,Pasadena,MD,21122,noData
+BLOCDAVMD1,DC,active,-77.0044,38.9764,3,GPS,7016,Sycamore Ave,Takoma Park,MD,20912,noData
+BOOKJUDVA1,DC,active,NA,NA,NA,NA,3442,Surrey Ln,Falls Church,VA,22042,noData
+BOONGREMD1,DC,resight-only,-76.6238,39.379563,99999,U,6215,Haddon Ave,Baltimore,MD,99999,noData
+BOONGREMD2,DC,active,-76.55691,39.49158,3,GPS,13412,Blenfield Rd,Phoenix,MD,21131,noData
+BORGRACMD1,DC,discontinued,-76.631598,39.286099,99999,map,137,S Poppleton St,Baltimore,MD,21201,locationEstimate
+BOSCJOEDC1,DC,resight-only,-77.34458,38.92374,99999,U,3121,Newark St NW,Washington,DC,20008,noData
+BRENSTEMD1,DC,discontinued,-76.998343364,38.643031,99999,U,8911,Cottongrass St,Waldorf,MD,20603,Resight Only
+BRENTESDC1,DC,active,-77.00224,38.88462,3,GPS,301,301 N Carolina Ave SE,Washington,DC,20003,noData
+BRIGKIMMD1,DC,resight-only,-76.54802,39.126658,99999,U,2407,229th Street,Pasadena,MD,21122,noData
+BRIGPAUMD1,DC,discontinued,-76.873598,39.002435,99999,map,56H,Crescent Rd,Greenbelt,MD,20770,locationEstimate
+BROOKSIMD1,DC,active,-77.032995842,39.058623,99999,U,1400,Glenallan Ave,Silver Spring,MD,20902,noData
+BROWANNDC1,DC,active,-77.05334,38.89977,5,GPS,800,25th St NW,Washington,DC,20037,noData
+BROWANNMD1,DC,active,-76.48468,38.96281,13,GPS,692,Fairview Ave,Annapolis,MD,21403,noData
+BRUEELIMD1,DC,discontinued,-77.103818,39.040017,99999,map,5109,White Flint Dr,Kensington,MD,20895,locationEstimate
+BUCHELIDC1,DC,active,NA,NA,NA,NA,noData,9th and Elder St NW,Washington,DC,20012,noData
+BUCKLMSMD1,DC,resight-only,-76.95898,39.00971,99999,U,2611,Buck Lodge Rd,Adelphi,MD,20783,noData
+BUFFJESMD1,DC,active,NA,NA,NA,NA,7501,Flower Ave.,Takoma Park,MD,20912,noData
+BUISNORVA1,DC,active,-77.26441,38.74159,10,GPS,9201,Deveron Court,Fairfax Station,VA,22039,noData
+BURDROBVA1,DC,resight-only,-77.41811,38.865157,99999,U,13607,Parkside Manor Court,Chantilly,VA,20151,noData
+BURKSANMD1,DC,discontinued,-77.08536,38.982444,99999,map,7211,Oakridge Ave,Chevy Chase,MD,20815,locationEstimate
+BURNNANMD1,DC,resight-only,-76.12497,38.732481,99999,U,27457,Westpoint Rd,Easton,MD,21601,noData
+BURRANDMD1,DC,discontinued,-76.559736,38.94883,99999,map,2908,Main St,Edgewater,MD,21037,locationEstimate
+BURRANDMD2,DC,discontinued,-76.443988,39.040118,99999,map,1235,Hampton Rd,Annapolis- Cape St. Clair,MD,21409,locationEstimate
+BUSHLYNMD1,DC,active,NA,NA,NA,NA,5402,Glenwood Rd.,Bethesda,MD,20815,noData
+CAHAGABMD1,DC,resight-only,-77.08751,39.034495,99999,U,10918,Schuylkill Rd,Rockville,MD,20852,noData
+CAINBRIMD1,DC,discontinued,-77.032135,38.897921,99999,map,noData,"IBM Corp Washington Systems Center - ATS, Blg 183 Room 2B110",Gaithersburg,MD,99999,locationEstimate
+CALLJERMD1,DC,discontinued,-76.95434,38.942218,99999,map,4307,40th St,Brentwood,MD,20722,locationEstimate
+CAMBDJMD1,DC,active,-76.75251289,38.967296949,99999,GPS,2809,Folsom Lane,Bowie,MD,20715,noData
+CAMEPARVA1,DC,active,-77.066287469,38.799805112,99999,GPS,2251,Mill Road,Alexandria,VA,22314,noData
+CAMPGLOMD1,DC,active,-76.92866,39.06249,2,GPS,12513,Calvert Hills Dr,Beltsville,MD,20705,noData
+CAMPLIBMD1,DC,discontinued,-77.0229,38.675841,99999,U,800,Bryan Point Rd,Accokeek,MD,20607,noData
+CAMPROSMD1,DC,active,-77.02264,39.01415,4,GPS,728,Guilford Ct,Silver Spring,MD,20901,noData
+CANTBOBMD1,DC,discontinued,-77.227727682,38.997446,99999,U,11015,Chandler Rd,Potomac,MD,20854,noData
+CAPITCSDC1,DC,resight-only,-77.013429,38.961157,99999,map,100,Peabody St NW,Washington,DC,20011,locationEstimate
+CARLSHIMD1,DC,discontinued,-76.588785,39.395162,99999,map,513,513 Brook Rd,Towson,MD,21286,locationEstimate
+CAUSSUSMD1,DC,resight-only,-77.17451,39.296892,99999,U,26821,Overlook St,Damascus,MD,20872,noData
+CHAMPARVA1,DC,active,-77.127641815,38.835204283,99999,GPS,2505,North Chambliss Street,Alexandria,VA,22305,noData
+CHUAMELMD1,DC,active,NA,NA,NA,NA,4404,Puller Dr,Kensington,MD,20895,noData
+CLARCOLDC1,DC,active,-77.04754,38.91971,3,GPS,2335,Ashmead Pl NW,Washington,DC,99999,locationEstimate
+CLARKELMD1,DC,discontinued,-76.582412474,38.98628,99999,U,103,1st St,Annapolis,MD,21410,noData
+COFFMICMD1,DC,discontinued,-76.482983,39.0382,99999,U,1276,Masters Dr,Arnold,MD,99999,noData
+COLALISMD1,DC,resight-only,-76.99381,39.30942,99999,U,13757,Frederick Rd,West Friendship,MD,21794,noData
+COLSKATMD1,DC,active,-76.84428,39.15633,7,GPS,9553,Red Apple Lane,Columbia,MD,21046,noData
+CONAGAIMD1,DC,discontinued,-76.836499,39.326754,99999,map,10104,Davis Ave,Granite,MD,21163,locationEstimate
+CONNBARMD1,DC,discontinued,-76.780006265,39.266481,99999,U,6607,Carleton Court,Laurel,MD,20707,noData
+CONWJOAMD1,DC,active,NA,NA,NA,NA,5-D,Ridge Rd,Greenbelt,MD,20770,noData
+CORCJOEMD1,DC,discontinued,-76.780331,39.266198,99999,map,9,Benway Ct.,Catonsville,MD,21228,locationEstimate
+CORCJOEMD2,DC,discontinued,-76.77265,39.266627,99999,map,113,Starhill Lane,Catonsville,MD,21228,locationEstimate
+CORDLESDC1,DC,active,NA,NA,NA,NA,5521,Chevy Chase Parkway NW,Washington,DC,20015,noData
+COTTCITMD1,DC,discontinued,-76.571593,38.560514,99999,U,noData,noData,Cottage City,MD,99999,noData
+COULMARMD1,DC,discontinued,-76.591968651,39.091655,99999,U,342,Prestonfield Ln,Severna Park,MD,21146,noData
+COURLESDC1,DC,discontinued,-76.989525,38.886372,99999,U,1216,C St SE,Washington,DC,20003,Nephew of Sally Rohrbach
+COWLANDMD1,DC,discontinued,-76.007615,38.961106,99999,map,114,Sycamore Lane,Queen Anne,MD,21657,locationEstimate
+CRISBRUMD1,DC,active,-77.177248634,39.140368785,99999,GPS,208,Hickory Road,Washington Grove,MD,20880,noData
+CRONCHRVA1,DC,discontinued,-77.353212,38.620605,99999,map,15343,Inlet Plaza,Dumfries,VA,22025,locationEstimate
+CRONCHRVA2,DC,resight-only,-77.35579,38.626042,99999,map,15051,Holleyside Drive,Dumfries,VA,22025,locationEstimate
+CYLBURNMD1,DC,discontinued,-76.653927,39.352573,99999,map,4915,Greenspring Ave,Baltimore,MD,99999,locationEstimate
+CYMRHELDC1,DC,active,-76.99879,38.88877,5,GPS,514,A St SE,Washington,DC,20003,locationEstimate
+CYRUALLMD1,DC,discontinued,-77.040764,39.11478,99999,map,1816,Chapel Hill Rd,Silver Spring,MD,20906,locationEstimate
+DALEELIMD1,DC,active,-76.58533,39.682474,99999,U,2627,Meredith Rd,White Hall,MD,21161,noData
+DANIBARMD1,DC,discontinued,-76.5341,39.012895,99999,map,438,Epping Way,Annapolis,MD,21401,locationEstimate
+DANIBARMD2,DC,discontinued,-76.786866009,39.275981,99999,U,741,Oella Ave,Ellicott City,MD,21403,noData
+DANIKATMD1,DC,active,NA,NA,NA,NA,110,Valley Rd,Bethesda,MD,20816,noData
+DAVIALIVA1,DC,resight-only,-77.09664,38.898386,99999,U,2335,N Edgewood St,Arlington,VA,22201,noData
+DAVIKELVA1,DC,resight-only,-77.49654,38.463688,99999,U,6,Crawford Ln,Stafford,VA,99999,noData
+DAVILINMD1,DC,active,NA,NA,NA,NA,1204,Grove Ave.,Shady Side,MD,20764,noData
+DAWSBOBVA1,DC,active,NA,NA,NA,NA,3916,7th Street South,Arlington,VA,22204,noData
+DECHKIMMD1,DC,discontinued,-76.600211605,39.041453,99999,U,773,Paul Birch Drive,Crownsville,MD,21113,noData
+DECHKIMMD2,DC,resight-only,-76.60021,39.041453,99999,U,773,Paul Birch Drive,Crownsville,MD,21113,noData
+DELUBILMD1,DC,discontinued,99999,99999,99999,U,noData,noData,noData,noData,99999,noData
+DELUKARVA1,DC,discontinued,-77.161128876,38.905535,99999,U,2116,Elliott Avenue,McLean,VA,22101,Resight Only
+DELUKARVA2,DC,active,-77.07797,38.89236,3,GPS,1610,N. Queen St,Arlington,VA,22209,noData
+DELUKARVA3,DC,active,-77.077891,38.892695,99999,map,1610,North Queen St,Arlington,VA,99999,locationEstimate
+DEMBSANMD1,DC,active,NA,NA,NA,NA,7705,Hamilton Spring Rd,Bethesda,MD,20817,noData
+DIETJANMD1,DC,active,-76.73842854,38.93883609,99999,GPS,15416,Empress Way,Bowie,MD,20716,noData
+DIXOALIMD1,DC,resight-only,-77.103775103,39.009812611,99999,GPS,5201,Elsmere Ave.,Bethesda,MD,20814,noData
+DODGEESMD1,DC,resight-only,99999,99999,99999,U,noData,noData,noData,noData,99999,noData
+DONOLORDC1,DC,discontinued,-77.030072,38.911439,99999,map,1307,Q Street NW,Washington,DC,20009,locationEstimate
+DONOLORDC2,DC,resight-only,-77.10746,38.930031,99999,U,5311,Cathedral Ave NW,Washington,DC,20016,noData
+DORNROBMD1,DC,discontinued,-76.5197,38.896318,99999,map,3893,Cotter Dr,Edgewater,MD,21037,locationEstimate
+DOVECARVA1,DC,resight-only,-77.208259677,38.806163305,99999,GPS,7607,Elgar Street,Springfield,VA,22151,noData
+DRAKBERMD1,DC,discontinued,-76.583534032,38.829108,99999,U,5103,Sudley Rd,West River,MD,20778,noData
+DUELCREMD1,DC,discontinued,-76.95083,38.933626,99999,map,3800,Newton Street,Dueling Creek,MD,99999,locationEstimate
+DUMBOPKDC1,DC,active,-77.061467,38.913597,99999,map,NA,NA,NA,NA,NA,NA
+EARLNANMD1,DC,discontinued,-76.541146,38.841726,99999,map,4842,Riverside Dr,Galesville,MD,20765,locationEstimate
+EBERJACMD1,DC,active,-77.062569955,38.981175635,99999,GPS,7009,W. Greenvale Pkwy,Chevy Chase,MD,20815,noData
+EDEREDWVA1,DC,resight-only,-77.0509,38.719622,99999,U,1015,Emerald Dr,Alexandria,VA,22308,noData
+EDSALOUVA1,DC,resight-only,-77.415588233,38.725320891,99999,GPS,7010,Trappers Court,Manassas,VA,20111,noData
+EGANMARMD1,DC,resight-only,-77.10968,38.947608,99999,U,5404,Spangler Ave,Bethesda,MD,20816,noDat
+EGGELESVA1,DC,resight-only,-77.14485,38.86538,99999,U,3110,Olin Dr,Falls Church,VA,22044,noData
+EISESHOMD1,DC,active,-77.088200308,39.018192607,99999,GPS,4407,Glenridge St.,Kensington,MD,20895,noData
+ENZIKIRMD1,DC,discontinued,-76.628741,38.848259,99999,map,289,Sigma Dr,Harwood,MD,20776,locationEstimate
+EVANMICMD1,DC,resight-only,-77.13472,39.057751,99999,U,4,Sherry Court,Rockville,MD,20852,noData
+EVERJACDC1,DC,active,NA,NA,NA,NA,3902,W Street NW,Washington,DC,20007,noData
+FAGABERMD1,DC,discontinued,-77.020251405,38.985277,99999,U,608,Philadelphia Ave,Takoma Park,MD,20912,noData
+FAGAKELMD1,DC,active,NA,NA,NA,NA,1934,Old Post Road,Crofton,MD,21114,noData
+FAINSANMD1,DC,active,NA,NA,NA,NA,211,Vierling Drive,Colesville,MD,20904,noData
+FAJFSHUVA1,DC,active,NA,NA,NA,NA,3663,North Harrison Street,Arlington,VA,22207,noData
+FARYSIMMD1,DC,active,-77.01771,38.98896,11,GPS,716,Chesapeake Ave,Sliver Spring,MD,20910,noData
+FERRSUEMD1,DC,discontinued,-76.291998,39.470445,99999,map,3308,Abingdon Rd,Abingdon,MD,21009,locationEstimate
+FIERCARMD1,DC,active,-77.117372259,38.969687914,99999,GPS,5807,Ridgefield Road,Bethesda,MD,20816,noData
+FINEMAUMD1,DC,resight-only,-76.73989058,38.958051838,99999,GPS,2509,Knighthill Lane,Bowie,MD,20715,noData
+FISHFERVA1,DC,active,-77.13156,38.91267,11,GPS,3409,N Albemarle St,Arlington,VA,22207,noData
+FOLEMARMD1,DC,discontinued,-76.571556,38.965588,99999,map,344,Broadview Lane,Annapolis,MD,21401,locationEstimate
+FOOSDAVVA1,DC,discontinued,-77.131991,38.90094,99999,map,4922,4922 26th St N,Arlington	VA,noData,99999,locationEstimate
+FORCBREVA1,DC,discontinued,-77.394018,38.669979,99999,map,6244,6244 Oscar Court,Woodbridge,VA,22193,locationEstimate
+FORESESMD1,DC,active,-77.01909,39.0335,2,GPS,10830,Eastwood Ave,Silver Spring,MD,20901,noData
+FORSDAWMD1,DC,resight-only,-77.076534926,39.019374012,99999,GPS,3814,Everett St,Kensington,MD,20895,noData
+FREYFREMD1,DC,active,-76.667853693,39.376434,99999,U,2106,Smith Ave,Baltimore,MD,21209,noData
+FRONTROVA1,DC,active,NA,NA,NA,NA,1500,Remount Rd,Front Royal,VA,22630,noData
+FUISLISVA1,DC,discontinued,-77.057244,38.909098,99999,U,2800,P St NW,Washington,DC,20007,noData
+FUISLISVA2,DC,active,-77.09269,38.86296,5,GPS,842,S Glebe Road,Arlington,VA,22204,locationEstimate
+FULLRITMD1,DC,active,NA,NA,NA,NA,1710,Peartree Lane,Crofton,MD,21114,noData
+FUTRIVAVA1,DC,discontinued,-77.115777,38.877461,99999,map,4600,N 7th St,Arlington,VA,22203,locationEstimate
+GAETHEAMD1,DC,resight-only,-76.80004,39.280076,99999,U,3313,Governor Henry Court,Ellicott City,MD,21043,noData
+GAGNSTUMD1,DC,active,NA,NA,NA,NA,41,Philadelphia Ave,Takoma Park,MD,20912,noData
+GALETANMD1,DC,discontinued,-76.493753,38.384473,99999,map,11140,Mears Creek Rd,Lusby,MD,20657,locationEstimate
+GALLMONVA1,DC,discontinued,-77.295224541,38.712159,99999,U,10117,Hampton Woods Dr,Fairfax Station,VA,22039,noData
+GALLSARMD1,DC,active,NA,NA,NA,NA,10410,Ewell avenue,Kensington,MD,20895,noData
+GALLTERMD1,DC,resight-only,-76.53842,39.061207,99999,U,612,Randall Rd,Severna Park,MD,21146,noData
+GARDVALMD1,DC,active,-76.59892,39.08908,4,GPS,40,St Andrews Rd,Severna Park,MD,21146,noData
+GARRJOAVA1,DC,active,NA,NA,NA,NA,2803,Mosby St,Alexandria,VA,22305,noData
+GATELINMD1,DC,resight-only,-77.105483161,39.007439167,99999,GPS,5217,Acacia Avenue,Bethesda,MD,20814,noData
+GECACARVA1,DC,active,-77.12254,38.884753,3,GPS,1214,N Columbus St,Arlington,VA,22205,noData
+GEHRDALMD1,DC,discontinued,-76.614092,39.363247,99999,map,5912,Bellona Avenue,Baltimore,MD,21212,locationEstimate
+GELLNERMD1,DC,discontinued,-76.859292867,38.779549,99999,U,8003,Green Street,Clinton,MD,20735,noData
+GERYERIMD1,DC,resight-only,-77.11898,38.999149,99999,U,8710,Hartsdale Ave,Bethesda,MD,20817,noData
+GIBSELAMD1,DC,discontinued,-77.114597,39.041565,99999,map,5613,Whitney Mill Way,Rockville,MD,20852,locationEstimate
+GIESALLVA1,DC,discontinued,-77.162335,38.923376,99999,map,1640,Birch Rd,McLean,VA,22101,locationEstimate
+GILLEVAMD1,DC,discontinued,-76.553182,38.82695,99999,map,806,Shady Oaks Rd,West River,MD,20778,locationEstimate
+GIRAANGMD1,DC,resight-only,-77.23417,39.205828,99999,U,11419,Seneca Forest Circle,Germantown,MD,20876,noData
+GOCHJOAMD1,DC,active,-76.58091,39.651874,99999,U,2800,Garrett Rd,White Hill,MD,21161,noData
+GOMEKARMD1,DC,resight-only,-76.58365,39.090174,99999,map,472,Lission Ct,Severna Park,MD,21146,locationEstimate
+GORDELIDC1,DC,discontinued,-77.037168,38.911273,99999,map,1600,16th St NW,Washington,DC,20009,locationEstimate
+GOROCARDC1,DC,resight-only,-77.055554,38.975832,99999,U,6613,31st St NW,Washington,DC,20015,noData
+GOUGGREMD1,DC,discontinued,-77.117744,38.987426,99999,map,7715,Radnor Rd,Bethesda,MD,20817,locationEstimate
+GRIFBETDC1,DC,discontinued,-77.059128,38.975591,99999,map,6637,32nd St Nw,Washington,DC,20015,locationEstimate
+GRIFROGMD1,DC,active,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+GROSJEAMD1,DC,discontinued,-77.062411,39.074726,99999,map,7,Ripling Brook Ct,Silver Spring,MD,20906,locationEstimate
+GUIDJOHDC1,DC,resight-only,-77.09470177,38.950022612,99999,GPS,4604,48th St. NW,Washington,DC,20016,noData
+GUYTNIKMD1,DC,resight-only,-77.009019273,39.075851909,99999,GPS,13401,Sherwood Forest Drive,Colesville,MD,20904,noData
+HADDMARMD1,DC,discontinued,-76.617466,38.792951,99999,map,5802,Brooks Woods Rd,Lothian,MD,20711,locationEstimate
+HALLDEBVA1,DC,discontinued,-77.085421353,38.780345,99999,U,6245,Gentle Lane,Alexandria,VA,22310,noData
+HAMIMARMD1,DC,discontinued,-76.43189,39.011824,99999,U,1001,Whitehall Cove,Annapolis,MD,21401,noData
+HAMMBARMD1,DC,discontinued,-76.604774,38.985061,99999,map,597,Moran Ct,Annapolis,MD,21401,locationEstimate
+HANNNANMD1,DC,resight-only,-77.00705,39.013608,99999,U,9610,Evergreen St,Silver Spring,MD,20901,noData
+HARRASHDC1,DC,active,-77.077555129,38.946067394,99999,GPS,3904,Yuma Street,NW Washington,DC,20016,noData
+HARRPHYMD1,DC,discontinued,-76.726139,38.907597,99999,map,1305,Pennypacker Lane,Bowie,MD,20716,locationEstimate
+HARTPRIMD1,DC,discontinued,-76.490434,38.977176,99999,map,159,Conduit St,Annapolis,MD,21401,locationEstimate
+HARWRANDC1,DC,discontinued,-77.068693,38.9634,99999,map,3507,Livingston NW,Washington,DC,20015,locationEstimate
+HAWNJANVA1,DC,discontinued,-77.131503,38.858805,99999,U,5910,Merritt Pl,Falls Church,VA,22041,noData
+HAYFISCVA1,DC,resight-only,-77.145466,38.75238,99999,map,7630,Telegraph Road,Alexandria,VA,99999,locationEstimate
+HEATSUEVA1,DC,discontinued,-77.44713,38.846127,99999,map,14469,Four Chimney Dr,Centreville,VA,20120,locationEstimate
+HELFGAIMD1,DC,discontinued,-76.991882,38.983605,99999,map,7404,Glenside Dr,Takoma Park,MD,20912,locationEstimate
+HERBJOAMD1,DC,discontinued,-76.479483,39.105757,99999,map,7,N Carolina Ave,Pasadena,MD,21122,locationEstimate
+HERNELEVA1,DC,resight-only,-77.37767,38.97646,99999,U,630,Dranesville Rd,Herndon,VA,99999,noData
+HESSNATVA1,DC,discontinued,-77.09942,38.882052,99999,map,803,N Kenmore St.,Arlington,VA,22201,locationEstimate
+HILLTHRVA1,DC,resight-only,-77.095327674,38.897986516,99999,GPS,2814,23rd St N,Arlington,VA,22201,noData
+HIRSHHODC1,DC,discontinued,-77.023467,38.887885,99999,map,700,Independence Avenue Southwest,Washington,DC,20560,locationEstimate
+HITCHBJMD1,DC,discontinued,-76.800355,39.110734,99999,map,31,Little River Rd,Laurel,MD,20724,locationEstimate
+HOBBANNMD1,DC,active,NA,NA,NA,NA,9002,Bradford Rd,Silver Spring,MD,20901,noData
+HOLLDEBVA1,DC,discontinued,-77.104677019,38.898710304,99999,GPS,3618,22nd St. N,Arlington,VA,22201,noData
+HOPKBARMD1,DC,resight-only,-76.969138114,39.030463467,99999,GPS,1940,Kimberly Road,Silver Spring,MD,20903,noData
+HOROBONVA1,DC,resight-only,-77.33713,38.90791,99999,U,2690,Mattox Creek Dr,Oakton,VA,22124,noData
+HOROBONVA2,DC,active,-77.34132,38.90577,99999,U,2781,Marshall Lake Dr,Oakton,VA,22124,noData
+HUFFCHRVA1,DC,resight-only,-77.299205589,39.037594372,99999,GPS,117,Commonage Dr.,Great Falls,VA,22066,noData
+HUFFJANMD1,DC,active,NA,NA,NA,NA,5001,White Flint Dr.,Kensington,MD,20895,noData
+HULLJEFVA1,DC,resight-only,-77.070170188,38.826929,99999,U,409,Jackson Place,Alexandria,VA,22302,noData
+HUNTBRIMD1,DC,discontinued,-76.538052,39.075961,99999,map,99,McKinsey Rd,Severna Park,MD,21146,locationEstimate
+HUNTDAVMD1,DC,active,99999,99999,99999,U,noData,noData,noData,noData,99999,noData
+HUNTDAVMD2,DC,resight-only,-77.00498,38.981324,99999,U,7509,Hancock Rd,Takoma Park,MD,20912,noData
+HUTCBARVA1,DC,resight-only,-77.09665,38.705807,99999,U,3703,Riverwood Ct,Alexandria,VA,22309,noData
+IRVISANMD1,DC,active,NA,NA,NA,NA,3G,Crescent Road,Greenbelt,MD,20770,noData
+JACKALADC1,DC,resight-only,-76.96206,38.864802,99999,U,2040,31st Place SE,Washington,DC,99999,noData
+JACOAMYMD1,DC,discontinued,-75.852359,38.83089,99999,map,24581,Williston Road,Denton,MD,21629,locationEstimate
+JACOMERMD1,DC,resight-only,-77.20438,39.084151,99999,U,13714,Goosefoot Terrace,Rockville,MD,20850,noData
+JACOSYDMD1,DC,active,-76.96756,39.015894,99999,U,2302,Lackawanna Street,Adelphi,MD,20783,noData
+JAKOELVVA1,DC,resight-only,-77.09060333,38.765826,99999,U,7017,Grove Road,Alexandria,VA,22306,noData
+JAMESESVA1,DC,active,-77.14086,38.9164,0,GPS,3700,North Delaware,Arlington,VA,22207,noData
+JEWELIBMD1,DC,resight-only,-77.10457,38.957666,99999,U,5309,Wriley Rd,Bethesda,MD,20816,noData
+JOHNAESVA1,DC,active,-77.12649,38.83517,7,GPS,5651,Rayburn Ave,Alexandria,VA,22311,noData
+JOHNTHEMD1,DC,discontinued,-76.332588,39.517608,99999,map,14,Vermont Place,Bel Air,MD,21014,locationEstimate
+JONECBRMD1,DC,discontinued,-76.588029,38.966895,99999,map,2803,S Haven Rd,Annapolis,MD,21401,locationEstimate
+JONETINMD1,DC,active,-76.946273314,38.948583503,99999,GPS,4105,Decatur St.,Hyattsville,MD,20781,noData
+JORABONVA1,DC,discontinued,-77.146788,38.895191,99999,U,2432,N Nottingham St,Arlington,VA,22207,noData
+JUBILHODC1,DC,discontinued,99999,99999,99999,U,noData,noData,noData,noData,99999,noData
+KAMILEIVA1,DC,resight-only,-77.13684,38.859211,99999,U,6034,Hardwick Pl,Falls Church,VA,22041,noData
+KANESTAMD1,DC,active,NA,NA,NA,NA,500,Highgate Ter,Silver Spring,MD,20904,noData
+KAUFLAUMD1,DC,discontinued,-77.082862,39.462503,99999,map,4062,Ridge Rd,Westminster,MD,21157,locationEstimate
+KAUFRAYMD1,DC,discontinued,-76.344301,39.541912,99999,map,448,East Broadway,Bel Air,MD,21014,locationEstimate
+KAYEKATDC1,DC,active,-77.065450857,38.935704323,99999,GPS,3433,34th Street NW,Washington,DC,20008,noData
+KENILWODC1,DC,discontinued,-76.94161,38.912829,99999,map,1550,Anacostia Ave NE,Washington,DC,20019,locationEstimate
+KESTSABDC1,DC,active,-77.047442,38.922725,99999,U,1973,Biltmore St NW,Washington,DC,20009,noData
+KEYESUSMD1,DC,active,-77.30772,39.09019,3,GPS,14801,Springfield Road,Darnestown,MD,20874,noData
+KIMBAESDC1,DC,discontinued,-76.957313,38.882278,99999,map,3375,Minnesota Ave SE,Washington,DC,20019,locationEstimate
+KINDFARMD1,DC,discontinued,-76.588280452,39.098364,99999,U,1011,Kinder Farm Park Rd,Millersville,MD,21108,noData
+KINGMANDC1,DC,resight-only,-76.963642217,38.893482,99999,GPS,Lot 7,Kingman Island,Washington,DC,20002,noData
+KNIGSALVA1,DC,active,-77.32038,38.37807,3,GPS,2744,Brooke Rd,Stafford,VA,22554,noData
+KORRHARMD1,DC,resight-only,-76.741790248,39.275348,99999,U,117,Melvin Ave,Catonsville,MD,21228,noData
+KOSLDREMD1,DC,discontinued,-76.483852,38.9352,99999,map,3154,Arundel On the Bay Rd,Annapolis,MD,21403,locationEstimate
+KOVASANMD1,DC,resight-only,-77.107594282,39.011644773,99999,GPS,9511,Linden Avenue,Bethesda,MD,20814,noData
+KRAMPAUMD1,DC,discontinued,-76.340535,39.71296,99999,map,1556,Main St,Whiteford,MD,21160,locationEstimate
+LAFOMELVA1,DC,active,-77.15827,38.89578,6,GPS,6528,27th St N,Arlington,VA,22213,noData
+LAINANTMD1,DC,active,-77.070078858,39.175911237,99999,GPS,3504,Mount Olney Lane,Olney,MD,20832,noData
+LAKEAESVA1,DC,active,-77.34595,38.96634,0,GPS,11510,North Shore Dr,Reston,VA,20190,noData
+LAMBAMYMD1,DC,resight-only,-77.116505,38.967095,99999,map,5711,Newington Road,Bethesda,MD,20816,locationEstimate
+LANDCELVA1,DC,active,-77.24095,38.88216,4,GPS,8514,Marquette St,Vienna,VA,22180,"Site Center: In the center of the backyard on the walkway, on the fourth paving stone from the shed."
+LANGANKVA1,DC,resight-only,-77.299275684,38.93561,99999,U,10228,Tamarack Dr,Vienna,VA,22182,noData
+LEONTESDC1,DC,active,-77.05682,38.93492,5,GPS,2732,Ordway St NW #1,Washington,DC,20008,noData
+LERNJEFMD1,DC,discontinued,-77.019242,38.981265,99999,map,510,Albany Ave,Takoma Park,MD,20912,locationEstimate
+LEWIKATMD1,DC,discontinued,-77.223657093,39.258672141,99999,GPS,24511,Ridge Road,Damascus,MD,20872,noData
+LIEBJUDMD1,DC,active,-77.10436,38.95739,99999,U,5305,Wriley Road,Bethesda,MD,20816,noData
+LINDHANMD1,DC,resight-only,-77.08468,38.979683,99999,U,7004,Maple Ave,Chevy Chase,MD,20815,noData
+LLANMATMD1,DC,discontinued,-76.499835,39.034625,99999,map,84,Kane Drive,Arnold,MD,21012,locationEstimate
+LLEISUEDC1,DC,discontinued,-77.04171,38.92433,99999,map,1752,Lanier Place NW,Washington,DC,20009,locationEstimate
+LORAJORMD1,DC,discontinued,-76.591530909,39.378332,99999,U,6701,Parkway Rd,Baltimore,MD,21239,noData
+LUCAJILMD1,DC,resight-only,-77.1074,38.9491,99999,U,5315,Albemarle St.,Bethesda,MD,20816,noData
+LUCIDANMD1,DC,discontinued,-76.509499027,38.992581,99999,U,7,Gladden St,Annapolis,MD,21401,noData
+LUNDTERMD1,DC,resight-only,-77.118570553,39.00987813,99999,GPS,5819,Walton Rd,Bethesda,MD,20817,noData
+LURZPAUMD1,DC,active,NA,NA,NA,NA,633,Chase St.,Annapolis,MD,21401,noData
+LYCEEESMD1,DC,active,-77.064433,38.986569,99999,map,3200,Woodbine St,Chevy Chase,MD,20815,locationEstimate
+LYONLYNVA1,DC,discontinued,-77.428586004,38.813547,99999,U,13921,Marblestone Dr.,Clifton,VA,20124,noData
+MAGNDAVMD1,DC,discontinued,-76.311764,39.701327,99999,map,1575,Kerr Rd,Whiteford,MD,21160,locationEstimate
+MAGRPARMD1,DC,discontinued,-76.951303,38.952673,99999,map,noData,40th Avenue and Hamilton Street,Hyattsville,MD,99999,locationEstimate
+MAHESHEDC1,DC,active,-77.061553482,38.972399686,99999,GPS,6155,31st Place (not street) NW,Washington,DC,20015,noData
+MAHOJIMMD1,DC,discontinued,-76.539657252,38.790704,99999,U,5865,Deal Beach Rd,Deale,MD,20751,noData
+MAIMLOIMD1,DC,resight-only,-77.117634277,39.009075221,99999,GPS,5804,Wilmett,Bethesda,MD,20817,noData
+MALLBARMD1,DC,discontinued,-77.12293,38.945274,99999,map,108,Valley Rd,Bethesda,MD,20816,locationEstimate
+MANNJANDC1,DC,active,-77.05754,38.972525,99999,U,2922,Tennyson St NW,Washington,DC,20019,noData
+MARRPETMD1,DC,discontinued,-77.005066,38.971542,99999,map,6616,Cockerille St,Takoma Park,MD,20912,locationEstimate
+MARRPETMD2,DC,active,-77.00267,38.97477,2,GPS,6903,Sycamore Ave,Takoma Park,MD,20912,it's pete's house
+MASIADRMD1,DC,discontinued,99999,99999,99999,U,noData,noData,noData,noData,99999,noData
+MASOCASMD1,DC,active,NA,NA,NA,NA,3517,Maureen Ln,Bowie,MD,20175,noData
+MASORICMD1,DC,discontinued,-76.627049,39.045887,99999,map,1431,Hoppa Rd,Crownsville,MD,21032,locationEstimate
+MAZUJENMD1,DC,resight-only,-77.00353,39.150225,99999,U,17820,Tree Lawn Drive,Ashton,MD,20861,noData
+MCCAKEVMD1,DC,resight-only,-76.88435,39.207563,99999,U,6000,Misty Arch Run,Columbia,MD,21044,noData
+MCCOCHRMD1,DC,resight-only,-77.053323809,39.348465,99999,U,15634,Thistle Downs Ct,Woodbine,MD,21797,noData
+MCCOJOHMD1,DC,discontinued,-76.927058656,39.174562,99999,U,11965,Simpson Rd,Clarksville,MD,21029,noData
+MCDODAVMD1,DC,active,NA,NA,NA,NA,4218,Brookfield Dr,Kensington,MD,20895,noData
+MCDOELIVA1,DC,active,-77.07861,38.7932,0,GPS,2706,Jefferson Drive,Alexandria,VA,22303,noData
+MCFAPAMMD1,DC,active,NA,NA,NA,NA,90,Quarter Landing Rd,Annapolis,MD,21403,noData
+MCGHDENMD1,DC,discontinued,-76.299445,39.479343,99999,map,221,Kensington Pkwy,Abingdon,MA,21009,locationEstimate
+MCKEANNVA1,DC,discontinued,-77.066687309,38.761026,99999,U,2103,Paul Spring Rd,Alexandria,VA,22307,noData
+MCKEJANMD1,DC,discontinued,-76.997061,39.296593,99999,map,13856,Rover Mill Rd,West Friendship	MD 	21794,MD,21794,locationEstimate
+MCKIRACDC1,DC,active,-77.001617173,38.92413032,99999,GPS,2623,3rd St NE,Washington,DC,20002,noData
+MCLERICMD1,DC,discontinued,-76.785879,39.710665,99999,map,3930,St Paul's Rd,Manchester,MD,21102,locationEstimate
+MCNAKRIMD1,DC,resight-only,-77.098623131,38.958565,99999,U,5216,Baltimore Ave,Bethesda,MD,20816,noData
+MCQUJACDC1,DC,active,NA,NA,NA,NA,1429,Longfellow St NW,Washington,DC,20011,noData
+MEADTHEMD1,DC,active,NA,NA,NA,NA,12502,Hemm Place,Bowie,MD,20716,noData
+MEGOPATMD1,DC,discontinued,-76.680267,38.74348,99999,map,11913,11913 Rivershore Dr.,Dunkirk,MD,21075,locationEstimate
+MEGOPATMD2,DC,resight-only,-76.656373149,38.746513,99999,U,2920,2920 Cedartwood Ln,Dunkirk,MD,21075,noData
+MERRJOAMD1,DC,discontinued,-77.207702,39.268785,99999,map,25108,Angela Ct,Damascus,MD,20872,locationEstimate
+MESEBARMD1,DC,discontinued,-76.445298,39.520254,99999,map,1811,Laurel Brook Rd,Fallston,MD,21047,locationEstimate
+METZNORDC1,DC,active,NA,NA,NA,NA,638,G Street SE,Washington,DC,20003,noData
+MILLJOEMD1,DC,resight-only,-76.607853889,39.098204,99999,U,335,Butternut Ct,Millersville,MD,21108,noData
+MILLLORVA1,DC,resight-only,-77.589400388,38.850265,99999,U,4930,Circuit Ct,Gainesville,VA,20155,noData
+MILLPAUMD1,DC,discontinued,-76.499811439,38.99312,99999,U,108,Shiley St,Annapolis,MD,21401,noData
+MILTMIKVA1,DC,active,-77.11954,38.87374,5,GPS,412,N Edison St,Arlington,VA,22203,locationEstimate
+MISBJANMD1,DC,discontinued,-76.930213,39.064356,99999,map,12613,Shoal Creek Terrace,Beltsville,MD,20705,locationEstimate
+MISSEDDC1,DC,resight-only,-76.99685,38.883233,99999,U,647,South Carolina Ave SE,Washington,DC,20003,noData
+MITCBARMD1,DC,discontinued,-77.092304,39.036185,99999,map,10928,Clermont Ave,Garret Park,MD,99999,locationEstimate
+MOLIKARMD1,DC,resight-only,-76.53508,38.703962,99999,U,PO Box 228 8832,Dayton,North Beach,MD,20714,noData
+MONTSUZMD1,DC,resight-only,-76.799201524,38.995167423,99999,GPS,11804,Fletchertown Road,Bowie,MD,20720,noData
+MORAANGMD1,DC,discontinued,-76.853080739,39.304516,99999,U,9749,Gudel Drive,Ellicot City,MD,21042,noData
+MORAJANMD1,DC,discontinued,-76.464450334,38.997886,99999,U,210,Providence Rd,Annapolis,MD,21401,noData
+MORRCHRVA1,DC,active,-77.29872,39.03615,2,GPS,111,Commonage Dr,Great Falls,VA,22066,noData
+MORRJESMD1,DC,discontinued,-77.006599,38.994577,99999,U,102,Devon Court,Silver Spring,MD,20910,noData
+MOSMCARMD1,DC,active,-76.46768,39.09271,0,GPS,473,New York Ave,Pasadena,MD,21122,noData
+MULLJOYVA1,DC,resight-only,-77.33961,38.687718,99999,U,4294,Newbold Ct,Woodbridge,VA,22192,noData
+MURTERIMD1,DC,discontinued,-77.082134,38.986002,99999,map,4117,Leland Ave,Chevy Chase,MD,99999,locationEstimate
+MUTRCYNMD1,DC,discontinued,-77.22274,38.984846,99999,map,2,Gate Post Court,Potomac,MD,20854,locationEstimate
+MUTRCYNVA1,DC,discontinued,-77.222729,38.984842,99999,map,1434,Ingleside Ave,McLean,VA,99999,locationEstimate
+MUTRCYNVA2,DC,active,-77.18272,38.93399,8,GPS,noData,noData,noData,noData,99999,noData
+MYERBRUMD1,DC,resight-only,-76.983759001,39.024953,99999,U,10324,Parkman Rd,Silver Spring,MD,20903,noData
+NADSPAUMD1,DC,resight-only,-76.762432263,38.955848338,99999,GPS,14004,Heatherstone Drive,Bowie,MD,20720,noData
+NARADESVA1,DC,discontinued,-77.795039,38.70968,99999,map,117,Green St,Warrenton,VA,20186,locationEstimate
+NATICATDC1,DC,discontinued,-77.071838,38.93115,99999,map,3612,Woodley Road Northwest,Washington,DC,20016,locationEstimate
+NATIGALDC1,DC,discontinued,-77.021388,38.891806,99999,map,noData,6th and Constitution Ave NW,Washington,DC,20565,locationEstimate
+NAYLMICMD1,DC,discontinued,-76.795876,39.318023,99999,map,8210,Dogwood Rd,Baltimore,MD,21244,locationEstimate
+NAYLMICMD2,DC,resight-only,-76.80688,39.307703,99999,U,2311,Daniels Rd,Ellicot City,MD,21043,noData
+NELSJIMMD1,DC,resight-only,-77.119754643,38.995386459,99999,GPS,8510,Bradmoor Drive,Bethesda,MD,20817,noData
+NEWBCARVA1,DC,active,-77.32746,38.88929,1,GPS,11018,Devenish Drive,Oakton,VA,22124,noData
+NICHALIMD1,DC,discontinued,-76.566301136,38.997022,99999,U,632,Harberts Ct,Annapolis,MD,21401,noData
+NICHSANMD1,DC,discontinued,-76.70061638,39.242845,99999,U,5520,Heatherwood Road,Baltimore,MD,21227,noData
+NORTHESMD1,DC,discontinued,-76.459529,39.631058,99999,map,1445,North Bend Rd,Jarrettsville,MD,21084,locationEstimate
+NZPAMAZDC1,DC,discontinued,-77.047894,38.927652,99999,map,3001,Connecticut Ave NW,Washington,DC,20008,locationEstimate
+NZPAMERDC1,DC,active,-77.048423,38.92926,99999,U,noData,noData,noData,DC,99999,noData
+NZPBIRDDC1,DC,active,-77.051862,38.929578,99999,U,noData,NZP Bird House,noData,noData,99999,noData
+NZPEDZODC1,DC,resight-only,-77.052622,38.931493,99999,map,3001,Connecticut Ave NW,Washington,DC,20008,locationEstimate
+NZPELEPDC1,DC,active,99999,99999,99999,U,noData,noData,noData,noData,99999,noData
+NZPFRONVA1,DC,discontinued,-78.165394,38.888174,99999,map,1500,Remount Rd,Front Royal,VA,22630,locationEstimate
+NZPPARDDC1,DC,active,-77.046277,38.9261,99999,U,noData,noData,noData,DC,99999,noData
+NZPSMBCDC1,DC,active,-77.047647,38.925786,99999,U,2800,Adams Mill Rd NW,Washington,DC,20009,"Lat Long from Google Maps, SE side of SMBC bldg."
+OBRICHRMD1,DC,active,-76.92444,39.01342,5,GPS,4804,Laguna Rd,College Park,MD,20740,noData
+ODELVINMD1,DC,discontinued,-77.066745,39.477325,99999,map,3515,Westview Rd,Westminster,MD,21157,locationEstimate
+ODELVINMD2,DC,resight-only,-76.54221,39.086621,99999,U,177,Berrywood Drive,Severna Park,MD,21146,noData
+OHAGKERVA1,DC,active,NA,NA,NA,NA,4100,Tidewater Court,Alexandria,VA,22309,noData
+OHAGKEVVA1,DC,active,-77.299941407,38.825071845,99999,GPS,10263,Friendship Court,Fairfax,VA,22032,noData
+OLONMARDC1,DC,active,-77.08421,38.94893,3,GPS,4536,43rd St NW,Washington,DC,20008,noData
+OMALMADVA1,DC,resight-only,-77.101973478,38.707739672,99999,GPS,9205,Volunteer Drive,Alexandria,VA,22309,noData
+OMLAKEVMD1,DC,discontinued,-76.731394,38.714152,99999,map,15715,Candy Hill Road,Upper Marlboro,MD,20772,locationEstimate
+ONTAHOUDC1,DC,active,-77.04259,38.92559,7,GPS,2853,Ontario Rd,Washington,DC,20009,noData
+OPALDPKMD1,DC,active,-77.004642,38.98168,99999,U,noData,noData,noData,DC,99999,noData
+OPPEJANMD1,DC,resight-only,-76.926282901,39.005031517,99999,GPS,9200,49th Ave.,College Park,MD,20740,noData
+OWENDORVA1,DC,resight-only,-77.39895,38.848046,99999,U,13106,Heart Leaf Court,Fairfax,VA,22030,noData
+OWENJOHMD1,DC,discontinued,-76.763676165,39.299355,99999,U,1410,Lincoln Woods Dr,Catonsville,MD,21228,noData
+OWENKATMD1,DC,resight-only,-77.146469,39.073258,99999,map,4,Vashi Lane,Rockville,MD,20852,locationEstimate
+PADORAMVA1,DC,resight-only,-77.103420751,38.785293,99999,U,6046,Redwood Lane,Alexandria,VA,22310,noData
+PALPARKDC1,DC,discontinued,-77.105627,38.924954,99999,map,5200,Sherier Pl,Washington,DC,20016,locationEstimate
+PANCSAMMD1,DC,discontinued,-77.005752,38.97139,99999,U,6601,Allegheny Ave,Takoma Park,MD,20912,noData
+PARVRONDC1,DC,active,NA,NA,NA,NA,3637,Brandywine St. NW,Washington,DC,20008,noData
+PATCLORDC1,DC,active,-77.0354,38.97622,0,GPS,7110,Alaska Ave NW,Washington,DC,20012,noData
+PATSNADMD1,DC,discontinued,-76.680715288,39.374438,99999,U,6601,Troy Ct,Baltimore,MD,21209,noData
+PATTPARMD1,DC,resight-only,-76.58182,39.288508,99999,U,2437,Eastern Avenue,Baltimore,MD,21224,noData
+PENISUEMD1,DC,active,NA,NA,NA,NA,12336,Bonmot Place,Reisterstown,MD,21136,noData
+PERNMIKMD1,DC,active,-77.03846,39.31998,3,GPS,15074,Bushy Park Road,Woodbine,MD,21797,noData
+PERRCHRMD1,DC,active,-76.54777,39.010404,1,GPS,534A,534A Epping Forest Rd,Annapolis,MD,21401,noData
+PHARAIMMD1,DC,active,-76.47009,39.017459,3,GPS,1700,St Margarets Road,Annapolis,MD,21409,noData
+PHELCLADC1,DC,discontinued,-77.054930255,38.984049,99999,U,7085,Wyndale St NW,Washington,DC,22015,noData
+PICCLINMD1,DC,discontinued,-77.030825,39.067279,99999,map,1463,Casino Circle,Silver Spring,MD,20906,locationEstimate
+PICKCREMD1,DC,discontinued,-76.126927,38.854629,99999,map,11450,Pickering Creek,Easton,MD,21601,locationEstimate
+PIROELADC1,DC,active,-77.08238,38.957433,99999,U,5214,42nd St NW,Washington,DC,20015,noData
+POMANAMD1,DC,resight-only,-77.11837094,39.01247665,99999,GPS,9514,Singleton Drive,Bethesda,MD,20817,noData
+POORLYNMD1,DC,discontinued,-76.662488,38.754529,99999,map,3070,Hickory Ridge Rd,Dunkirk,MD,20754,locationEstimate
+PORTTESMD1,DC,discontinued,-76.910736,38.94646,99999,map,4351,58th Avenue,Bladensburg,MD,20710,locationEstimate
+PRICKIMMD1,DC,active,NA,NA,NA,NA,6,Quince Mill Court,Gaithersburg,MD,20878,noData
+PRICMICMD1,DC,resight-only,-77.089102414,38.991155181,99999,GPS,4412,Highland Ave,Bethesda,MD,20814,noData
+PROBSUEMD1,DC,active,NA,NA,NA,NA,5413,Killingworth Way,Columbia,MD,21044,noData
+RABIANDMD1,DC,discontinued,-77.23235,39.136871,99999,map,15,Solataire Ct,Gaithersburg,MD,20878,locationEstimate
+RASMANAMD1,DC,resight-only,-77.143084488,38.974182908,99999,GPS,6400,W Halbert Rd.,Bethesda,MD,20817,noData
+RAUCDANMD1,DC,discontinued,-76.816002,38.853814,99999,map,2610,Ritchie Marlboro Rd,Upper Marlboro,MD,20774,locationEstimate
+RAUNERIMD1,DC,discontinued,NA,NA,NA,NA,2317,Peggy Lane,Silver Spring,MD,20910,noData
+RAUNERIMD2,DC,active,-76.88507,39.00142,3,GPS,107,Lakeside Drive,Greenbelt,MD,20770,noData
+RAYTIMMD1,DC,discontinued,99999,99999,99999,U,noData,noData,noData,noData,99999,noData
+RCPCG1DC1,DC,discontinued,-77.05345,38.966516667,99999,U,noData,Rock Creek Park,noData,noData,99999,noData
+RCPDP1DC1,DC,discontinued,-77.054286089,38.957769,99999,U,noData,Rock Creek Park,noData,noData,99999,noData
+RCPHC1DC1,DC,discontinued,-77.050323153,38.955604,99999,U,noData,Rock Creek Park,noData,noData,99999,noData
+RCPHC2DC1,DC,discontinued,-77.044800487,38.971424,99999,U,noData,Rock Creek Park,noData,noData,99999,noData
+RCPKM1DC1,DC,discontinued,-77.049326016,38.933808,99999,U,noData,Rock Creek Park,noData,noData,99999,noData
+RCPNC1DC1,DC,discontinued,-77.051652559,38.958085,99999,U,noData,Rock Creek Park,noData,noData,99999,noData
+RCPPH1DC1,DC,discontinued,-77.051133333,38.975316667,99999,U,noData,Rock Creek Park,noData,noData,99999,noData
+RCPPH2DC1,DC,discontinued,-77.048233333,38.9733,99999,U,noData,Rock Creek Park,noData,noData,99999,noData
+RCPPH3DC1,DC,discontinued,-77.0448,38.97105,99999,U,noData,Rock Creek Park,noData,noData,99999,noData
+RCPPM1DC1,DC,discontinued,-77.052386835,38.939538,99999,U,noData,Rock Creek Park,noData,noData,99999,noData
+RCPPM2DC1,DC,discontinued,-77.052640303,38.936326,99999,U,noData,Rock Creek Park,noData,noData,99999,noData
+RCPRR1DC1,DC,discontinued,-77.043366301,38.958069,99999,U,noData,Rock Creek Park,noData,noData,99999,Ross Road
+RCPRS1DC1,DC,discontinued,-77.0414,38.97825,99999,U,noData,Rock Creek Park,noData,noData,99999,Riley Spring
+RCPSMBCDC1,DC,resight-only,-77.047404817,38.92557,99999,U,1640,Columbia Rd NW #2,Washington,DC,20009,noData
+RCSVPARMD1,DC,discontinued,-77.106829,39.112668,99999,map,5100,Meadowside Lane,Rockville,MD,20853,locationEstimate
+REEDJENMD1,DC,resight-only,-77.000502459,38.978850779,99999,GPS,402,Boyd Avenue,Takoma Park,MD,20912,noData
+REIKROBMD1,DC,discontinued,-77.026854,39.249036,99999,map,14825,Woodfield Lane,Glenelg,MD,21737,locationEstimate
+REILJENMD1,DC,discontinued,-76.610887,38.897272,99999,map,3870,Birdsville Rd,Davidsonville,MD,21035,locationEstimate
+REIRJEAMD1,DC,discontinued,-76.545862,39.105331,99999,map,244,Old Magothy Bridge Rd,Pasadena,MD,21122,locationEstimate
+REITBOBMD1,DC,active,-77.02058,38.99424,5,GPS,727,Easley St,Silver Spring,MD,99999,Bob's house
+REUTSHAMD1,DC,discontinued,-76.62489,39.283698,99999,U,653,Washington Blvd,Baltimore,MD,21230,noData
+RICEBOBMD1,DC,resight-only,-76.995652177,38.977546284,99999,GPS,811,Hayward Ave,Takoma Park,MD,20912,noData
+RICHLIBMD1,DC,discontinued,-76.473826,39.002933,99999,map,311,Martins Cove Rd,Annapolis,MD,99999,locationEstimate
+RIDGHEIDC1,DC,active,-77.02761801,38.922978635,99999,GPS,2515,12th Street NW,Washington,DC,20009,noData
+ROBEKRIDC1,DC,active,NA,NA,NA,NA,1211,Decatur NW,Washington,DC,20011,noData
+ROCKPALMD1,DC,resight-only,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+ROGHTESMD1,DC,discontinued,-76.911283,38.94534,99999,map,4301,58th Avenue,Bladensburg,MD,20710,locationEstimate
+ROHRSALMD1,DC,active,-76.55349,38.859942,99999,U,902,Cumberstone Rd,Harwood,MD,20776,noData
+ROSAPESMD1,DC,discontinued,-76.973404,38.965892,99999,map,6111,Ager Road,Hyattsville,MD,20782,locationEstimate
+ROTHPAUVA1,DC,discontinued,-77.23712964,38.888939,99999,U,8409,Stonewall Dr,Vienna,VA,22180,noData
+ROTTJEAMD1,DC,resight-only,-76.757371799,38.994363466,99999,GPS,4714,Ramsgate Lane,Bowie,MD,20715,noData
+RUSHCLAMD1,DC,resight-only,-76.871529406,39.008355782,99999,GPS,8,Plateau Place Unit S,Greenbelt,MD,20770,noData
+RUSSJODMD1,DC,discontinued,-76.874740157,39.149845,99999,U,8011,Martown Rd,Laurel,MD,20723,noData
+RUTTJORMD1,DC,resight-only,-77.054722387,39.076568924,99999,GPS,2610,Belle Crest Lane,Silver Spring,MD,20906,noData
+SALAJENMD1,DC,discontinued,-77.18059,39.067381,99999,U,8809,Wandering Trail Dr,Potomac,MD,20854,noData
+SALALISMD1,DC,resight-only,-77.075521172,39.021833794,99999,GPS,3810,Washington Street,Kensington,MD,20895,noData
+SALOSHEMD1,DC,active,-76.92108,38.92721,0,GPS,5607,Greenleaf Rd,Cheverly,MD,99999,noData
+SANFCARMD1,DC,resight-only,-76.86772,38.759709,99999,U,9417,Dangerfield Rd,Clinton,MD,20735,noData
+SARGMARMD1,DC,resight-only,-77.05741,38.99516,99999,U,8422,Donnybrook Drive,Chevy Chase,MD,20815,noData
+SCALMARVA1,DC,active,NA,NA,NA,NA,8740,Redman St,Springfield,VA,22153,noData
+SCHILYDMD1,DC,discontinued,-77.290863162,39.079726,99999,U,13621,Esworthy Rd,Darnestown,MD,20874,noData
+SCHIMARMD1,DC,resight-only,-77.10883,39.106011,99999,U,15224,Manor Lake Drive,Rockville,MD,20853,noData
+SCHLROBMD1,DC,active,-76.81905,39.33631,5,GPS,8918,Dogwood Road,Baltimore,MD,21244,locationEstimate
+SCHOPAUMD1,DC,discontinued,-76.820832,39.465927,99999,map,227,Mystic Wood Rd,Reisterstown,MD,21136,locationEstimate
+SCHUDONMD1,DC,discontinued,-76.501348,38.897933,99999,map,1200,Dixona Dr,Mayo,MD,21106,locationEstimate
+SCHUJENMD1,DC,active,-76.75629453,38.996091681,99999,GPS,12108,Round Tree Lane,Bowie,MD,20715,noData
+SCOLWENMD1,DC,discontinued,-76.548078,39.358982,99999,map,3113,Pinewood Ave,Baltimore,MD,21214,locationEstimate
+SEMMLUTMD1,DC,discontinued,-77.239584,39.050732,99999,U,11646,Partridge Run Rd,Potomac,MD,20854,locationEstimat
+SERCGUEMD1,DC,discontinued,-76.553137,38.888733,99999,map,647,Contees Wharf Road,Edgewater,MD,21037,locationEstimate
+SEWADIAMD1,DC,discontinued,-77.22359965,38.996516139,99999,GPS,10809,Rock Run Drive,Potomac,MD,20854,noData
+SHANEDWMD1,DC,resight-only,-77.153731653,38.985771944,99999,GPS,12,Royal Dominion Ct,Bethesda,MD,20817,noData
+SHAYSARMD1,DC,discontinued,-76.650812414,39.205664,99999,U,205,Hilltop Rd,Linthicum Heights,MD,21090,noData
+SHEEMARMD1,DC,discontinued,-76.948867,38.960511,99999,map,6007,40th Avenue,Hyattsville,MD,20782,locationEstimate
+SILLSCOMD1,DC,active,-76.99169,38.98627,8,GPS,1108,Jackson Ave,Takoma Park,MD,20912,noData
+SIMMJOAVA1,DC,discontinued,-77.379128,38.778717,99999,map,7031,Cold Point Road,clifton,VA,20124,locationEstimate
+SIMOROSVA1,DC,discontinued,-77.074493112,38.81276,99999,U,502,Robinson Ct,Alexandria,VA,22302,noData
+SINGDADMD1,DC,resight-only,-77.18879,39.210861,99999,map,9217,English Meadow Way,Gaithersburg,MD,20882,locationEstimate
+SINGTONMD1,DC,discontinued,-76.476573,38.971602,99999,map,521,First St,Annapolis	MD,noData,99999,locationEstimate
+SINGVIRDC1,DC,active,-77.0755,38.94755,1,GPS,3806,Albermarle St,NW DC 20016,noData,20016,noData
+SINGVIRMD1,DC,active,-77.075251702,38.947793294,99999,GPS,3806,Albemarle St. NW,Washington,DC,20016,noData
+SIZOOPKDC1,DC,active,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+SLIGOPKMD1,DC,active,-77.010293,38.997415,99999,U,noData,noData,noData,DC,99999,noData
+SMITHCADC1,DC,active,-77.025817,38.888604,99999,U,noData,noData,noData,DC,99999,noData
+SMITJRMD1,DC,active,-76.937713674,38.960943989,99999,GPS,4515,Oliver street,Riverdale Park,MD,20737,noData
+SMITMARMD1,DC,discontinued,-77.112652,38.969614,99999,map,6002,Springfield Dr,Bethesda,MD,20816,locationEstimate
+SOLIAPRMD1,DC,resight-only,-76.766465488,38.411006,99999,U,27042,Glenn Ct,Mechanicsville,MD,20659,noData
+SOLLCHRMD1,DC,resight-only,-77.142,38.973968,99999,U,6403,W Halbert Rd,Bethesda,MD,20817,noData
+SPETMARMD1,DC,resight-only,-76.728390275,38.924550235,99999,GPS,5907,Ann Arbor Court,Bowie,MD,20716,noData
+SPEYPAUMD1,DC,discontinued,-76.507121578,38.997531,99999,U,59,McPherson Rd,Annapolis,MD,21401,noData
+SPRINPKMD1,DC,active,-77.005201,38.973139,99999,U,noData,noData,noData,DC,99999,noData
+STANJEFMD1,DC,active,-77.0684,38.97719,3,GPS,3421,Raymond St,Chevy Chase,MD,20815,noData
+STAVKORMD1,DC,discontinued,-77.002615,38.982348,99999,map,7508,Carroll Avenue,Takoma Park,MD,20912,locationEstimate
+STEWBETMD1,DC,active,-76.98587,39.08302,0,GPS,1224,Crockett Lane,Silver Spring,MD,20904,noData
+STONKERMD1,DC,active,NA,NA,NA,NA,1303,Elson Court,Takoma Park,MD,20912,noData
+STORPATMD1,DC,discontinued,-76.879357284,39.225897,99999,U,5418,Hesperus Drive,Columbia,MD,21044,noData
+STUECHRVA1,DC,discontinued,-77.166488,38.91379,99999,map,6514,Ivy Hill Dr,McLean,VA,22101,locationEstimate
+STUECHRVA2,DC,active,-77.16607,38.91761,3,GPS,6509,Beverly Ave,McLean,VA,99999,noData
+STURCARMD1,DC,resight-only,-76.873480247,39.003071,99999,U,58F,Crescent Rd,Greenbelt,MD,20770,noData
+SUBRSTEMD1,DC,discontinued,-77.015237887,39.002663,99999,U,500,Dartmouth Ave,Silver Spring,MD,20910,noData
+SUITKATMD1,DC,discontinued,-76.614036,39.112099,99999,map,8315,Sunnyview Dr,Millersville,MD,21108,locationEstimate
+SULLPAUVA1,DC,discontinued,-77.106526766,38.823134,99999,U,4300,Ivanhoe Pl,Alexandria,VA,22304,noData
+SWANELIMD1,DC,discontinued,-76.580815,39.148162,99999,map,367,Beaghan Dr,Glen Burnie,MD,21060,locationEstimate
+TANGLAUDC1,DC,active,-76.99245,38.9412,0,GPS,1001,Taussig Place NE,Washington,DC,99999,noData
+TATEJUAMD1,DC,active,-76.56586,38.96538,3,GPS,2781,Autumn Chase Run,Annapolis,MD,21401,noData
+TAUBKAYMD1,DC,resight-only,-76.992718739,39.024404478,99999,GPS,909,Crest Park Drive,Silver Spring,MD,20903,noData
+TAYLGLOMD1,DC,discontinued,-77.086122,38.982259,99999,map,7206,Oakridge Ave,Chevy Chase,MD,20815,locationEstimate
+TAYLOESVA1,DC,discontinued,-77.114073,38.907669,99999,map,2600,N Stuart St,Arlington,VA,99999,locationEstimate
+THOMBARMD1,DC,resight-only,-77.273282791,39.075817728,99999,GPS,13201,Moran Drive,North Potomac,MD,20878,noData
+THOMCARMD1,DC,discontinued,-77.085431,38.945333,99999,map,4346,Windom Place NW,Washington,DC,20016,locationEstimate
+THOMMARDC1,DC,discontinued,99999,99999,99999,U,noData,noData,noData,noData,99999,noData
+THOMSUEMD1,DC,discontinued,-76.5389908,39.012938,99999,U,502A,Epping Forest Road,Annapolis,MD,21401,noData
+TINIKATMD1,DC,discontinued,-76.992594,39.140526,99999,map,17203,Emerson Drive,Silver Spring,MD,20905,locationEstimate
+TOWNJOADC1,DC,active,NA,NA,NA,NA,4980,Quebec Street NW,Washington,DC,20016,noData
+TRAUPATVA1,DC,discontinued,-77.303937753,38.999398,99999,U,803,Gouldman Ln,Great Falls,VA,22066,noData
+TRAUPATVA2,DC,resight-only,-77.3286,38.996908,99999,U,1041,Utterback Store Road,Great Falls,VA,22066,noData
+TUFTKATMD1,DC,discontinued,-77.076584,39.299093,99999,map,2830,Duvall Rd,Woodbine,MD,21797,locationEstimate
+TUNICATMD1,DC,discontinued,-76.99349,38.978113,99999,map,907,Larch Ave,Takoma Park,MD,20912,locationEstimate
+UNGELAUDC1,DC,discontinued,-77.066524,38.906579,99999,map,3308,N St NW,Washington,DC,20007,locationEstimate
+URBABETMD1,DC,discontinued,-76.685049,38.996228,99999,map,1791,Regents Park Rd,Crofton,MD,21114,locationEstimate
+VERSBETMD1,DC,resight-only,-76.546883,38.929357,99999,map,1807,Keymar Rd,Edgewater,MD,99999,locationEstimate
+VERSBETMD2,DC,active,-76.59784,38.72271,3,GPS,7030,Old Solomons Island Road,Owings,MD,99999,noData
+VONGJENMD1,DC,active,-77.13128,39.00987,0,GPS,6309,Marywood Rd,Bethesda,MD,20817,noData
+VOSSCOLVA1,DC,resight-only,-77.28131,38.906239,99999,U,2208,Abbotsford Dr,Vienna,VA,22181,noData
+WALKPATVA1,DC,discontinued,-77.327739537,38.689261,99999,U,12230,Dapple Gray Court,Woodbridge,VA,22192,noData
+WALTBONMD1,DC,discontinued,-76.959979,38.616205,99999,map,6127,St Anthony's Ct,Waldorf,MD,20603,locationEstimate
+WAPLEESVA1,DC,resight-only,-77.34399,38.876111,99999,U,11509,Waples Mill Road,Oakton,VA,22124,noData
+WARDDOUVA1,DC,discontinued,-77.089050657,38.884061,99999,U,930,N Cleveland St,Arlington,VA,22201,noData
+WARNJIMDC1,DC,active,NA,NA,NA,NA,1316,Leegate Road NW,Washington,DC,20012,noData
+WATSPATDC1,DC,discontinued,-77.064569658,38.966165,99999,U,3207,Northampton St NW,Washington,DC,20015,noData
+WATSTERMD1,DC,discontinued,-76.918178647,39.044855291,99999,GPS,4506,Yates Road,Beltsville,MD,20705,noData
+WELLCARMD1,DC,discontinued,-77.038502,39.081093,99999,map,13730,Town Line Rd,Silver Spring,MD,20906,locationEstimate
+WESTNANMD1,DC,active,-77.014078891,39.073701286,99999,GPS,13305,Locksley Lane,Silver Spring,MD,20904,noData
+WHEATESMD1,DC,discontinued,-77.092482,39.067105,99999,map,4650,Falcon St,Wheaton,MD,20853,locationEstimate
+WHEATPKMD1,DC,active,-77.036859,39.056253,99999,U,noData,noData,noData,noData,99999,noData
+WHITLAUDC1,DC,discontinued,-77.081697233,38.734602,99999,U,8216,Holland Rd,Alexandria,VA,22306,noData
+WIEBFRAMD1,DC,resight-only,-77.01577,38.977191,99999,U,7112,Cedar Ave,Takoma Park,MD,20912,noData
+WIKACORMD1,DC,resight-only,-76.48508,39.008744,99999,U,1768,Baltimore/ Annapolis Blvd,Annapolis,MD,21401,noData
+WILDANNVA1,DC,discontinued,-77.09839,38.899038,99999,map,2337,N Fillmore St,Arlington,VA,22207,locationEstimate
+WILDANNVA2,DC,resight-only,-77.204878,38.868079,99999,U,3017,Pine Spring Rd,Falls Church,VA,22042,noData
+WILELINMD1,DC,resight-only,-76.211910425,38.969596,99999,U,110,Canal St,Grasonville,MD,21638,noData
+WILLCYNVA1,DC,discontinued,-77.212943557,38.877453,99999,U,2832,Hogan Court,Falls Church,VA,22043,noData
+WILLHOLMD1,DC,active,NA,NA,NA,NA,336,Redwood Grove Court,Millersville,MD,21108,noData
+WILLMARVA1,DC,resight-only,-77.105604294,38.726443,99999,GPS,8505,Radford Ave,Alexandria,VA,99999,noData
+WILLRAJMD1,DC,resight-only,-76.49434,38.969231,99999,U,200,President St,Annapolis,MD,21403,noData
+WILLSHAMD1,DC,resight-only,-76.743914345,38.931527759,99999,GPS,3026,Nutwood Lane,South Bowie,MD,20716,noData
+WILLTERMD1,DC,resight-only,-76.91765,38.930064,99999,U,3205,Tremont Ave,Cheverly,MD,20785,noData
+WILLTINVA1,DC,resight-only,-77.34858534,38.786955,99999,U,11639,Havenner Rd,Fairfax Station,VA,22039,noData
+WINGJERMD1,DC,discontinued,-76.986449,38.687903,99999,map,14618,Bisque St,Accokeek,MD,20607,locationEstimate
+WISECELMD1,DC,resight-only,-77.03262,39.069748,99999,U,1534,Hugo Circle,Silver Spring,MD,20906,noData
+WOLFAMYDC1,DC,active,-77.04321,38.9185,2,GPS,1838,Wyoming Ave NW,Washington,DC,20009,noData
+WOLFKARDC1,DC,resight-only,-77.06121,38.94187,99999,U,4025,Connecticut Ave NW #404,Washington,DC,20008,noData
+WOODELEVA1,DC,resight-only,-77.15308,38.889592,99999,U,6310,N 22nd Rd,Arlington,VA,22205,noData
+WOODLESMD1,DC,active,-76.73913017,38.984527088,99999,GPS,12612,Milburn Lane,Bowie,MD,20715,noData
+WOODPAUVA1,DC,active,-77.29446,38.84077,1,GPS,4117,Virgina Street,Fairfax,VA,22032,noData
+WOODROWVA1,DC,discontinued,-77.143947,38.851221,99999,map,6101,Knollwood Drive,Falls Church,VA,22041,locationEstimate
+WRIGNOAMD1,DC,discontinued,-76.840059,39.191128,99999,map,7180,Talisman Lane,Columbia,MD,21045,locationEstimate
+WRIGVENMD1,DC,discontinued,-76.89769,38.72139,99999,U,6307,Hickory Bend,Clinton,MD,20735,noData
+YOUNELIMD1,DC,resight-only,-77.0904,39.069366,99999,U,13004,Freeland Rd,Rockville,MD,20853,noData
+YOUNKIMVA1,DC,resight-only,-77.28131,38.746031,99999,U,7805,Preakness Lane,Fairfax Station,VA,22039,noData
+ZAMBTRAMD1,DC,resight-only,-77.075,38.982775,99999,U,3712,Underwood Street,Chevy Chase,MD,20815,noData
+ZASTMARMD1,DC,resight-only,-76.927993611,38.959564258,99999,GPS,5022,Oglethorpe Street,Riverdale,MD,20737,noData
+ZEMKSYDVA1,DC,resight-only,-77.077918,38.74513,99999,U,7808,Schelhorn Road,Alexandria,VA,22306,noData
+ZENKBOBMD1,DC,discontinued,-76.488423,38.96237,99999,map,851,Fairview,Annapolis,MD,99999,locationEstimate
+AAROJESFL1,Gainesville,resight-only,-82.31812,29.659659,99999,U,630,NE 8th Ave,Gainesville,FL,32601,noData
+ADAMVICFL1,Gainesville,active,-82.3629,29.65016,99999,GPS,202,SW 27th St,Gainesville,FL,32607,noData
+ANDRJENFL1,Gainesville,resight-only,-82.321941,29.661625,99999,U,1015,NE 3rd St,Gainesville,FL,32601,noData
+BANDCATFL1,Gainesville,active,-82.52331,29.23485,99999,GPS,6650,SE 150th Ave,Morriston,FL,99999,locationEstimate
+BLAUVICFL1,Gainesville,discontinued,-82.43076971,29.663499,99999,U,1105,Ft Clarke Blvd Apt 1612,Gainesville,FL,32606,noData
+BLOOLEEFL1,Gainesville,active,-82.43333,29.56487,99999,GPS,8518,SW 98th Ave,Gainesville,FL,32608,noData
+BOUGROBFL1,Gainesville,resight-only,-82.385173,29.670174,99999,U,1903,NW 40 Terrace,Gainesville,FL,99999,noData
+BREMSARFL1,Gainesville,discontinued,-82.37878418,29.660097,99999,U,811,NW 37th Terrace,Gainesville,FL,32605,noData
+BRYAANGFL1,Gainesville,active,-82.41119,29.73884,99999,GPS,9205,NW 64 Ter,noData,noData,99999,noData
+CAMPGINFL1,Gainesville,resight-only,99999,99999,99999,U,3725,SW 6th Pl,noData,noData,99999,noData
+CAMPPAUFL1,Gainesville,active,-82.36549,29.68024,99999,GPS,2921,NW 29th St,Gainesville,FL,32605,noData
+CARLDAVFL1,Gainesville,active,-82.43845,29.65902,99999,GPS,731,731 NW 91st Street,Gainesville,FL,32601,noData
+CARRVIRFL1,Gainesville,discontinued,-82.31615,29.653214,99999,U,113,NE 8th St,Gainesville,FL,32601,noData
+CASEANNFL1,Gainesville,active,-82.35385,29.67446,99999,GPS,2245,NW 24th Ave,Gainesville,FL,32605,noData
+CHERNADFL1,Gainesville,active,-82.28356,29.62779,99999,GPS,3216,SE 27th Ave,Gainesville,FL,32641,noData
+CHURCARFL1,Gainesville,active,-82.31863,29.67133,99999,GPS,2024,NE 6th Terrace,Gainesville,FL,32609,noData
+CIBUJEAFL1,Gainesville,active,-82.44714,29.71153,99999,GPS,9805,NW 62nd Lane,Gainesville,FL,32653,noData
+COCKNICFL1,Gainesville,discontinued,-82.42218165,29.716911,99999,U,6733,NW 77th St,Gainesville,FL,32653,noData
+COCKTERFL1,Gainesville,discontinued,-82.40567541,29.686678,99999,U,15778,NW 58th Ave,Alachua,FL,32615,noData
+COLLCLAFL1,Gainesville,resight-only,-82.485053,29.672741,99999,U,2207,NW 135th Terrace,Gainesville,FL,32606,noData
+COLLKEIFL1,Gainesville,active,-82.05865,29.70731,99999,GPS,24919,NE SR26,Melrose,FL,32666,noData
+COXANDFL1,Gainesville,active,-82.42992,29.59628,99999,GPS,8018,SW 63rd Lane,Gainesville,FL,32608,noData
+CROSLEXFL1,Gainesville,discontinued,-82.363278,29.618019,99999,map,noData,Lexington Crossing Apartments,Gainesville,FL,99999,locationEstimate
+DAYLAUFL1,Gainesville,active,-82.2473,29.63566,99999,GPS,6619,SE 14th Lane,Gainesville,FL,32641,noData
+DEENSHEFL1,Gainesville,discontinued,-82.52517039,29.623654,99999,U,3128,SW 170th Street,Archer,FL,32618,noData
+DOUGSANFL1,Gainesville,active,-82.30879,29.51678,99999,GPS,1172,SE 149th Place,Micanopy,FL,99999,noData
+DOWBENFL1,Gainesville,discontinued,-82.44832733,29.60312,99999,U,9937,SW 54th Lane,Gainesville,FL,32608,noData
+DOYLJAMFL1,Gainesville,resight-only,-82.18251,29.661644,99999,map,1015,County Road 234,Windsor,FL,99999,locationEstimate
+DUFFSHAFL1,Gainesville,discontinued,-82.350793,29.64642,99999,map,noData,Graham Hall,Gainesville,FL,32612,locationEstimate
+ELLIJONFL1,Gainesville,active,-82.2962,29.63108,99999,GPS,2205,SE 23rd Place,Gainesville,FL,32641,noData
+ENNEBECFL1,Gainesville,discontinued,-82.29541911,29.63125,99999,U,14806,NW 147th Ave,Alachua,FL,32615,noData
+EWINSAMFL1,Gainesville,resight-only,-82.361774,29.662485,99999,map,2610,NW 11th Ave,Gainesville,FL,32605,locationEstimate
+FIGUCHAFL1,Gainesville,discontinued,-82.39125527,29.698417,99999,U,4830,NW 43rd St Apt 238,Gainesville,FL,99999,noData
+FLAGMARFL1,Gainesville,active,-82.34321,29.59866,99999,GPS,1701,SW 58th Ave,Gainesville,FL,32608,noData
+FLAMSCOFL1,Gainesville,active,-82.44131,29.66766,99999,GPS,9312,NW 15 Pl,Gainesville,FL,32606,locationEstimate
+FREEJOHFL1,Gainesville,active,-82.33599,29.66421,99999,GPS,1024,NW 13th Avenue,Gainesville,FL,32601,locationEstimate
+FULLPAMFL1,Gainesville,active,-82.63689,29.82501,99999,GPS,27716,NW 182nd Ave,High Springs,FL,99999,locationEstimate
+GIRLPLAFL1,Gainesville,discontinued,-82.351517,29.687885,99999,map,2101,NW 39th Ave,Gainesville,FL,32605,locationEstimate
+GOWAGEOFL1,Gainesville,active,-82.39008,29.66754,99999,GPS,4400,NW 16th Place,Gainesville,FL,32605,noData
+GOWAJOAFL1,Gainesville,active,-82.32144,29.65617,99999,GPS,406,NE 5th Avenue,Gainesville,FL,32601,noData
+GRANIANFL1,Gainesville,active,-82.49689,29.64017,99999,GPS,1404,SW 143rd Street,Newberry,FL,32669,noData
+GRINJENFL1,Gainesville,discontinued,-82.35543347,29.692381,99999,U,4216,NW 22nd Terrace,Gainesville,FL,32605,noData
+HALLGRAFL1,Gainesville,resight-only,-82.351102,29.64714,99999,U,684,Gale Lemerand Dr,Gainesville,FL,32611,noData
+HANLCORFL1,Gainesville,discontinued,-82.43621185,29.64366,99999,U,835,NW 14th Ave,Gainesville,FL,32601,noData
+HAZZIANFL1,Gainesville,resight-only,-82.52293,29.69339,99999,U,4211,NW 170th Street,Jonesville,FL,32669,noData
+HEINANNFL1,Gainesville,discontinued,-82.31560531,29.670431,99999,U,2120,NW 7th St,Gainesville,FL,32609,noData
+HENJELAFL1,Gainesville,resight-only,-82.45174,29.602099,99999,U,10254,SW 55th Lane,Gainesville,FL,32608,noData
+HERRJAYFL1,Gainesville,active,-82.55321,29.47942,99999,GPS,950,132nd Terrace,Archer,FL,99999,locationEstimate
+HOSTMARFL1,Gainesville,active,-82.3846,29.66887,99999,GPS,1804,NW 51st Terrace,Gainesville,FL,32605,locationEstimate
+HOUSEPREFL1,Gainesville,resight-only,-82.354406,29.65155,99999,U,noData,President's House,Gainesville,FL,32603,noData
+INGRBENFL1,Gainesville,active,-82.49235,29.77595,99999,GPS,13850,NW 131 Place,Alachua,FL,99999,noData
+JACOSUSFL1,Gainesville,active,-82.34895,29.66428,99999,GPS,2002,NW 12th Rd,Gainesville,FL,32605,noData
+JONEHARFL1,Gainesville,active,-82.34166,29.61851,99999,GPS,3709,SW 15th Street,noData,noData,99999,noData
+KENTADAFL1,Gainesville,active,-82.31024,29.64941,99999,GPS,222,SE 12th St,Gainesville,FL,32641,noData
+KLUBKARFL1,Gainesville,resight-only,-82.40767846,29.702114,99999,U,5128,NW 60th Terr,Gainsville,FL,32653,noData
+KNOXMIKFL1,Gainesville,active,-82.32754,29.68285,99999,GPS,303,NW 33 Avenue,Gainesville,Fl,32609,noData
+KORNHARFL1,Gainesville,resight-only,-82.438976,29.569814,99999,U,9192,SW 90th St,Gainesville,FL,32608,noData
+KOWAELIFL1,Gainesville,active,-82.38075,29.71569,99999,GPS,6611,NW 38th Terrace,Gainesville,FL,32653,noData
+KRATANDFL1,Gainesville,resight-only,-82.310457,29.629228,99999,U,1201,SE 24th Avenue,Gainesville,FL,32641,noData
+LAMMLAUFL1,Gainesville,active,-82.36671,29.65398,99999,GPS,204,NW 29th St,Gainesville,FL,32607,noData
+LAUESARFL1,Gainesville,active,-82.36906482,29.70681497,99999,U,3126,NW 56th Place,Gainesville,FL,32653,noData
+LICHJERFL1,Gainesville,active,-82.3821,29.64623,99999,GPS,3835,SW 6th Place,gainesville,FL,32607,noData
+LISVINFL1,Gainesville,discontinued,-82.316725,29.647211,99999,U,436,SE 8th Street,Gainesville,FL,32601,noData
+LOUWLISFL1,Gainesville,resight-only,-82.536884,29.618331,99999,U,18404,SW 42nd Lane,Newberry,noData,32669,noData
+LOWRSTEFL1,Gainesville,active,-82.39716,29.44645,99999,GPS,623,NE 2nd St,Williston,FL,32696,noData
+LUISJONFL1,Gainesville,discontinued,-82.35335,29.660283333,99999,U,2159,NW 9th Ave,Gainesville,FL,32603,noData
+MACHCHRFL1,Gainesville,discontinued,-82.448336883,29.603066,99999,U,2151,W University Avenue,Gainesville,FL,32603,noData
+MANEXXXFL1,Gainesville,active,-82.31727,29.4384,99999,GPS,11630,NW 200th St,Micanopy,FL,32667,noData
+MAULSHAFL1,Gainesville,active,-82.261001,29.383675,99999,U,922,SW 88th Street,Gainesville,FL,32607,noData
+MCCOWALFL1,Gainesville,resight-only,-82.431281,29.602818,99999,U,5435,SW 83rd Terrace,Gainesville,FL,32608,noData
+MILLKARFL1,Gainesville,resight-only,-82.45175131,29.60210875,99999,U,810,NE 4th Ave,Gainesville,FL,32601,noData
+MILLMARFL1,Gainesville,active,-82.370702,29.697342,99999,U,3235,NW 46th Pl,Gainesville,FL,99999,noData
+NAHIWILFL1,Gainesville,active,99999,99999,99999,U,noData,noData,noData,noData,99999,noData
+NATURTLFL1,Gainesville,active,-82.36873,29.63285,99999,GPS,noData,Natural Area Drive,Gainesville,FL,32608,noData
+NOSSANDFL1,Gainesville,active,-82.3805,29.66554,99999,GPS,1405,NW 38th Street,noData,noData,99999,noData
+ONEAJACFL1,Gainesville,discontinued,-82.24733123,29.635771,99999,U,3706,NW 58th Terrace,Gainesville,FL,32606,noData
+PALUMATFL1,Gainesville,active,-82.27659,29.051253,99999,GPS,208,NE 9th Ave,micanopy,FL,99999,noData
+PERRJULFL1,Gainesville,discontinued,-82.191576,29.392085,99999,U,414,NE 5th Ave,Gainesville,FL,32601,noData
+PFEIJOHFL1,Gainesville,active,-82.19528,29.6584,99999,GPS,11708,NE 7th Ave,Gainesville,FL,32641,noData
+PLACGIRFL1,Gainesville,resight-only,-82.3614525,29.621078,99999,U,2101,NW 39th Ave,Gainesville,FL,32605,noData
+PLAZBUTFL1,Gainesville,discontinued,-82.38177042,29.62306,99999,U,noData,"Best Buy, Butler Plaza",Gainesville,FL,99999,noData
+PRESHOUFL1,Gainesville,active,99999,99999,99999,U,noData,noData,noData,noData,99999,noData
+PRESPENFL1,Gainesville,active,-82.41505,29.61532,99999,GPS,4220,SW 67th Terrace,Gainesville,FL,32608,noData
+PROWGARFL1,Gainesville,active,-82.40082,29.71951,99999,GPS,7025,NW 52nd Drive,Gainesville,FL,32653,noData
+ROBIRONFL1,Gainesville,active,-82.4905,29.7063,99999,GPS,13715,NW 56th Avenue,Gainesville,FL,32653,noData
+ROBISCOFL1,Gainesville,resight-only,-82.43741,29.64333,99999,U,8936,SW 11th Ave,Gainesville,FL,99999,noData
+SHAHMAUFL1,Gainesville,active,-82.43604,29.64376,99999,GPS,922,SW 88th Street,Gainesville,FL,32607,noData
+SILVCELFL1,Gainesville,resight-only,-82.345244,29.671154,99999,U,1651,NW 19th Circle,Gainesville,FL,32605,noData
+STEPGREFL1,Gainesville,active,-82.49715,29.63621,99999,GPS,1844,SW 143rd Street,Jonesville,noData,99999,noData
+STRARICFL1,Gainesville,active,-82.31892,29.66124,99999,GPS,611,NE 10 Pl,noData,noData,99999,noData
+SUARERIFL1,Gainesville,discontinued,-82.347167,29.623438,99999,U,1710,SW 35th Place,Gainesville,FL,99999,noData
+VONMGREFL1,Gainesville,discontinued,-82.224575,29.385423,99999,U,3716,SW 4th Place,Gainesville,FL,32607,noData
+WATSJOSFL1,Gainesville,active,-82.45276,29.67767,99999,GPS,2616,NW 104th Ct,noData,noData,32606,noData
+WEBBTOMFL1,Gainesville,discontinued,-82.3553734,29.692526,99999,U,1935,NE 8th St,Gainesville,FL,32609,noData
+WELLBREFL1,Gainesville,active,-82.35295,29.72176,99999,GPS,7317,NW 21 Way,Gainesville,FL,32653,noData
+WHITLIZFL1,Gainesville,resight-only,-82.314362,29.652604,99999,U,101,NE 9th Street,Gainesville,FL,32601,noData
+WILLJIMFL1,Gainesville,active,-82.39462,29.66666,99999,GPS,4820,NW 15th Place,noData,noData,99999,noData
+WILLNAHFL1,Gainesville,discontinued,-82.40886249,29.662515,99999,U,1020,NW 61st Terrace,Gainesville,FL,32605,noData
+WINTCHAFL1,Gainesville,active,-82.3356,29.67466,99999,GPS,1019,NW 24th Ave,Gainesville,FL,32601,noData
+YOPPINCFL1,Gainesville,resight-only,-82.326262,99999,99999,map,524,NW 1st Street,Gainesville,FL,32601,locationEstimate
+ALBEJOAPA1,Pittsburgh,resight-only,-79.940503,40.580084,99999,map,4366,Kenson Dr,Allison Park,PA,15101,locationEstimate
+ALCACHLPA1,Pittsburgh,resight-only,-79.922222,40.419631,99999,map,3169,Beechwood Blvd,Pittsburgh,PA,15217,locationEstimate
+ALEXROBPA1,Pittsburgh,resight-only,-80.013415,40.4622,99999,map,1926,Perrysville Ave,Pittsburgh,PA,15214,locationEstimate
+AMANDRUPA1,Pittsburgh,active,-80.103982,40.284954,99999,map,114,N Heide Ln,McMurray,PA,15317,locationEstimate
+ANDEBRUPA1,Pittsburgh,resight-only,-80.187639,40.627599,99999,U,122,Mason Rd,Baden,PA,15005,noData
+ARNDKARPA1,Pittsburgh,resight-only,-79.905615,40.444813,99999,map,7124,Willard St,Point Breeze,PA,15208,locationEstimate
+AZARCARPA1,Pittsburgh,active,-79.898519,40.445298,99999,U,7439,Richland Manor Dr,Pittsburgh,PA,99999,noData
+BAERMIKPA1,Pittsburgh,resight-only,-79.761329,40.398538,99999,U,136,Ridgeview Dr,Monroeville,PA,15146,noData
+BALDARTPA1,Pittsburgh,active,-79.79083,40.34736,99999,map,2009,McClintock Rd,White Oak,PA,15131,noData
+BARTTARPA1,Pittsburgh,active,-80.255665,40.715854,99999,map,437,Pittsburgh Rd,Rochester,PA,15074,locationEstimate
+BECIBARPA1,Pittsburgh,active,-80.073508,40.643914,99999,map,861,Oak Rd,Bradford Woods,PA,15015,locationEstimate
+BERASHEPA1,Pittsburgh,active,-80.09299,40.547892,99999,map,319,Crimson Dr,Pittsburgh,PA,15237,locationEstimate
+BERGANDPA1,Pittsburgh,resight-only,-80.178234,40.561372,99999,map,502,Spanish Tract,Sewickley,PA,15143,locationEstimate
+BERNJUNPA1,Pittsburgh,active,-79.953197,40.602037,99999,U,4966,Gittings Dr,Gibsonia,PA,15044,noData
+BERNKENPA1,Pittsburgh,resight-only,-80.013816,40.551549,99999,U,102,Van Fleet Circle,Pittsburgh,PA,15202,noData
+BEVIPETPA1,Pittsburgh,active,-80.131648,40.259269,99999,map,201,Waterdam Rd,Canonsburg,PA,15317,locationEstimate
+BIREROYPA1,Pittsburgh,active,-79.895097,40.419177,99999,map,1529,Mansion Pl,Pittsburgh,PA,15218,locationEstimate
+BODNGEOPA1,Pittsburgh,resight-only,-79.966782,40.496696,99999,map,299,Hawthorne Rd,Pittsburgh,PA,15209,locationEstimate
+BOREJOYPA1,Pittsburgh,resight-only,-80.036159,40.546476,99999,map,1116,Perry Highway,Pittsburgh,PA,15237,locationEstimate
+BOREJOYPA2,Pittsburgh,resight-only,99999,99999,99999,noData,4485,Middle Rd,Allison Park,PA,15101,noData
+BOSAJOEPA1,Pittsburgh,resight-only,-79.936751,40.557295,99999,map,2537,Middle Rd,Glenshaw,PA,15116,locationEstimate
+BOZESARPA1,Pittsburgh,resight-only,-79.654472,40.80602,99999,U,405,Hogg Rd,Worthington,PA,16262,noData
+BRUNKIMPA1,Pittsburgh,resight-only,-79.702042,40.448102,99999,map,4016,Duchess Court,Murrysville,PA,15668,locationEstimate
+BYERHEAPA1,Pittsburgh,active,-80.071362,40.559248,99999,U,1630,King James Dr,Pittsburgh,PA,15237,noData
+CASACORPA1,Pittsburgh,resight-only,-80.049145,40.424809,99999,map,113,Poplar St,Pittsburgh,PA,15205,locationEstimate
+CASESUEPA1,Pittsburgh,resight-only,-79.487879,40.450783,99999,U,1735,Edmon Road,Avonmore,PA,99999,noData
+CHIOKELPA1,Pittsburgh,resight-only,-80.084749,40.432414,99999,map,570,Hamilton Road,Pittsburgh,PA,15205,locationEstimate
+COCHJIMPA1,Pittsburgh,resight-only,-79.66719,40.576209,99999,map,125,McCoal Lane,New Kensington,PA,15058,locationEstimate
+COLSREBPA1,Pittsburgh,resight-only,-80.106507,40.351764,99999,map,1062,Lafayette Street,Bridgeville,PA,15017,locationEstimate
+COMAPATPA1,Pittsburgh,active,-79.642357,40.405107,99999,map,1049,Lexington Drive,Murrysville,PA,15632,locationEstimate
+COPEHAZPA1,Pittsburgh,active,-80.068758,40.38846,99999,map,918,Osage Rd,Mt. Lebanon,PA,15243,noData
+CROYKATPA1,Pittsburgh,resight-only,-79.991968,40.534535,99999,map,553,Thompson Run Rd,Pittsburgh,PA,15237,locationEstimate
+CUNKMARPA1,Pittsburgh,active,-79.329859,40.480757,99999,map,292,Swisco Road,Clarksburg,PA,15725,locationEstimate
+CUSHAMYPA1,Pittsburgh,resight-only,-79.879068,40.424833,99999,map,2231,Hampton Street,Pittsburgh,PA,15218,locationEstimate
+DAMIMARPA1,Pittsburgh,active,-79.921083,40.444516,99999,U,1341,Shady Ave,Pittsburgh,PA,15217,noData
+DEMAMARPA1,Pittsburgh,resight-only,-79.854997,40.500629,99999,U,144,Riverwatch Dr.,Pittsburgh,PA,15238,noData
+DEMAPATPA1,Pittsburgh,active,-79.857404,40.434858,99999,map,616,Woodside Road,Pittsburgh,PA,15221,locationEstimate
+DEPHKATPA1,Pittsburgh,active,-79.715191,40.29617,99999,U,2750,Ipnar Rd,N Huntington,PA,15642,noData
+DICKSUSPA1,Pittsburgh,active,-79.127842,40.574338,99999,U,130,Apple Ln,Indiana,PA,15701,noData
+DILLSHIPA1,Pittsburgh,resight-only,-79.995803,40.552028,99999,map,7110,Bennington Woods Drive,Pittsburgh,PA,15237,locationEstimate
+DOJOSUEPA1,Pittsburgh,resight-only,-79.708033,40.474762,99999,map,219,Fiesta Drive,Plum,PA,15239,locationEstimate
+DOMENATPA1,Pittsburgh,discontinued,-79.990493,40.319798,99999,map,6530,Ventura Dr,Pittsburgh,PA,15236,locationEstimate
+DONLEDPA1,Pittsburgh,resight-only,-79.269602,40.671025,99999,U,1243,Five Points Rd,Indiana,PA,15701,noData
+DOUTMARPA1,Pittsburgh,discontinued,-80.083042,40.432611,99999,map,545,Hamilton Ave.,Pittsburgh,PA,15205,locationEstimate
+DWORBARPA1,Pittsburgh,active,-79.95963,40.309967,99999,U,3053,Shady Timber Ln,Jefferson Hills,PA,15025,noData
+ECKLJULPA1,Pittsburgh,resight-only,-79.758554,40.388178,99999,U,521,7th St,Trafford,PA,15085,noData
+ELINEDPA1,Pittsburgh,resight-only,-79.946794,40.661191,99999,map,3869,Kim Lane,Gibsonia,PA,15044,locationEstimate
+ENVICHAPA1,Pittsburgh,resight-only,-79.896825,40.435728,99999,U,829,Milton st,Pittsburgh,PA,15218,noData
+FARRAMYPA1,Pittsburgh,active,-80.041152,40.306718,99999,map,6000,Puddingstone Lane,Bethel Park,PA,15102,locationEstimate
+FECHMARPA1,Pittsburgh,resight-only,-79.940885,40.418666,99999,U,400,Bigelow St,Pittsburgh,PA,15207,noData
+FERKHOLPA1,Pittsburgh,active,-79.969337,40.335436,99999,map,310,Rennie Dr,Pittsburgh,PA,15236,locationEstimate
+FOYLDONPA1,Pittsburgh,active,-79.976062,40.365915,99999,map,3944,Edge Road,Pittsburgh,PA,15227,locationEstimate
+GALVLIBPA1,Pittsburgh,resight-only,-79.693967,40.69186,99999,map,154,Ralston Rd,Sarver,PA,16055,locationEstimate
+GALVLIBPA2,Pittsburgh,active,-80.038271,40.309683,99999,map,5893,Keystone Dr,Bethel Park,PA,15102,New Address
+GERBGIGPA1,Pittsburgh,active,99999,99999,99999,noData,104,Creekwood Dr,Venetia,PA,15367,locationEstimate
+GERHEUNPA1,Pittsburgh,active,-79.659533,40.169761,99999,map,125,Duzyk Lane,Ruffs Dale,PA,15679,noData
+GETZGLEPA1,Pittsburgh,active,-80.033097,40.575702,99999,map,9254,Darrell Dr,Pittsburgh,PA,15237,locationEstimate
+GRANLINPA1,Pittsburgh,resight-only,-80.069151,40.71108,99999,map,109,Windwood Heights Rd,Cranberry Twp,PA,16066,locationEstimate
+GUARMARPA1,Pittsburgh,resight-only,-80.050853,40.697259,99999,map,468,Myoma Road,Mars,PA,16048,locationEstimate
+GURTMARPA1,Pittsburgh,active,-80.044384,40.576545,99999,U,278,Moreland Rd,Pittsburgh,PA,15237,noData
+HANDLINPA1,Pittsburgh,active,-80.054709,40.383852,99999,map,421,Serpentine Drive,Pittsburgh,PA,15243,locationEstimate
+HARVJILPA1,Pittsburgh,resight-only,-80.044289,40.393485,99999,map,1553,Grandin Ave,Dormont,PA,15216,locationEstimate
+HASHTAMPA1,Pittsburgh,active,-79.924878,40.43628,99999,map,5705,Bartlett Street,Pittsburgh,PA,15217,locationEstimate
+HATFGREPA1,Pittsburgh,resight-only,-79.820706,40.457716,99999,map,310,Stoneledge Drive,Pittsburgh,PA,15235,locationEstimate
+HAUSJIMPA1,Pittsburgh,active,-79.968402,40.308559,99999,map,300,Rainbow Dr,Jefferson Hills,PA,15025,locationEstimate
+HAWKTERPA1,Pittsburgh,discontinued,-80.190129,40.798498,99999,map,136,Lakeview Road,Fombell,PA,16123,locationEstimate
+HEALMOLPA1,Pittsburgh,active,-79.938495,40.467743,99999,U,5200,"Hillcrest St, Healcrest Urban Farm",Pittsburgh,PA,15224,noData
+HICKBARPA1,Pittsburgh,resight-only,-79.896566,40.433361,99999,map,1001,LaClair Street,Pittsburgh,PA,15218,locationEstimate
+HIGHRIVPA1,Pittsburgh,resight-only,99999,99999,99999,noData,NA,NA,NA,NA,NA,NA
+HOOVJASPA1,Pittsburgh,resight-only,-80.230447,40.662036,99999,U,1001,Catherine Dr,Conway,PA,15027,noData
+HOPEDONPA1,Pittsburgh,resight-only,-80.041354,40.372661,99999,U,286,Jefferson Dr,Pittsburgh,PA,15228,noData
+HOPEGREPA1,Pittsburgh,active,-79.970495,40.339552,99999,map,401,Faith Dr,Pittsburgh,PA,15236,locationEstimate
+HUNTVIRPA1,Pittsburgh,resight-only,-80.061573,40.375402,99999,U,976,Summer Pl,Pittsburgh,PA,15243,noData
+HYJUMIKPA1,Pittsburgh,discontinued,-80.035519,40.489759,99999,map,1240,San Pedro St,Pittsburgh,PA,15212,locationEstimate
+JEFFMARPA1,Pittsburgh,resight-only,-80.084815,40.398772,99999,map,216,Boden Avenue,Carnegie,PA,15106,locationEstimate
+JOHNJUDPA1,Pittsburgh,active,-79.659005,40.459231,99999,map,5000,North Lawn Circle,Murrysville,PA,15668,locationEstimate
+JONENICPA1,Pittsburgh,resight-only,-79.995157,40.575215,99999,U,1846,Concord Drive,Allison Park,PA,15101,noData
+JOSELINPA1,Pittsburgh,resight-only,99999,99999,99999,noData,NA,NA,NA,NA,NA,NA
+KARMALYPA1,Pittsburgh,resight-only,-80.009066,40.28259,99999,map,2948,Sebolt Road,South Park,PA,15129,locationEstimate
+KARMALYPA2,Pittsburgh,resight-only,-80.003907,40.2693672,99999,U,4,Hilltop Rd,Finleyville,PA,15332,noData
+KARMALYPA3,Pittsburgh,active,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+KELLERIPA1,Pittsburgh,resight-only,-80.077976,40.448473,99999,map,1010,Village Rd,Pittsburgh,PA,15205,locationEstimate
+KENNALAPA1,Pittsburgh,discontinued,-79.909879,40.435393,99999,map,2053,Beechwood Blvd,Pittsburgh,PA,15217,locationEstimate
+KILEHAYPA1,Pittsburgh,active,-79.860587,40.442617,99999,map,812,Limecrest Rd,Pittsburgh,PA,15221,locationEstimate
+KINGHOPPA1,Pittsburgh,discontinued,-79.905811,40.682035,99999,map,602,Sandy Hill Rd,Valencia,PA,16059,locationEstimate
+KIRSCHRPA1,Pittsburgh,resight-only,-80.060073,40.735063,99999,map,611,Callery Road,Evans City,Pa,16033,locationEstimate
+KOBEDANPA1,Pittsburgh,active,-80.10557,40.26457,99999,map,172,East Highland Drive,McMurray,PA,15317,noData
+KOCHDONPA1,Pittsburgh,resight-only,-80.819415,40.659505,99999,map,16865,Seigler Road,Salineville,OH,43945,locationEstimate
+KOPCTOMPA1,Pittsburgh,resight-only,-79.580546,40.274385,99999,map,1368,Denton St,Greensburg,PA,15601,locationEstimate
+KOSAMICPA1,Pittsburgh,resight-only,-79.26688,40.424149,99999,map,144,1st Ave PO Box 372,Black Lick,PA,15716,locationEstimate
+KRESMARPA1,Pittsburgh,discontinued,-79.967638,40.624248,99999,map,5536,Gibson Rd,Gibsonia,PA,15044,locationEstimate
+KUMASUPPA1,Pittsburgh,resight-only,-79.921631,40.426491,99999,map,6341,Burchfield Ave,Pittsburgh,PA,15217,locationEstimate
+LARSLIDPA1,Pittsburgh,active,-79.922067,40.447791,99999,GPS,5897,Devereaux Ln,Pittsburgh,PA,15232,noData
+LATTSTEPA1,Pittsburgh,resight-only,-79.956839,40.639942,99999,map,3931,Dickey Rd,Gibsonia,PA,15044,locationEstimate
+LEEJOEPA1,Pittsburgh,active,-79.94972,40.603059,99999,map,4925,S Pioneer Rd,Gibsonia,PA,15044,locationEstimate
+LEONMICPA1,Pittsburgh,resight-only,-80.01199,40.375236,99999,U,884,Edgewood Ave,Pittsburgh,PA,15234,noData
+LINDOLIPA1,Pittsburgh,active,-79.930259,40.476824,99999,U,1024,Jancey St,Pittsburgh,PA,15206,noData
+LYNCPATPA1,Pittsburgh,active,-80.038047,40.632111,99999,U,195,Hill Haven Ln,Wexford,Pa,15090,noData
+MADJDAVPA1,Pittsburgh,active,-80.17721,40.6646,99999,map,212,Ridge Ave.,Freedom,PA,15042,noData
+MADJDAVPA2,Pittsburgh,discontinued,NA,NA,NA,NA,145,Thunder Mtn Ln,Portersville,PA,16051,noData
+MAFFANGPA1,Pittsburgh,active,-79.822689,40.426728,99999,map,220,Harwick Drive,Pittsburgh,PA,15235,locationEstimate
+MAIEBILPA1,Pittsburgh,resight-only,-79.708513,40.411251,99999,U,3577,Mayer Dr,Murrysville,PA,99999,noData
+MAKAKATPA1,Pittsburgh,resight-only,-80.169451,40.497939,99999,map,202,Ogden Nash Dr.,Moon Twp.,PA,15108,locationEstimate
+MAKAKATPA2,Pittsburgh,resight-only,-80.056479,40.51259,99999,U,1518,Ridge Ave,Corapolis,PA,15108,noData
+MALLTANPA1,Pittsburgh,resight-only,-79.834509,40.493609,99999,U,6233,Hallwood Dr,Verona,PA,15147,noData
+MANNCARPA1,Pittsburgh,discontinued,-79.915875,40.351725,99999,map,104,Kenwwod Place,West Mifflin,PA,15122,locationEstimate
+MARNMELPA1,Pittsburgh,active,-80.078548,40.512419,99999,U,1,The Knob,Kilbuck Twp,PA,15202,noData
+MATISHAPA1,Pittsburgh,resight-only,-79.772931,39.943387,99999,map,18,Langley Rd,Uniontown,PA,15401,locationEstimate
+MCAUTEDPA1,Pittsburgh,resight-only,-80.439093,40.363961,99999,map,1063,Eldersville Rd,Burgettstown,PA,15021,locationEstimate
+MCCLEESPA1,Pittsburgh,active,-79.970358,40.329822,99999,U,360,School Lane,Pittsburgh,PA,15236,noData
+MCDEDAVPA1,Pittsburgh,resight-only,-79.573564,40.043827,99999,map,2115,Buttermore Blvd,Connellsville,PA,15425,locationEstimate
+MCGEMANPA1,Pittsburgh,active,-80.05979,40.373339,99999,U,20,Alexander Place,Mt. Lebanon,PA,15243,noData
+MCGRERIPA1,Pittsburgh,resight-only,-80.043393,40.413813,99999,map,1424,Carnahan Rd,Greentree,PA,15220,locationEstimate
+MEALRYAPA1,Pittsburgh,resight-only,-79.702867,40.344081,99999,map,2092,Shaw St,Irwin,PA,15642,locationEstimate
+MEHLMOLPA1,Pittsburgh,resight-only,-79.860341,40.433797,99999,U,33,Wilkins Rd,Pittsburgh,PA,99999,noData
+MILLJEFPA1,Pittsburgh,resight-only,-80.102691,40.590528,99999,map,1611,Norman Dr,Franklin Park,PA,15143,locationEstimate
+MINNJEAPA1,Pittsburgh,resight-only,-80.144599,40.588184,99999,map,106,Hunt Rd,Sewickley Hills,PA,15143,locationEstimate
+MITCNICPA1,Pittsburgh,resight-only,-80.199558,40.268285,99999,map,716,Alpine Dr,Canonsburg,PA,15317,locationEstimate
+MOLLRUSPA1,Pittsburgh,active,-80.089009,40.470978,99999,map,1756,McKees Rocks Rd,McKees Rocks,PA,15136,locationEstimate
+MOORMATPA1,Pittsburgh,resight-only,-80.08152,40.434264,99999,map,1100,Princeton Road,Pittsburgh,PA,15205,locationEstimate
+MORRDOUPA1,Pittsburgh,active,-80.034754,40.308769,99999,map,5846,Wilson Dr,Bethel Park,PA,15102,locationEstimate
+MORROESPA1,Pittsburgh,resight-only,-80.039691,40.479844,99999,U,1611,Davis Ave,Pittsburgh,PA,15212,noData
+MOSSZARPA1,Pittsburgh,resight-only,-80.08285,40.691658,99999,U,536,Grandshire Drive,Cranberry Township,PA,16066,noData
+NAILJENPA1,Pittsburgh,discontinued,-80.017012,40.392999,99999,map,2523,Glenarm Ave,Brookline,PA,15226,locationEstimate
+NATIAVIPA1,Pittsburgh,active,-80.010364,40.453635,99999,U,700,Arch Street,Pittsburgh,PA,15212,noData
+NEWTMICPA1,Pittsburgh,active,-79.832767,40.42461,99999,map,1255,Free Lane,Turtle Creek,PA,15145,"Private lane, house is at the top of the hill, surrounded by hedges"
+NIKODONPA1,Pittsburgh,active,-79.781179,40.363525,99999,map,1108,Preston Drive,North Versailles,PA,15137,locationEstimate
+OLMSSTUPA1,Pittsburgh,active,-79.898496,40.432403,99999,map,1005,Lancaster Ave,Pittsburgh,PA,15218,Front of house is actually located at 1005 Billiard Way
+PAPICHRPA1,Pittsburgh,resight-only,-79.916244,40.720314,99999,U,555,Steiner Bridge Rd,Valencia,PA,16059,noData
+PARRJOHPA1,Pittsburgh,resight-only,-80.118167,40.646207,99999,map,208,Pine Grove Court,Baden,PA,15005,locationEstimate
+PATTMYRPA1,Pittsburgh,resight-only,-80.055241,40.45678,99999,map,3101,Bergman St.,Pittsburgh,PA,15204,locationEstimate
+PETETOWPA1,Pittsburgh,resight-only,-80.117563,40.267759,99999,U,264,E McMurray Rd,McMurray,PA,15317,noData
+PFENCHIPA1,Pittsburgh,resight-only,-79.91388,40.535168,99999,U,579,Dorseyville Rd,Pittsburgh,PA,15238,noData
+PHILJIMPA1,Pittsburgh,resight-only,-80.056328,40.365514,99999,U,66,Altadena Dr,Pittsburgh,PA,15228,noData
+PIACRICPA1,Pittsburgh,active,-79.914357,40.427618,99999,map,2613,Mount Royal Road,Pittsburgh,PA,15217,locationEstimate
+PINKSUSPA1,Pittsburgh,active,-80.041286,40.689273,99999,U,261,Cliffside Dr,Mars,PA,16046,noData
+POINANNPA1,Pittsburgh,resight-only,-80.270413,40.590866,99999,map,1922,Cardinal Ave,Hopewell,PA,15001,locationEstimate
+PRASJOHPA1,Pittsburgh,active,-79.982003,40.417293,99999,U,1812,Arlington Ave,Pittsburgh,PA,15210,noData
+PROPSCHPA1,Pittsburgh,resight-only,-80.015658,40.460182,99999,U,1805,Buena Vista Street,Pittsburgh,PA,15212,noData
+QUIMKIMPA1,Pittsburgh,active,-79.902937,40.532478,99999,U,135,Millview Dr.,Pittsburgh,PA,15238,noData
+RALSJIMPA1,Pittsburgh,active,-80.091763,40.303689,99999,map,129,Carol Drive,McMurray,PA,15317,locationEstimate
+RASHMICPA1,Pittsburgh,resight-only,-79.941728,40.301189,99999,map,708,Kathleen Drive,Jefferson Hills,PA,15025,locationEstimate
+RAVECATPA1,Pittsburgh,active,-79.89365,40.565117,99999,U,940,Dorseyville Rd,Pittsburgh,PA,15238,noData
+RESIMARPA1,Pittsburgh,active,-79.983415,40.356158,99999,map,4592,Clubvue Drive,Pittsburgh,PA,15236,locationEstimate
+RICEMICPA1,Pittsburgh,active,-80.075475,40.587787,99999,map,2379,Oakview Dr,Pittsburgh,PA,15237,noData
+RIGAMARPA1,Pittsburgh,active,-80.033535,40.294926,99999,map,1243,1243 Clifton Rd,Bethel Park,PA,15102,locationEstimate
+ROCKJESPA1,Pittsburgh,resight-only,-79.5439993,40.7774527,99999,U,noData,Bunker Hill Rd,Kittanning,PA,16201,noData
+ROMESUZPA1,Pittsburgh,resight-only,-79.995531,40.358687,99999,map,4769,Baptist Rd,Pittsburgh,PA,15227,locationEstimate
+RYANCATPA1,Pittsburgh,resight-only,-80.012235,40.455471,99999,map,1213,Resaca Pl,Pittsburgh,PA,15212,locationEstimate
+SABLKARPA1,Pittsburgh,discontinued,-79.900713,40.391951,99999,map,2712,Main St,Munhall,PA,15120,locationEstimate
+SACHLARPA1,Pittsburgh,active,-79.848937,40.426152,99999,U,253,Sharon Dr,Pittsburgh,PA,15221,noData
+SADLCHRPA1,Pittsburgh,active,-79.98932,40.338758,99999,map,5324,Ranchview Dr,Pittsburgh,PA,15236,locationEstimate
+SAHNRAMPA1,Pittsburgh,resight-only,-79.906013,40.552497,99999,map,46,Mallard Drive,Pittsburgh,PA,15238,locationEstimate
+SAVALETPA1,Pittsburgh,resight-only,-80.117606,40.58646,99999,map,2378,Magee Road Ext,Sewickley,PA,15143,locationEstimate
+SAXTCHRPA1,Pittsburgh,active,-79.661588,40.447215,99999,map,4832,Treesdale Ct,Murrysville,PA,15668,locationEstimate
+SCHLJOYPA1,Pittsburgh,resight-only,-80.041399,40.41356,99999,U,1346,Kirsopp Ave,Pittsburgh,PA,15220,noData
+SCHNLAUPA1,Pittsburgh,resight-only,-79.280397,40.252446,99999,U,227,Ross Road,Ligonier,noData,15658,noData
+SEVEMARPA1,Pittsburgh,active,-79.631699,40.445701,99999,map,3769,Wiestertown Rd,Export,PA,15632,locationEstimate
+SHAIKAIPA1,Pittsburgh,resight-only,-79.8624,40.512892,99999,map,210,Sunridge Rd,Pittsburgh,PA,15238,locationEstimate
+SOLOJACPA1,Pittsburgh,resight-only,-79.916129,40.441352,99999,map,6514,Dalzell Pl,Pittsburgh,PA,15217,locationEstimate
+SPRIHILPA1,Pittsburgh,resight-only,-79.989447,40.465409,99999,U,1351,Damas Street,Pittsburgh,PA,15212,noData
+STACTIMPA1,Pittsburgh,active,-80.039111,40.712278,99999,map,240,Forsythe Road,Mars,PA,16046,"House located at the end of long gravel lane. For directions, enter in coordinates rather than address. 40.712293, -80.039119"
+STALJUDPA1,Pittsburgh,active,-80.079833,40.343773,99999,map,1821,Woodlands Circle,Upper St. Clair,PA,15241,locationEstimate
+STEIJANPA1,Pittsburgh,resight-only,-80.083846,40.504942,99999,map,7116,Ohio River Blvd,Pittsburgh,PA,15202,locationEstimate
+STERKATPA1,Pittsburgh,resight-only,99999,99999,99999,U,noData,noData,noData,noData,99999,noData
+STORLISPA1,Pittsburgh,resight-only,-80.219091,40.531679,99999,U,183,Schafer Rd,Moon Twp,PA,15108,noData
+TABACARPA1,Pittsburgh,active,-79.914446,40.422857,99999,U,39,Rosemont Ln,Pittsburgh,PA,15217,noData
+TABARENPA1,Pittsburgh,discontinued,-79.660088,40.337925,99999,U,116,Terrence Dr,Manor,PA,15665,noData
+TEAMKARPA1,Pittsburgh,active,-79.75459,40.417282,99999,map,1155,Princeton Drive,Monroeville,PA,15146,locationEstimate
+THOMDEBPA1,Pittsburgh,active,-79.80944,40.177537,99999,U,322,Rolling Dr,Belle Vernon,PA,15012,noData
+THOMMARPA1,Pittsburgh,active,-80.138547,40.4731,99999,map,68,Kathleen Dr,McKees Rocks,PA,15136,noData
+VASAJODPA1,Pittsburgh,resight-only,-80.047236,40.630186,99999,U,104,Kestler Drive,Wexford,PA,15090,noData
+VIDAREBPA1,Pittsburgh,resight-only,-80.178406,40.371002,99999,map,6425,Interlaken Drive,McDonald,PA,15057,locationEstimate
+VIDIJULPA1,Pittsburgh,resight-only,-79.949076,40.626682,99999,map,4030,Waters Lane,Gibsonia,PA,15044,locationEstimate
+WALDSCHPA1,Pittsburgh,resight-only,-79.942337,40.46395,99999,map,201,S WineBiddle St,Pittsburgh,PA,15224,locationEstimate
+WALKJOEPA1,Pittsburgh,resight-only,-79.70898,40.466062,99999,map,210,Gibralter Dr,Plum,PA,15239,locationEstimate
+WALKJOEPA2,Pittsburgh,active,-79.702073,40.448083,99999,U,4016,Duchess Ct,Murrysville,PA,15668,noData
+WEINANIPA1,Pittsburgh,resight-only,-79.806318,40.473759,99999,map,329,Crescent Garden Drive,Pittsburgh,PA,15235,locationEstimate
+WEISDONPA1,Pittsburgh,resight-only,-80.032549,40.232237,99999,map,65,Cooper Road,Venetia,PA,15367,locationEstimate
+WIDESTAPA1,Pittsburgh,resight-only,-80.172455,40.784095,99999,map,162,Ben Venue Rd,Fombell,PA,16123,locationEstimate
+WILEBRAPA1,Pittsburgh,resight-only,-80.243906,40.953427,99999,map,578,Wildlife Dr,New Castle,PA,16101,locationEstimate
+WILKAMYPA1,Pittsburgh,resight-only,-80.070348,40.609087,99999,U,2567,Matterhorn Drive,Wexford,PA,99999,noData
+WINSRAYPA1,Pittsburgh,discontinued,-79.126645,40.648091,99999,map,1491,Woodland Rd,Indiana,PA,15701,locationEstimate
+WISSDAMPA1,Pittsburgh,active,-80.027606,40.662002,99999,map,530,530 Tree Line Dr.,Gibsonia,PA,15044,locationEstimate
+WOHLLYNPA1,Pittsburgh,resight-only,-80.044051,40.354563,99999,map,110,Skylark Circle,Pittsburgh,PA,15234,locationEstimate
+WOLFMELPA1,Pittsburgh,active,-80.057099,40.654605,99999,map,305,Scarlet Circle,Wexford,PA,15090,locationEstimate
+YEANDAVPA1,Pittsburgh,active,-79.881418,40.585755,99999,U,3801,Saxonburg,Cheswick,PA,15024,noData
+YMCAHOMPA1,Pittsburgh,resight-only,-79.897548,40.456474,99999,U,7140,Bennet St,Pittsburgh,PA,15208,noData
+YODELAUPA1,Pittsburgh,resight-only,-79.467353,40.150774,99999,U,999,Laurelville Lane,Mount Pleasant,PA,15666,noData
+ARGEGIONC1,Raleigh,active,-78.728081,35.692378,99999,U,2429,Lullwater Dr,Raleigh,NC,27606,noData
+AUSTCLANC1,Raleigh,active,-78.644444,36.092778,99999,U,2602,Horseshoe Rd,Creedmoor,NC,27522,noData
+BACHMARNC1,Raleigh,active,-78.732778,35.887778,99999,U,7806,Clover Creek Ct,Raleigh,NC,27613,noData
+BAILPATNC1,Raleigh,active,-79.161944,35.794167,99999,U,277,Mint Springs Rd,Pittsboro,NC,27312,noData
+BEARKARNC1,Raleigh,active,-78.666578,35.867639,99999,U,1809,Lakepark Dr,Raleigh,NC,27612,noData
+BEEGERLNC1,Raleigh,resight-only,-78.655289,35.889211,99999,U,8024,Foxwood Dr,Raleigh,NC,27615,noData
+BOBAMICNC1,Raleigh,active,-78.838547,35.649167,99999,U,316,Ash Court,Holly Springs,NC,27540,noData
+BOTHVERNC1,Raleigh,resight-only,-79.037556,36.091411,99999,U,708,Dumont Dr,Hillsborough,NC,27278,noData
+BROANANNC1,Raleigh,active,-78.974777,35.071153,99999,U,5407,Summer Duck Rd,Fayetteville,NC,28314,noData
+BUDNNORNC1,Raleigh,active,-79.025833,36.011111,99999,U,4115,Garrett Drive,Durham,NC,27705,noData
+BURGRENNC1,Raleigh,resight-only,-79.411168,36.188339,99999,U,4280,Union Ridge Rd,Burlington,NC,27217,noData
+BURNDENNC1,Raleigh,active,-79.890664,36.082647,99999,U,7,Brownstone Ln,Greensboro,NC,27410,noData
+CAMPSUSNC1,Raleigh,resight-only,-79.326839,35.167571,99999,U,174,Yadkin Run Lane,Southern Pines,NC,28388,noData
+CASTTOMNC1,Raleigh,active,-80.319188,36.101079,99999,U,3602,Dewsbury Rd,Winston-Salem,NC,27104,noData
+COLLJUDNC1,Raleigh,resight-only,-79.005278,35.937778,99999,U,307,St Thomas Dr,Chapel Hill,NC,27517,noData
+CONNJOHNC1,Raleigh,active,-78.631881,35.796411,99999,U,1227,Mordecai Drive,Raleigh,NC,27604,noData
+CORBAMYNC1,Raleigh,active,-78.576044,35.896725,99999,U,9601,Leslieshire Dr,Raleigh,NC,27614,noData
+COSTHOWNC1,Raleigh,resight-only,-80.085133,36.16054,99999,U,1415,Kerner Rd,Kernersville,NC,27284,noData
+COTTVANNC1,Raleigh,active,-78.705,35.900833,99999,U,8329,Lakewood Drive,Raleigh,NC,27613,noData
+CRAIJOSNC1,Raleigh,active,-78.4875,36.019167,99999,U,100,Patterson Dr,Youngsville,NC,27596,noData
+DAGGNATNC1,Raleigh,active,-80.062094,36.146069,99999,U,1304,Linview Dr,Kernersville,NC,27284,noData
+DEBRMARNC1,Raleigh,active,-79.065,35.926389,99999,U,316,Severin Street,Chapel Hill,NC,27516,noData
+DEGELAUNC1,Raleigh,active,-78.920278,35.92,99999,U,5,Ozark Ct,Durham,NC,27713,noData
+DOWDMIRNC1,Raleigh,resight-only,-78.758848,35.762875,99999,U,817,Greenwood Cir,Cary,NC,27511,"Two yellowjacket nests in front yard in 2016, not found until after nets were set up."
+DURBLAUNC1,Raleigh,resight-only,-78.783889,35.665833,99999,U,300,Roseberry Way,Holly Springs,NC,27540,noData
+FERNKARNC1,Raleigh,active,-79.115833,36.028056,99999,U,3902,Ode Turner Road,Hillsborough,NC,27278,noData
+FOSTSTENC1,Raleigh,resight-only,-78.984444,35.901944,99999,U,6623,Glen Forest Drive,Chapel Hill,NC,27517,noData
+FRANMICNC1,Raleigh,resight-only,-79.580292,35.979858,99999,U,6755,McPherson Clay Rd,Liberty,NC,27298,noData
+GALLLENNC1,Raleigh,resight-only,-78.642428,35.816328,99999,U,2907,Hostetler St,Raleigh,NC,27609,noData
+GERWJOHNC1,Raleigh,resight-only,-78.716667,35.775278,99999,U,1008,Ravenwood Dr,Raleigh,NC,27606,noData
+GLORPETNC1,Raleigh,active,-78.794444,35.622222,99999,U,2500,Stewart St,FuquayÂ Varina,NC,37526,noData
+GOINJANNC1,Raleigh,resight-only,-79.896763,36.137617,99999,U,4605,Scarlet Haw Dr,Greensboro,NC,27410,noData
+HAGACOUNC1,Raleigh,resight-only,-78.797222,35.494444,99999,U,169,Smithwood Drive,FuquayÂ Varina,NC,27526,noData
+HAHNMARNC1,Raleigh,active,-78.668094,35.747358,99999,U,1716,Evergreen Avenue,Raleigh,NC,27603,noData
+HANSAMYNC1,Raleigh,active,-79.786563,36.08505,99999,U,303,E Hendrix St,Greensboro,NC,27401,noData
+HARABARNC1,Raleigh,active,-79.862462,36.101413,99999,U,1200,Double Oaks Rd,Greensboro,NC,27410,noData
+HARPMOLNC1,Raleigh,resight-only,-78.805936,35.810644,99999,U,403,Peachtree Point Ct,Cary,NC,27513,noData
+HARVSUENC1,Raleigh,active,-78.523322,35.791969,99999,U,308,Hinton Street,Knightdale,NC,27545,noData
+HENRJAYNC1,Raleigh,resight-only,-80.009233,36.041847,99999,U,4118,Aberdare Drive,High Point,NC,27265,noData
+HINTLORNC1,Raleigh,active,-78.515,35.883611,99999,U,804,Kings Mill Rd,Chapel Hill,NC,27517,noData
+IVESALINC1,Raleigh,active,-79.396226,35.134466,99999,U,505,Stoneyfield Dr,Southern Pines,NC,28387,noData
+JENSKEINC1,Raleigh,active,-78.80536,35.74872,99999,U,102,Ayr Ct,Cary,NC,27511,noData
+JOHNMIKNC1,Raleigh,resight-only,-79.577336,36.183647,99999,U,7000,Laurel Point Dr,Gibsonville,NC,27249,noData
+JOHNNORNC1,Raleigh,active,-79.32916,35.957485,99999,U,638,Waterbury Ct,Graham,NC,27253,noData
+KALIELINC1,Raleigh,active,-79.034643,35.949178,99999,U,2125,N Lakeshore Dr,Chapel Hill,NC,27514,noData
+KANEEVANC1,Raleigh,active,-78.67225,35.795428,99999,U,2728,Van Dyke Avenue,Raleigh,NC,27607,noData
+KARALIZNC1,Raleigh,resight-only,-78.648736,36.118322,99999,U,2763,Garland Ct,Creedmoor,NC,27522,noData
+KEATELINC1,Raleigh,active,-79.106667,35.83,99999,U,343,Dark Forest Dr,Chapel Hill,NC,27516,noData
+KELSBRENC1,Raleigh,resight-only,-79.571086,36.132408,99999,U,6777,Frieden Church Rd,Gibsonville,NC,27249,noData
+KNIGKENNC1,Raleigh,resight-only,-80.113016,35.368548,99999,U,32034,Valley Dr,Albemarle,NC,28801,noData
+LADYKENNC1,Raleigh,active,-79.52776,36.083566,99999,U,2200,Mather Ct,Burlington,NC,27215,noData
+LANETARNC1,Raleigh,active,-78.74453,35.911052,99999,U,9212,Zermatt Court,Raleigh,NC,27617,noData
+LIPSMARNC1,Raleigh,resight-only,-79.425431,36.099961,99999,U,219,Rolling Rd,Burlington,NC,27217,noData
+LOFLKATNC1,Raleigh,active,-78.792453,35.716397,99999,U,10712,Penny Road,Cary,NC,27518,noData
+MANDMARNC1,Raleigh,active,-78.965,36.0225,99999,U,5,Radley Pl,Durham,NC,27705,noData
+MCCODINNC1,Raleigh,active,-80.324275,36.144674,99999,U,101,Mallard Glen Circle,Winston Salem,NC,27106,noData
+MCCRSARNC1,Raleigh,active,-79.777507,35.561445,99999,U,5006,Seagrove Plank Rd,Asheboro,NC,27205,noData
+MEADRUTNC1,Raleigh,active,-78.867436,35.751656,99999,U,203,Thorn Hollow Dr,Apex,NC,27502,noData
+MICCANNNC1,Raleigh,resight-only,-79.670981,36.384006,99999,U,138,Carroll Farm Rd,Reidsville,NC,27320,noData
+MOSELYNNC1,Raleigh,active,-79.424698,36.050245,99999,U,1442,Old Coach Rd,Graham,NC,27253,noData
+NEWTROBNC1,Raleigh,active,-79.833102,36.190974,99999,U,7215,Northmoor Trace,Greensboro,NC,27455,noData
+NICHGLONC1,Raleigh,resight-only,-79.024167,35.916667,99999,U,224,Flemington Road,Chapel Hill,NC,27517,noData
+OSBEBARNC1,Raleigh,resight-only,-78.350833,35.536667,99999,U,1160,Wilson's Mills Road,Smithfield,NC,27577,noData
+OWENEDDNC1,Raleigh,active,-78.821639,35.770342,99999,U,109,S Drawbridge Ln,Cary,NC,27513,noData
+PENNGRANC1,Raleigh,active,-79.0775,35.797778,99999,U,149,Lassiter Road,Pittsboro,NC,27312,noData
+PICKADANC1,Raleigh,resight-only,-78.383611,35.654167,99999,U,69,Yellow Daisy Place,Clayton,NC,27527,noData
+POTEMARNC1,Raleigh,resight-only,-79.93239,35.979337,99999,U,1209,Bales Chapel,Jamestown,NC,27282,noData
+PRAIRIDNC1,Raleigh,resight-only,-78.7154,35.8104,99999,U,1671,Gold Star Dr,Raleigh,NC,27607,noData
+PRESANNNC1,Raleigh,active,-79.808699,35.699818,99999,U,423,E Kivett St,Asheboro,NC,27203,noData
+ROBELINNC1,Raleigh,active,-80.290852,36.109229,99999,U,2933,Buena Vista Road,Winston-Salem,NC,27106,noData
+ROSETRANC1,Raleigh,resight-only,-79.077992,34.951412,99999,U,7597,Arabia Rd,Lumber Bridge,NC,28357,noData
+RUDDLINNC1,Raleigh,resight-only,-78.713436,35.721586,99999,U,5001,Yates Mill Pond Rd,Raleigh,NC,27606,noData
+SALITYLNC1,Raleigh,active,-78.693784,35.952029,99999,U,6108,Battleview Drive,Raleigh,NC,27613,noData
+SANFTIFNC1,Raleigh,active,-78.655278,35.609167,99999,U,6204,Hampton Ridge Rd,Raleigh,NC,27603,noData
+SENZIRINC1,Raleigh,resight-only,-78.686744,35.683439,99999,U,6814,Fayetteville Rd,Raleigh,NC,27603,noData
+SIMPEDWNC1,Raleigh,active,-80.489125,35.1307,99999,U,2128,NC 218,Monroe,noData,28110,noData
+SKRALOUNC1,Raleigh,active,-79.806092,36.148261,99999,U,5,Thimbleberry Sq,Greensboro,NC,27455,noData
+SORECLYNC1,Raleigh,active,-78.454444,35.680556,99999,U,104,Alan Lane,Clayton,NC,27520,noData
+SPEAMARNC1,Raleigh,resight-only,-78.655833,36.024722,99999,U,1105,Kalworth Rd,Wake Forest,NC,27587,noData
+SPEAMARNC2,Raleigh,resight-only,-78.824576,35.900075,99999,map,1509,Anthology Dr,Durham,NC,27703,locationEstimate
+TAYLJERNC1,Raleigh,resight-only,-79.453186,36.096118,99999,U,1106,West Davis St,Burlington,NC,27215,noData
+WALNCRENC1,Raleigh,resight-only,-78.624254,35.760524,99999,U,950,Peterson St,Raleigh,NC,27610,noData
+WALTANNNC1,Raleigh,active,-79.832131,36.091914,99999,U,902,Caswell Drive,Greensboro,NC,27408,noData
+WANGMATNC1,Raleigh,active,-79.950869,36.204578,99999,U,3296,Minglewood Trail,Summerfield,NC,27358,noData
+WHEEJENNC1,Raleigh,active,-78.702952,35.851932,99999,U,5008,Picardy Place,Raleigh,NC,27612,noData
+WILLAMBNC1,Raleigh,active,-78.81156,35.087532,99999,U,1938,Middle Rd,Eastover,NC,28312,noData
+WILLCAINC1,Raleigh,resight-only,-78.934444,35.979167,99999,U,2605,Chapel Hill Rd,Durham,NC,27707,noData
+WOLFMARNC1,Raleigh,active,-80.180167,35.375735,99999,U,1615,Bellamy Circle,Albemarle,NC,28001,noData
+WOUKKARNC1,Raleigh,active,-78.773611,36.019444,99999,U,5602,Dude Ranch Rd,Durham,NC,27704,noData
+AKREMICMA1,Springfield,resight-only,-72.498879,42.474254,99999,U,159,Montague Rd,Leverett,MA,99999,noData
+AKREMICMA2,Springfield,active,-72.46908,42.33727,10,GPS,277,North St.,Belchertown,MA,01007,noData
+AMESBURMA1,Springfield,resight-only,-72.48685,42.50642,99999,U,94,N. Leverett Rd,Leverett,MA,99999,noData
+ANDEHALMA1,Springfield,resight-only,-72.5665,42.60341,99999,GPS,16,11th St,Turners Fall,MA,01376,noData
+ARCADIAMA1,Springfield,active,-72.645744,42.289764,99999,map,127,Combs Rd,Easthampton,MA,01027,locationEstimate
+ATHEJIMMA1,Springfield,resight-only,-72.383806,42.170243,99999,U,229,Burlingame Rd,Palmer,MA,99999,noData
+ATHEJIMMA2,Springfield,active,-72.30301,42.13747,65,GPS,34,Cedarhurst Drive,Monson,MA,01057,noData
+BAKENANMA1,Springfield,active,-72.57801877,42.6112273,3,GPS,67,Overland Rd,Greenfield,MA,01301,noData
+BARDBARMA1,Springfield,discontinued,-72.774095,42.019851,99999,U,68,Congamond Rd,Southwick,MA,99999,noData
+BARSTINMA1,Springfield,discontinued,-72.490835,42.353567,99999,U,487,Old Farm Rd,Amherst,MA,99999,noData
+BELMMELMA1,Springfield,resight-only,-72.532314,42.546216,99999,U,103,G St,Turners Falls,MA,99999,noData
+BENNBILMA1,Springfield,active,-72.668833,42.426839,3,GPS,53,Webber Rd,West Whately,MA,01039,locationEstimate
+BESWMICMA1,Springfield,discontinued,-72.49791,42.477651,99999,U,1,Rattlesnake Gutter,Leverett,MA,99999,noData
+BGCACORNMA1,Springfield,active,-72.68021,42.2645,65,GPS,100,Acorn,Springfield,MA,01109,noData
+BLECLANMA1,Springfield,discontinued,-72.631849,42.330197,99999,U,40,Bradford St,Northampton,MA,99999,noData
+BLONDAVMA1,Springfield,resight-only,-72.60052,42.13107,99999,GPS,247,Atwater Rd,Springfield,MA,01107,noData
+BODKANNMA1,Springfield,active,-72.81866,42.58877,99999,GPS,30,Shephard Rd,Buckland,MA,01338,noData
+BOUDLYNMA1,Springfield,active,-72.31924945,42.59049975,3,GPS,30,Hamilton Ave,Orange,MA,01364,Point count taken from center of backyard in open space
+BOWEJOHMA1,Springfield,active,-72.67474,42.322,10,GPS,250,Florence Rd,Northampton,MA,01062,noData
+BOYLCOLMA1,Springfield,active,-72.57397373,42.28226528,3,GPS,216,Pearl St,South Hadley,MA,01075,noData
+BRIDNATMA1,Springfield,resight-only,-72.523492,42.362698,99999,map,53,53 Memorial Dr,Amherst,MA,01002,locationEstimate
+BRODDORMA1,Springfield,resight-only,-72.566488,42.059283,99999,U,63,Oakwood Dr,Longmeadow,MA,01106,noData
+BROOBOBMA1,Springfield,discontinued,-72.502877,42.324439,99999,U,30,South Orchard Drive,Amherst,MA,99999,noData
+BULLTHOMA1,Springfield,active,-72.59591528,42.57949222,5,GPS,179,Hope St,Greenfield,MA,01301,noData
+BURGMARMA1,Springfield,discontinued,-72.505571,42.378025,99999,U,67,Spaulding St,Amherst,MA,99999,noDatat
+BURNNIKMA1,Springfield,resight-only,-72.502359,42.121875,99999,U,122,Brewster St,Springfield,MA,99999,noData
+CALLEVEMA1,Springfield,active,-72.819683,42.146164,5,GPS,78,Stoney Ln,Westfield,MA,01085,noData
+CALVCARMA1,Springfield,active,-72.53394029,42.10099442,3,GPS,210,Winton St,Springfield,MA,01118,noData
+CANCYOLMA1,Springfield,resight-only,-72.57837,42.0979,99999,GPS,41,Ashmun St,Springfield,MA,01105,noData
+CANNANNMA1,Springfield,active,-72.53498153,42.31854964,3,GPS,337,Spencer Dr,Amherst,MA,01002,noData
+CASEWENMA1,Springfield,resight-only,-72.53551,42.17509,99999,GPS,321,Tolpa Cir,Chicopee,MA,01020,noData
+CHARANDMA1,Springfield,active,-72.4105,42.347076,10,GPS,143,Gold St,Belchertown,MA,01007,noData
+CHICOBGMA1,Springfield,resight-only,-72.615143,42.170581,99999,map,noData,noData,noData,noData,99999,locationEstimate
+CHILDPSMA1,Springfield,active,-72.54855,42.2483,65,GPS,40,Pleasant St,Granby,MA,01033,"LocationEstimate , Preschool"
+CLARBRYMA1,Springfield,active,-72.48633,42.10023,10,GPS,26,Butternut Circle,noData,MA,99999,noData
+CODYMELMA1,Springfield,discontinued,-72.672564,42.074852,99999,U,139,Cambridge St,Feeding Hills,MA,99999,noData
+CONZBRIMA1,Springfield,resight-only,-72.548587,42.09734,99999,U,53,Balfour Drive,Springfield,MA,99999,noData
+COURAUDMA1,Springfield,discontinued,-72.548485,42.091416,99999,U,121,Daviston Street,Springfield,MA,99999,noData
+CUSHTANMA1,Springfield,discontinued,-72.510632,42.439603,99999,U,74,Amherst Rd,Leverett,MA,99999,noData
+DAVIJUDMA1,Springfield,discontinued,-72.496819,42.34038,99999,U,7,Drummer Hill,Leverett,MA,99999,noData
+DAVILAUMA1,Springfield,resight-only,-72.532314,42.546216,99999,map,56,Court Square,Montague,MA,01351,locationEstimate
+DELUBILMA1,Springfield,active,-72.58629397,42.23811532,3,GPS,31,Lexington Ave,South Hadley,MA,01075,noData
+DOPPJANMA1,Springfield,active,-72.65373,42.28646,3,GPS,120,Lovefield St,Easthampton,MA,01027,noData
+DOYLPHIMA1,Springfield,active,-72.68038461,42.26491568,4,GPS,239,Main Street Rear 3,Easthampton,MA,99999,noData
+DROLBARMA1,Springfield,discontinued,-72.653756,42.431652,99999,U,49,Masterson Rd.,Whately,MA,99999,noData
+ELLIBARMA1,Springfield,resight-only,-72.628549,42.632184,99999,U,16,Sauter Lane,Greenfield,MA,99999,noData
+EMERSWPMA1,Springfield,resight-only,-72.582123,42.1018,99999,U,56,Maple Ct,Springfield,MA,99999,noData
+ESPIJUDMA1,Springfield,discontinued,-72.571233,42.267752,99999,U,74,Woodbridge St,South Hadley,MA,99999,noData
+FAERHOWMA1,Springfield,active,-72.67129604,42.35077559,11,GPS,53,N Farms Rd,Florence,MA,01062,noData
+FEINLISMA1,Springfield,active,-72.68849427,42.33534002,4,GPS,226,Spring St,Northampton,MA,01062,noData
+FORDSUSMA1,Springfield,resight-only,-72.692999,42.337925,99999,U,364,Spring St,Florence,MA,01062,noData
+FORESPKMA1,Springfield,active,-72.68031,42.26452,65,GPS,293,Sumner Ave,Springfield,noData,01108,locationEstimate
+FORTJOAMA1,Springfield,discontinued,-72.81138,42.104882,99999,U,99,Loomis Ridge,Westfield,MA,99999,noData
+FORTMARMA1,Springfield,discontinued,-72.640927,42.188947,99999,U,16,Bray Park Drive,Holyoke,MA,99999,noData
+GAIEMELMA1,Springfield,active,-72.5601979,42.53251604,3,GPS,161,Meadow Rd,Montague,MA,01351,noData
+GIARORCMA1,Springfield,resight-only,-72.504263,42.332264,99999,U,236,Middle St.,Amherst,MA,01002,noData
+GILLESMA1,Springfield,resight-only,-72.49742362,42.64950245,3,GPS,48,Boyle Rd,Gill,MA,99999,locationEstimate
+GIRLSINMA1,Springfield,active,-72.60772,42.204529,30,GPS,noData,noData,noData,noData,99999,noData
+GOLDBETMA1,Springfield,active,-72.6345001,42.31400264,4,GPS,43,Fort Hill Terrace,Northampton,MA,01060,noData
+GOODNANMA1,Springfield,active,-72.57342,42.4183,5,GPS,429,River Dr,Hadley,MA,01035,noData
+GREERICMA1,Springfield,discontinued,-72.49935,42.111261,99999,U,1346,Parker Street,Springfield,MA,99999,noData
+GRIFRACMA1,Springfield,active,-72.368328,42.239196,5,GPS,3,Oakwood Dr,Belchertown,MA,01007,noData
+GRUBBECMA1,Springfield,discontinued,-72.532314,42.546216,99999,U,4,Old Sunderland Road,Montague Center,MA,99999,noData
+GUISKATMA1,Springfield,resight-only,-72.515607,42.409921,99999,U,20,Owen Dr,Amherst,MA,99999,noData
+HALALEEMA1,Springfield,active,-72.440465,42.407565,5,GPS,10,Boyden Road,Pelham,MA,99999,noData
+HALLJENMA1,Springfield,active,-72.59510362,42.33644203,3,GPS,134,West St,Hadley,MA,01035,locationEstimate
+HAMMSHIMA1,Springfield,resight-only,-72.650444,42.320017,99999,map,25,James Ave,Northampton,MA,01060,locationEstimate
+HAYEROBMA1,Springfield,discontinued,-72.439815,42.420909,99999,U,244,Baker Road,Shutesbury,MA,99999,noData
+HAZZANNMA1,Springfield,active,-72.40734466,42.39913111,4,GPS,25,Shutesbury Rd 2,Pelham,MA,01102,noData
+HENDANNMA1,Springfield,resight-only,-72.50419,42.649835,99999,U,69,Boyle Rd,Gill,MA,99999,noData
+HERITAGEMA1,Springfield,active,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+HIGGBETMA1,Springfield,active,-72.66228,42.338066,5,GPS,109,Straw Ave,Florence,MA,99999,noData
+HIGHELEMA1,Springfield,active,-72.769846,42.119292,10,GPS,34,Western Ave,Westfield,MA,01085,locationEstimate
+HILBLAUMA1,Springfield,discontinued,-72.627427,42.329766,99999,U,218,North St,Northampton,MA,99999,noData
+HILLSALMA1,Springfield,active,-72.55674493,42.37175667,3,U,12,Meadowbrook Dr,Hadley,MA,99999,noData
+HODGBENMA1,Springfield,active,-72.66168,42.11467,50,GPS,31,Maple Heights,West Springfield,MA,99999,noData
+HOLYOBGMA1,Springfield,resight-only,-72.637146,42.203057,99999,map,noData,noData,noData,noData,99999,locationEstimate
+HOLYOYMMA1,Springfield,resight-only,-72.576227,42.244624,99999,U,101,Mosier Street,South Hadley,MA,99999,noData
+HOWAJANMA1,Springfield,active,-72.44043195,42.30402412,3,GPS,12,Country Lane,Belchertown,MA,01007,noData
+JAKUJULMA1,Springfield,active,-72.62359689,42.66617191,3,GPS,32,S County Rd,Leyden,MA,01301,noData
+JAKUSTEMA1,Springfield,active,-72.58441864,42.60758461,3,GPS,43,Wildwood Ave,Greenfield,MA,01301,noData
+JOHAHEAMA1,Springfield,active,-72.59529269,42.38164378,5,GPS,6,King St,Hatfield,MA,01038,noData
+JONEJULMA1,Springfield,resight-only,-72.695265,42.303112,99999,U,36,Sovereign Way,Northampton,MA,99999,noData
+JONEJULMA2,Springfield,resight-only,-72.67072,42.3065,99999,GPS,117,Black Birch Trail,Northampton,MA,99999,noData
+JORGJANMA1,Springfield,active,-72.586498,42.372896,99999,GPS,150,River Dr,Hadley,MA,99999,noData
+KANEBRIMA1,Springfield,active,-72.5400564,42.50643565,4,GPS,449,Montague Rd,Sunderland,MA,01375,noData
+KAPLRACMA1,Springfield,discontinued,-72.58237181,42.1907912,3,GPS,126,Mountainview St,Chicopee,MA,01020,noData
+KELLSETMA1,Springfield,active,-72.81363533,42.08597852,4,GPS,377,N Loomis St,Southwick,MA,01077,noData
+KINGDAVMA1,Springfield,resight-only,-72.51334,42.40217,99999,GPS,24,Sheerman Ln,Amherst,MA,01002,noData
+KINGGEOMA1,Springfield,active,-72.48807069,42.07461366,3,GPS,66,Rural Ln,East Longmeadow,MA,01028,noData
+KISTSANMA1,Springfield,discontinued,-72.568824,42.053773,99999,U,131,Lynnwood Dr,Longmeadow,MA,99999,noData
+KLOTBRUMA1,Springfield,active,-72.4710757,42.37795779,12,GPS,33,Amherst Rd,Pelham,MA,01002,locationEstimate
+LABOPEGMA1,Springfield,active,-72.5659,42.19874,65,GPS,41,Greenpoint Cir,Chicopee,MA,01020,noData
+LAMBJANMA1,Springfield,resight-only,-72.503516,42.363865,99999,U,14,Stanley St,Amherst,MA,99999,noData
+LANGPETMA1,Springfield,active,-72.946026,42.190735,5,GPS,23,N Blandford Road,Blandford,MA,99999,"Pete's house is a red brick house, GPS takes you to preceeding house (log cabin)"
+LAPPHENMA1,Springfield,active,-72.52177219,42.41859272,3,GPS,120,Pulpit Hill #31,Amherst,MA,01002,"co-housing. point count is in his backyard, but nets can be set up anywhere on a large piece of land belonging to the community"
+LATHJANMA1,Springfield,active,-72.53326,42.31619,5,GPS,8,Autumn Ln,Amherst,MA,01002,noData
+LEARKATMA1,Springfield,discontinued,-72.431586,42.123721,99999,U,5,Birchknoll Drive,Wilbraham,MA,99999,noData
+LEELINDMA1,Springfield,discontinued,-72.504088,42.099653,99999,U,32,S Tallyho Drive,Springfield,MA,99999,noData
+LERMSUSMA1,Springfield,resight-only,-72.509345,42.634787,99999,U,266,Main Road,Gill,MA,99999,noData
+LERMSUSMA2,Springfield,active,-72.4823,42.68116,3,GPS,45,Gill Center Road,Northfield,MA,01360,noData
+LEWASUSMA1,Springfield,active,-72.5122167,42.33977545,5,GPS,171,Pomeroy Ln,Amherst,MA,01002,"Point count: Facing house in backyard, N: standing ~8m from stone fire pit, Plum Brooke E, woods W & S"
+MALTELIMA1,Springfield,active,-72.5556505,42.05020848,4,GPS,165,Viscount Rd,Longmeadow,MA,01106,noData
+MARTJUAMA1,Springfield,active,-72.557711,42.078413,10,GPS,96,Bronson Terrace,Springfield,MA,01108,noData
+MATHLYNMA1,Springfield,active,-72.69634,42.58277,65,GPS,90,Shelburne Center Rd,Shelburne,MA,01370,noData
+MATUKEVMA1,Springfield,resight-only,-72.77746,42.14119,99999,GPS,115,Hawks Cir,Westfield,MA,01085,noData
+MCKEERIMA1,Springfield,resight-only,-72.50419,42.649835,99999,U,69,Boyle Rd,Gill,MA,01354,noData
+MCKICAIMA1,Springfield,active,-72.649204,42.322204,10,GPS,55,Forbes Ave,Northampton,MA,01060,noData
+MCMAANDMA1,Springfield,resight-only,-72.617534,42.222649,99999,U,37,Stratford Rd.,Holyoke,MA,99999,noData
+MERIMARMA1,Springfield,active,-72.701723,42.309739,5,GPS,1238,Burts Pit Rd,Florence,MA,01062,noData
+MIRKJOEMA1,Springfield,resight-only,-72.601731,42.594786,99999,U,10,Walnut St,Greenfield,MA,01301,noData
+MORETONMA1,Springfield,active,-72.55672,42.36649,30,GPS,127,Rocky Hill Rd,Hadley,MA,01035,"point count in backyard, about 15 m south of house. would suggest moving to side yard next year."
+MORRDONMA1,Springfield,discontinued,-72.386285,42.105139,99999,U,100,Beebe Road,Wilbraham,MA,99999,noData
+MURPELEMA1,Springfield,active,-72.68109386,42.44622458,4,GPS,61,Poplar Hill Rd,Whately,MA,01373,noData
+MURPTHEMA1,Springfield,resight-only,-72.542093,42.43227,99999,U,8,East Plumtree Rd,Sunderland,MA,99999,noData
+NELSKATMA1,Springfield,discontinued,-72.509057,42.417265,99999,U,389,State St,Amherst,MA,99999,noData
+NORMMONMA1,Springfield,discontinued,-72.40961,42.292781,99999,U,70,Federal St,Belchertown,MA,99999,noData
+NUESTFAMA1,Springfield,discontinued,-72.601266,42.203751,99999,U,noData,E Dwight St,Holyoke,MA,99999,noData
+PAGEALLMA1,Springfield,resight-only,-72.529284,42.535552,99999,U,40,Center Street,Montague,MA,99999,noData
+PELALYNMA1,Springfield,active,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+PELLLYNMA1,Springfield,active,-72.56621319,42.60304983,3,GPS,NA,NA,NA,NA,NA,NA
+PELLVOLMA1,Springfield,resight-only,-72.62592344,42.21651601,5,GPS,53,Fairfield Ave,Holyoke,MA,01040,noData
+PICKSALMA1,Springfield,resight-only,-72.530365,42.533714,99999,U,25,Union Street,Montague,MA,01351,noData
+PIEPSUSMA1,Springfield,resight-only,-72.606296,42.125211,99999,U,103,Atwater Terrace,Springfield,MA,99999,noData
+PRANSABMA1,Springfield,resight-only,-72.796262,42.106768,99999,U,123,Sackett Road,Westfield,MA,99999,noData
+REIDLOLMA1,Springfield,active,-72.62352179,42.31734041,3,GPS,55,Williams St,Northampton,MA,01060,noData
+RICHALMA1,Springfield,active,-72.58248,42.46046,10,GPS,7,S Main Street,Sunderland,MA,01375,noData
+RINADAVMA1,Springfield,active,-72.68350104,42.06038876,4,GPS,5,Twoifby Street,Feeding Hills,MA,01030,noData
+ROBIBEAMA1,Springfield,discontinued,-72.610039,42.055492,99999,U,noData,noData,noData,noData,99999,noData
+ROCHJPMA1,Springfield,discontinued,-72.578543,42.058947,99999,U,37,Westmoreland Ave,Longmeadow,MA,99999,noData
+ROGEANDMA1,Springfield,active,-72.407528,42.454798,10,GPS,34,Cooleyville Rd,Shutesbury,MA,01072,noData
+ROMANICMA1,Springfield,resight-only,-72.6104,42.578251,99999,U,41,Solar Way,Greenfield,MA,01301,noData
+ROSEJOSMA1,Springfield,active,-72.479683,42.378153,5,GPS,40,Jenks St,Amherst,MA,01002,noData
+ROSNEDWMA1,Springfield,resight-only,-72.525885,42.138382,99999,U,671,Berkshire Ave,Springfield,MA,01109,noData
+RYANJOSMA1,Springfield,resight-only,-72.503016,42.341903,99999,U,25,Station Rd,Amherst,MA,99999,noData
+RYBAELAMA1,Springfield,active,-72.83900128,42.6195839,3,GPS,24,Burrington Rd,Charlemont,MA,01339,noData
+SCHOGREMA1,Springfield,resight-only,-72.725013,42.353578,99999,U,410a,Kennedy Rd,Leeds,MA,99999,noData
+SCIBLINMA1,Springfield,discontinued,-72.528179,42.101708,99999,U,18,Briarwood Ave,Springfield,MA,99999,noData
+SHEAMARMA1,Springfield,active,-72.60339,42.48173,10,GPS,100,N Main St,S. Deerfield,MA,99999,noData
+SHEPLYNMA1,Springfield,discontinued,-72.315006,42.159294,99999,U,141,Breckenridge St,Palmer,MA,99999,noData
+SHERALEMA1,Springfield,active,-72.54279336,42.09143811,3,GPS,78,Wexford St,Springfield,MA,01118,noData
+SINIKRIMA1,Springfield,resight-only,-72.5723,42.587107,99999,GPS,1,S High Street,Turners Falls,MA,01376,noData
+SLONJOHMA1,Springfield,resight-only,-72.442105,42.237635,99999,U,18,Rimrock Rd,Belchertown,MA,99999,noData
+SLONSUSMA1,Springfield,active,-72.5226678,42.10719619,4,GPS,335,Greenaway Drive,Springfield,MA,01109,noData
+SPLAMARMA1,Springfield,resight-only,-72.671855,42.233474,99999,U,17,Willow Cir,Easthampton,MA,99999,noData
+SPLAMARMA2,Springfield,active,-72.671774515,42.25080747,3,GPS,31,Treehouse Cir,Easthampton,MA,01027,Point count taken standing next to hose
+SPRINBGMA1,Springfield,active,-72.591298,42.119713,30,GPS,481,Carew St,Springfield,MA,01104,locationEstimate
+SPRINRSMA1,Springfield,resight-only,-72.573841,42.133065,99999,U,1170,Carew St,Springfield,MA,99999,noData
+STEMMSMA1,Springfield,resight-only,-72.551317,42.119279,99999,U,60,Alton St,Springfield,MA,01109,noData
+STEPJANMA1,Springfield,active,-72.53203359,42.5369667,3,GPS,11,North Street,Montague,MA,01351,noData
+STEVSADMA1,Springfield,active,-72.56707799,42.20693565,3,GPS,155,Royal Street,Chicopee,MA,01020,noData
+STIEDAVMA1,Springfield,discontinued,-72.567379,42.514686,99999,U,11,Sunrise Ave,Deerfield,MA,99999,noData
+SURNSANMA1,Springfield,active,-72.530906055,42.36424651,4,GPS,55,Baker St,Amherst,MA,01002,noData
+SURNSCOMA1,Springfield,active,-72.45919449,42.32418081,3,GPS,134,Goodell St,Belchertown,MA,01007,noData
+SVECSTEMA1,Springfield,resight-only,-72.328153,42.201391,99999,U,21,Sunnyside Street,West Springfield,MA,01089,noData
+TAMBJUDMA1,Springfield,resight-only,-72.495811,42.418007,99999,U,6,High Point Dr,Amherst,MA,01002,noData
+THERLARMA1,Springfield,active,-72.38007014,42.26906659,3,GPS,68,Aldrich Street,Belchertown,MA,01007,noData
+TOSCPAMMA1,Springfield,active,-72.62899228,42.55252986,9,GPS,219,Upper Rd,Deerfield,MA,99999,noData
+TOUCWENMA1,Springfield,resight-only,-72.732809,42.245833,99999,U,30,Wolcott Road,Southampton,MA,01073,noData
+UPACAMSMA1,Springfield,active,99999,99999,99999,noData,1385,Berkshire Ave,Springfield,MA,01151,noData
+VALLMEGMA1,Springfield,resight-only,-72.532314,42.546216,99999,U,92,Millers Falls Rd,Turners Falls,MA,01376,noData
+VARLKARMA1,Springfield,discontinued,-72.518974,42.064093,99999,U,29,Edmund Street,East Longmeadow,MA,99999,noData
+VEARRICMA1,Springfield,active,-72.53763,42.102769,10,GPS,460,Roosevelt Ave,Springfield,MA,01118,noData
+VERSMATMA1,Springfield,resight-only,-72.720675,42.355236,99999,U,508,Kennedy Rd,Leeds,MA,99999,noData
+WALSMELMA1,Springfield,resight-only,-72.497385,42.037867,99999,U,42,Capri Drive,East Longmeadow,MA,01028,noData
+WARRPAIMA1,Springfield,active,-72.5277657,42.40897349,3,GPS,36,Harris St,Amherst,MA,01002,noData
+WEBERCAMA1,Springfield,resight-only,-72.650596,42.124993,99999,U,noData,noData,noData,noData,99999,noData
+WESCCATMA1,Springfield,active,-72.49271,42.51172,65,GPS,18,Hannabrooke Dr,Leverett,MA,01054,noData
+WHELGWEMA1,Springfield,resight-only,-72.436773,42.378924,99999,U,3,Pine Tree Circle,Pelham,MA,01002,noData
+WILDSIEMA1,Springfield,resight-only,-72.876869,42.403214,99999,U,18,Ireland St,West Chesterfield,MA,01084,noData
+WILLJUDMA1,Springfield,resight-only,-72.940316,42.540699,99999,U,525,West Main St,Plainfield,MA,01070,noData
+WILSMARMA1,Springfield,discontinued,-72.541487,42.406623,99999,U,20,Juggler Meadow Rd,Amherst,MA,99999,noData
+WIRZCARMA1,Springfield,resight-only,-72.684905,42.273527,99999,U,15,Searls St,Easthampton,MA,99999,noData
+WOODSANMA1,Springfield,discontinued,-72.534234,42.244401,99999,U,11,Pheasant Hill,Granby,MA,99999,noData
+YOUNLINMA1,Springfield,resight-only,-72.567965,42.247731,99999,U,15,Westbrook Road,South Hadley,MA,99999,noData
+ZEPHPATMA1,Springfield,resight-only,-72.425317,42.389364,99999,U,281,North Valley Rd,Pelham,MA,99999,noData
+ZEPKJANMA1,Springfield,active,-72.328153,42.201391,10,GPS,46,Pilgrim Rd,West Springfield,MA,01089,noData
+ZIMMBOBMA1,Springfield,resight-only,-72.668928,42.367865,99999,U,549,N Farms Rd,Florence,MA,01062,noData
+ZINNMARMA1,Springfield,discontinued,-72.558415,42.435126,99999,U,127,N Plain Rd,Sunderland,MA,99999,noData
