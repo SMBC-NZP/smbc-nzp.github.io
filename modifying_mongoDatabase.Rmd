@@ -42,6 +42,7 @@ knitr::opts_chunk$set(echo = TRUE)
 install.packages('mongolite')
 install.packages('tidyverse')
 install.packages('callr')
+install.packages('shiny')
 install.packages('editData')
 install.packages('RCurl')
 ```
