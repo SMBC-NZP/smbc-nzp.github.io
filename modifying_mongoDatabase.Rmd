@@ -55,7 +55,7 @@ library(RCurl)
 
 script <-
   getURL(
-    "https://raw.githubusercontent.com/SMBC-NZP/neighborhoodNestwatch/master/fix_mongoRecords.R?token=AFXm5HX8tMp1xr1orhALtnO0eb2qCqZtks5bB1wUwA%3D%3D"
+    "https://raw.githubusercontent.com/SMBC-NZP/neighborhoodNestwatch/master/fix_mongoRecords.R?token=AFXm5GZQNlAgZ3ETxvAo-LPg5LKneDyKks5bCAUawA%3D%3D"
   )
 
 # Evaluate then remove the source script:
