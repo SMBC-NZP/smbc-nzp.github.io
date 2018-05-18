@@ -41,6 +41,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r eval = FALSE}
 install.packages('mongolite')
 install.packages('tidyverse')
+install.packages('callr')
 install.packages('editData')
 install.packages('RCurl')
 ```
@@ -101,7 +102,7 @@ get_mongoData(
 </ul>
 ```{r eval = FALSE}
 get_mongoData(
-  collection  = 'staffContacts',
+  collection  = 'sites',
   hub = 'DC'
   )
 ```
