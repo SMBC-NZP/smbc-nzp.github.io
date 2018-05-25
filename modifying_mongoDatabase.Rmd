@@ -37,12 +37,25 @@ knitr::opts_chunk$set(echo = TRUE)
 <br>
 <h3>Set-up</h3>
 <br>
-<p>We need to start by installing packages that you may not currently have. To do so, run the code below on your computer. <i>Note: This will only have to be done once and will not have to be repeated each time you want to modify or add records.</i></p>
+<p>We need to start by installing packages that you may not currently have. To do so, run the code below on your computer. Run one line at a time, as some lines may require your input and you will need to know if any errors are generated. <i>Note: This will only have to be done once and will not have to be repeated each time you want to modify or add records.</i></p>
 ```{r eval = FALSE}
-install.packages(mongolite)
-install.packages(tidyverse)
-install.packages(editData)
-install.packages(RCurl)
+install.packages('Rtools')
+
+install.packages('devtools')
+
+install.packages('httpuv', dependencies = TRUE)
+
+install.packages('stringi')
+
+install.packages('shiny', dependencies = TRUE)
+
+install.packages('mongolite')
+
+install.packages('tidyverse')
+
+install.packages('editData')
+
+install.packages('RCurl')
 ```
 <br>
 <p>The next step may seem frightening, but it's not -- you don't have to understand what this stuff does. This is the behind-the-scenes mechanics that makes reading and writing to the database possible. Simply copy-and-paste this section into R and <b>run the entire section</b>.
@@ -55,7 +68,7 @@ library(RCurl)
 
 script <-
   getURL(
-    "https://raw.githubusercontent.com/SMBC-NZP/neighborhoodNestwatch/master/fix_mongoRecords.R?token=AFXm5Egs2kHu9i8uRDzbMxpps3Mu3TSwks5bETz6wA%3D%3D"
+    "https://raw.githubusercontent.com/SMBC-NZP/neighborhoodNestwatch/master/modifying_mongoDatabase/fix_mongoRecords.R?token=AFXm5Hl50O4dlo0ZQNvrxk_l4jx1AShXks5bEVHJwA%3D%3D"
   )
 
 # Evaluate then remove the source script:
