@@ -178,7 +178,7 @@ Through this process, participants are expected to develop a flexible skillset f
 <h3>Preliminary lesson</h3>
 <p><b>Goal</b>: Provide the baseline knowledge necessary to use R for absolutely new users, align existing users with some of the terminology, get a sense of course participants incoming knowledge</p>
 <ul>
-<li><a href = "https://smbc-nzp.github.io/introToWorkshop2018.html">Worksheet website</a></li>
+<li><a href = "https://smbc-nzp.github.io/introToWorkshop_2018.html">Worksheet website</a></li>
 </ul>
 
 <h3>Lesson One: Data management and the art of wrangling</h3>
