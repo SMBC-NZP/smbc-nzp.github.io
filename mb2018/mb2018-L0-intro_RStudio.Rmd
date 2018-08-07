@@ -131,7 +131,7 @@ $$\frac{1+1+2}{3} + \frac{5}{8}$$
 
 <br>
 
-<p>If you are new to R, please take a moment to explore using R as a calculator.</p>
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 100%"></i> If you are new to R, please take a moment to explore using R as a calculator.</p>
 </div>
 
 <br>
@@ -140,7 +140,7 @@ $$\frac{1+1+2}{3} + \frac{5}{8}$$
 
 <h3>The workspace panel</h3>
 
-<p>When you open R you initiate an R session. An R session is defined by all of the code that you have run and any objects that you've stored in the global environment. The  workspace panel is where you can view your global environment and your session history. In addition to viewing, you can use this panel to save or clean your session history and objects in your global environment. Using these tools can help streamline your R workflow and aid in replication.</p>
+<p>When you open R you initiate an R session. An R session is defined by all of the code that you have run and any objects that you've stored in the global environment. The global environment is a temporary storage location for all of the objects and functions that you create in an R working session. The  workspace panel is where you can view your global environment and your session history. In addition to viewing, you can use this panel to save or clean your session history and objects in your global environment. Using these tools can help streamline your R workflow and aid in replication.</p>
 
 <br>
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Click on the "History" tab of the workspace panel to view the commands that you have run so far.</p>
@@ -227,7 +227,7 @@ simpleAddition / 3
 
 <br>
 
-<p><i>Note: If you are new to R, you probably have yet to grasp how powerful assignments are. As most users begin to develop their R skillset, the number of assignments they use grows. What began as a useful tool can end up leading to an inevitable addiction that causes messy, hard-to-read scripts. In this course you will learn how to use assignments effectively and avoid the confusion that over-assignment causes.</i></p>
+<p><i>Note: If you are new to R, you probably have yet to grasp how powerful assignments are. As most users begin to develop their R skillset, the number of assignments they use grows. What began as a useful tool can end up leading to an addiction that causes messy, hard-to-read scripts. In this course you will learn how to use assignments effectively and avoid the confusion that over-assignment causes.</i></p>
 
 <br>
 
@@ -370,7 +370,7 @@ mean(
 ```
 <br>
 <h4>Libraries of functions</h4>
-<p>Many functions are available in base R but there are loads of functions that have been written by others and assembled into packages called libraries that you can download. These user-built libraries are very powerful and can automate many of the tasks you confront when coding. To download a library, you use the function `install.packages`. This function evaluates the name of a library, in quotation marks and installs the library on your computer. <i>Note: Each package will only be loaded once, therefore this process should be completed in the console panel</i>.</p>
+<p>Base R is a set of functions that are preloaded when you downloaded R. Many functions are available in base R but there are loads of functions that have been written by others and assembled into libraries (also called packages) that you can download. These user-built libraries are very powerful and can automate many of the tasks you confront when coding. To download a library, you use the function `install.packages`. This function evaluates the name of a library, in quotation marks and installs the library on your computer. <i>Note: Each package will only be loaded once, therefore this process should be completed in the console panel</i>.</p>
 
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Install two libraries that we will use throughout the course of this workshop:</p>
 
@@ -443,7 +443,7 @@ library(RCurl)
 <ul>
 <li><b>Argument</b>: Condition that modifies the behavior of a function</li>
 <li><b>Assign</b>: Provide a name for an R object</li>
-<li><b>Camel case</b>: A convention of writing in which multiple words are joined without spaces and all words following the initial word are capitalized</li>
+<li><b>Camel case</b>: A convention of writing in which multiple words are joined without spaces and all words following the initial word are capitalized. forExampleThisIsCamelCase.</li>
 <li><b>Code</b>: Any text written in the source or console panel</li>
 <li><b>Comment</b>: Use a `#` to communicate to R that the subsequent section of code will not be evaluated</li>
 <li><b>Console panel</b>: A panel of R Studio used to execute code and writing/running code that users do not intend to replicate</li>
