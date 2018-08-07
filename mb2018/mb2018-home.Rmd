@@ -1,0 +1,61 @@
+---
+output: html_document
+---
+
+<!-- html head --> 
+
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+<!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
+</head>
+
+<h1 style="text-align: center;"><b>The Ecology and Conservation of Migratory Birds</b></h1>
+<hr>
+
+<p>Welcome to the Ecology and Conservation of Migratory Birds 2018! This website will be our home base for the R portion of the course. Each lesson has accompanying hyperlinks that may include:</p>
+<ul>
+<li><b>Lesson instructions</b>: Website with written-out instructions and exercises associated with a presentation or lab activity.</li>
+<li><b>Lesson code</b>: The R code that accompanies a lesson (<i>Note: These links will download an R file</i>).</li>
+<li><b>Lesson data</b>: Data that will accompany a lesson (<i>Note: These links will download an data file</i>).</li>
+</ul>
+
+<br>
+<p>Please email me with any questions at <a href="mailto:evansbr@si.edu">evansbr@si.edu</a>
+<br>
+<h2>Getting started</h2>
+<hr>
+<p>R has become the universal quantitative interface for ecologists - it's free, powerful, flexible enough to do everything but write manuscripts for you, and is relatively user-friendly. We ask that, regardless of your current level of R knowledge, you please complete the following preliminary exercises prior to attending the course:<p>
+
+<ul>
+<li><b>Introduction to R Studio</b>. This lesson will provide new R users with the baseline knowledge necessary to use R and R Studio and align experienced R users with some of the terminology and best management practices used throughout this course.
+</li>
+<ul>
+<li><a href = "https://smbc-nzp.github.io/mb2018-L0-intro_RStudio">Lesson instructions</a></li>
+</ul>
+<li><b>Introduction to R, lesson 1: Values</b>. This lesson will instruct R users on the different classes of values that they will interact with in R.
+</ul>
+<ul>
+<li><a href = "https://smbc-nzp.github.io/mb2018-L1-rValues">Lesson instructions</a></li>
+</ul>
+<br>
+<div class = "row">
+<br>
+<hr>
+<img src = "images/robotBird.jpg"
+  style = "float:left;
+  padding-left: 0px;
+  padding-left: 10px;
+  width: 15%;">
+<i><p><b>About the Instructor</b>: Brian Evans is an avian ecologist and data scientist at the Smithsonian Migratory Bird Center. He received his Ph.D. in quantitative ecology from the University of North Carolina in 2015. Brian has been using R for over 10 years and has been teaching classes and workshops in R and data management since 2012. Follow Brian on Twitter: <a href = "https://twitter.com/bsevans_unc">@bsevans_unc</a></i></p>
+</div>
+<div class = "row">
+<img 
+  src="images/nzpLogo.png"
+  style= "display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;"/>
+</div>
+
+
