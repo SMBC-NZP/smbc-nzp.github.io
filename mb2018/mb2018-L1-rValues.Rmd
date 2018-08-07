@@ -1,5 +1,5 @@
 ---
-title: "Introductory lesson one: Values"
+title: "Lesson one: Values"
 author: "Brian S. Evans, Ph.D."
 output: learnr::tutorial
 runtime: shiny_prerendered
@@ -975,5 +975,72 @@ kable(df, "html") %>%
 ```
 
 </div>
+
+<hr style="border-width: 10px;">
+## Term review and glossary
+
+<div class="roundBorder">
+<p><b>Functions and operators</b></p>
+<ul> 
+
+<li>`as.integer` Convert an object from double numeric to an integer</li>
+<li>`as.numeric` Convert an object from integer to double numeric</li>
+<li>`c` Combine objects</li>
+<li>`class` Determine the class of an object</li>
+<li>`factor` Make a factor object</li>
+<li>`levels` Determine the levels of a factor object</li>
+<li>`mean` Take the average of a set of values (note, use na.rm = TRUE in the presence of NA's)</li>
+<li>`plot` Plot an object, used in this exercise to plot a factor</li>
+<li>`typeof` Determine how R stores an object in your global environment</li>
+
+
+<li>`<-` Assign a name to an object in R (assignment operator)</li>
+<li>`?` Get help for a given function</li> 
+</ul>
+<p><b>Logical operators</b></p>
+```{r echo = FALSE}
+require(knitr)
+require(kableExtra)
+
+df <-
+  data.frame(
+  `Operator` = c('==', '!=', '|', '&', '<', '<=', '%in%','>', '>='),
+  `Usage` = c('x == y', 'x != y', 'x | y', 'x & y','x %in% yz', 'x < y', 'x <= y', 'x > y', 'x >= y'),
+  `Meaning` = c(
+    'x is equal to y',
+    'x is NOT equal to y',
+    'x OR y',
+    'x AND y',
+    'x is in the vector c(y,z)',
+    'x is less than y',
+    'x is less than or equal to y',
+    'x is greater than y',
+    'x is greater than or equal to y')
+  )
+
+kable(df, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE, position = 'left', font_size = 14)
+```
+
+<hr style = "border: 1px solid #30288C;">
+
+<p><b>Vocabulary</b></p>
+<ul>
+<li><b>Character</b>: a symbol or set of symbols from a given alphabet (note: also includes numbers and punctuation)</li>
+<li><b>Factor</b>: a value in which characters are mapped to integer levels and labels</li>
+<li><b>Integer</b>: a whole number</li>
+<li><b>Labels (of a factor)</b>: character values associated with a factor level when printing or plotting factors</li>
+<li><b>Levels (of a factor)</b>: character values mapped to integer values</li>
+<li><b>Logical operator</b>: Operators that are used to test logical statements (e.g., 3 `>` 2)</li>
+<li><b>Logical value</b>: TRUE or FALSE</li>
+<li><b>Numeric, double</b>: For our purposes, a decimal number</li>
+<li><b>Type</b>: how a value is stored in R (e.g., double or integer)</li>
+<li><b>Value</b>: any single unit of data</li>
+</ul>
+</div>
+
+<hr style="border-width: 10px;">
+<img style="float: right; margin: 0px 0px 15px 15px" src="images/nzpLogoSideways2.png" width="50%" />
+
 
 <b>End of lesson!</b>
