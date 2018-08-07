@@ -1,0 +1,845 @@
+---
+title: "Lesson one: Values"
+author: "Brian S. Evans, Ph.D."
+output: learnr::tutorial
+runtime: shiny_prerendered
+theme: yeti
+---
+
+<!-- html head --> 
+
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+<!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
+</head>
+
+```{r setup, include=FALSE}
+# Load libraries:
+
+library(learnr)
+library(RCurl)
+library(lubridate)
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+
+knitr::opts_chunk$set(echo = FALSE)
+options(knitr.table.format = "html")
+
+# Objects used:
+
+numberObject <-
+  c(1, 1, 2, 3)
+
+numericVector <- 
+  numberObject
+
+exampleFactor <- 
+  factor(
+    c('one', 'one', 'two', 'three')
+    )
+
+```
+<br>
+
+## Introduction
+
+<img src="images/dsWorkflowOverview.png" 
+            title="data science workflow"
+            alt = "data science diagram"
+            style= "float: right; width: 50%; padding-right: 0px; padding-left: 10px"/>
+            
+<p><b>Re-thinking the structure of data:</b> How we have interacted with data in the past dictates how we structure data mentally. Many of us in science, myself included, have learned to use programs like Microsoft Excel (or iOS' numbers, libreOffice's Calc, Google Sheets, etc.) for viewing and managing data. Through learning and using spreadsheet programs, we tend to format and organize data in ways that are incompatible with environments outside of that system. In other words, there are ways that we interact with data in Excel, especially in regards to how we organize spreadsheets, which do not lend itself well to working with data outside of the spreadsheet environment. Under these conditions, using R (and other programming environments) becomes a frustrating exercise of constantly wrestling with datasets to perform even simple analyses. This process ends up taking most of our computer time.</p>
+
+<p>In addition to increasing our stress level when working with R, the spreadsheet paradigm fails to provide us with fully reproducible data or adequate reporting. Ideally, our target audience should be able to reproduce each step of a data process, starting with the raw data itself.</p>
+
+<p>In this lesson we will work to develop a strong understanding of the structures that hold values.</b>
+
+<hr>
+
+## Objects: Containers for values
+<br>
+
+<p>In R, containers called <b>objects</b> hold sets of values. Different types of objects store values in different ways.</p>
+<div class = "row">
+<br>
+```{r echo = FALSE}
+require(knitr)
+require(kableExtra)
+
+df <-
+  data.frame(
+    `Dimensions` = c('1-D', '2-D'),
+    `Homogeneous` = c('Atomic vector', 'Matrix'),
+    `Heterogeneous` = c('List', 'Data frame')
+  )
+
+kable(df, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+</div>
+
+<div class = "row">
+<p>For each object type, we'll address:</p>
+<ul>
+<li>One vs. two dimensions</li>
+<li>Heterogeneous vs. homogeneous value classes</li>
+<li>Indexing: Location within an object</li>
+<li>Attributes of the object class</li>
+</ul>
+</div>
+
+<br>
+
+
+## Atomic vectors
+<br>
+<p>An <b>atomic vector</b> is a one-dimensional collection of values. Values in an atomic vector are homogeneous. In other words, all values must be of the same class. We've already learned how to create an atomic vector -- this is the object that is created with `c()`.</p>
+<br>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i>Create an atomic vector with the numbers 1, 1, 2, and 3 and assign the name `numericVector` to the object.</p>
+
+```{r avec, exercise = TRUE, exercise.lines = 5}
+# Create an atomic vector:
+```
+
+```{r avec-hint-1}
+numericVector <- ...
+```
+
+```{r avec-hint-2}
+numericVector <- 
+  c(...)
+```
+
+```{r avec-hint-3}
+numericVector <- 
+  c(1, 1, 2, 3)
+```
+
+<p>To print the output, type the name assigned to the object:</p>
+
+```{r printAvec, exercise = TRUE, exercise.lines = 5}
+# View the atomic vector:
+
+```
+
+</div>
+<br>
+
+<h3>The structure of atomic vectors<h3>
+
+<p>The structure of an object describes the class of object and the number of values of an object in each dimension. In the previous lesson we used `class()` and `typeof()` to observe object class and type. For atomic vectors, which are one-dimensional we can use `length()` to determine the number of values that make up the object.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i>Determine the class and type of values in the object `numericVector`.</p>
+
+```{r classType_avec, exercise = TRUE, exercise.lines = 5}
+# Class and type of numericVector:
+```
+
+```{r classType_avec-hint-1}
+class(...)
+
+typeof(...)
+```
+
+```{r classType_avec-hint-2}
+class(numericVector)
+
+typeof(numericVector)
+```
+
+<p>Determine the number of values that make up the numericVector.</p>
+
+```{r length_avec, exercise = TRUE, exercise.lines = 5}
+# Number of values in numericVector:
+
+```
+
+```{r length_avec-hint-1}
+length(...)
+```
+
+```{r length_avec-hint-2}
+length(numericVector)
+```
+
+</div>
+
+<p>We can view the length and class of an object at once using the function `str()` (structure).</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i>Use `str()` to determine the class and number of values in the object `numericVector` in one step.</p>
+
+```{r str_avec, exercise = TRUE, exercise.lines = 5}
+# str can be used to observe object structure:
+
+```
+
+```{r str_avec-hint-1}
+str(...)
+```
+
+```{r str_avec-hint-2}
+str(numericVector)
+```
+</div>
+
+<p>If the object is numeric, integer, or factor, we can view quantitative summary information of an object using the `summary()` function.</p>
+<br>
+
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> View the structure and summary information of the atomic vector we created above.</p>
+```{r eval = FALSE}
+# Structure and summary of the numeric vector:
+
+str(numericVector)
+
+summary(numericVector)
+
+```
+
+<br>
+<p>All values in an atomic vector must be of the same class (homogeneous).</p>
+<br>
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Observe what happens when the values input into an atomic vector are heterogeneous.</p>
+```{r eval = FALSE}
+# All values in a vector must be of the same class:
+
+c(1, 'one', 2, 3)
+
+class(
+  c(1, 'one', 2, 3)
+  )
+
+str(
+  c(1, 'one', 2, 3)
+)
+
+summary(
+  c(1, 'one', 2, 3)
+)
+```
+
+<br>
+<h3>Indexing atomic vectors<h3>
+<br>
+
+<p>Each value in a vector has a both a value and a position, denoted by "[<i>x</i>]". The position and value information for our `numericVector` could be written as:</p>
+
+```{r echo = FALSE}
+
+df <-
+  data.frame(
+    `Position` = c('[1]','[2]','[3]','[4]'),
+    `Value` = c(1, 1, 2, 3)
+  )
+
+df <-
+  data_frame(
+    `[1]` = 1,
+    `[2]` = 1,
+    `[3]` = 2,
+    `[4]` = 3
+  )
+
+kable(df, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = TRUE, position = 'center')
+```
+
+<br>
+<p>The brackets above represent an index of a values location. We can refer to this index using the notation `object_name[x]`. This process is method to <b>filter</b> or <b>subset</b> a vector by position. Filtering or querying a data object is the process of reducing the number of values in that object to only those that match a given condition. It may be useful to consider the code snippet `object_name[x]` as `object_name` where (`[`) the position is equal to `x`.</p>
+<br>
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the atomic vector `numericVector` to the value at position 3:</p>
+```{r eval = FALSE}
+# Use indexing to subset a vector to the third position:
+
+numericVector
+
+numericVector[3]
+```
+<br>
+<p>The value, `3`, that we indexed above is actually a vector of one value, the number three. We can determine the values at multiple positions by providing a vector of multiple integer positions inside the brackets.</p>
+<br>
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the atomic vector `numericVector` to the values at positions 1, 2, and 3:</p>
+
+```{r eval = FALSE}
+# Use indexing to subset a vector to the first, second, and third positions:
+
+numericVector[1:3]
+
+numericVector[c(1, 2, 3)]
+```
+<br>
+
+<h3>Attributes of atomic vectors</h3>
+<br>
+
+<div style = "text-align: left;">
+<p>Typical attributes of vectors that we are interested include:</p>
+<ul>
+<li><b>Class</b>: What type of values? This may be determine by the `class` and `str` functions.
+<li><b>Length</b>: How many values? This may be determined by the `length` and `str` functions.
+</ul>
+</div>
+<br>
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> View the attribute information for the atomic vector `numericVector`.</p>
+```{r eval = FALSE}
+# Attributes of the vector:
+
+class(numericVector)
+
+length(numericVector)
+
+str(numericVector)
+```
+
+<br>
+<p>Some attributes can be added to vectors. For example, we might want to add names to a vector. We can do so using the `names` function.</p>
+<br>
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Determine the names of the atomic vector `numericVector` and add new names.</p>
+```{r eval = FALSE}
+# Adding attributes to a vector:
+
+numericVector
+
+names(numericVector)
+
+names(numericVector) <- c('orange', 'pear', 'apple', 'grape')
+
+numericVector
+```
+
+<br>
+<p>In addition to indexing a named vector by position, you can also index a named vector by name, by indexing a vector of names in quotes. For example, we might consider our vector above as:</p>
+<br>
+```{r echo = FALSE}
+df <-
+  data_frame(
+    `['orange']` = 1,
+    `['pear']` = 1,
+    `['apple']` = 2,
+    `['grape']` = 3
+  )
+
+kable(df, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = TRUE, position = 'center')
+```
+
+<br>
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the atomic vector `numericVector` to the position in which the name of the value is "orange":</p>
+```{r eval = FALSE}
+# Indexing a vector by the name of the value:
+
+numericVector[3:4]
+
+numericVector['orange']
+```
+<br>
+<p>You may also choose to subset by a vector of names.</p>
+<br>
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the atomic vector `numericVector` to the position in which value is named "orange" or "grape":</p>
+```{r eval = FALSE}
+# Indexing a vector by the name of the value:
+
+numericVector[3:4]
+
+numericVector[c('orange','grape')]
+```
+
+<hr>
+## Matrix objects
+<br>
+<p>A <b>matrix</b> is a two dimensional object -- basically a vector that has been split into multiple columns. All values must be of the same class.</p>
+<br>
+
+```{r eval = FALSE}
+# Generate matrix:
+
+m <- matrix(c(1, 1, 2, 3), ncol = 2)
+
+m
+
+class(m)
+
+typeof(m)
+```
+<br>
+<p>A vector can be structured horizontally (row-wise) or vertically (column-wise) within a matrix:</p>
+<br>
+```{r eval = FALSE}
+# Compare matrices built row-wise and column-wise:
+
+matrix(c(1, 1, 2, 3), ncol = 2, byrow = TRUE)
+
+matrix(c(1, 1, 2, 3), ncol = 2, byrow = FALSE)
+```
+
+<br>
+<p>Because matrices must be homogeneous, all values are forced to be the same type.</p>
+<br>
+
+```{r eval = FALSE}
+
+# Matrix built with multiple types:
+
+messyMatrix <- matrix(c(1, 'one', 2, 3), ncol = 2)
+
+messyMatrix
+
+class(messyMatrix)
+
+typeof(messyMatrix)
+
+```
+<br>
+<h3>Matrix objects: Indexing</h3>
+<br>
+<p>Values in a matrix have a row (x) and column (y) position, denoted by "[<i>x</i>, <i>y</i>]"</p>
+<table style = "font-size: 1.1em; vertical-align: middle;">
+<tr>
+  <th style = "text-align: center; font-weight: normal;"></th>
+  <th style = "text-align: center; font-weight: normal;">[ ,1]</th>
+  <th style = "text-align: center; font-weight: normal;">[ ,2]</th>
+</tr>
+<tr>
+  <td style = "text-align: center;">[1, ]</td>
+  <td style = "text-align: center;">1</td>
+  <td style = "text-align: center;">2</td>
+</tr>
+<tr>
+  <td style = "text-align: center;">[2, ]</td>
+  <td style = "text-align: center;">1</td>
+  <td style = "text-align: center;">3</td>
+</tr>
+</table>
+<br>
+```{r eval = FALSE}
+# Index by row (x) and column (y) position [x,y]:
+
+m[1,1]
+
+m[2,2]
+
+m[1:2,2]
+
+```
+<br>
+
+<h3>Matrix objects: Attributes</h3>
+<br>
+<p>There are a number of attributes that can be observed for a given matrix:</p>
+<br>
+```{r eval = FALSE}
+# View matrix attributes:
+
+class(m)
+
+length(m)
+
+dim(m)
+
+str(m)
+
+summary(m)
+```
+<br>
+<p>You may add a name attribute to rows and columns.</p>
+<br>
+```{r eval = FALSE}
+# Naming rows and columns:
+
+colnames(m) <- c('a', 'b')
+
+rownames(m) <- c('c', 'd')
+
+attributes(m)
+
+m
+```
+<hr>
+## List objects
+<br>
+<p>A <b>list</b> is a one dimensional object constructed by combining ANY objects with ANY dimensionality.</p>
+<br>
+
+```{r eval = FALSE}
+# List of a numeric vector and matrices:
+
+exampleList <- list(numericVector, m, messyMatrix)
+
+exampleList
+```
+<br>
+<br>
+
+<h3>List objects: Indexing</h3>
+<br>
+<p>List position is denoted by [[<i>x</i>]].</p>
+<br>
+
+<div class = "row">
+<p>[[1]]</p>
+<table style = "font-size: 1em; vertical-align: middle; float: left; padding: 10px">
+<tr>
+<th style = "text-align: center; font-weight: normal;">[1]</th>
+<th style = "text-align: center; font-weight: normal;">[2]</th>
+<th style = "text-align: center; font-weight: normal;">[3]</th>
+<th style = "text-align: center; font-weight: normal;">[4]</th>
+</tr>
+<tr>
+<td style = "text-align: center;">1</td>
+<td style = "text-align: center;">1</td>
+<td style = "text-align: center;">2</td>
+<td style = "text-align: center;">3</td>
+</tr>
+</table>
+<br>
+</div>
+
+<div class = "row">
+<p>[[2]]</p>
+<table style = "font-size: 1.1em; vertical-align: middle;">
+<tr>
+<th style = "text-align: center; font-weight: normal;"></th>
+<th style = "text-align: center; font-weight: normal;">[ ,1]</th>
+<th style = "text-align: center; font-weight: normal;">[ ,2]</th>
+</tr>
+<tr>
+<td style = "text-align: center;">[1, ]</td>
+<td style = "text-align: center;">1</td>
+<td style = "text-align: center;">2</td>
+</tr>
+<tr>
+<td style = "text-align: center;">[2, ]</td>
+<td style = "text-align: center;">1</td>
+<td style = "text-align: center;">3</td>
+</tr>
+</table>
+<br>
+</div>
+
+<div class = "row">
+<p>[[3]]</p>
+<table style = "font-size: 1.1em; vertical-align: middle;">
+<tr>
+<th style = "text-align: center; font-weight: normal;"></th>
+<th style = "text-align: center; font-weight: normal;">[ ,1]</th>
+<th style = "text-align: center; font-weight: normal;">[ ,2]</th>
+</tr>
+<tr>
+<td style = "text-align: center;">[1, ]</td>
+<td style = "text-align: center;">"1"</td>
+<td style = "text-align: center;">"2"</td>
+</tr>
+<tr>
+<td style = "text-align: center;">[2, ]</td>
+<td style = "text-align: center;">"one"</td>
+<td style = "text-align: center;">"3"</td>
+</tr>
+</table>
+</div>
+<br>
+
+
+```{r eval = FALSE}
+# List indexing:
+
+exampleList
+
+exampleList[[2]]
+
+exampleList[[2]] == m
+
+m[2,2]
+
+exampleList[[2]][2,2]
+```
+
+<br>
+<h3>Attributes of lists</h3>
+<br>
+<div style = "text-align: left;">
+<p>Typical attributes we are interested in of lists include:</p>
+<ul>
+<li><b>Class</b>: What type of values?
+<li><b>Length</b>: How many values?
+</ul>
+</div>
+<br>
+
+```{r eval = FALSE}
+# Attributes of a list:
+
+class(exampleList)
+
+length(exampleList)
+
+str(exampleList)
+
+# Attributes of list items:
+
+class(exampleList[[1]])
+
+length(exampleList[[1]])
+
+```
+
+<br>
+<p>Attributes, such as names, can be added to lists:</p>
+<br>
+
+```{r eval = FALSE}
+# Adding attributes to a list:
+
+exampleList
+
+names(exampleList)
+
+names(exampleList) <- c('numericVector', 'm', 'messyMatrix')
+
+attributes(exampleList)
+```
+<br>
+<p>If named have been provided, lists can be indexed by their names attribute using matrix notation or the `$` operator.</p>
+<br>
+
+```{r eval = FALSE}
+# Lists can be indexed by name using the notation:
+
+exampleList[[3]]
+
+exampleList[['messyMatrix']]
+
+exampleList$messyMatrix
+
+```
+<hr>
+## Data frames
+<br>
+<p>A <b>data frame</b> is a two dimensional object constructed by combining vectors.</p>
+<br>
+
+```{r eval = FALSE}
+# Generate a data frame:
+
+df <- data.frame(a = c(1, 1), b =  c(2, 3))
+
+df
+```
+<br>
+<p>A matrix may also be converted to a data frame using the `as.data.frame` function.</p>
+<br>
+
+```{r eval = FALSE}
+# Generate a data frame from a matrix:
+
+as.data.frame(m)
+
+```
+
+<br>
+
+<br>
+<p>The vectors that are contained in a data frame may be of different classes.</p>
+<br>
+
+```{r eval = FALSE}
+# Generate a data frame of different vector classes:
+
+data.frame(a = c('one', 'one'), b =  c(2, 3))
+
+```
+<br>
+
+<p>But individual vectors are still coerced into the same class!</p>
+<br>
+
+```{r eval = FALSE}
+# Attempt to generate a data frame with heterogeneous vectors:
+
+messyDf <- data.frame(a = c(1, 'one'), b =  c(2, 3))
+
+messyDf
+
+```
+
+<br>
+<h3>Indexing data frames</h3>
+<br>
+<p>Values in a data frame have a row (x) and column (y) position, denoted by "[<i>x</i>, <i>y</i>]"</p>
+
+<br>
+<table style = "font-size: 1.1em; vertical-align: middle;">
+<tr>
+  <th style = "text-align: center; font-weight: normal;"></th>
+  <th style = "text-align: center; font-weight: normal;">[ ,1]</th>
+  <th style = "text-align: center; font-weight: normal;">[ ,2]</th>
+</tr>
+<tr>
+  <td style = "text-align: center;">[1, ]</td>
+  <td style = "text-align: center;">1</td>
+  <td style = "text-align: center;">1</td>
+</tr>
+<tr>
+  <td style = "text-align: center;">[2, ]</td>
+  <td style = "text-align: center;">2</td>
+  <td style = "text-align: center;">3</td>
+</tr>
+</table>
+<br>
+<br>
+
+```{r eval = FALSE}
+# Index by row (x) and column (y) position [x,y]:
+
+df[1,1]
+
+df[2,2]
+
+df[1:2,2]
+
+df[1,]
+
+df[,2]
+
+```
+<br>
+<br>
+<h3>Attributes of data frames</h3>
+<br>
+<p>There are a number of attributes that can be observed for a given data frame:</p>
+
+```{r eval = FALSE}
+# View data frame attributes:
+
+str(df)
+
+class(df)
+
+length(df)
+
+dim(df)
+
+summary(df)
+```
+<br>
+<p>Always check attributes prior to working with data frame!</p>
+<br>
+
+```{r eval = FALSE}
+# View attributes of the messy dataframe:
+
+str(messyDf)
+
+dfStrings <- data.frame(
+  a = c(1, 'one'), 
+  b =  c(2, 3),
+  stringsAsFactors = FALSE
+  )
+
+str(dfStrings)
+
+```
+
+<br>
+<p>Name attributes are automatically set when a data frame is created. Failing to set this attribute leads to bad names:</p>
+<br>
+
+```{r eval = FALSE}
+# Set and unset names:
+
+data.frame(a = c(1, 1), b =  c(2, 3))
+
+data.frame(c(1, 1),c(2, 3))
+
+```
+
+<br>
+<p>Similar to other objects, the names attribute can also be set manually after an object is created:</p>
+<br>
+
+```{r eval = FALSE}
+# View data frame attributes:
+
+exampleDf <- data.frame(c(1, 1),c(2, 3))
+
+names(exampleDf) <- c('hello', 'world')
+
+exampleDf
+
+```
+
+<br>
+<p>Data frames can be indexed by their names attribute using matrix notation or the `$` operator.</p>
+<br>
+
+```{r eval = FALSE}
+# View data frame attributes:
+
+exampleDf['hello']
+
+
+exampleDf$hello
+
+```
+<br>
+## Tibble data frames!</h2>
+<br>
+<p>A <b>tibble</b> is a special type of data frame provided by the package tidyverse.</p>
+<br>
+
+```{r eval = FALSE}
+# Read tidyverse package(s):
+
+library(tidyverse)
+
+# Generate a tibble data frame:
+
+tibbleDf <- data_frame(a = c(1, 'one'), b =  c(2, 3))
+
+tibbleDf
+```
+<br>
+
+<p>Base R data frames can also be converted to a tibble.</p>
+<br>
+
+```{r eval = FALSE}
+# Convert a data frame to a tbl:
+
+tbl_df(messyDf)
+
+tbl_df(data.frame(a = c(1, 'one'), b =  c(2, 3)))
+
+```
+
+<br>
+
+<p>How do tibbles differ from Base R data frames?</p>
+<br>
+
+```{r eval = FALSE}
+# Compare tibble and base R data frame:
+
+data.frame(a = c(1, 'one'), b =  c(2, 3))
+
+data_frame(a = c(1, 'one'), b =  c(2, 3))
+
+# Load data and compare between a data frame and a tibble:
+# Note: the "data" function loads example datasets
+
+data(iris)
+
+iris
+
+tbl_df(iris)
+```
+
+<br>
+<hr>
+
+<b>End of lesson 2</b>
+<img style="float: right; margin: 0px 0px 15px 15px;" src="nzpLogoSideways2.png" width="300" />
