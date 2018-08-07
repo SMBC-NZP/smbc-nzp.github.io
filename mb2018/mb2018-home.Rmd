@@ -17,7 +17,7 @@ output: html_document
 <ul>
 <li><b>Lesson instructions</b>: Website with written-out instructions and exercises associated with a presentation or lab activity (<i>Note: The instructions hyperlinks are the highlighted lesson titles</i>).</li>
 <li><b>Lesson code</b>: The R code that accompanies a lesson (<i>Note: These links will download an R file</i>).</li>
-<li><b>Lesson data</b>: Data that will accompany a lesson (<i>Note: These links will download an data file</i>).</li>
+<li><b>Lesson data</b>: Data that will accompany a lesson (<i>Note: These links will download a data file</i>).</li>
 </ul>
 
 <br>
@@ -29,7 +29,7 @@ output: html_document
  
 
 <ul>
-<li><b><a href = "https://smbc.shinyapps.io/mb2018-L0-intro_RStudio">Introduction to R Studio</a></b>. This lesson will provide new R users with the baseline knowledge necessary to use R and R Studio and align experienced R users with some of the terminology and best management practices used throughout this course.
+<li><b><a href = "https://smbc.shinyapps.io/mb2018-L0-intro_RStudio" target="_blank">Introduction to R Studio</a></b>. This lesson will provide new R users with the baseline knowledge necessary to use R and R Studio and align experienced R users with some of the terminology and best management practices used throughout this course.
 </li>
 <li><b><a href = "https://smbc.shinyapps.io/mb2018-L1-rValues" target="_blank">Lesson 1: Values</a></b>. Learn the primary classes of values you will use in this course</li>
 <li><b><a href = "https://smbc.shinyapps.io/mb2018-L1-rValues" target="_blank">Lesson 2: Objects</a></b>. Learn the primary types of objects that are used to store values</li>
