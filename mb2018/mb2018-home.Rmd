@@ -10,7 +10,7 @@ output: html_document
 <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
 </head>
 
-<h1 style="text-align: center;"><b>The Ecology and Conservation of Migratory Birds</b></h1>
+<h2 style="text-align: center;"><b>The Ecology and Conservation of Migratory Birds</b></h2>
 <hr>
 
 <p>Welcome to the Ecology and Conservation of Migratory Birds, 2018! This website will be our home base for the R portion of the course. R has become the universal quantitative interface for ecologists - it's free, powerful, flexible enough to do everything but write manuscripts for you, and is relatively user-friendly. Each lesson has accompanying hyperlinks that may include:</p>
@@ -22,7 +22,7 @@ output: html_document
 
 <br>
 
-<h2>Preliminary exercises</h2>
+<h3>Preliminary exercises</h3>
 <hr>
 <p>We ask that, regardless of your current level of R knowledge, you please complete the following preliminary exercises prior to attending the course. Please feel free to email Brian Evans with any questions at <a href="mailto:evansbr@si.edu">evansbr@si.edu</a></p>
  
@@ -32,10 +32,10 @@ output: html_document
 <li><b><a href = "https://smbc.shinyapps.io/mb2018-L0-intro_RStudio" target="_blank">Introduction to R Studio</a></b>. This lesson will provide new R users with the baseline knowledge necessary to use R and R Studio and align experienced R users with some of the terminology and best management practices used throughout this course.
 </li>
 <li><b><a href = "https://smbc.shinyapps.io/mb2018-L1-rValues" target="_blank">Lesson 1: Values</a></b>. Learn the primary classes of values you will use in this course</li>
-<li><b><a href = "https://smbc.shinyapps.io/mb2018-L1-rValues" target="_blank">Lesson 2: Objects</a></b>. Learn the primary types of objects that are used to store values</li>
-<li><b><a href = "https://smbc.shinyapps.io/mb2018-L1-rValues" target="_blank">Lesson 3: Indexing</a></b>. Learn how to query objects using indexing in base R</li>
-<li><b><a href = "https://smbc.shinyapps.io/mb2018-L1-rValues" target="_blank">Lesson 4: Functions</a></b>. Learn how to write custom functions</li>
-<li><b><a href = "https://smbc.shinyapps.io/mb2018-L1-rValues" target="_blank">Lesson 5: For loops</a></b>. Learn how to write simple for loops</li>
+<li><b><a href = "https://smbc.shinyapps.io/mb2018-L2-rObjects" target="_blank">Lesson 2: Objects</a></b>. Learn the primary types of objects that are used to store values</li>
+<li><b><a href = "https://smbc-nzp.github.io/mb2018/mb2018-L3-indexing.html" target="_blank">Lesson 3: Indexing</a></b>. Learn how to query objects using indexing in base R</li>
+<li><b><a href = "https://smbc-nzp.github.io/mb2018/mb2018-L4-functions.html" target="_blank">Lesson 4: Functions</a></b>. Learn how to write custom functions</li>
+<li><b><a href = "https://smbc-nzp.github.io/mb2018/mb2018-L5-forLoops.html" target="_blank">Lesson 5: For loops</a></b>. Learn how to write simple for loops</li>
 </ul>
 <br>
 <div class = "row">
