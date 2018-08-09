@@ -94,9 +94,8 @@ kable(df, "html") %>%
 
 
 ## Atomic vectors
-<br>
+
 <p>An <b>atomic vector</b> is a one-dimensional collection of values. Values in an atomic vector are homogeneous. In other words, all values must be of the same class. We've already learned how to create an atomic vector -- this is the object that is created with `c()`.</p>
-<br>
 
 <div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i>Create an atomic vector with the numbers 1, 1, 2, and 3 and assign the name `numericVector` to the object.</p>
@@ -129,7 +128,7 @@ numericVector <-
 </div>
 <br>
 
-<h3>The structure of atomic vectors<h3>
+<h3>The structure of atomic vectors</h3>
 
 <p>The structure of an object describes the class of object and the number of values of an object in each dimension. In the previous lesson we used `class()` and `typeof()` to observe object class and type. For atomic vectors, which are one-dimensional we can use `length()` to determine the number of values that make up the object.</p>
 
@@ -169,7 +168,8 @@ length(numericVector)
 
 </div>
 
-<p>We can view the length and class of an object at once using the function `str()` (structure).</p>
+<br>
+<p>We can view the length and class of an object in one step using the function `str()` (structure).</p>
 
 <div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i>Use `str()` to determine the class and number of values in the object `numericVector` in one step.</p>
@@ -188,44 +188,135 @@ str(numericVector)
 ```
 </div>
 
-<p>If the object is numeric, integer, or factor, we can view quantitative summary information of an object using the `summary()` function.</p>
 <br>
+<p>If the object is numeric, integer, or factor, we can view quantitative summary information of an object using the `summary()` function.</p>
 
-<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> View the structure and summary information of the atomic vector we created above.</p>
-```{r eval = FALSE}
-# Structure and summary of the numeric vector:
-
-str(numericVector)
-
-summary(numericVector)
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i>Use `summary()` to calculate summary statistics for the object `numericVector`.</p>
+```{r summary_avec, exercise = TRUE, exercise.lines = 5}
+# str can be used to observe object structure:
 
 ```
 
+```{r summary_avec-hint-1}
+summary(...)
+```
+
+```{r summary_avec-hint-2}
+str(numericVector)
+```
+</div>
+
 <br>
+
 <p>All values in an atomic vector must be of the same class (homogeneous).</p>
-<br>
-<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Observe what happens when the values input into an atomic vector are heterogeneous.</p>
-```{r eval = FALSE}
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Observe what happens when the values input into an atomic vector are heterogeneous. Create a vector with the values, 1, 'one', 2, and 3</p>
+
+```{r heteroV, exercise = TRUE, exercise.lines = 5}
 # All values in a vector must be of the same class:
 
-c(1, 'one', 2, 3)
+```
+</ul>
+```{r heteroV-hint-1}
+c(...)
+```
 
+
+```{r heteroV-hint-2}
+c(1, 'one', 2, 3)
+```
+<br>
+<p>Repeat the above and use `class()` to determine the class of the object</p>
+
+
+```{r heteroV_class, exercise = TRUE, exercise.lines = 5}
+# All values in a vector must be of the same class:
+
+```
+</ul>
+```{r heteroV_class-hint-1}
+class(...)
+```
+
+```{r heteroV_class-hint-2}
+class(
+  c(...)
+)
+```
+
+```{r heteroV_class-hint-3}
 class(
   c(1, 'one', 2, 3)
-  )
+)
+```
+<br>
+<p>Repeat the above and use `str()` to determine the length and class of the object</p>
 
+```{r heteroV_str, exercise = TRUE, exercise.lines = 5}
+# All values in a vector must be of the same class:
+
+```
+</ul>
+```{r heteroV_str-hint-1}
+str(...)
+```
+
+```{r heteroV_str-hint-2}
+str(
+  c(...)
+)
+```
+
+```{r heteroV_str-hint-3}
 str(
   c(1, 'one', 2, 3)
 )
+```
+<br>
+<p>Repeat the above and use `summary()` to calculate the summary statistics of the object (if possible!)</p>
 
+```{r heteroV_summary, exercise = TRUE, exercise.lines = 5}
+# All values in a vector must be of the same class:
+
+```
+</ul>
+```{r heteroV_summary-hint-1}
+summary(...)
+```
+
+```{r heteroV_summary-hint-2}
+summary(
+  c(...)
+)
+```
+
+```{r heteroV_summary-hint-3}
 summary(
   c(1, 'one', 2, 3)
 )
 ```
+</div>
+<br>
+
+<p>Some attributes can be added to vectors. For example, we might want to add names to a vector. We can do so using the `names()` function.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Explore the code below, which demonstrates adding names attributes to the values a vector</p>
+```{r vectorNames, exercise = TRUE, exercise.lines = 5}
+# Adding attributes to a vector:
+
+names(numericVector)
+
+names(numericVector) <- c('orange', 'pear', 'apple', 'grape')
+
+numericVector
+```
+</div>
 
 <br>
-<h3>Indexing atomic vectors<h3>
-<br>
+<h3>Indexing atomic vectors</h3>
 
 <p>Each value in a vector has a both a value and a position, denoted by "[<i>x</i>]". The position and value information for our `numericVector` could be written as:</p>
 
@@ -246,71 +337,57 @@ df <-
   )
 
 kable(df, "html") %>%
-  kable_styling(bootstrap_options = c("striped", "hover"), full_width = TRUE, position = 'center')
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE, position = 'center')
 ```
 
 <br>
-<p>The brackets above represent an index of a values location. We can refer to this index using the notation `object_name[x]`. This process is method to <b>filter</b> or <b>subset</b> a vector by position. Filtering or querying a data object is the process of reducing the number of values in that object to only those that match a given condition. It may be useful to consider the code snippet `object_name[x]` as `object_name` where (`[`) the position is equal to `x`.</p>
-<br>
+<p>The brackets above represent an index of a values location. We can refer to this index using the notation `object_name[x]`. This process is method to <b>filter</b> or <b>subset</b> a vector by position. Filtering or querying a data object is the process of reducing the number of values in that object to only those that match a given condition. It may be useful to consider the code snippet `object_name[x]` as `object_name` where (`[`) the position is equal to `x`. For example, we could subset the `numericVector` object to the second value by typing `numericVector[2]`.</p>
+
+<div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the atomic vector `numericVector` to the value at position 3:</p>
-```{r eval = FALSE}
-# Use indexing to subset a vector to the third position:
+```{r numeric3, exercise = TRUE, exercise.lines = 5}
+# Subset numericVector to the value associated with position 3:
 
+```
+
+```{r numeric3-hint-1}
 numericVector
+```
 
+```{r numeric3-hint-2}
+numericVector[...]
+```
+
+```{r numeric3-hint-3}
 numericVector[3]
 ```
+</div>
+
 <br>
 <p>The value, `3`, that we indexed above is actually a vector of one value, the number three. We can determine the values at multiple positions by providing a vector of multiple integer positions inside the brackets.</p>
-<br>
+
+<div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the atomic vector `numericVector` to the values at positions 1, 2, and 3:</p>
 
-```{r eval = FALSE}
+```{r numeric123, exercise = TRUE, exercise.lines = 5}
 # Use indexing to subset a vector to the first, second, and third positions:
 
+```
+
+```{r numeric123-hint-1}
+numericVector[...]
+```
+
+```{r numeric123-hint-2}
 numericVector[1:3]
-
-numericVector[c(1, 2, 3)]
 ```
-<br>
 
-<h3>Attributes of atomic vectors</h3>
-<br>
-
-<div style = "text-align: left;">
-<p>Typical attributes of vectors that we are interested include:</p>
-<ul>
-<li><b>Class</b>: What type of values? This may be determine by the `class` and `str` functions.
-<li><b>Length</b>: How many values? This may be determined by the `length` and `str` functions.
-</ul>
+```{r numeric123-hint-3}
+# or:
+numericVector[c(1,2,3)]
+```
 </div>
-<br>
-<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> View the attribute information for the atomic vector `numericVector`.</p>
-```{r eval = FALSE}
-# Attributes of the vector:
 
-class(numericVector)
-
-length(numericVector)
-
-str(numericVector)
-```
-
-<br>
-<p>Some attributes can be added to vectors. For example, we might want to add names to a vector. We can do so using the `names` function.</p>
-<br>
-<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Determine the names of the atomic vector `numericVector` and add new names.</p>
-```{r eval = FALSE}
-# Adding attributes to a vector:
-
-numericVector
-
-names(numericVector)
-
-names(numericVector) <- c('orange', 'pear', 'apple', 'grape')
-
-numericVector
-```
 
 <br>
 <p>In addition to indexing a named vector by position, you can also index a named vector by name, by indexing a vector of names in quotes. For example, we might consider our vector above as:</p>
@@ -325,31 +402,63 @@ df <-
   )
 
 kable(df, "html") %>%
-  kable_styling(bootstrap_options = c("striped", "hover"), full_width = TRUE, position = 'center')
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE, position = 'center')
 ```
-
 <br>
-<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the atomic vector `numericVector` to the position in which the name of the value is "orange":</p>
-```{r eval = FALSE}
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the atomic vector `numericVector` to the position in which the name of the value is "grape":</p>
+```{r vectorNames_subset, exercise = TRUE, exercise.lines = 5}
 # Indexing a vector by the name of the value:
 
-numericVector[3:4]
+names(numericVector) <- c('orange', 'pear', 'apple', 'grape')
 
-numericVector['orange']
+numericVector[...]
 ```
+
+```{r vectorNames_subset-hint-1}
+# Indexing a vector by the name of the value:
+
+names(numericVector) <- c('orange', 'pear', 'apple', 'grape')
+
+numericVector['grape']
+```
+</div>
+
 <br>
-<p>You may also choose to subset by a vector of names.</p>
+<p>You may also choose to subset the named vector by denoting position using a vector of names.</p>
 <br>
+<div class = "reviewDiv>
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the atomic vector `numericVector` to the position in which value is named "orange" or "grape":</p>
-```{r eval = FALSE}
+```{r vectorNames_subset2, exercise = TRUE, exercise.lines = 5}
 # Indexing a vector by the name of the value:
 
-numericVector[3:4]
+names(numericVector) <- c('orange', 'pear', 'apple', 'grape')
 
-numericVector[c('orange','grape')]
+numericVector[...]
 ```
+
+```{r vectorNames_subset2-hint-1}
+# Indexing a vector by the name of the value:
+
+names(numericVector) <- c('orange', 'pear', 'apple', 'grape')
+
+numericVector[c(...)]
+```
+
+```{r vectorNames_subset2-hint-2}
+# Indexing a vector by the name of the value:
+
+names(numericVector) <- c('orange', 'pear', 'apple', 'grape')
+
+numericVector[c('orange', 'grape')]
+```
+</div>
+
+<p>We will be addressing indexing in depth in the next lesson, so be sure you have a thorough understanding of the above!</p>
 
 <hr>
+
 ## Matrix objects
 <br>
 <p>A <b>matrix</b> is a two dimensional object -- basically a vector that has been split into multiple columns. All values must be of the same class.</p>
