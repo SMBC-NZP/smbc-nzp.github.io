@@ -1,5 +1,5 @@
 ---
-title: "Lesson one: Values"
+title: "Lesson two: Objects"
 author: "Brian S. Evans, Ph.D."
 output: learnr::tutorial
 runtime: shiny_prerendered
