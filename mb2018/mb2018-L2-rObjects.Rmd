@@ -85,8 +85,8 @@ kable(df, "html") %>%
 <ul>
 <li>One vs. two dimensions</li>
 <li>Heterogeneous vs. homogeneous value classes</li>
-<li>Indexing: Location within an object</li>
 <li>Attributes of the object class</li>
+<li>Indexing: Location within an object</li>
 </ul>
 </div>
 
@@ -95,7 +95,7 @@ kable(df, "html") %>%
 
 ## Atomic vectors
 
-<p>An <b>atomic vector</b> is a one-dimensional collection of values. Values in an atomic vector are homogeneous. In other words, all values must be of the same class. We've already learned how to create an atomic vector -- this is the object that is created with `c()`.</p>
+<p>An <b>atomic vector</b> is a <b>one-dimensional</b> collection of values. Values in an atomic vector are <b>homogeneous</b>. In other words, all values must be of the same class. We've already learned how to create an atomic vector -- this is the type of object that we created using the combine function, `c()`.</p>
 
 <div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i>Create an atomic vector with the numbers 1, 1, 2, and 3 and assign the name `numericVector` to the object.</p>
@@ -209,10 +209,8 @@ str(numericVector)
 
 <br>
 
-<p>All values in an atomic vector must be of the same class (homogeneous).</p>
-
 <div class = "reviewDiv">
-<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Observe what happens when the values input into an atomic vector are heterogeneous. Create a vector with the values, 1, 'one', 2, and 3</p>
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> To explore how atomic vectors are homogeneous, observe what happens when the values input into an atomic vector are heterogeneous. Create a vector with the values, 1, 'one', 2, and 3</p>
 
 ```{r heteroV, exercise = TRUE, exercise.lines = 5}
 # All values in a vector must be of the same class:
@@ -300,7 +298,9 @@ summary(
 </div>
 <br>
 
-<p>Some attributes can be added to vectors. For example, we might want to add names to a vector. We can do so using the `names()` function.</p>
+<h3>Attributes of Atomic vectors</h3>
+
+<p>You can determine the attributes of an object using the function `attributes()`. Vectors typically do not have attributes. Some attributes, however, can be added to vectors. For example, we might want to add names to a vector. We can do so using the `names()` function.</p>
 
 <div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Explore the code below, which demonstrates adding names attributes to the values a vector</p>
@@ -312,6 +312,8 @@ names(numericVector)
 names(numericVector) <- c('orange', 'pear', 'apple', 'grape')
 
 numericVector
+
+attributes(numericVector)
 ```
 </div>
 

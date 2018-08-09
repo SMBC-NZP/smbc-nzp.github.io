@@ -126,10 +126,10 @@ One vs. two dimensions
 Heterogeneous vs. homogeneous value classes
 </li>
 <li>
-Indexing: Location within an object
+Attributes of the object class
 </li>
 <li>
-Attributes of the object class
+Indexing: Location within an object
 </li>
 </ul>
 </div>
@@ -138,7 +138,7 @@ Attributes of the object class
 <div id="section-atomic-vectors" class="section level2">
 <h2>Atomic vectors</h2>
 <p>
-An <b>atomic vector</b> is a one-dimensional collection of values. Values in an atomic vector are homogeneous. In other words, all values must be of the same class. We’ve already learned how to create an atomic vector – this is the object that is created with <code>c()</code>.
+An <b>atomic vector</b> is a <b>one-dimensional</b> collection of values. Values in an atomic vector are <b>homogeneous</b>. In other words, all values must be of the same class. We’ve already learned how to create an atomic vector – this is the type of object that we created using the combine function, <code>c()</code>.
 </p>
 <div class="reviewDiv">
 <p>
@@ -245,12 +245,9 @@ If the object is numeric, integer, or factor, we can view quantitative summary i
 </div>
 </div>
 <p><br></p>
-<p>
-All values in an atomic vector must be of the same class (homogeneous).
-</p>
 <div class="reviewDiv">
 <p>
-<i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Observe what happens when the values input into an atomic vector are heterogeneous. Create a vector with the values, 1, ‘one’, 2, and 3
+<i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> To explore how atomic vectors are homogeneous, observe what happens when the values input into an atomic vector are heterogeneous. Create a vector with the values, 1, ‘one’, 2, and 3
 </p>
 <div class="tutorial-exercise" data-label="heteroV" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="5">
 <pre class="text"><code># All values in a vector must be of the same class:</code></pre>
@@ -331,8 +328,11 @@ Repeat the above and use <code>summary()</code> to calculate the summary statist
 </div>
 </div>
 <p><br></p>
+<h3>
+Attributes of Atomic vectors
+</h3>
 <p>
-Some attributes can be added to vectors. For example, we might want to add names to a vector. We can do so using the <code>names()</code> function.
+You can determine the attributes of an object using the function <code>attributes()</code>. Vectors typically do not have attributes. Some attributes, however, can be added to vectors. For example, we might want to add names to a vector. We can do so using the <code>names()</code> function.
 </p>
 <div class="reviewDiv">
 <p>
@@ -345,7 +345,9 @@ names(numericVector)
 
 names(numericVector) &lt;- c(&#39;orange&#39;, &#39;pear&#39;, &#39;apple&#39;, &#39;grape&#39;)
 
-numericVector</code></pre>
+numericVector
+
+attributes(numericVector)</code></pre>
 <script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":false,"message":true,"exercise.df_print":"paged","exercise.checker":"NULL"}</script>
 </div>
 </div>
