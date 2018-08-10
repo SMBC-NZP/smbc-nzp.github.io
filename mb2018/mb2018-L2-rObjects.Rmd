@@ -46,6 +46,12 @@ myMatrix <-
     ncol = 2
   )
 
+myList <-
+  list(
+    numericVector,
+    myMatrix
+  )
+
 fibVec <- vector('numeric', length = 12)
 
 fibVec[1:2] <- c(0, 1)
@@ -74,8 +80,7 @@ fibMat <-
 
 <p>In addition to increasing our stress level when working with R, the spreadsheet paradigm fails to provide us with fully reproducible data or adequate reporting. Ideally, our target audience should be able to reproduce each step of a data process, starting with the raw data itself.</p>
 
-<p>In this lesson we will work to develop a strong understanding of the structures that hold values.</p>
-<p>In R, containers called <b>objects</b> hold sets of values. Different types of objects store values in different ways.</p>
+<p>In this lesson we will work to develop a strong understanding of the containers that hold values. These containers are called <b>objects</b>. Different classes of objects structure values in different ways.</p>
 <div class = "row">
 <br>
 ```{r echo = FALSE}
@@ -327,7 +332,8 @@ summary(
 
 names(numericVector)
 
-names(numericVector) <- c('orange', 'pear', 'apple', 'grape')
+names(numericVector) <- 
+  c('orange', 'pear', 'apple', 'grape')
 
 numericVector
 
@@ -431,13 +437,15 @@ kable(df, "html") %>%
 ```{r vectorNames_subset, exercise = TRUE, exercise.lines = 5}
 # Indexing a vector by the name of the value:
 
-names(numericVector) <- c('orange', 'pear', 'apple', 'grape')
+names(numericVector) <- 
+  c('orange', 'pear', 'apple', 'grape')
 
 numericVector[...]
 ```
 
 ```{r vectorNames_subset-hint-1}
-names(numericVector) <- c('orange', 'pear', 'apple', 'grape')
+names(numericVector) <- 
+  c('orange', 'pear', 'apple', 'grape')
 
 numericVector['grape']
 ```
@@ -452,19 +460,22 @@ numericVector['grape']
 ```{r vectorNames_subset2, exercise = TRUE, exercise.lines = 5}
 # Indexing a vector by the name of the value:
 
-names(numericVector) <- c('orange', 'pear', 'apple', 'grape')
+names(numericVector) <- 
+  c('orange', 'pear', 'apple', 'grape')
 
 numericVector[...]
 ```
 
 ```{r vectorNames_subset2-hint-1}
-names(numericVector) <- c('orange', 'pear', 'apple', 'grape')
+names(numericVector) <- 
+  c('orange', 'pear', 'apple', 'grape')
 
 numericVector[c(...)]
 ```
 
 ```{r vectorNames_subset2-hint-2}
-names(numericVector) <- c('orange', 'pear', 'apple', 'grape')
+names(numericVector) <- 
+  c('orange', 'pear', 'apple', 'grape')
 
 numericVector[c('orange', 'grape')]
 ```
@@ -897,17 +908,48 @@ myMatrix[c(1, 3), 'world']
 
 ## List objects
 <br>
-<p>A <b>list</b> is a one dimensional object constructed by combining ANY objects with ANY dimensionality.</p>
+<p>A <b>list</b> is a one dimensional object constructed by combining ANY objects with ANY dimensionality. Because of their flexibility, lists can be very powerful (and occasionally messy and/or dangerous!). A list is created using the `list()` function, the arguments of which are the items contained within the list.</p>
 <br>
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Explore the following to observe the structure of lists:</p>
 
-```{r eval = FALSE}
-# List of a numeric vector and matrices:
+```{r list, exercise = TRUE, exercise.lines = 5}
+# Homogeneous list of values:
 
-exampleList <- list(numericVector, m, messyMatrix)
+list(1, 1, 2)
 
-exampleList
+# Heterogeneous list of values:
+
+list(1, 'one', 2)
+
+# List of objects:
+
+list(numericVector, myMatrix)
+
+myList <-
+  list(numericVector, myMatrix)
+
+myList
 ```
+</div>
 <br>
+
+<p>List items can be named. To do so, you may name a pre-existing list using the convention `names(listName) <- c(namesVector)`. You may also specify the names when the list is created (e.g., `list(hello = 1, world = 2)`).</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Explore the following to observe the naming of list items:</p>
+```{r list_names, exercise = TRUE, exercise.lines = 5}
+# Specify list names when the list is constructed:
+
+list(apple = 1, pear = 2)
+
+# Specify the names of a pre-existing list:
+
+names(myList) <-
+  c('hello', 'world')
+```
+</div>
+
 <br>
 
 <h3>List objects: Indexing</h3>
