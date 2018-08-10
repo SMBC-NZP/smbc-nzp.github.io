@@ -40,6 +40,26 @@ exampleFactor <-
     c('one', 'one', 'two', 'three')
     )
 
+myMatrix <-
+  matrix(
+    c(1, 1, 2, 3),
+    ncol = 2
+  )
+
+fibVec <- vector('numeric', length = 12)
+
+fibVec[1:2] <- c(0, 1)
+
+for(i in 3:length(fibVec)){
+  fibVec[i] <- 
+    fibVec[i-1] + fibVec[i-2]
+}
+
+fibMat <-
+  fibVec %>%
+  matrix(
+    ncol = 3, byrow = TRUE)
+
 ```
 <br>
 
@@ -48,19 +68,13 @@ exampleFactor <-
 <img src="images/dsWorkflowOverview.png" 
             title="data science workflow"
             alt = "data science diagram"
-            style= "float: right; width: 50%; padding-right: 0px; padding-left: 10px"/>
+            style= "float: right; width: 50%; padding-right: 0px; padding-left: 10px; padding-bottom:  10px"/>
             
 <p><b>Re-thinking the structure of data:</b> How we have interacted with data in the past dictates how we structure data mentally. Many of us in science, myself included, have learned to use programs like Microsoft Excel (or iOS' numbers, libreOffice's Calc, Google Sheets, etc.) for viewing and managing data. Through learning and using spreadsheet programs, we tend to format and organize data in ways that are incompatible with environments outside of that system. In other words, there are ways that we interact with data in Excel, especially in regards to how we organize spreadsheets, which do not lend itself well to working with data outside of the spreadsheet environment. Under these conditions, using R (and other programming environments) becomes a frustrating exercise of constantly wrestling with datasets to perform even simple analyses. This process ends up taking most of our computer time.</p>
 
 <p>In addition to increasing our stress level when working with R, the spreadsheet paradigm fails to provide us with fully reproducible data or adequate reporting. Ideally, our target audience should be able to reproduce each step of a data process, starting with the raw data itself.</p>
 
-<p>In this lesson we will work to develop a strong understanding of the structures that hold values.</b>
-
-<hr>
-
-## Objects: Containers for values
-<br>
-
+<p>In this lesson we will work to develop a strong understanding of the structures that hold values.</p>
 <p>In R, containers called <b>objects</b> hold sets of values. Different types of objects store values in different ways.</p>
 <div class = "row">
 <br>
@@ -83,10 +97,14 @@ kable(df, "html") %>%
 <div class = "row">
 <p>For each object type, we'll address:</p>
 <ul>
-<li>One vs. two dimensions</li>
-<li>Heterogeneous vs. homogeneous value classes</li>
-<li>Attributes of the object class</li>
-<li>Indexing: Location within an object</li>
+<li>The number of dimensions: One vs. two dimensions</li>
+<li>The classes of values within an object:
+<ul>
+<li><b>Homogeneous</b>: Only one class of values per object</li>
+<li><b>Heterogeneous</b>: One or more classes of values per object</li>
+</ul>
+<li><b>Attributes</b> of the object class: Names and dimensions</li>
+<li><b>Indexing</b>: Location within an object</li>
 </ul>
 </div>
 
@@ -300,7 +318,7 @@ summary(
 
 <h3>Attributes of Atomic vectors</h3>
 
-<p>You can determine the attributes of an object using the function `attributes()`. Vectors typically do not have attributes. Some attributes, however, can be added to vectors. For example, we might want to add names to a vector. We can do so using the `names()` function.</p>
+<p>You can determine the attributes of an object using the function `attributes()`. Vectors typically do not have attributes. Some attributes, however, can be added to vectors. For example, we might want to get or add names to a vector. We can both assess and add to the names attribute of a vector using the `names()` function.</p>
 
 <div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Explore the code below, which demonstrates adding names attributes to the values a vector</p>
@@ -419,8 +437,6 @@ numericVector[...]
 ```
 
 ```{r vectorNames_subset-hint-1}
-# Indexing a vector by the name of the value:
-
 names(numericVector) <- c('orange', 'pear', 'apple', 'grape')
 
 numericVector['grape']
@@ -430,7 +446,8 @@ numericVector['grape']
 <br>
 <p>You may also choose to subset the named vector by denoting position using a vector of names.</p>
 <br>
-<div class = "reviewDiv>
+
+<div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the atomic vector `numericVector` to the position in which value is named "orange" or "grape":</p>
 ```{r vectorNames_subset2, exercise = TRUE, exercise.lines = 5}
 # Indexing a vector by the name of the value:
@@ -441,16 +458,12 @@ numericVector[...]
 ```
 
 ```{r vectorNames_subset2-hint-1}
-# Indexing a vector by the name of the value:
-
 names(numericVector) <- c('orange', 'pear', 'apple', 'grape')
 
 numericVector[c(...)]
 ```
 
 ```{r vectorNames_subset2-hint-2}
-# Indexing a vector by the name of the value:
-
 names(numericVector) <- c('orange', 'pear', 'apple', 'grape')
 
 numericVector[c('orange', 'grape')]
@@ -463,52 +476,279 @@ numericVector[c('orange', 'grape')]
 
 ## Matrix objects
 <br>
-<p>A <b>matrix</b> is a two dimensional object -- basically a vector that has been split into multiple columns. All values must be of the same class.</p>
-<br>
+<p>A <b>matrix</b> is a two dimensional object -- an atomic vector that is arranged into rows and columns (see `?matrix`). You can use the function `matrix()` to create a matrix. The first argument to supply to the matrix function is the data that you would like to express as a matrix. You can add arguments specifying the number of rows, `nrow`, or columns, `ncol` to change the shape of the resultant matrix. These arguments accept numeric values.</p>
 
-```{r eval = FALSE}
-# Generate matrix:
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Convert the atomic vector `c(1, 1, 2, 3)` into a matrix object:</p>
+```{r mat, exercise = TRUE, exercise.lines = 5}
+# Convert c(1, 1, 2, 3) to a matrix:
 
-m <- matrix(c(1, 1, 2, 3), ncol = 2)
-
-m
-
-class(m)
-
-typeof(m)
-```
-<br>
-<p>A vector can be structured horizontally (row-wise) or vertically (column-wise) within a matrix:</p>
-<br>
-```{r eval = FALSE}
-# Compare matrices built row-wise and column-wise:
-
-matrix(c(1, 1, 2, 3), ncol = 2, byrow = TRUE)
-
-matrix(c(1, 1, 2, 3), ncol = 2, byrow = FALSE)
+c(1, 1, 2, 3)
 ```
 
+```{r mat-hint-1}
+matrix(
+  c(1, 1, 2, 3)
+)
+```
+
+<p>Repeat the above and use the `nrow` or `ncol` arguments to arrange the matrix into an object with two rows and two columns:<p>
+```{r mat_ncol, exercise = TRUE, exercise.lines = 5}
+# Convert c(1, 1, 2, 3) to a matrix:
+
+matrix(
+  c(1, 1, 2, 3)
+)
+```
+
+```{r mat_ncol-hint-1}
+matrix(
+  c(1, 1, 2, 3),
+  nrow = ...
+)
+
+# or ...
+
+matrix(
+  c(1, 1, 2, 3),
+  ncol = ...
+)
+```
+
+
+```{r mat_ncol-hint-2}
+matrix(
+  c(1, 1, 2, 3),
+  nrow = 2
+)
+
+# or ...
+
+matrix(
+  c(1, 1, 2, 3),
+  ncol = 2
+)
+```
+</div>
+
 <br>
-<p>Because matrices must be homogeneous, all values are forced to be the same type.</p>
+<p>Note in the above that the matrix was created by arranging the atomic vector into columns. When you generated the matrix without an `nrow` or `ncol` argument, the data were arranged as a one column matrix, in the order of the values of the vector. Specifying `nrow` or `ncol` split the column, but the order of values remains the same. This order is known as "by column". You can specify that you would like to arrange the values of the atomic vector in the matrix "by row" by adding a `byrow` argument to the matrix function. This argument accepts logical values (TRUE or FALSE).</p> 
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Observe what happens when a matrix is generated with the argument `byrow = TRUE`:</p>
+```{r mat_byrow, exercise = TRUE, exercise.lines = 10}
+# Convert c(1, 1, 2, 3) to a matrix:
+
+matrix(
+  c(1, 1, 2, 3),
+  nrow = 2,
+  byrow = FALSE
+)
+
+matrix(
+  c(1, 1, 2, 3),
+  nrow = 2,
+  byrow = TRUE
+)
+```
+</div>
+
+
 <br>
+<p>When we use the `class()` function, the class of object is returned. The `typeof()` function provides the type of values that make up the object. Like the atomic vectors that matrices <i>secretly</i> are, all values in a matrix must be of the same type of values.</p>
 
-```{r eval = FALSE}
 
-# Matrix built with multiple types:
-
-messyMatrix <- matrix(c(1, 'one', 2, 3), ncol = 2)
-
-messyMatrix
-
-class(messyMatrix)
-
-typeof(messyMatrix)
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Generate a matrix using the values 1, 'one', 2, and 3.</p>
+```{r mat_hetero, exercise = TRUE, exercise.lines = 5}
+# Convert c(1, 'one', 2, 3) to a matrix:
 
 ```
+
+```{r mat_hetero-hint-1}
+matrix(...)
+
+```
+
+
+```{r mat_hetero-hint-2}
+matrix(
+  c(...)
+)
+
+```
+
+```{r mat_hetero-hint-3}
+matrix(
+  c(1, 'one', 2, 3)
+)
+
+```
+
+<p>Use `class` to determine the class of object that was generated</p>
+
+```{r mat_hetero_class, exercise = TRUE, exercise.lines = 5}
+# What is the class of the above object?
+
+```
+
+```{r mat_hetero_class-hint-1}
+class(...)
+```
+
+```{r mat_hetero_class-hint-2}
+class(
+  matrix(...)
+)
+```
+
+```{r mat_hetero_class-hint-3}
+class(
+  matrix(
+    c(...)
+  )
+)
+```
+
+```{r mat_hetero_class-hint-4}
+class(
+  matrix(
+    c(1, 'one', 2, 3)
+  )
+)
+```
+
+<p>Use `typeof()` to determine the type of values that make up the matrix</p>
+
+```{r mat_hetero_typeof, exercise = TRUE, exercise.lines = 5}
+# What type of values make up the above matrix?
+
+```
+
+```{r mat_hetero_typeof-hint-1}
+typeof(...)
+```
+
+```{r mat_hetero_typeof-hint-2}
+typeof(
+  matrix(...)
+)
+```
+
+```{r mat_hetero_typeof-hint-3}
+typeof(
+  matrix(
+    c(...)
+  )
+)
+```
+
+```{r mat_hetero_typeof-hint-4}
+typeof(
+  matrix(
+    c(1, 'one', 2, 3)
+  )
+)
+```
+</div>
+
+
+<br>
+<p>Matrices have one attribute (`?attributes`) by default -- the dimensions of the matrix. Additional attributes, such as row and column names, can be added using the `rowNames()` and `colNames()` functions, respectively.<p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Generate a two-column matrix using the values 1, 1, 2, 3, 5, 8, 13, and 21 and assign the name `myMatrix` to the object.</p>
+```{r myMat, exercise = TRUE, exercise.lines = 5}
+# Convert c(1, 1, 2, 3) to a matrix and assign a name:
+
+```
+
+```{r myMat-hint-1}
+myMatrix <- ...
+
+```
+
+
+```{r myMat-hint-2}
+myMatrix <- 
+  matrix(...)
+```
+
+```{r myMat-hint-3}
+myMatrix <-
+  matrix(
+    c(...),
+    ncol = ...
+  )
+```
+
+```{r myMat-hint-4}
+myMatrix <-
+  matrix(
+    c(1, 1, 2, 3, 5, 8, 13, 21),
+    ncol = 2
+  )
+```
+
+<p>No output? Type the name (and run the line of code) to see the object</p>
+
+```{r myMat_print, exercise = TRUE, exercise.lines = 2}
+
+```
+
+```{r myMat_print-hint-1}
+myMatrix
+```
+
+<p>Determine the attributes of the object `myMatrix`:</p>
+```{r myMat_attributes, exercise = TRUE, exercise.lines = 5}
+# Attributes of myMatrix:
+
+
+```
+
+```{r myMat_attributes-hint-1}
+attributes(...)
+```
+
+```{r myMat_attributes-hint-2}
+attributes(myMatrix)
+```
+
+<p>Add the column names "hello" and "world" to `myMatrix` and view the attributes of the resultant object:</p>
+```{r myMat_colNames, exercise = TRUE, exercise.lines = 5}
+# Add column names to myMatrix:
+
+colnames(myMatrix) <- ...
+```
+
+```{r myMat_colNames-hint-1}
+colnames(myMatrix) <- 
+  c(...)
+```
+
+
+```{r myMat_colNames-hint-2}
+colnames(myMatrix) <- 
+  c('hello', 'world')
+
+attributes(...)
+```
+
+```{r myMat_colNames-hint-3}
+colnames(myMatrix) <- 
+  c('hello', 'world')
+
+attributes(myMatrix)
+```
+</div>
+
+
 <br>
 <h3>Matrix objects: Indexing</h3>
 <br>
-<p>Values in a matrix have a row (x) and column (y) position, denoted by "[<i>x</i>, <i>y</i>]"</p>
+<p>Values in a matrix have a row (x) and column (y) position, denoted by "[<i>x</i>, <i>y</i>]". It may be useful for you to think of a value's position (also known as "address") as "[<i>row</i>, <i>column</i>]".</p>
+
 <table style = "font-size: 1.1em; vertical-align: middle;">
 <tr>
   <th style = "text-align: center; font-weight: normal;"></th>
@@ -527,50 +767,134 @@ typeof(messyMatrix)
 </tr>
 </table>
 <br>
-```{r eval = FALSE}
-# Index by row (x) and column (y) position [x,y]:
 
-m[1,1]
+<p>Just as you would specify `vectorName[x]` to extract the value from the object `vectorName` at position `x`, you can use this notation to extract values from a matrix. To do so, you need to specify the `x` and `y` address using: `matrixName[x, y]` -- this will return all values of the object `matrixName` where the row number is equal to x and the column number is equal to y.</p>
 
-m[2,2]
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> What is the value of `myMatrix` at row 1, column 2?</p>  
 
-m[1:2,2]
+```{r myMat_index, exercise = TRUE, exercise.lines = 5}
+# Determine the value of myMatrix at row 1, column 2:
+
+myMatrix
 
 ```
-<br>
 
-<h3>Matrix objects: Attributes</h3>
-<br>
-<p>There are a number of attributes that can be observed for a given matrix:</p>
-<br>
-```{r eval = FALSE}
-# View matrix attributes:
-
-class(m)
-
-length(m)
-
-dim(m)
-
-str(m)
-
-summary(m)
+```{r myMat_index-hint-1}
+myMatrix[..., ...]
 ```
-<br>
-<p>You may add a name attribute to rows and columns.</p>
-<br>
-```{r eval = FALSE}
-# Naming rows and columns:
 
-colnames(m) <- c('a', 'b')
-
-rownames(m) <- c('c', 'd')
-
-attributes(m)
-
-m
+```{r myMat_index-hint-2}
+myMatrix[1, ...]
 ```
+
+```{r myMat_index-hint-3}
+myMatrix[1, 2]
+```
+</div>
+
+<br>
+<p>As with atomic vectors, you can specify a range or subset of values by supplying a vector of numbers for either the `x` or `y` position. You can subset a matrix dimension by name by using the column (or row) name instead of the numeric position. You can specify all values for a row or column by leaving the `x` or `y` position blank (e.g., `[x,]` or `[,y]`).</p> 
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the object `myMatrix` using the following criteria:</p>
+
+<ul>
+<li>All values in column 1:</li>
+```{r myMat_index1, exercise = TRUE, exercise.lines = 2}
+
+myMatrix[..., ...]
+
+```
+
+```{r myMat_index1-hint-1}
+myMatrix[..., 1]
+```
+
+```{r myMat_index1-hint-2}
+myMatrix[, 1]
+```
+
+<li>All values in row 1:</li>
+```{r myMat_index2, exercise = TRUE, exercise.lines = 2}
+
+myMatrix[..., ...]
+
+```
+
+```{r myMat_index2-hint-1}
+myMatrix[1, ...]
+```
+
+```{r myMat_index2-hint-2}
+myMatrix[1, ]
+```
+
+<li>The first <b>through</b> third values in column 2:</li>
+
+```{r myMat_index3, exercise = TRUE, exercise.lines = 2}
+
+myMatrix[..., ...]
+
+```
+
+```{r myMat_index3-hint-1}
+myMatrix[..., 2]
+```
+
+```{r myMat_index3-hint-2}
+myMatrix[1:3, 2]
+```
+
+<li>The first <b>and</b> third values in column 2:</li>
+```{r myMat_index4, exercise = TRUE, exercise.lines = 2}
+
+myMatrix[..., ...]
+
+```
+
+```{r myMat_index4-hint-1}
+myMatrix[c(1, 3), ...]
+```
+
+```{r myMat_index4-hint-2}
+myMatrix[c(1, 3), 2]
+```
+
+<li>All values in the column named "world":</li>
+```{r myMat_index5, exercise = TRUE, exercise.lines = 2}
+
+myMatrix[..., ...]
+
+```
+
+```{r myMat_index5-hint-1}
+myMatrix[, ...]
+```
+
+```{r myMat_index5-hint-2}
+myMatrix[, 'world']
+```
+
+<li>The first <b>and</b> third values in the column named "world":</li>
+```{r myMat_index6, exercise = TRUE, exercise.lines = 2}
+
+myMatrix[..., ...]
+
+```
+
+```{r myMat_index6-hint-1}
+myMatrix[, 'world']
+```
+
+```{r myMat_index6-hint-2}
+myMatrix[c(1, 3), 'world']
+```
+
+</div>
+
 <hr>
+
 ## List objects
 <br>
 <p>A <b>list</b> is a one dimensional object constructed by combining ANY objects with ANY dimensionality.</p>
