@@ -58,6 +58,13 @@ myList_named <-
 names(myList_named) <-
   c('numericVector', 'myMatrix')
 
+
+myDataFrame <-
+  data.frame(
+    factors = c('hello', 'hello', 'world' , 'world'),
+    integers = 1:4
+  )
+
 ```
 <br>
 
@@ -76,9 +83,6 @@ names(myList_named) <-
 <div class = "row">
 <br>
 ```{r echo = FALSE}
-require(knitr)
-require(kableExtra)
-
 df <-
   data.frame(
     `Dimensions` = c('1-D', '2-D'),
@@ -1090,7 +1094,7 @@ attributes(myMatrix)
 </div>
 <br>
 
-<div class = "reviewDiv>
+<div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> The object `myList` is comprised of two objects. Use indexing to extract the second list object:</p>
 
 ```{r list_indexing, exercise = TRUE, exercise.lines = 5}
@@ -1112,7 +1116,7 @@ myList[[2]]
 <br>
 <p>If names have been assigned to list items, lists can be indexed by these names. To do so, refer to the name of the list item, in quotes, formatted as `listName[['listItem_name']]`.</p>  
 
-<div class = "reviewDiv>
+<div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the list object `myList_named` to the list item named `myMatrix`.</p>
 ```{r list_indexing_name1, exercise = TRUE, exercise.lines = 5}
 # Lists can be indexed by name using the notation:
@@ -1133,7 +1137,7 @@ myList_named[['myMatrix']]
 <br>
 <p>You can also use an operator, `$`, as a shorthand for indexing the named list item. To use this operator, instead of typing `listName[['listItem_name']]`, you would type `listName$listItem_name`. Note that the name of the list item is not quoted.</p>
 
-<div class = "reviewDiv>
+<div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use the `$` operator to subset the list object `myList_named` to the list item named `myMatrix`.</p>
 ```{r list_indexing_name2, exercise = TRUE, exercise.lines = 5}
 # Lists can be indexed by name using the notation:
@@ -1155,60 +1159,181 @@ myList_named$myMatrix
 <hr>
 
 ## Data frames
-<br>
-<p>A <b>data frame</b> is a two dimensional object constructed by combining vectors.</p>
-<br>
 
-```{r eval = FALSE}
-# Generate a data frame:
+<p>A <b>data frame</b> is the object class that is most often used for storing data. Like a matrix, a data frame has two dimensions with data arranged into rows, <i>x</i>, and columns, <i>y</i>. This is where the similarity between data frames and matrices pretty much ends, however -- a data frame is actually list of atomic vectors in which the length of each vector is equal. As data frames are lists, they are heterogeneous -- each atomic vector that makes up the object (columns) may be of a different type.</p>
+<p>One method for arranging values into data frames is to use the `data.frame()` function. The arguments of this function are the atomic vectors vectors that make up the object (`data.frame(vector1, vector2)`).</p>
 
-df <- data.frame(a = c(1, 1), b =  c(2, 3))
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Explore the code below to observe the generation of data frames:</p>
+```{r dFrame, exercise = TRUE, exercise.lines = 7}
+# Make a data frame from vectors:
 
-df
+data.frame(
+  c('hello', 'world'),
+  1:2
+)
 ```
-<br>
-<p>A matrix may also be converted to a data frame using the `as.data.frame` function.</p>
-<br>
-
-```{r eval = FALSE}
-# Generate a data frame from a matrix:
-
-as.data.frame(m)
-
-```
-
+</div>
 <br>
 
-<br>
-<p>The vectors that are contained in a data frame may be of different classes.</p>
-<br>
+<p>Note in the above that the vectors that make up the data frame may be of different classes. Individual vectors, however, will be coerced into the same class.</p>
 
-```{r eval = FALSE}
-# Generate a data frame of different vector classes:
-
-data.frame(a = c('one', 'one'), b =  c(2, 3))
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Generate a data frame comprised of the vectors `c('hello', 1)` and `1:2`:</p>
+```{r dFrame_hetero, exercise = TRUE, exercise.lines = 5}
 
 ```
+
+```{r dFrame_hetero-hint-1}
+data.frame(...)
+```
+
+```{r dFrame_hetero-hint-2}
+data.frame(
+  ...,
+  ...
+)
+```
+
+```{r dFrame_hetero-hint-3}
+data.frame(
+  c('hello', 1),
+  ...
+)
+```
+
+```{r dFrame_hetero-hint-4}
+data.frame(
+  c('hello', 1),
+  1:2
+)
+```
+</div>
+
 <br>
+<p>As described above, a the vectors that make up a data frame must be of the same length. Before making data frames, make sure to explore their length -- making data frames of unequal length vectors may result in errors or lead to unexpected results.</p>
 
-<p>But individual vectors are still coerced into the same class!</p>
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Explore what happens when the vectors that make up a data frame are of unequal lengths</p>
+```{r dFrame_badLength1, exercise = TRUE, exercise.lines = 5}
+data.frame(
+  1:2,
+  1:4
+  )
+```
+
+```{r dFrame_badLength2, exercise = TRUE, exercise.lines = 5}
+data.frame(
+  1,
+  1:4
+  )
+```
+</div>
+
 <br>
+<p>When generating data frames, the columns (vectors) are named by default, but the assigned name may not be meaningful. You can assign the name of the columns when you create the data frame, using the convenction `data.frame(vector1_name = vector1, vector2_name = vector2)`.</p>
 
-```{r eval = FALSE}
-# Attempt to generate a data frame with heterogeneous vectors:
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Generate a data frame using two vectors, one containing the words "hello" and "world" and the other the integers 1 and 2. Assign the names "factors" and "integers" to the columns.</p>
+```{r dFrame_name1, exercise = TRUE, exercise.lines = 5}
+# Make a data frame from vectors:
 
-messyDf <- data.frame(a = c(1, 'one'), b =  c(2, 3))
-
-messyDf
 
 ```
+
+```{r dFrame_name1-hint-1}
+data.frame(...)
+```
+
+```{r dFrame_name1-hint-2}
+data.frame(
+  factors = ...,
+  integers = ...
+)
+```
+
+```{r dFrame_name1-hint-3}
+data.frame(
+  factors = c('hello', 'world'),
+  integers = 1:2
+)
+```
+</div>
+
+<br>
+<p>If a data frame is generated using pre-defined vector objects, the column titles will be the names assigned to each object.</p>
+
+<h3>Data frame structure and attributes</h3>
+<p>Data frames contain a rich set of structural components and attributes that are worth exploring.</p>
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Run the code below to observe the structure and attributes of data frames.</p>
+<ul>
+<li>Generate the data frame below and assign the name 'myDataFrame':</li>
+```{r myDf, exercise = TRUE, exercise.lines = 10}
+# Make a data frame from vectors:
+
+myDataFrame <-
+  data.frame(
+    factors = c('hello', 'hello', 'world' , 'world'),
+    integers = 1:4
+  )
+
+myDataFrame
+```
+
+<li>`class()` tells us that the object arranges values into a data frame:</li>
+```{r myDf_class, exercise = TRUE, exercise.lines = 2}
+class(myDataFrame)
+```
+
+<li>`names()` provides the names of the data frame columns (the names of vectors that make up the object):</li>
+```{r myDf_names, exercise = TRUE, exercise.lines = 2}
+names(myDataFrame)
+```
+
+<li>`attributes()` provides the names of columns and rows, as well as the class of the object:</li>
+```{r myDf_attributes, exercise = TRUE, exercise.lines = 2}
+attributes(myDataFrame)
+```
+
+<li>`length()` provides the number of vectors that make up a data frame:</li>
+```{r myDf_length, exercise = TRUE, exercise.lines = 2}
+length(myDataFrame)
+```
+
+<li>`nrow()` and `ncol()` provides the number of rows and columns of the data frame, respectively:</li>
+```{r myDf_nrow_ncol, exercise = TRUE, exercise.lines = 4}
+nrow(myDataFrame)
+
+ncol(myDataFrame)
+```
+
+<li>`dim()` provides the number of rows and columns of the data frame:</li>
+```{r myDf_dim, exercise = TRUE, exercise.lines = 2}
+dim(myDataFrame)
+```
+
+<li>`str()` provides structural information on the data frame, including the types of values of the composite vectors:</li>
+```{r myDf_str, exercise = TRUE, exercise.lines = 2}
+str(myDataFrame)
+```
+
+<li>`summary()` provides statistical summary information of a data frame:</li>
+```{r myDf_summary, exercise = TRUE, exercise.lines = 2}
+summary(myDataFrame)
+```
+</ul>
+</div>
 
 <br>
 <h3>Indexing data frames</h3>
-<br>
-<p>Values in a data frame have a row (x) and column (y) position, denoted by "[<i>x</i>, <i>y</i>]"</p>
+<p>Similar to matrices, values in a data frame have a row (x) and column (y) position, denoted by "[<i>x</i>, <i>y</i>]".</p>
 
 <br>
+<div class = "row">
+<div class = "col-sm-2"></div>
+
+<div class = "col-sm-3">
 <table style = "font-size: 1.1em; vertical-align: middle;">
 <tr>
   <th style = "text-align: center; font-weight: normal;"></th>
@@ -1217,113 +1342,191 @@ messyDf
 </tr>
 <tr>
   <td style = "text-align: center;">[1, ]</td>
-  <td style = "text-align: center;">1</td>
+  <td style = "text-align: center;">hello</td>
   <td style = "text-align: center;">1</td>
 </tr>
 <tr>
   <td style = "text-align: center;">[2, ]</td>
+  <td style = "text-align: center;">hello</td>
   <td style = "text-align: center;">2</td>
+</tr>
+<tr>
+  <td style = "text-align: center;">[3, ]</td>
+  <td style = "text-align: center;">world</td>
   <td style = "text-align: center;">3</td>
 </tr>
+<tr>
+  <td style = "text-align: center;">[4, ]</td>
+  <td style = "text-align: center;">world</td>
+  <td style = "text-align: center;">4</td>
+</tr>
 </table>
+</div>
+
+<div class = "col-sm-1">
+<div class="vl"></div>
+
+</div>
+
+<div class = "col-sm-5">
+<table style = "font-size: 1.1em; vertical-align: middle;">
+<tr>
+  <th style = "text-align: center; font-weight: normal;"></th>
+  <th style = "text-align: center; font-weight: normal;">[ ,'factors']</th>
+  <th style = "text-align: center; font-weight: normal;">[ ,'integers']</th>
+</tr>
+<tr>
+  <td style = "text-align: center;">[1, ]</td>
+  <td style = "text-align: center;">hello</td>
+  <td style = "text-align: center;">1</td>
+</tr>
+<tr>
+  <td style = "text-align: center;">[2, ]</td>
+  <td style = "text-align: center;">hello</td>
+  <td style = "text-align: center;">2</td>
+</tr>
+<tr>
+  <td style = "text-align: center;">[3, ]</td>
+  <td style = "text-align: center;">world</td>
+  <td style = "text-align: center;">3</td>
+</tr>
+<tr>
+  <td style = "text-align: center;">[4, ]</td>
+  <td style = "text-align: center;">world</td>
+  <td style = "text-align: center;">4</td>
+</tr>
+</table>
+</div>
+
+<div class = "col-sm-1"></div>
+
+</div>
+
 <br>
-<br>
 
-```{r eval = FALSE}
-# Index by row (x) and column (y) position [x,y]:
+<p>Data frames can be indexed using the convention `dataFrameName[x,y]`, `dataFrameName[,'columnName']`, or `dataFrameName$columnName`.</p> 
 
-df[1,1]
-
-df[2,2]
-
-df[1:2,2]
-
-df[1,]
-
-df[,2]
-
-```
-<br>
-<br>
-<h3>Attributes of data frames</h3>
-<br>
-<p>There are a number of attributes that can be observed for a given data frame:</p>
-
-```{r eval = FALSE}
-# View data frame attributes:
-
-str(df)
-
-class(df)
-
-length(df)
-
-dim(df)
-
-summary(df)
-```
-<br>
-<p>Always check attributes prior to working with data frame!</p>
-<br>
-
-```{r eval = FALSE}
-# View attributes of the messy dataframe:
-
-str(messyDf)
-
-dfStrings <- data.frame(
-  a = c(1, 'one'), 
-  b =  c(2, 3),
-  stringsAsFactors = FALSE
-  )
-
-str(dfStrings)
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Complete the following indexing operations on the object `myDataFrame`:</p>
+<ul>
+<li>Use the numeric address (`[x,y]`) to extract the value in the first row (x) and column (y):</li>
+```{r myDf_index1, exercise = TRUE, exercise.lines = 2}
 
 ```
 
-<br>
-<p>Name attributes are automatically set when a data frame is created. Failing to set this attribute leads to bad names:</p>
-<br>
+```{r myDf_index1-hint-1}
+myDataFrame[...]
+```
 
-```{r eval = FALSE}
-# Set and unset names:
+```{r myDf_index1-hint-2}
+myDataFrame[..., ...]
+```
 
-data.frame(a = c(1, 1), b =  c(2, 3))
 
-data.frame(c(1, 1),c(2, 3))
+```{r myDf_index1-hint-3}
+myDataFrame[1, 1]
+```
+
+<li>Use the numeric address (`[x,y]`) to extract all values in the first row (x):</li>
+
+```{r myDf_index2, exercise = TRUE, exercise.lines = 2}
 
 ```
 
-<br>
-<p>Similar to other objects, the names attribute can also be set manually after an object is created:</p>
-<br>
+```{r myDf_index2-hint-1}
+myDataFrame[..., ...]
+```
 
-```{r eval = FALSE}
-# View data frame attributes:
+```{r myDf_index2-hint-2}
+myDataFrame[1,...]
+```
 
-exampleDf <- data.frame(c(1, 1),c(2, 3))
+```{r myDf_index2-hint-3}
+myDataFrame[1,]
+```
 
-names(exampleDf) <- c('hello', 'world')
+<li>Use the numeric address (`[x,y]`) to extract all values in the second column (y):</li>
 
-exampleDf
+```{r myDf_index3, exercise = TRUE, exercise.lines = 2}
 
 ```
 
-<br>
-<p>Data frames can be indexed by their names attribute using matrix notation or the `$` operator.</p>
-<br>
-
-```{r eval = FALSE}
-# View data frame attributes:
-
-exampleDf['hello']
+```{r myDf_index3-hint-1}
+myDataFrame[..., ...]
+```
 
 
-exampleDf$hello
+```{r myDf_index3-hint-2}
+myDataFrame[...,1]
+```
+
+```{r myDf_index3-hint-3}
+myDataFrame[,1]
+```
+
+<li>Use the numeric address (`[x,y]`) to extract the values in the first and third rows (x) of the first column (y):</li>
+
+```{r myDf_index4, exercise = TRUE, exercise.lines = 2}
 
 ```
-<br>
-## Tibble data frames!</h2>
+
+```{r myDf_index4-hint-1}
+myDataFrame[..., ...]
+```
+
+
+```{r myDf_index4-hint-2}
+myDataFrame[...,1]
+```
+
+```{r myDf_index4-hint-3}
+myDataFrame[c(...),1]
+```
+
+```{r myDf_index4-hint-4}
+myDataFrame[c(1, 2),1]
+```
+
+<li>Use the numeric address for the row (`[x,]`) and the name of the column (`[,'columnName']`) to extract the values in the first and third rows (x) of the first column (y):</li>
+
+```{r myDf_index5, exercise = TRUE, exercise.lines = 2}
+
+```
+
+```{r myDf_index5-hint-1}
+myDataFrame[..., ...]
+```
+
+
+```{r myDf_index5-hint-2}
+myDataFrame[...,1]
+```
+
+```{r myDf_index5-hint-3}
+myDataFrame[c(...),1]
+```
+
+```{r myDf_index5-hint-4}
+myDataFrame[c(1, 2), 'integers']
+```
+
+<li>Use the convention `dataFrameName$columnName` to extract the vector associated with column 2 of the data frame:</li>
+```{r myDf_index6, exercise = TRUE, exercise.lines = 2}
+
+```
+
+```{r myDf_index6-hint-1}
+myDataFrame$...
+```
+
+```{r myDf_index6-hint-2}
+myDataFrame$integers
+```
+</ul>
+</div>
+<hr>
+
+## Tibble data frames
 <br>
 <p>A <b>tibble</b> is a special type of data frame provided by the package tidyverse.</p>
 <br>

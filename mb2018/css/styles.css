@@ -161,4 +161,11 @@ blockquote{
 .row{
   margin: auto;
 }
+
+/*vertical line*/
+
+.vl {
+    border-left: 6px solid #a6a6a6;
+    height: 160px;
+}
  
