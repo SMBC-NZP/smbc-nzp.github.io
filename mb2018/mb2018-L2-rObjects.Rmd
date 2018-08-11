@@ -61,7 +61,7 @@ names(myList_named) <-
 
 myDataFrame <-
   data.frame(
-    factors = c('hello', 'hello', 'world' , 'world'),
+    words = c('hello', 'hello', 'world' , 'world'),
     integers = 1:4
   )
 
@@ -1274,7 +1274,7 @@ data.frame(
 
 myDataFrame <-
   data.frame(
-    factors = c('hello', 'hello', 'world' , 'world'),
+    words = c('hello', 'hello', 'world' , 'world'),
     integers = 1:4
   )
 
@@ -1526,60 +1526,52 @@ myDataFrame$integers
 </div>
 <hr>
 
-## Tibble data frames
+## Tibbles!
 <br>
-<p>A <b>tibble</b> is a special type of data frame provided by the package tidyverse.</p>
+<p>The final object that we will look at is an object class provided by the package "tidyverse". A <b>tibble</b> is a special type of data frame. You can make a tibble using the `data_frame()` function. The arguments for this function are the same as that of `data.frame()`.</p>
 <br>
 
-```{r eval = FALSE}
-# Read tidyverse package(s):
-
-library(tidyverse)
-
-# Generate a tibble data frame:
-
-tibbleDf <- data_frame(a = c(1, 'one'), b =  c(2, 3))
-
-tibbleDf
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Generate a data frame and a tibble and observe any differences between the two:</p>
+<ul>
+<li>A data frame:</li>
+```{r df, exercise = TRUE, exercise.lines = 5}
+data.frame(
+  words = c('hello', 'hello', 'world' , 'world'),
+  integers = 1:4
+)
 ```
-<br>
-
-<p>Base R data frames can also be converted to a tibble.</p>
-<br>
-
-```{r eval = FALSE}
-# Convert a data frame to a tbl:
-
-tbl_df(messyDf)
-
-tbl_df(data.frame(a = c(1, 'one'), b =  c(2, 3)))
-
+<li>A tibble:</li>
+```{r tibble, exercise = TRUE, exercise.lines = 5}
+data_frame(
+  words = c('hello', 'hello', 'world' , 'world'),
+  integers = 1:4
+)
 ```
+</ul>
+</div>
 
 <br>
+<p>Notice that, in addition to printing the data frame, the tibble prints structural and attribute information about the object, including the dimensions, class, and types of values. By default, tibbles will also only print 10 lines at once for long data frames. This is very useful when working with large datasets. Another thing to notice is the type of object of the "words" column is different -- `data.frame()` produced a factor vector for that column whereas `data_frame()` produced a character vector. This is incredibly useful, as factors can cause lots of problems when they are generating unintentionally.</p>
 
-<p>How do tibbles differ from Base R data frames?</p>
-<br>
+<p>Data frames can also be converted to tibbles using the `as_tibble()` function. This will not, however, convert factor to character columns.</p>
 
-```{r eval = FALSE}
-# Compare tibble and base R data frame:
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use `as_tibble()` to convert `myDataFrame` to a tibble:</p>
 
-data.frame(a = c(1, 'one'), b =  c(2, 3))
+```{r as_tibble, exercise = TRUE, exercise.lines = 2}
 
-data_frame(a = c(1, 'one'), b =  c(2, 3))
-
-# Load data and compare between a data frame and a tibble:
-# Note: the "data" function loads example datasets
-
-data(iris)
-
-iris
-
-tbl_df(iris)
 ```
 
-<br>
+```{r as_tibble-hint-1}
+as_tibble(...)
+```
+
+```{r as_tibble-hint-2}
+as_tibble(myDataFrame)
+```
+</div>
 <hr>
 
 <b>End of lesson 2</b>
-<img style="float: right; margin: 0px 0px 15px 15px;" src="nzpLogoSideways2.png" width="300" />
+<img style="float: right; margin: 0px 0px 15px 15px;" src="images/nzpLogoSideways2.png" width="300" />
