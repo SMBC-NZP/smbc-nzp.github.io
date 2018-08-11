@@ -42,7 +42,7 @@ exampleFactor <-
 
 myMatrix <-
   matrix(
-    c(1, 1, 2, 3),
+    c(1, 1, 2, 3, 5, 8, 13, 21),
     ncol = 2
   )
 
@@ -52,19 +52,11 @@ myList <-
     myMatrix
   )
 
-fibVec <- vector('numeric', length = 12)
+myList_named <- 
+  myList
 
-fibVec[1:2] <- c(0, 1)
-
-for(i in 3:length(fibVec)){
-  fibVec[i] <- 
-    fibVec[i-1] + fibVec[i-2]
-}
-
-fibMat <-
-  fibVec %>%
-  matrix(
-    ncol = 3, byrow = TRUE)
+names(myList_named) <-
+  c('numericVector', 'myMatrix')
 
 ```
 <br>
@@ -95,7 +87,7 @@ df <-
   )
 
 kable(df, "html") %>%
-  kable_styling(bootstrap_options = c("striped", "hover"))
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
 ```
 </div>
 
@@ -434,7 +426,7 @@ kable(df, "html") %>%
 
 <div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the atomic vector `numericVector` to the position in which the name of the value is "grape":</p>
-```{r vectorNames_subset, exercise = TRUE, exercise.lines = 5}
+```{r vectorNames_subset, exercise = TRUE, exercise.lines = 10}
 # Indexing a vector by the name of the value:
 
 names(numericVector) <- 
@@ -457,7 +449,7 @@ numericVector['grape']
 
 <div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the atomic vector `numericVector` to the position in which value is named "orange" or "grape":</p>
-```{r vectorNames_subset2, exercise = TRUE, exercise.lines = 5}
+```{r vectorNames_subset2, exercise = TRUE, exercise.lines = 10}
 # Indexing a vector by the name of the value:
 
 names(numericVector) <- 
@@ -670,7 +662,7 @@ typeof(
 <div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Generate a two-column matrix using the values 1, 1, 2, 3, 5, 8, 13, and 21 and assign the name `myMatrix` to the object.</p>
 ```{r myMat, exercise = TRUE, exercise.lines = 5}
-# Convert c(1, 1, 2, 3) to a matrix and assign a name:
+# Convert c(1, 1, 2, 3, 5, 8, 13, and 21) to a matrix and assign a name:
 
 ```
 
@@ -871,37 +863,7 @@ myMatrix[c(1, 3), ...]
 ```{r myMat_index4-hint-2}
 myMatrix[c(1, 3), 2]
 ```
-
-<li>All values in the column named "world":</li>
-```{r myMat_index5, exercise = TRUE, exercise.lines = 2}
-
-myMatrix[..., ...]
-
-```
-
-```{r myMat_index5-hint-1}
-myMatrix[, ...]
-```
-
-```{r myMat_index5-hint-2}
-myMatrix[, 'world']
-```
-
-<li>The first <b>and</b> third values in the column named "world":</li>
-```{r myMat_index6, exercise = TRUE, exercise.lines = 2}
-
-myMatrix[..., ...]
-
-```
-
-```{r myMat_index6-hint-1}
-myMatrix[, 'world']
-```
-
-```{r myMat_index6-hint-2}
-myMatrix[c(1, 3), 'world']
-```
-
+</ul>
 </div>
 
 <hr>
@@ -912,52 +874,161 @@ myMatrix[c(1, 3), 'world']
 <br>
 <div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Explore the following to observe the structure of lists:</p>
-
-```{r list, exercise = TRUE, exercise.lines = 5}
+<ul>
+<li>A homogeneous list of values:</li>
+```{r list_homoG, exercise = TRUE, exercise.lines = 5}
 # Homogeneous list of values:
 
 list(1, 1, 2)
-
+```
+<li>A heterogeneous list of values:</li>
+```{r list_heteroG, exercise = TRUE, exercise.lines = 5}
 # Heterogeneous list of values:
 
 list(1, 'one', 2)
+```
 
-# List of objects:
+<li>A list of multidimensional objects:</li>
+
+```{r list_multiD, exercise = TRUE, exercise.lines = 5}
+# List of multidimensional objects:
 
 list(numericVector, myMatrix)
+```
+
+<li>A list with a name assigned:</li>
+```{r list_assigned, exercise = TRUE, exercise.lines = 10}
+# Assigned list:
 
 myList <-
   list(numericVector, myMatrix)
 
 myList
 ```
+</ul>
 </div>
 <br>
+<p>Lists are vectors, just heterogeneous ones. We can view the structure of list objects in a similar way to atomic vectors.</p>
 
-<p>List items can be named. To do so, you may name a pre-existing list using the convention `names(listName) <- c(namesVector)`. You may also specify the names when the list is created (e.g., `list(hello = 1, world = 2)`).</p>
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Explore the structure of `myList`:</p>
+<ul>
+<li>Determine the class of the object:</li>
+```{r list_class, exercise = TRUE, exercise.lines = 5}
+
+```
+
+```{r list_class-hint-1}
+class(...)
+```
+
+```{r list_class-hint-2}
+class(exampleList)
+```
+
+<li>Determine the length of the object:</li>
+
+```{r list_length, exercise = TRUE, exercise.lines = 5}
+
+```
+
+```{r list_length-hint-1}
+length(...)
+```
+
+```{r list_length-hint-2}
+length(exampleList)
+```
+
+<li>View the overall structure of the object using `str()`:</li>
+
+
+```{r list_str, exercise = TRUE, exercise.lines = 5}
+
+```
+
+```{r list_str-hint-1}
+str(...)
+```
+
+```{r list_str-hint-2}
+str(exampleList)
+```
+</div>
+
+
+<br>
+
+<p>Names attributes can be added to list items. To do so, you may name a pre-existing list using the convention `names(listName) <- c(namesVector)`. You may also specify names of list items when a list is created (e.g., `list(hello = 1, world = 2)`).</p>
 
 <div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Explore the following to observe the naming of list items:</p>
-```{r list_names, exercise = TRUE, exercise.lines = 5}
-# Specify list names when the list is constructed:
+<ul>
+<li>Name objects when the list is contructed:</li>
+```{r list_names1, exercise = TRUE, exercise.lines = 3}
 
 list(apple = 1, pear = 2)
+```
 
-# Specify the names of a pre-existing list:
+<li>Specify the names of objects in a pre-existing list:</li>
+```{r list_names2, exercise = TRUE, exercise.lines = 10}
+myList_named <- 
+  myList
 
-names(myList) <-
+names(myList_named) <-
   c('hello', 'world')
+
+attributes(myList_named)
+```
+</ul>
+</div>
+
+<br>
+<p>Lists are often used to inform functions. For example, we have thus far used `attributes()` to view the attributes of an object. `attributes()` can also be used to assign attributes to an object. This makes it a much more powerful function than it might have appeared.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Add column names to `myMatrix` using a list of attributes:</p>
+```{r list_namesAttributes, exercise = TRUE, exercise.lines = 10}
+# Adding attributes to myMatrix:
+
+attributes(myMatrix)
+
+attributes(myMatrix) <- 
+  list(colnames = c('hello','world'))
+
+attributes(myMatrix)
 ```
 </div>
 
 <br>
+<p>When it comes to adding attributes, the sky is the limit. For example, you can add metadata to an object using `attributes()`. This may add useful information without affecting the performance of the object.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Explore adding a description to an object by providing a list of attributes:</p>
+
+```{r list_metadata, exercise = TRUE, exercise.lines = 12}
+# Adding attributes to myMatrix:
+
+attributes(myMatrix) <- 
+  list(
+    colnames = c('hello','world'),
+    author = 'Brian',
+    reason = 'To show attribute lists'
+    )
+
+attributes(myMatrix)
+```
+</div>
+
+
+<br>
 
 <h3>List objects: Indexing</h3>
-<br>
-<p>List position is denoted by [[<i>x</i>]].</p>
-<br>
+
+<p>List position is denoted by [[<i>x</i>]]. To query a list, use the convention `listName[[x]]`.</p>
 
 <div class = "row">
+<div class = "col-sm-4">
 <p>[[1]]</p>
 <table style = "font-size: 1em; vertical-align: middle; float: left; padding: 10px">
 <tr>
@@ -973,10 +1044,9 @@ names(myList) <-
 <td style = "text-align: center;">3</td>
 </tr>
 </table>
-<br>
 </div>
 
-<div class = "row">
+<div class = "col-sm-4">
 <p>[[2]]</p>
 <table style = "font-size: 1.1em; vertical-align: middle;">
 <tr>
@@ -995,10 +1065,9 @@ names(myList) <-
 <td style = "text-align: center;">3</td>
 </tr>
 </table>
-<br>
 </div>
 
-<div class = "row">
+<div class = "col-sm-4">
 <p>[[3]]</p>
 <table style = "font-size: 1.1em; vertical-align: middle;">
 <tr>
@@ -1018,82 +1087,73 @@ names(myList) <-
 </tr>
 </table>
 </div>
-<br>
-
-
-```{r eval = FALSE}
-# List indexing:
-
-exampleList
-
-exampleList[[2]]
-
-exampleList[[2]] == m
-
-m[2,2]
-
-exampleList[[2]][2,2]
-```
-
-<br>
-<h3>Attributes of lists</h3>
-<br>
-<div style = "text-align: left;">
-<p>Typical attributes we are interested in of lists include:</p>
-<ul>
-<li><b>Class</b>: What type of values?
-<li><b>Length</b>: How many values?
-</ul>
 </div>
 <br>
 
-```{r eval = FALSE}
-# Attributes of a list:
+<div class = "reviewDiv>
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> The object `myList` is comprised of two objects. Use indexing to extract the second list object:</p>
 
-class(exampleList)
+```{r list_indexing, exercise = TRUE, exercise.lines = 5}
+# List indexing:
 
-length(exampleList)
-
-str(exampleList)
-
-# Attributes of list items:
-
-class(exampleList[[1]])
-
-length(exampleList[[1]])
-
+myList
 ```
 
-<br>
-<p>Attributes, such as names, can be added to lists:</p>
-<br>
-
-```{r eval = FALSE}
-# Adding attributes to a list:
-
-exampleList
-
-names(exampleList)
-
-names(exampleList) <- c('numericVector', 'm', 'messyMatrix')
-
-attributes(exampleList)
+```{r list_indexing-hint-1}
+myList[[...]]
 ```
-<br>
-<p>If named have been provided, lists can be indexed by their names attribute using matrix notation or the `$` operator.</p>
-<br>
 
-```{r eval = FALSE}
+
+```{r list_indexing-hint-2}
+myList[[2]]
+```
+</div>
+
+<br>
+<p>If names have been assigned to list items, lists can be indexed by these names. To do so, refer to the name of the list item, in quotes, formatted as `listName[['listItem_name']]`.</p>  
+
+<div class = "reviewDiv>
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the list object `myList_named` to the list item named `myMatrix`.</p>
+```{r list_indexing_name1, exercise = TRUE, exercise.lines = 5}
 # Lists can be indexed by name using the notation:
 
-exampleList[[3]]
-
-exampleList[['messyMatrix']]
-
-exampleList$messyMatrix
-
+myList_named
 ```
+
+```{r list_indexing_name1-hint-1}
+
+myList_named[[...]]
+```
+
+```{r list_indexing_name1-hint-2}
+
+myList_named[['myMatrix']]
+```
+</div>
+<br>
+<p>You can also use an operator, `$`, as a shorthand for indexing the named list item. To use this operator, instead of typing `listName[['listItem_name']]`, you would type `listName$listItem_name`. Note that the name of the list item is not quoted.</p>
+
+<div class = "reviewDiv>
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use the `$` operator to subset the list object `myList_named` to the list item named `myMatrix`.</p>
+```{r list_indexing_name2, exercise = TRUE, exercise.lines = 5}
+# Lists can be indexed by name using the notation:
+
+myList_named
+```
+
+```{r list_indexing_name2-hint-1}
+
+myList_named$...
+```
+
+```{r list_indexing_name2-hint-2}
+
+myList_named$myMatrix
+```
+</div>
+
 <hr>
+
 ## Data frames
 <br>
 <p>A <b>data frame</b> is a two dimensional object constructed by combining vectors.</p>
