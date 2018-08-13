@@ -79,7 +79,7 @@ myDataFrame <-
 
 <p>In addition to increasing our stress level when working with R, the spreadsheet paradigm fails to provide us with fully reproducible data or adequate reporting. Ideally, our target audience should be able to reproduce each step of a data process, starting with the raw data itself.</p>
 
-<p>In this lesson we will work to develop a strong understanding of the containers that hold values. These containers are called <b>objects</b>. Different classes of objects structure values in different ways.</p>
+<p>In this lesson we will work to develop a strong understanding of <b>objects</b>. Objects are containers that hold values or other objects. Different classes of objects structure values in different ways.</p>
 <div class = "row">
 <br>
 ```{r echo = FALSE}
@@ -104,8 +104,8 @@ kable(df, "html") %>%
 <li><b>Homogeneous</b>: Only one class of values per object</li>
 <li><b>Heterogeneous</b>: One or more classes of values per object</li>
 </ul>
-<li><b>Attributes</b> of the object class: Names and dimensions</li>
-<li><b>Indexing</b>: Location within an object</li>
+<li><b>Attributes</b> of the object class: Names, dimensions, and metadata associated with an object</li>
+<li><b>Indexing</b>: Subsetting an object by the location of a value or values within an object</li>
 </ul>
 </div>
 
@@ -323,7 +323,7 @@ summary(
 
 <div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Explore the code below, which demonstrates adding names attributes to the values a vector</p>
-```{r vectorNames, exercise = TRUE, exercise.lines = 5}
+```{r vectorNames, exercise = TRUE, exercise.lines = 10}
 # Adding attributes to a vector:
 
 names(numericVector)
@@ -449,7 +449,6 @@ numericVector['grape']
 
 <br>
 <p>You may also choose to subset the named vector by denoting position using a vector of names.</p>
-<br>
 
 <div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the atomic vector `numericVector` to the position in which value is named "orange" or "grape":</p>
@@ -477,6 +476,7 @@ numericVector[c('orange', 'grape')]
 ```
 </div>
 
+<br>
 <p>We will be addressing indexing in depth in the next lesson, so be sure you have a thorough understanding of the above!</p>
 
 <hr>
@@ -661,7 +661,7 @@ typeof(
 
 
 <br>
-<p>Matrices have one attribute (`?attributes`) by default -- the dimensions of the matrix. Additional attributes, such as row and column names, can be added using the `rowNames()` and `colNames()` functions, respectively.<p>
+<p>Matrices have one attribute (`?attributes`) by default -- the dimensions of the matrix. Additional attributes, such as row and column names, can be added using the `rownames()` and `colnames()` functions, respectively.<p>
 
 <div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Generate a two-column matrix using the values 1, 1, 2, 3, 5, 8, 13, and 21 and assign the name `myMatrix` to the object.</p>
@@ -1528,7 +1528,7 @@ myDataFrame$integers
 
 ## Tibbles!
 <br>
-<p>The final object that we will look at is an object class provided by the package "tidyverse". A <b>tibble</b> is a special type of data frame. You can make a tibble using the `data_frame()` function. The arguments for this function are the same as that of `data.frame()`.</p>
+<p>The final object that we will look at is an object class provided by the package "tidyverse". A <b>tibble</b> is a special type of data frame. You can make a tibble using the `tibble()` function. The arguments for this function are the same as that of `data.frame()`.</p>
 <br>
 
 <div class = "reviewDiv">
@@ -1543,7 +1543,7 @@ data.frame(
 ```
 <li>A tibble:</li>
 ```{r tibble, exercise = TRUE, exercise.lines = 5}
-data_frame(
+tibble(
   words = c('hello', 'hello', 'world' , 'world'),
   integers = 1:4
 )
@@ -1552,9 +1552,11 @@ data_frame(
 </div>
 
 <br>
-<p>Notice that, in addition to printing the data frame, the tibble prints structural and attribute information about the object, including the dimensions, class, and types of values. By default, tibbles will also only print 10 lines at once for long data frames. This is very useful when working with large datasets. Another thing to notice is the type of object of the "words" column is different -- `data.frame()` produced a factor vector for that column whereas `data_frame()` produced a character vector. This is incredibly useful, as factors can cause lots of problems when they are generating unintentionally.</p>
+<p>Notice that, in addition to printing the data frame, the tibble prints structural and attribute information about the object, including the dimensions, class, and types of values. By default, tibbles will also only print 10 lines at once for long data frames. This is very useful when working with large datasets. Another thing to notice is the type of object of the "words" column is different -- `data.frame()` produced a factor vector for that column whereas `tibble()` produced a character vector. This is incredibly useful, as factors can cause lots of problems when they are generating unintentionally.</p>
 
 <p>Data frames can also be converted to tibbles using the `as_tibble()` function. This will not, however, convert factor to character columns.</p>
+
+<p>Tibbles behave quite differently from data frames in meaningful ways beyond what I have described above. For now, these differences are beyond the scope of this course. Advanced R users who are new to tibbles may want to read the tibble vignette (`vignette('tibble')`).
 
 <div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use `as_tibble()` to convert `myDataFrame` to a tibble:</p>
@@ -1573,5 +1575,59 @@ as_tibble(myDataFrame)
 </div>
 <hr>
 
-<b>End of lesson 2</b>
+## Term review and glossary
+
+<div class="roundBorder">
+
+<p><b>Functions</b></p>
+<ul> 
+<li>`as_tibble` Convert a data frame to a tibble</li>
+<li>`attributes` Print or set the attributes of an object (e.g., names)</li>
+<li>`colnames` Add column names to a matrix or data frame</li>
+<li>`data.frame` Structure equal length vectors into a data frame data structure</li>
+<li>`dim` Determine the number of rows and columns in a data frame or matrix</li>
+<li>`length` Determine the length of an object. For atomic vectors and matrices, this returns the number of values. For lists and data frames, this returns the number of component objects.</li>
+<li>`list` Structure component objects into a list data structure</li>
+<li>`matrix` Arrange an atomic vector as a matrix data structure</li>
+<li>`names` Add names to an object's values or component objects</li>
+<li>`ncol` Determine the number of columns in a data frame or matrix</li>
+<li>`nrow` Determine the number of rows in a data frame or matrix</li>
+<li>`rownames` Add row names to a matrix or data frame</li>
+<li>`str` Determine the structure of an object, including the length and class of component objects</li>
+<li>`summary` Print summary statistical information for an object</li>
+<li>`tibble` Structure component objects into a tibble data structure</li>
+</ul>
+
+
+<p><b>Operators</b></p>
+<li>`listN[[x]]` Use to subset `listN` to the values or component objects at position `x`</li>
+<li>`vectorN[x]` Use to subset `vectorN` to the values at position `x`</li>
+<li>`matrixN[x, y]` Use to subset `matrixN` to the values at position `x,y` (row, column)</li>
+<li>`dataFrameN[x, y]` Use to subset `dataFrameN` to the values at position `x,y` (row, column)</li>
+<li>`dataFrameN$colName` Use to subset `dataFrameN` (or a tibble) to the column named `colName`</li> 
+</ul>
+
+<hr style = "border: 1px solid #30288C;">
+
+<p><b>Vocabulary</b></p>
+<ul>
+<li><b>Atomic vector</b>: A set of values of the same class (<b>homogeneous</b>) arranged in one dimension.</li>
+<li><b>Attributes</b>: Names, dimensions, and metadata associated with an object.</li>
+<li><b>Data frame</b>: A special type of list that contains equal-length atomic vectors. Data frames are <b>heterogenous</b> and have two dimensions.</li>
+<li><b>Heterogeneous object</b>: a container that holds values of one or more object classes</li>
+<li><b>Homogeneous object</b>: a container that holds values of only one class</li>
+<li><b>Indexing</b>: Subsetting an object by the location of a value or values within an object</li>
+<li><b>List</b>: A storage container that holds objects of any class. Lists are <b>heterogenous</b> and have one dimension.</li>
+<li><b>Matrix</b>: An atomic vector that is arranged into rows and columns. Matrices are <b>homogeneous</b> and have two dimensions.</li>
+<li><b>Object</b>: a container that holds values or other objects</li>
+<li><b>Tibble</b>: A special type of data frame that prints informative metadata about a data frame and does not coerce character vectors to factor.</li>
+</ul>
+</div>
+
+<hr style="border-width: 10px;">
+<img style="float: right; margin: 0px 0px 15px 15px" src="images/nzpLogoSideways2.png" width="50%" />
+
+
+
+<b>End of lesson 2!</b>
 <img style="float: right; margin: 0px 0px 15px 15px;" src="images/nzpLogoSideways2.png" width="300" />
