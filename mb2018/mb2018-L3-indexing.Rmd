@@ -68,6 +68,9 @@ table, td, th {
 
 ```{r setup, include = FALSE}
 
+require(knitr)
+require(kableExtra)
+
 knitr::opts_chunk$set(echo = TRUE)
 
 # Libraries:
@@ -106,7 +109,10 @@ numericVector <- c(1, 1, 2, 3)
 Migratory Bird Center<br />
 Smithsonian Conservation Biology Institute</p>
 <hr>
-<p>In this lesson we will be exploring how to query data using what is often called "matrix notation". We will learn a <b>much easier</b> way to query data by the end of this workshop. I start by teaching this method of querying because it is helpful in understanding how R objects work, gives a glimpse of what is happening under the hood when using other querying techniques, and still used for some advanced querying techniques.</p>
+
+## Introduction
+
+<p>In this lesson we will be exploring how to query data using what is often called "indexing" or "matrix notation". We will learn a <b>much easier</b> way to query data by the end of this workshop. I start by teaching this method of querying because it is helpful in understanding how R objects work, gives a glimpse of what is happening under the hood when using other querying techniques, and still used for some advanced querying techniques.</p>
 
 <h2>Review: logical values</h2>
 
@@ -167,49 +173,26 @@ df == 3
 <p>The table below provides a set of the logical operators that are most commonly used to compare values. In each of the table items we are evaluating some object (or value) x relative to some object y.</p>
 <br>
 
-<table>
-<tr>
-  <th><b>Operator</b></th>
-  <th><b>Description</b></th>
-  <th><b>Value class</b></th>
-</tr>
-<tr>
-  <td>x == y</td>
-  <td>x is equal to y</td>
-  <td>any</td>
-</tr>
-<tr>
-  <td>x != y</td>
-  <td>x is NOT equal to y</td>
-  <td>any</td>
-</tr>
-<tr>
-  <td>!x</td>
-  <td>NOT x</td>
-  <td>any</td>
-</tr>
-<tr>
-  <td>x < y</td>
-  <td>x is less than y</td>
-  <td>numbers</td>
-</tr>
-<tr>
-  <td>x <= y</td>
-  <td>x is less than or equal to y</td>
-  <td>numbers</td>
-</tr>
-<tr>
-  <td>x > y</td>
-  <td>x is greater than y</td>
-  <td>numbers</td>
-</tr>
-<tr>
-  <td>x <= y</td>
-  <td>x is greater than or equal to y</td>
-  <td>numbers</td>
-</tr>
-</table>
-<br>
+```{r echo = FALSE}
+df <-
+  data.frame(
+  `Operator` = c('==', '!=', '|', '&', '<', '<=', '%in%','>', '>='),
+  `Usage` = c('x == y', 'x != y', 'x | y', 'x & y','x %in% yz', 'x < y', 'x <= y', 'x > y', 'x >= y'),
+  `Meaning` = c(
+    'x is equal to y',
+    'x is NOT equal to y',
+    'x OR y',
+    'x AND y',
+    'x is in the vector c(y,z)',
+    'x is less than y',
+    'x is less than or equal to y',
+    'x is greater than y',
+    'x is greater than or equal to y')
+  )
+
+kable(df, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE, position = 'left', font_size = 14)
+```
 
 <p>Each of the logical operators above can be applied in the same way that we have applied `==` thus far. Try out the code below, then conduct your own logical tests to explore their application further.</p>
 <br>

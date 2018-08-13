@@ -189,8 +189,10 @@ Introduction to data science in R, Lesson 2:<br />Querying data
 Brian S. Evans, Ph.D.<br /> Migratory Bird Center<br /> Smithsonian Conservation Biology Institute
 </p>
 <hr>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
 <p>
-In this lesson we will be exploring how to query data using what is often called “matrix notation”. We will learn a <b>much easier</b> way to query data by the end of this workshop. I start by teaching this method of querying because it is helpful in understanding how R objects work, gives a glimpse of what is happening under the hood when using other querying techniques, and still used for some advanced querying techniques.
+In this lesson we will be exploring how to query data using what is often called “indexing” or “matrix notation”. We will learn a <b>much easier</b> way to query data by the end of this workshop. I start by teaching this method of querying because it is helpful in understanding how R objects work, gives a glimpse of what is happening under the hood when using other querying techniques, and still used for some advanced querying techniques.
 </p>
 <h2>
 Review: logical values
@@ -252,97 +254,122 @@ The logical operators: Comparing values
 The table below provides a set of the logical operators that are most commonly used to compare values. In each of the table items we are evaluating some object (or value) x relative to some object y.
 </p>
 <p><br></p>
-<table>
+<table class="table table-striped table-hover" style="font-size: 14px; width: auto !important; ">
+<thead>
 <tr>
-<th>
-<b>Operator</b>
+<th style="text-align:left;">
+Operator
 </th>
-<th>
-<b>Description</b>
+<th style="text-align:left;">
+Usage
 </th>
-<th>
-<b>Value class</b>
+<th style="text-align:left;">
+Meaning
 </th>
 </tr>
+</thead>
+<tbody>
 <tr>
-<td>
+<td style="text-align:left;">
+==
+</td>
+<td style="text-align:left;">
 x == y
 </td>
-<td>
+<td style="text-align:left;">
 x is equal to y
 </td>
-<td>
-any
-</td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
+!=
+</td>
+<td style="text-align:left;">
 x != y
 </td>
-<td>
+<td style="text-align:left;">
 x is NOT equal to y
 </td>
-<td>
-any
+</tr>
+<tr>
+<td style="text-align:left;">
+|
+</td>
+<td style="text-align:left;">
+x | y
+</td>
+<td style="text-align:left;">
+x OR y
 </td>
 </tr>
 <tr>
-<td>
-!x
+<td style="text-align:left;">
+&amp;
 </td>
-<td>
-NOT x
+<td style="text-align:left;">
+x &amp; y
 </td>
-<td>
-any
+<td style="text-align:left;">
+x AND y
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
+&lt;
+</td>
+<td style="text-align:left;">
+x %in% yz
+</td>
+<td style="text-align:left;">
+x is in the vector c(y,z)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+&lt;=
+</td>
+<td style="text-align:left;">
 x &lt; y
 </td>
-<td>
+<td style="text-align:left;">
 x is less than y
 </td>
-<td>
-numbers
-</td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
+%in%
+</td>
+<td style="text-align:left;">
 x &lt;= y
 </td>
-<td>
+<td style="text-align:left;">
 x is less than or equal to y
 </td>
-<td>
-numbers
-</td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
+&gt;
+</td>
+<td style="text-align:left;">
 x &gt; y
 </td>
-<td>
+<td style="text-align:left;">
 x is greater than y
-</td>
-<td>
-numbers
 </td>
 </tr>
 <tr>
-<td>
-x &lt;= y
+<td style="text-align:left;">
+&gt;=
 </td>
-<td>
+<td style="text-align:left;">
+x &gt;= y
+</td>
+<td style="text-align:left;">
 x is greater than or equal to y
 </td>
-<td>
-numbers
-</td>
 </tr>
+</tbody>
 </table>
-<p><br></p>
 <p>
 Each of the logical operators above can be applied in the same way that we have applied <code>==</code> thus far. Try out the code below, then conduct your own logical tests to explore their application further.
 </p>
@@ -991,6 +1018,7 @@ Which country had the smallest population in 2005?
 What was the population of the United Kingdom in 2008?
 </li>
 </ol>
+</div>
 
 
 
