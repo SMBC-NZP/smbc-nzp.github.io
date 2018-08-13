@@ -1625,9 +1625,6 @@ as_tibble(myDataFrame)
 </div>
 
 <hr style="border-width: 10px;">
-<img style="float: right; margin: 0px 0px 15px 15px" src="images/nzpLogoSideways2.png" width="50%" />
-
-
 
 <b>End of lesson 2!</b>
 <img style="float: right; margin: 0px 0px 15px 15px;" src="images/nzpLogoSideways2.png" width="300" />
