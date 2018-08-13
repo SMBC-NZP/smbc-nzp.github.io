@@ -20,7 +20,7 @@ runtime: shiny_prerendered
 
 <img style="float: right; margin: 0px 0px 15px 15px" src="images/robotBird.jpg" width="30%" />
 
-<p>This document will begin to prepare you for the material presented in this course. At the bottom of the document you will submit your application. Before doing so, please read and complete the following steps. Even if you are entering this workshop with loads of R experience, please thoroughly read and complete each section of this document, as each section contains terminology you may be unfamiliar with and the beginnings of the R data science workflow that we will develop over the course of this workshop.</p>
+<p>This document will begin to prepare you for the material presented in this course. Please read and complete the following steps. Even if you are entering this class with loads of R experience, please thoroughly read and complete each section of this document, as each section contains terminology you may be unfamiliar with and the beginnings of the R data science workflow that we will develop over the course of this class.</p>
 
 <p>Throughout documents of this class there are a number of icons and formats to pay special attention to:</p>
 <ul>
@@ -30,7 +30,7 @@ runtime: shiny_prerendered
 <li>The end of each document will provide summary information on keyboard shortcuts, operators, functions, and vocabulary.</li>
 </ul>
 
-<i>Important! Throughout this workshop we will be using keyboard shortcuts. Workshop documents refer to Windows/Linux keyboard mapping. Mac users should use "command" instead of CTRL to execute keyboard shortcuts.</i>
+<i>Important! Throughout this class we will be using keyboard shortcuts. Class documents refer to Windows/Linux keyboard mapping. Mac users should use "command" instead of CTRL to execute keyboard shortcuts.</i>
 
 <hr style="border-width: 10px;">
 
@@ -54,7 +54,7 @@ runtime: shiny_prerendered
 
 <br>
 
-<p>R Studio is an interface to R that has numerous advantages over using R's built-in interface. More than anything, R Studio provides an environment that is easy to organize. R Studio is divided into four panels, as described in the image below. We will use panel names and their functionality considerably throughout this workshop, so please take a moment to familiarize yourself with them.</p>
+<p>R Studio is an interface to R that has numerous advantages over using R's built-in interface. More than anything, R Studio provides an environment that is easy to organize. R Studio is divided into four panels, as described in the image below. We will use panel names and their functionality considerably throughout this class, so please take a moment to familiarize yourself with them.</p>
 <br>
 <img style= "width: 100%;" src="images/rStudio_environment.png" />
 <br>
@@ -145,11 +145,11 @@ $$\frac{1+1+2}{3} + \frac{5}{8}$$
 <br>
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Click on the "History" tab of the workspace panel to view the commands that you have run so far.</p>
 <br>
-<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Click on the save icon on the history tab of the workspace panel. Save your history as "rWorkshop" (the file type will be added automatically). We will build on this file over the course of this workshop.</p>
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Click on the save icon on the history tab of the workspace panel. Save your history as "migBirds" (the file type will be added automatically). We will build on this file over the course of this class.</p>
 <br>
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Click on the broom icon on the history tab of the workspace panel. This will remove everything you've done in R since your session began.</p>
 <br>
-<p><i>Note: The workspace panel contains tools for a number of other tasks, including tools for importing and exporting data and executing code. We will not be using most of these features in this workshop but you may want to explore them to determine whether you'd like to integrate them into your workflow.</i></p>
+<p><i>Note: The workspace panel contains tools for a number of other tasks, including tools for importing and exporting data and executing code. We will not be using most of these features in this class but you may want to explore them to determine whether you'd like to integrate them into your workflow.</i></p>
 <br>
 
 <div class = "roundBorderBlack">
@@ -165,14 +165,14 @@ $$\frac{1+1+2}{3} + \frac{5}{8}$$
 <p>There is a lot going on in the viewer panel, but basically it provides tools for viewing anything other than command line output. The tabs on this panel include:</p>
 
 <ul>
-<li>Files: A file manager window (the initial location should default to your working directory).</li>
+<li>Files: A file manager window. This shows the files located in your working directory, which is the folder on your computer that R is reading from and writing to.</li>
 <li>Plots: Any plots that you create can be viewed here.</li>
 <li>Packages: R libraries that have been installed onto your system.</li>
 <li>Help: Help files that provide in-depth information into any R function that you will use.</li>
 <li>Viewer: Images and maps can be viewed here.</li>
 </ul>
 
-<p><i>Note: The viewer panel contains tools for a number of other tasks, including tools for loading and installing libraries and managing files. We will not be using most of these features in this workshop but you may want to explore them to determine whether you'd like to integrate them into your workflow.</i></p>
+<p><i>Note: The viewer panel contains tools for a number of other tasks, including tools for loading and installing libraries and managing files. We will not be using most of these features in this class but you may want to explore them to determine whether you'd like to integrate them into your workflow.</i></p>
 
 <hr style="border-width: 10px;">
 
@@ -270,7 +270,7 @@ simpleAddition / 3
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Add comments to the lines of code from the previous section:</p>
 
 ```{r eval = FALSE}
-# Practing simple math and adding assignments:
+# Practicing simple math and adding assignments:
 simpleAddition <- 
   1 + 1 + 2
 
@@ -297,12 +297,30 @@ helloWorld <-
 
 ```{r eval = FALSE}
 # Combine values:
+
 firstSet <- 
   c(1, 1, 2)
 ```
 <br>
 <p>Before you use a function it is often necessary to get a good sense of how it works. The "Help" tab of the viewer panel provides in-depth resources on each function. To access the help file for a given function simply type `?` followed by the name of the function in the console panel.</p>
 <br>
+
+<p>Functions can be used to explore, modify, or create objects as well as define how R interacts with your computer's file system. The functions below can be used to get the working directory R reads to and write from, list the files in that folder, and change the working directly to some other folder on your computer:</p>
+
+```{r eval = FALSE}
+# Retrieve the location of your working directory:
+
+getwd()
+
+# List the files in your current working directory:
+
+list.files()
+
+# Change your working directory (modify the code below to a folder in your file system):
+
+setwd('C:/Users/...')
+
+```
 
 <h4>Nested functions</h4>
 
@@ -372,7 +390,7 @@ mean(
 <h4>Libraries of functions</h4>
 <p>Base R is a set of functions that are preloaded when you downloaded R. Many functions are available in base R but there are loads of functions that have been written by others and assembled into libraries (also called packages) that you can download. These user-built libraries are very powerful and can automate many of the tasks you confront when coding. To download a library, you use the function `install.packages`. This function evaluates the name of a library, in quotation marks and installs the library on your computer. <i>Note: Each package will only be loaded once, therefore this process should be completed in the console panel</i>.</p>
 
-<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Install two libraries that we will use throughout the course of this workshop:</p>
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Install two libraries that we will use throughout the course of this class:</p>
 
 ```{r eval = FALSE}
 install.packages('tidyverse')
@@ -392,11 +410,11 @@ library(RCurl)
 <br>
 <div class = "roundBorderBlack">
 <br>
-<p><i class="fa fa-user-secret" aria-hidden="true" style = "font-size: 150%"></i> Libraries should always be loaded in the  source panel! It's best to load libraries one of three locations:</p>
+<p><i class="fa fa-user-secret" aria-hidden="true" style = "font-size: 150%"></i> Libraries should always be loaded in the  source panel! It's best to load libraries in one of three locations:</p>
 <ul>
 <li>At the top of the script</li>
-<li>On a separate source script (to be covered in this workshop)</li>
-<li>Within a user-created function (to be covered in this workshop)</li>
+<li>On a separate source script</li>
+<li>Within a user-created function</li>
 </ul>
 
 <hr style = "border: 1px solid #D3D3D3;">
@@ -407,23 +425,26 @@ library(RCurl)
 <li>You visit Google or Stack overflow and, reading through the answers, find sets of libraries that do what you want</li>
 <li>You install and load the library and <i>potentially</i> move past the issue</li>
 </ol>
-<p><i>Why is this a problem?</i> Some of the libraries you stumble on will be critical to your current and future workflows. Most of the libraries found in this way will not. This turns scripts into a sloppy patchwork of libraries. It can make code very confusing to follow and lead to unseen errors (if the function does not do exactly what you perceive). If the issue can be solved with Base R or the packages you are currently working with, it will make your code more clear, help you avoid problems, and save you time in the future. In this workshop we will teach you a workflow to examine and remedy R problems using a core set of packages.
+<p><i>Why is this a problem?</i> Some of the libraries you stumble on will be critical to your current and future workflows. Most of the libraries found in this way will not. This turns scripts into a sloppy patchwork of libraries. It can make code very confusing to follow and lead to unseen errors (if the function does not do exactly what you perceive). If the issue can be solved with Base R or the packages you are currently working with, it will make your code more clear, help you avoid problems, and save you time in the future. In this class we will teach you a workflow to examine and remedy R problems using a core set of packages.
 </p>
 </div>
 
 
 <hr style="border-width: 10px;">
+
 ## Term review and glossary
 
 <div class="roundBorder">
 <p><b>Functions and operators</b></p>
 <ul> 
-<li>`c` Combine objects</li></li>
-<li>`install.packages` Add a new library to a user's computer</li></li>
-<li>`library` Add a new library to a user's current R session</li></li>
-<li> `mean` Take the average of a set of values (note, use na.rm = TRUE in the presence of NA's)
-<li>`<-` Assign a name to an object in R (assignment operator)</li></li>
-<li>`?` Get help for a given function</li> 
+<li>`c` Combine objects</li>
+<li>`getwd` print the location of your current working directory</li>
+<li>`install.packages` Add a new library to a user's computer</li>
+<li>`library` Add a new library to a user's current R session</li>
+<li>`list.files` print the files names that are located in your current working directory</li>
+<li> `mean` Take the average of a set of values (note, use na.rm = TRUE in the presence of NA's)</li>
+<li> `setwd` Set a new location for your working directory</li>
+<li>`<-` Assign a name to an object in R (assignment operator)</li>
 </ul>
 
 <hr style = "border: 1px solid #30288C;">

@@ -54,7 +54,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <h2>Introduction to R Studio</h2>
 <p><img style="float: right; margin: 0px 0px 15px 15px" src="images/robotBird.jpg" width="30%" /></p>
 <p>
-This document will begin to prepare you for the material presented in this course. At the bottom of the document you will submit your application. Before doing so, please read and complete the following steps. Even if you are entering this workshop with loads of R experience, please thoroughly read and complete each section of this document, as each section contains terminology you may be unfamiliar with and the beginnings of the R data science workflow that we will develop over the course of this workshop.
+This document will begin to prepare you for the material presented in this course. Please read and complete the following steps. Even if you are entering this class with loads of R experience, please thoroughly read and complete each section of this document, as each section contains terminology you may be unfamiliar with and the beginnings of the R data science workflow that we will develop over the course of this class.
 </p>
 <p>
 Throughout documents of this class there are a number of icons and formats to pay special attention to:
@@ -73,7 +73,7 @@ The spy icon (<i class="fa fa-user-secret" aria-hidden="true" style = "font-size
 The end of each document will provide summary information on keyboard shortcuts, operators, functions, and vocabulary.
 </li>
 </ul>
-<p><i>Important! Throughout this workshop we will be using keyboard shortcuts. Workshop documents refer to Windows/Linux keyboard mapping. Mac users should use “command” instead of CTRL to execute keyboard shortcuts.</i></p>
+<p><i>Important! Throughout this class we will be using keyboard shortcuts. Class documents refer to Windows/Linux keyboard mapping. Mac users should use “command” instead of CTRL to execute keyboard shortcuts.</i></p>
 <hr style="border-width: 10px;">
 <!-- intro to r studio -->
 </div>
@@ -97,7 +97,7 @@ If you do not have R Studio Desktop installed on your computer, <a href="https:/
 </p>
 <p><br></p>
 <p>
-R Studio is an interface to R that has numerous advantages over using R’s built-in interface. More than anything, R Studio provides an environment that is easy to organize. R Studio is divided into four panels, as described in the image below. We will use panel names and their functionality considerably throughout this workshop, so please take a moment to familiarize yourself with them.
+R Studio is an interface to R that has numerous advantages over using R’s built-in interface. More than anything, R Studio provides an environment that is easy to organize. R Studio is divided into four panels, as described in the image below. We will use panel names and their functionality considerably throughout this class, so please take a moment to familiarize yourself with them.
 </p>
 <br> <img style= "width: 100%;" src="images/rStudio_environment.png" /> <br> <br>
 <p>
@@ -174,7 +174,7 @@ Would be written in R as:
 <pre class="r"><code>(1+1+2)/3+5/8 </code></pre>
 <p><br></p>
 <p>
-If you are new to R, please take a moment to explore using R as a calculator.
+<i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 100%"></i> If you are new to R, please take a moment to explore using R as a calculator.
 </p>
 </div>
 <p><br></p>
@@ -183,7 +183,7 @@ If you are new to R, please take a moment to explore using R as a calculator.
 The workspace panel
 </h3>
 <p>
-When you open R you initiate an R session. An R session is defined by all of the code that you have run and any objects that you’ve stored in the global environment. The workspace panel is where you can view your global environment and your session history. In addition to viewing, you can use this panel to save or clean your session history and objects in your global environment. Using these tools can help streamline your R workflow and aid in replication.
+When you open R you initiate an R session. An R session is defined by all of the code that you have run and any objects that you’ve stored in the global environment. The global environment is a temporary storage location for all of the objects and functions that you create in an R working session. The workspace panel is where you can view your global environment and your session history. In addition to viewing, you can use this panel to save or clean your session history and objects in your global environment. Using these tools can help streamline your R workflow and aid in replication.
 </p>
 <br>
 <p>
@@ -191,7 +191,7 @@ When you open R you initiate an R session. An R session is defined by all of the
 </p>
 <br>
 <p>
-<i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Click on the save icon on the history tab of the workspace panel. Save your history as “rWorkshop” (the file type will be added automatically). We will build on this file over the course of this workshop.
+<i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Click on the save icon on the history tab of the workspace panel. Save your history as “migBirds” (the file type will be added automatically). We will build on this file over the course of this class.
 </p>
 <br>
 <p>
@@ -199,7 +199,7 @@ When you open R you initiate an R session. An R session is defined by all of the
 </p>
 <br>
 <p>
-<i>Note: The workspace panel contains tools for a number of other tasks, including tools for importing and exporting data and executing code. We will not be using most of these features in this workshop but you may want to explore them to determine whether you’d like to integrate them into your workflow.</i>
+<i>Note: The workspace panel contains tools for a number of other tasks, including tools for importing and exporting data and executing code. We will not be using most of these features in this class but you may want to explore them to determine whether you’d like to integrate them into your workflow.</i>
 </p>
 <p><br></p>
 <div class="roundBorderBlack">
@@ -218,7 +218,7 @@ There is a lot going on in the viewer panel, but basically it provides tools for
 </p>
 <ul>
 <li>
-Files: A file manager window (the initial location should default to your working directory).
+Files: A file manager window. This shows the files located in your working directory, which is the folder on your computer that R is reading from and writing to.
 </li>
 <li>
 Plots: Any plots that you create can be viewed here.
@@ -234,7 +234,7 @@ Viewer: Images and maps can be viewed here.
 </li>
 </ul>
 <p>
-<i>Note: The viewer panel contains tools for a number of other tasks, including tools for loading and installing libraries and managing files. We will not be using most of these features in this workshop but you may want to explore them to determine whether you’d like to integrate them into your workflow.</i>
+<i>Note: The viewer panel contains tools for a number of other tasks, including tools for loading and installing libraries and managing files. We will not be using most of these features in this class but you may want to explore them to determine whether you’d like to integrate them into your workflow.</i>
 </p>
 <hr style="border-width: 10px;">
 <!-- assignment operator -->
@@ -289,7 +289,7 @@ simpleAddition + 2
 simpleAddition / 3</code></pre>
 <p><br></p>
 <p>
-<i>Note: If you are new to R, you probably have yet to grasp how powerful assignments are. As most users begin to develop their R skillset, the number of assignments they use grows. What began as a useful tool can end up leading to an inevitable addiction that causes messy, hard-to-read scripts. In this course you will learn how to use assignments effectively and avoid the confusion that over-assignment causes.</i>
+<i>Note: If you are new to R, you probably have yet to grasp how powerful assignments are. As most users begin to develop their R skillset, the number of assignments they use grows. What began as a useful tool can end up leading to an addiction that causes messy, hard-to-read scripts. In this course you will learn how to use assignments effectively and avoid the confusion that over-assignment causes.</i>
 </p>
 <p><br></p>
 <div class = "roundBorderBlack">
@@ -348,7 +348,7 @@ It is good to add a comment before steps in a code that describes what happens. 
 <p>
 <i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Add comments to the lines of code from the previous section:
 </p>
-<pre class="r"><code># Practing simple math and adding assignments:
+<pre class="r"><code># Practicing simple math and adding assignments:
 simpleAddition &lt;- 
   1 + 1 + 2
 
@@ -374,6 +374,7 @@ Functions are what data-wrangling-guru Hadley Wickham calls the “fundamental b
 <i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Combine the integers 1, 1, and 2 into a single object (the combine function in R is <code>c</code>) in the source panel and name the object <code>firstSet</code>:
 </p>
 <pre class="r"><code># Combine values:
+
 firstSet &lt;- 
   c(1, 1, 2)</code></pre>
 <br>
@@ -381,6 +382,20 @@ firstSet &lt;-
 Before you use a function it is often necessary to get a good sense of how it works. The “Help” tab of the viewer panel provides in-depth resources on each function. To access the help file for a given function simply type <code>?</code> followed by the name of the function in the console panel.
 </p>
 <p><br></p>
+<p>
+Functions can be used to explore, modify, or create objects as well as define how R interacts with your computer’s file system. The functions below can be used to get the working directory R reads to and write from, list the files in that folder, and change the working directly to some other folder on your computer:
+</p>
+<pre class="r"><code># Retrieve the location of your working directory:
+
+getwd()
+
+# List the files in your current working directory:
+
+list.files()
+
+# Change your working directory (modify the code below to a folder in your file system):
+
+setwd(&#39;C:/Users/...&#39;)</code></pre>
 <h4>
 Nested functions
 </h4>
@@ -447,10 +462,10 @@ mean(
 Libraries of functions
 </h4>
 <p>
-Many functions are available in base R but there are loads of functions that have been written by others and assembled into packages called libraries that you can download. These user-built libraries are very powerful and can automate many of the tasks you confront when coding. To download a library, you use the function <code>install.packages</code>. This function evaluates the name of a library, in quotation marks and installs the library on your computer. <i>Note: Each package will only be loaded once, therefore this process should be completed in the console panel</i>.
+Base R is a set of functions that are preloaded when you downloaded R. Many functions are available in base R but there are loads of functions that have been written by others and assembled into libraries (also called packages) that you can download. These user-built libraries are very powerful and can automate many of the tasks you confront when coding. To download a library, you use the function <code>install.packages</code>. This function evaluates the name of a library, in quotation marks and installs the library on your computer. <i>Note: Each package will only be loaded once, therefore this process should be completed in the console panel</i>.
 </p>
 <p>
-<i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Install two libraries that we will use throughout the course of this workshop:
+<i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Install two libraries that we will use throughout the course of this class:
 </p>
 <pre class="r"><code>install.packages(&#39;tidyverse&#39;)
 
@@ -469,17 +484,17 @@ library(RCurl)</code></pre>
 <div class = "roundBorderBlack">
 <br>
 <p>
-<i class="fa fa-user-secret" aria-hidden="true" style = "font-size: 150%"></i> Libraries should always be loaded in the source panel! It’s best to load libraries one of three locations:
+<i class="fa fa-user-secret" aria-hidden="true" style = "font-size: 150%"></i> Libraries should always be loaded in the source panel! It’s best to load libraries in one of three locations:
 </p>
 <ul>
 <li>
 At the top of the script
 </li>
 <li>
-On a separate source script (to be covered in this workshop)
+On a separate source script
 </li>
 <li>
-Within a user-created function (to be covered in this workshop)
+Within a user-created function
 </li>
 </ul>
 <hr style = "border: 1px solid #D3D3D3;">
@@ -498,7 +513,7 @@ You install and load the library and <i>potentially</i> move past the issue
 </li>
 </ol>
 <p>
-<i>Why is this a problem?</i> Some of the libraries you stumble on will be critical to your current and future workflows. Most of the libraries found in this way will not. This turns scripts into a sloppy patchwork of libraries. It can make code very confusing to follow and lead to unseen errors (if the function does not do exactly what you perceive). If the issue can be solved with Base R or the packages you are currently working with, it will make your code more clear, help you avoid problems, and save you time in the future. In this workshop we will teach you a workflow to examine and remedy R problems using a core set of packages.
+<i>Why is this a problem?</i> Some of the libraries you stumble on will be critical to your current and future workflows. Most of the libraries found in this way will not. This turns scripts into a sloppy patchwork of libraries. It can make code very confusing to follow and lead to unseen errors (if the function does not do exactly what you perceive). If the issue can be solved with Base R or the packages you are currently working with, it will make your code more clear, help you avoid problems, and save you time in the future. In this class we will teach you a workflow to examine and remedy R problems using a core set of packages.
 </p>
 </div>
 <hr style="border-width: 10px;">
@@ -513,23 +528,26 @@ You install and load the library and <i>potentially</i> move past the issue
 <li>
 <code>c</code> Combine objects
 </li>
+<li>
+<code>getwd</code> print the location of your current working directory
 </li>
 <li>
 <code>install.packages</code> Add a new library to a user’s computer
 </li>
-</li>
 <li>
 <code>library</code> Add a new library to a user’s current R session
 </li>
+<li>
+<code>list.files</code> print the files names that are located in your current working directory
 </li>
 <li>
 <code>mean</code> Take the average of a set of values (note, use na.rm = TRUE in the presence of NA’s)
+</li>
+<li>
+<code>setwd</code> Set a new location for your working directory
+</li>
 <li>
 <code>&lt;-</code> Assign a name to an object in R (assignment operator)
-</li>
-</li>
-<li>
-<code>?</code> Get help for a given function
 </li>
 </ul>
 <hr style = "border: 1px solid #30288C;">
@@ -565,7 +583,7 @@ CTRL+Enter: Execute line or section of code from the source panel
 <b>Assign</b>: Provide a name for an R object
 </li>
 <li>
-<b>Camel case</b>: A convention of writing in which multiple words are joined without spaces and all words following the initial word are capitalized
+<b>Camel case</b>: A convention of writing in which multiple words are joined without spaces and all words following the initial word are capitalized. forExampleThisIsCamelCase.
 </li>
 <li>
 <b>Code</b>: Any text written in the source or console panel
