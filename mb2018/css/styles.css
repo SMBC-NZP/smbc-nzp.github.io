@@ -132,6 +132,7 @@ table, td, th {
     padding: 5px;
     text-align: right;
     vertical-align: middle;
+    background-color: #ffffff;
 }
   
   /* Create two equal columns that floats next to each other */

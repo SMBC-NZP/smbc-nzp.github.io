@@ -986,7 +986,7 @@ Determine the class of the object:
 <pre class="text"><code>class(...)</code></pre>
 </div>
 <div class="tutorial-exercise-support" data-label="list_class-hint-2" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<pre class="text"><code>class(exampleList)</code></pre>
+<pre class="text"><code>class(myList)</code></pre>
 </div>
 <li>
 Determine the length of the object:
@@ -998,7 +998,7 @@ Determine the length of the object:
 <pre class="text"><code>length(...)</code></pre>
 </div>
 <div class="tutorial-exercise-support" data-label="list_length-hint-2" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<pre class="text"><code>length(exampleList)</code></pre>
+<pre class="text"><code>length(myList)</code></pre>
 </div>
 <li>
 View the overall structure of the object using <code>str()</code>:
@@ -1010,7 +1010,7 @@ View the overall structure of the object using <code>str()</code>:
 <pre class="text"><code>str(...)</code></pre>
 </div>
 <div class="tutorial-exercise-support" data-label="list_str-hint-2" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<pre class="text"><code>str(exampleList)</code></pre>
+<pre class="text"><code>str(myList)</code></pre>
 </div>
 </div>
 <p><br></p>
@@ -1276,7 +1276,7 @@ myList_named</code></pre>
 A <b>data frame</b> is the object class that is most often used for storing data. Like a matrix, a data frame has two dimensions with data arranged into rows, <i>x</i>, and columns, <i>y</i>. This is where the similarity between data frames and matrices pretty much ends, however – a data frame is actually list of atomic vectors in which the length of each vector is equal. As data frames are lists, they are heterogeneous – each atomic vector that makes up the object (columns) may be of a different type.
 </p>
 <p>
-One method for arranging values into data frames is to use the <code>data.frame()</code> function. The arguments of this function are the atomic vectors vectors that make up the object (<code>data.frame(vector1, vector2)</code>).
+One method for arranging values into data frames is to use the <code>data.frame()</code> function. The arguments of this function are the atomic vectors that make up the object (<code>data.frame(vector1, vector2)</code>).
 </p>
 <div class="reviewDiv">
 <p>
@@ -1652,10 +1652,10 @@ Use the numeric address (<code>[x,y]</code>) to extract all values in the second
 <pre class="text"><code>myDataFrame[..., ...]</code></pre>
 </div>
 <div class="tutorial-exercise-support" data-label="myDf_index3-hint-2" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<pre class="text"><code>myDataFrame[...,1]</code></pre>
+<pre class="text"><code>myDataFrame[...,2]</code></pre>
 </div>
 <div class="tutorial-exercise-support" data-label="myDf_index3-hint-3" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<pre class="text"><code>myDataFrame[,1]</code></pre>
+<pre class="text"><code>myDataFrame[,2]</code></pre>
 </div>
 <li>
 Use the numeric address (<code>[x,y]</code>) to extract the values in the first and third rows (x) of the first column (y):
@@ -1673,7 +1673,7 @@ Use the numeric address (<code>[x,y]</code>) to extract the values in the first 
 <pre class="text"><code>myDataFrame[c(...),1]</code></pre>
 </div>
 <div class="tutorial-exercise-support" data-label="myDf_index4-hint-4" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<pre class="text"><code>myDataFrame[c(1, 2),1]</code></pre>
+<pre class="text"><code>myDataFrame[c(1, 3),1]</code></pre>
 </div>
 <li>
 Use the numeric address for the row (<code>[x,]</code>) and the name of the column (<code>[,'columnName']</code>) to extract the values in the first and third rows (x) of the first column (y):
@@ -1691,7 +1691,7 @@ Use the numeric address for the row (<code>[x,]</code>) and the name of the colu
 <pre class="text"><code>myDataFrame[c(...),1]</code></pre>
 </div>
 <div class="tutorial-exercise-support" data-label="myDf_index5-hint-4" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<pre class="text"><code>myDataFrame[c(1, 2), &#39;integers&#39;]</code></pre>
+<pre class="text"><code>myDataFrame[c(1, 3), &#39;words&#39;]</code></pre>
 </div>
 <li>
 Use the convention <code>dataFrameName$columnName</code> to extract the vector associated with column 2 of the data frame:
@@ -1713,7 +1713,7 @@ Use the convention <code>dataFrameName$columnName</code> to extract the vector a
 <h2>Tibbles!</h2>
 <br>
 <p>
-The final object that we will look at is an object class provided by the package “tidyverse”. A <b>tibble</b> is a special type of data frame. You can make a tibble using the <code>tibble()</code> function. The arguments for this function are the same as that of <code>data.frame()</code>.
+The final object that we will look at is an object class provided by the package “tidyverse”. <i>Note: You must run the “tidyverse” library (<code>library(tidyverse)</code>) before you can tibbles</i>! A <b>tibble</b> is a special type of data frame. You can make a tibble using the <code>tibble()</code> function. The arguments for this function are the same as that of <code>data.frame()</code>.
 </p>
 <p><br></p>
 <div class="reviewDiv">
@@ -1745,7 +1745,7 @@ A tibble:
 </div>
 <br>
 <p>
-Notice that, in addition to printing the data frame, the tibble prints structural and attribute information about the object, including the dimensions, class, and types of values. By default, tibbles will also only print 10 lines at once for long data frames. This is very useful when working with large datasets. Another thing to notice is the type of object of the “words” column is different – <code>data.frame()</code> produced a factor vector for that column whereas <code>tibble()</code> produced a character vector. This is incredibly useful, as factors can cause lots of problems when they are generating unintentionally.
+Notice that, in addition to printing the data frame, the tibble prints some additional information about the object. By default, tibbles will also only print 10 lines at once for long data frames. This is very useful when working with large datasets. Another thing to notice is the type of object of the “words” column is different – <code>data.frame()</code> produced a factor vector for that column whereas <code>tibble()</code> produced a character vector. This is incredibly useful, as factors can cause lots of problems when they are generated unintentionally.
 </p>
 <p>
 Data frames can also be converted to tibbles using the <code>as_tibble()</code> function. This will not, however, convert factor to character columns.
@@ -1786,7 +1786,7 @@ Data frames can also be converted to tibbles using the <code>as_tibble()</code> 
 <code>colnames</code> Add column names to a matrix or data frame
 </li>
 <li>
-<code>data.frame</code> Structure equal length vectors into a data frame data structure
+<code>data.frame</code> Arrange equal length vectors into a data frame data structure
 </li>
 <li>
 <code>dim</code> Determine the number of rows and columns in a data frame or matrix
@@ -1847,13 +1847,13 @@ Data frames can also be converted to tibbles using the <code>as_tibble()</code> 
 </p>
 <ul>
 <li>
-<b>Atomic vector</b>: A set of values of the same class (<b>homogeneous</b>) arranged in one dimension.
+<b>Atomic vector</b>: A set of values of the same class (<i>homogeneous</i>) arranged in one dimension.
 </li>
 <li>
 <b>Attributes</b>: Names, dimensions, and metadata associated with an object.
 </li>
 <li>
-<b>Data frame</b>: A special type of list that contains equal-length atomic vectors. Data frames are <b>heterogenous</b> and have two dimensions.
+<b>Data frame</b>: A special type of list that contains equal-length atomic vectors. Data frames are <i>heterogenous</i> and have two dimensions.
 </li>
 <li>
 <b>Heterogeneous object</b>: a container that holds values of one or more object classes
@@ -1865,10 +1865,10 @@ Data frames can also be converted to tibbles using the <code>as_tibble()</code> 
 <b>Indexing</b>: Subsetting an object by the location of a value or values within an object
 </li>
 <li>
-<b>List</b>: A storage container that holds objects of any class. Lists are <b>heterogenous</b> and have one dimension.
+<b>List</b>: A storage container that holds objects of any class. Lists are <i>heterogenous</i> and have one dimension.
 </li>
 <li>
-<b>Matrix</b>: An atomic vector that is arranged into rows and columns. Matrices are <b>homogeneous</b> and have two dimensions.
+<b>Matrix</b>: An atomic vector that is arranged into rows and columns. Matrices are <i>homogeneous</i> and have two dimensions.
 </li>
 <li>
 <b>Object</b>: a container that holds values or other objects
