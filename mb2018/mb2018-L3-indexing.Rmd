@@ -1,69 +1,18 @@
 ---
-output:
-  html_document:
-    theme: yeti
+title: "Lesson three: Indexing"
+author: "Brian S. Evans, Ph.D."
+output: learnr::tutorial
+runtime: shiny_prerendered
+theme: yeti
 ---
 
-<style>
-  code{
-    background-color:#f2f2f2;
-  }
-  
-  span.co{
-    color:#000080;
-    font-weight: bold;
-  }
-  
-  img{
-	      display: block;
-	      padding-left: 15px;
-        padding-right: 15px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-  }
+<!-- html head --> 
 
-  p{
-    text-align: left;
-    font-size: 18px;
-  }
-
-  ul{
-    line-height: 27px;
-    text-align: left;
-    font-size: 18px;
-    margin-left: 0px;
-  }
-  
-  .row{
-    margin: auto;
-  }
-  
-  table {
-    border-collapse: collapse;
-}
-
-table, td, th {
-    border: 1px solid black;
-    padding: 5px;
-    text-align: center;
-    vertical-align: middle;
-}
-  
-  /* Create two equal columns that floats next to each other */
-.column {
-    float: left;
-    width: 50%;
-    padding: 10px;
-}
-
-/* Clear floats after the columns */
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-</style>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+<!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
+</head>
 
 
 ```{r setup, include = FALSE}
@@ -114,7 +63,7 @@ Smithsonian Conservation Biology Institute</p>
 
 <p>In this lesson we will be exploring how to query data using what is often called "indexing" or "matrix notation". We will learn a <b>much easier</b> way to query data by the end of this workshop. I start by teaching this method of querying because it is helpful in understanding how R objects work, gives a glimpse of what is happening under the hood when using other querying techniques, and still used for some advanced querying techniques.</p>
 
-<h2>Review: logical values</h2>
+## Review: logical values
 
 <br>
 <p>Recall that logical values can be obtained by evaluating objects with <b>logical operators</b>. For example, the logical operator `==` tests whether a value is equal to another value.</p>
@@ -135,7 +84,9 @@ Smithsonian Conservation Biology Institute</p>
 (3 == 3) + (3 == 2 + 1)
 ```
 <br>
-<h2>Using logic with objects</h2>
+
+## Using logic with objects
+
 <br>
 <p>We can run a logic test on objects with more than one value. In the following examples, R tests whether each value in the objects below are equal to 3 and returns logical values in the dimensions of the object.</p>
 <br>
@@ -167,7 +118,9 @@ df == 3
 ```
 <br>
 
-<h2>The logical operators: Comparing values</h2>
+## The logical operators
+
+<h3>Comparing values</h3>
 
 <br>
 <p>The table below provides a set of the logical operators that are most commonly used to compare values. In each of the table items we are evaluating some object (or value) x relative to some object y.</p>
@@ -222,7 +175,8 @@ v >= 3
 <p>Repeat the above with your matrix, `m`, and data frame, `df`.</p>
 <br>
 
-<h2>The logical operators: Comparing sets</h2>
+<h3>Comparing sets</h3>
+
 <br>
 
 <p>We are often interested in comparing sets of values with one another. Using the code above, we may be interested in testing whether values `1` and `3` appear in vector `v`. To do so, we use the operator `%in%`, which tests the logic statement "is in".</p>
@@ -285,7 +239,11 @@ v < 5 & v != 2 | v == 8
 
 ```
 <br>
-<h2>Indexing and logic: Querying vectors</h2>
+
+## Indexing and logic
+
+<h3>Querying vectors</h3>
+
 <br>
 <p>Recall that the position of value `x` in vector `v` would be notated as `v[x]` and that we can use this information to index vector `v` as follows:</p>
 <br>
@@ -351,7 +309,7 @@ v[v > 2]
 </ul>
 <br>
 
-<h2>Indexing and logic: Querying matrices</h2>
+<h3>Querying matrices</h3>
 
 <br>
 <p>Recall that the position of value `x,y` (row, column) in a matrix, `m`, can be notated as `m[x,y]`. We can use this information to index matrix `m` as follows:</p>
@@ -445,7 +403,7 @@ m[m[,1] < 2 &  m[,2] < 5 , ]
 
 <br>
 
-<h2>Indexing and logic: Querying data frames</h2>
+<h3>Querying data frames</h3>
 
 <br>
 <p>Recall that the position of value `x,y` (row, column) in a data frame, `df`, can be notated as `df[x,y]`. We can use this information to index data frame `df` as follows:</p>
@@ -540,7 +498,7 @@ df[df$hello > 1,]
 <p>In the matrix section, we queried matrix `m` such that values of column one are less than 2 and values of column two are less than 5. Repeat this query on data frame `df` using "matrix notation" and the column names of `df`.</p>
 <br>
 
-<h2>Indexing and logic: Working with strings</h2>
+## Working with strings
 <br>
 <br>
 <p>Strings are notoriously difficult to work with when cleaning data. Luckily the tidyverse libraries contain the package "stringr" that simplifies the process of working with strings. We won't dive too deeply into the string realm here, but it is important to have some idea of how they work.</p>
@@ -748,7 +706,7 @@ fruit[str_detect(fruit, 'apple')]
 
 <br>
 
-<h2>Indexing and logic: Summarizing and queries</h2>
+## Summarizing and queries
 
 <br>
 <p>Querying with indexing and logic can be a great way to summarize your data. Let's generate a fake data frame and explore the `min` (minimum value in a set) and `max` (maximum value in a set) summary functions:</p>
@@ -821,7 +779,7 @@ min(dummyData[dummyData$gen == 'a',]$n)
 
 <br>
 
-<h2>Indexing and logic: Practice with real data</h2>
+## Practice with real data
 
 <br>
 
@@ -924,12 +882,3 @@ population[population$country == 'United States of America' &
 ```
 
 <hr>
-<p><b>Now you</b>! Use the population dataset to explore the following questions:</p>
-<br>
-
-<ol>
-<li>What was the population of Palau in 2005?</li>
-<li>Which countries had a population of less than 10,000 in 2013?</li>
-<li>Which country had the smallest population in 2005?</li>
-<li>What was the population of the United Kingdom in 2008?</li>
-</ol>
