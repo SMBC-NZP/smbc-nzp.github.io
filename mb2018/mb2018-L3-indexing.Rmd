@@ -51,14 +51,6 @@ numericVector <- c(1, 1, 2, 3)
 
 ```
 
-<h1 style="text-align: center;">Introduction to data science in R, Lesson 2:<br/>Querying data</h1>
-<br>
-<!img style="float: left; margin: 0px 0px 15px 15px;" src="nzpLogo.jpg" width="150" />
-<p style = "text-align: center; font-size: 14px;">Brian S. Evans, Ph.D.<br />
-Migratory Bird Center<br />
-Smithsonian Conservation Biology Institute</p>
-<hr>
-
 ## Introduction
 
 <p>In this lesson we will be exploring how to query data using what is often called "indexing" or "matrix notation". We will learn a <b>much easier</b> way to query data by the end of this workshop. I start by teaching this method of querying because it is helpful in understanding how R objects work, gives a glimpse of what is happening under the hood when using other querying techniques, and still used for some advanced querying techniques.</p>
@@ -69,20 +61,72 @@ Smithsonian Conservation Biology Institute</p>
 <p>Recall that logical values can be obtained by evaluating objects with <b>logical operators</b>. For example, the logical operator `==` tests whether a value is equal to another value.</p>
 <br>
 
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use the logical operator `==` to test whether the each set of values is equivalent ($\equiv$).</p>
 
-```{r is equal to, eval = FALSE}
-# The "is equal to" logical operator:
+<p>$21 \equiv 34$</p>
 
-3 == 3
+```{r logic1, exercise = TRUE, exercise.lines = 3}
 
-3 == 4
-
-3 == 2 + 1
-
-3 == 3 + 1
-
-(3 == 3) + (3 == 2 + 1)
 ```
+
+```{r logic1-hint}
+21 == 34
+```
+
+<p>$21 \equiv 21$</p>
+
+```{r logic2, exercise = TRUE, exercise.lines = 3}
+
+```
+
+```{r logic2-solution}
+21 == 21
+```
+
+<p>$21 \equiv 34 - 13$</p>
+
+```{r logic3, exercise = TRUE, exercise.lines = 3}
+
+```
+
+```{r logic3-solution}
+21 == 34 - 13
+```
+
+<p>$34 \equiv 21 + 13$</p> 
+
+```{r logic4, exercise = TRUE, exercise.lines = 3}
+
+```
+
+```{r logic4-hint-1}
+34 == 21 + 13
+```
+
+<p>$21 \equiv 13 - 34$</p>
+
+```{r logic5, exercise = TRUE, exercise.lines = 3}
+
+```
+
+```{r logic5-solution}
+21 == 13 - 34
+```
+
+<p>$(21 \equiv 34) + (34 \equiv 21 + 13)$</p>
+
+```{r logic6, exercise = TRUE, exercise.lines = 3}
+
+```
+
+```{r logic6-solution}
+(31 == 34) + (34 == 21 + 13)
+```
+
+</div>
+
+
 <br>
 
 ## Using logic with objects

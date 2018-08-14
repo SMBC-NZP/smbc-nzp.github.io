@@ -49,14 +49,6 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <link rel="stylesheet" type="text/css" href="css/styles.css"> <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
 </head>
-<h1 style="text-align: center;">
-Introduction to data science in R, Lesson 2:<br/>Querying data
-</h1>
-<br> <!img style="float: left; margin: 0px 0px 15px 15px;" src="nzpLogo.jpg" width="150" />
-<p style="text-align: center; font-size: 14px;">
-Brian S. Evans, Ph.D.<br /> Migratory Bird Center<br /> Smithsonian Conservation Biology Institute
-</p>
-<hr>
 <div id="section-introduction" class="section level2">
 <h2>Introduction</h2>
 <p>
@@ -70,17 +62,41 @@ In this lesson we will be exploring how to query data using what is often called
 Recall that logical values can be obtained by evaluating objects with <b>logical operators</b>. For example, the logical operator <code>==</code> tests whether a value is equal to another value.
 </p>
 <p><br></p>
-<pre class="r"><code># The &quot;is equal to&quot; logical operator:
-
-3 == 3
-
-3 == 4
-
-3 == 2 + 1
-
-3 == 3 + 1
-
-(3 == 3) + (3 == 2 + 1)</code></pre>
+<div class="reviewDiv">
+<p>
+<i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use the logical operator <code>==</code> to test whether the each set of values is equivalent (<span class="math inline">\(\equiv\)</span>).
+</p>
+<p>
+<span class="math inline">\(21 \equiv 34\)</span>
+</p>
+<pre class="r"><code>21 == 34</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>
+<span class="math inline">\(21 \equiv 21\)</span>
+</p>
+<pre class="r"><code>21 == 21</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>
+<span class="math inline">\(21 \equiv 34 - 13\)</span>
+</p>
+<pre class="r"><code>21 == 34 - 13</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>
+<span class="math inline">\(34 \equiv 21 + 13\)</span>
+</p>
+<pre class="r"><code>34 == 21 + 13</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>
+<span class="math inline">\(21 \equiv 13 - 34\)</span>
+</p>
+<pre class="r"><code>21 == 13 - 34</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>
+<span class="math inline">\((21 \equiv 34) + (34 \equiv 21 + 13)\)</span>
+</p>
+<pre class="r"><code>(31 == 34) + (34 == 21 + 13)</code></pre>
+<pre><code>## [1] 1</code></pre>
+</div>
 <p><br></p>
 </div>
 <div id="section-using-logic-with-objects" class="section level2">
