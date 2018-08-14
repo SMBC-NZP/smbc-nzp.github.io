@@ -17,8 +17,12 @@ theme: yeti
 
 ```{r setup, include = FALSE}
 
-require(knitr)
-require(kableExtra)
+library(learnr)
+library(RCurl)
+library(lubridate)
+library(knitr)
+library(kableExtra)
+library(tidyverse)
 
 knitr::opts_chunk$set(echo = TRUE)
 
@@ -49,17 +53,30 @@ exampleFactorLabels <- factor(
 
 numericVector <- c(1, 1, 2, 3)
 
+v <- 
+  c(1, 1, 2, 3, 5, 8)
+
+df <-
+  data.frame(
+    hello = c(1, 1, 2),
+    world = c(3, 5, 8)
+  )
+
+m <- 
+  matrix(
+    c(1, 1, 2, 3, 5, 8), 
+    ncol = 2
+  )
+
 ```
 
 ## Introduction
 
-<p>In this lesson we will be exploring how to query data using what is often called "indexing" or "matrix notation". We will learn a <b>much easier</b> way to query data by the end of this workshop. I start by teaching this method of querying because it is helpful in understanding how R objects work, gives a glimpse of what is happening under the hood when using other querying techniques, and still used for some advanced querying techniques.</p>
-
-## Review: logical values
+<p>The process of querying data -- in other words subsetting or filtering data by some condition -- is one of the most important data operations we use when evaluating data collected in the field. In this lesson we will be exploring how to query data using what is often called "indexing" or "matrix notation". We will learn a <b>much easier</b> way to query data by the end of this course. I start by teaching this method of querying because it is helpful in understanding how R objects work, gives a glimpse of what is happening under the hood when using other querying techniques, and still used for some advanced querying techniques.</p>
 
 <br>
+<h4>Review: logical values</h4>
 <p>Recall that logical values can be obtained by evaluating objects with <b>logical operators</b>. For example, the logical operator `==` tests whether a value is equal to another value.</p>
-<br>
 
 <div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use the logical operator `==` to test whether the each set of values is equivalent ($\equiv$).</p>
@@ -70,7 +87,7 @@ numericVector <- c(1, 1, 2, 3)
 
 ```
 
-```{r logic1-hint}
+```{r logic1-solution}
 21 == 34
 ```
 
@@ -132,52 +149,96 @@ numericVector <- c(1, 1, 2, 3)
 ## Using logic with objects
 
 <br>
-<p>We can run a logic test on objects with more than one value. In the following examples, R tests whether each value in the objects below are equal to 3 and returns logical values in the dimensions of the object.</p>
-<br>
+<p>We can run a logic test on objects with more than one value. This is executed in the same way as evaluating a single value</p>
 
-```{r logic with objects, eval = FALSE}
-# Generate and evaluate whether values in vector v are equal to 3:
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use the logical operator `==` to examine which values in the objects below are equivalent ($\equiv$) to the number 3.</p>
+<ul>
+<li>An atomic vector object:</li>
+```{r logic_objects_vector, exercise = TRUE, exercise.lines = 10}
 
-v <- c(1,1,2,3,5,8)
+v <- 
+  c(1, 1, 2, 3, 5, 8)
+
+v
+```
+
+```{r logic_objects_vector-solution}
+v <- 
+  c(1, 1, 2, 3, 5, 8)
 
 v
 
 v == 3
+```
+<li>A matrix object:</li>
+```{r logic_objects_matrix, exercise = TRUE, exercise.lines = 10}
 
-# Generate and evaluate whether values in matrix m are equal to 3:
+m <- 
+  matrix(
+    c(1,1,2,3,5,8), 
+    ncol = 2
+  )
 
-m <- matrix(v, ncol = 2)
+m
+
+```
+
+```{r logic_objects_matrix-solution}
+m <- 
+  matrix(
+    c(1, 1, 2, 3, 5, 8), 
+    ncol = 2
+  )
 
 m
 
 m == 3
+```
 
-# Generate and evaluate whether values in data frame df are equal to 3:
+<li>A data frame object:</li>
+```{r logic_objects_dataframe, exercise = TRUE, exercise.lines = 10}
 
-df <- as.data.frame(m)
+df <-
+  data.frame(
+    a = c(1, 1, 2),
+    b = c(3, 5, 8)
+  )
+
+df
+
+```
+
+```{r logic_objects_dataframe-solution}
+df <-
+  data.frame(
+    a = c(1, 1, 2),
+    b = c(3, 5, 8)
+  )
 
 df
 
 df == 3
 ```
-<br>
+</ul>
+</div>
+
 
 ## The logical operators
 
-<h3>Comparing values</h3>
+<h4>Comparing values in objects</h4>
 
-<br>
 <p>The table below provides a set of the logical operators that are most commonly used to compare values. In each of the table items we are evaluating some object (or value) x relative to some object y.</p>
-<br>
 
 ```{r echo = FALSE}
 df <-
   data.frame(
-  `Operator` = c('==', '!=', '|', '&', '<', '<=', '%in%','>', '>='),
-  `Usage` = c('x == y', 'x != y', 'x | y', 'x & y','x %in% yz', 'x < y', 'x <= y', 'x > y', 'x >= y'),
+  `Operator` = c('==', '!=','!', '|', '&', '<', '<=', '%in%','>', '>='),
+  `Usage` = c('x == y', 'x != y', '!(x)','x | y', 'x & y','x %in% yz', 'x < y', 'x <= y', 'x > y', 'x >= y'),
   `Meaning` = c(
     'x is equal to y',
     'x is NOT equal to y',
+    'not x',
     'x OR y',
     'x AND y',
     'x is in the vector c(y,z)',
@@ -190,129 +251,232 @@ df <-
 kable(df, "html") %>%
   kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE, position = 'left', font_size = 14)
 ```
-
-<p>Each of the logical operators above can be applied in the same way that we have applied `==` thus far. Try out the code below, then conduct your own logical tests to explore their application further.</p>
 <br>
+<p>Each of the logical operators above can be applied in the same way that we have applied `==` thus far.</p>
 
-```{r explore logical operators with v, eval = FALSE}
-
-# Explore logical operators with vector v:
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Using vector `v`, as above, use logical operators to test the following statements:</p>
+<ul>
+<li>`v` is not equal to 3</li>
+```{r logic_operators1, exercise = TRUE, exercise.lines = 3}
 
 v
 
-v != 3
+```
 
-!(v == 3)
+```{r logic_operators1-solution}
+v
+
+v != 3
+```
+
+<li>`v` is less than 3</li>
+
+```{r logic_operators2, exercise = TRUE, exercise.lines = 3}
+
+v
+
+```
+
+```{r logic_operators2-solution}
+v
 
 v < 3
+```
+
+
+<li>`v` is less than or equal to 3</li>
+
+```{r logic_operators3, exercise = TRUE, exercise.lines = 3}
+
+v
+
+```
+
+```{r logic_operators3-solution}
+v
 
 v <= 3
+```
+
+<li>`v` is greater than 3</li>
+
+```{r logic_operators4, exercise = TRUE, exercise.lines = 3}
+
+v
+
+```
+
+```{r logic_operators4-solution}
+v
 
 v > 3
+```
+
+<li>`v` is greater than or equal to 3</li>
+
+```{r logic_operators5, exercise = TRUE, exercise.lines = 3}
+
+v
+
+```
+
+```{r logic_operators5-solution}
+v
 
 v >= 3
+```
+
+<li>`v` is equal to 2 <b>or</b> `v` is equal to 3</li>
+
+```{r logic_operators6, exercise = TRUE, exercise.lines = 3}
+
+v
 
 ```
 
+```{r logic_operators6-solution}
+v
+
+v == 2 | v == 3
+```
+
+<li>`v` is equal to 2 <b>and</b> `v` is equal to 3</li>
+
+```{r logic_operators7, exercise = TRUE, exercise.lines = 3}
+
+v
+
+```
+
+```{r logic_operators7-solution}
+v
+
+v == 2 & v == 3
+```
+</ul>
+
+<p>Explore logical operators as above using matrix `m`:</p>
+
+```{r logic_operators_m, exercise = TRUE, exercise.lines = 5}
+
+m
+
+```
+
+
+<p>Explore logical operators as above using data frame `df`:</p>
+
+```{r logic_operators_df, exercise = TRUE, exercise.lines = 5}
+
+df
+
+```
+</div>
+
 <br>
 
-<p>Repeat the above with your matrix, `m`, and data frame, `df`.</p>
-<br>
+<h4>Comparing sets of values</h4>
 
-<h3>Comparing sets</h3>
+<p>We are often interested in comparing sets of values with one another. Using the code above, we may be interested in testing whether values `1` and `3` appear in vector `v`. We can use the or statement, as above, with the syntax `v == 1 | v == 3`. This can quickly get cumbersome if we are comparing long value sets. We can test To do so, we use the operator `%in%`, which tests the logic statement "is in".</p>
 
-<br>
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Test which values of `v` are in the vector `c(1,3)`:</p>
 
-<p>We are often interested in comparing sets of values with one another. Using the code above, we may be interested in testing whether values `1` and `3` appear in vector `v`. To do so, we use the operator `%in%`, which tests the logic statement "is in".</p>
-<br>
+```{r logic_operators_in, exercise = TRUE, exercise.lines = 3}
 
-```{r using in, eval = FALSE}
-# Test whether values in v match values 1 or 3:
+v
 
+```
+
+```{r logic_operators_in-hint-1}
+v %in% c(...)
+```
+
+```{r logic_operators_in-hint-2}
 v %in% c(1,3)
-
 ```
+</div>
 <br>
 
-<p>The NOT statement, `!x`, wasn't very useful before. In combination with `%in%`, it becomes a powerful tool to examine sets.</p>
+<p>The NOT statement, `!(x)` has limited utility for simple statements. For example, the statement `!(x == 1)` is written more simply as `x != 1`. Likewise, `!(x < 1)` may be written as `x >= 1`. In more complex logical operations, such as when it used in combination with `%in%`, it becomes a powerful tool to examine sets.</p>
 
-```{r using in and not, eval = FALSE}
-# Test whether values in v match values 1 or 3:
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Test which values of `v` are NOT in the vector `c(1,3)`:</p>
 
+```{r logic_operators_notIn, exercise = TRUE, exercise.lines = 3}
+
+v
+
+```
+
+```{r logic_operators_notIn-hint-1}
+!(...)
+```
+
+```{r logic_operators_notIn-hint-2}
+!(v %in% ...)
+```
+
+```{r logic_operators_notIn-hint-3}
+!(v %in% c(...))
+```
+
+```{r logic_operators_notIn-hint-4}
 !(v %in% c(1,3))
+```
+</div>
+<br>
+
+<p>You can also compare sets with <i>and/or</i> statements, represented in R by `&` and `|`. As described above, the statement `v == 1 | v ==3` is equivalent to `v %in% c(1,3)`. The "and" statement (`&`) is not very useful for logical problems such as these, because no value can be both 1 and 3 at the same time. The `&` operator becomes very useful when querying across multiple conditions.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Test whether values of `v` are less than 5 and not equal to 2:</p>
+
+```{r logic_operators_and, exercise = TRUE, exercise.lines = 3}
+
+v
 
 ```
 
-<br>
-<p>You can also compare sets with <i>and/or</i> statements, represented in R by `&` and `|`.</p>
-<br>
-
-```{r using and or, eval = FALSE}
-# Test whether values in v match values 1 OR 3:
-
-v == 1 | v ==3
-
-# Test whether values in v match values 1 AND 3:
-
-v == 1 & v == 3
-
+```{r logic_operators_and-hint-1}
+v < 5 ...
 ```
 
-<br>
-<p>The first statement above, OR, is equivalent to our previous `v %in% c(1,3)`. The latter, AND, is not very useful in this case, because none of the values can be both 1 and 3 at the same time.</p>
-<br>
+```{r logic_operators_and-hint-2}
+v < 5 & ...
+```
 
-<p>The AND operator becomes very useful when querying across multiple conditions. For example, if we wanted to test whether a value was less than 5 and not equal to 2, we would write this out as:</p>
-<br>
-
-```{r better use of and, eval = FALSE}
-# Test whether values in v are less than 5 and not equal to 2:
-
+```{r logic_operators_and-hint-3}
 v < 5 & v != 2
+```
+</div>
+
+
+<br>
+
+## Querying vectors
+
+<p>Recall that the position of value `x` in vector `v` would be notated as `v[x]`. This notation, indexing, instructs R to evaluate and return the statement "vector `v` where position v<sub>x</sub> is equal to 3". R returns all of the values from vector `v` for which this statement was `TRUE`. In other words, you conducted a query of vector `v` by <b>position</b>.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset vector `v` to its first and second values by position</p>
+
+```{r indexPosition1, exercise = TRUE, exercise.lines = 3}
+
+v
 
 ```
 
-<br>
-<p>Logic can get pretty hairy fairly quickly with AND/OR statements. It's good to have a sense of how to tackle more complex statements using these operators. Have a look at the code below and be sure you understand how it is evaluated.</p>
-</br>
-
-```{r complex and or, eval = FALSE}
-# Test whether values in v are less than 5 and not equal to 2 OR equal to eight:
-
-v < 5 & v != 2 | v == 8
-
+```{r indexPosition1-solution}
+v[1:2]
 ```
-<br>
-
-## Indexing and logic
-
-<h3>Querying vectors</h3>
+</div>
 
 <br>
-<p>Recall that the position of value `x` in vector `v` would be notated as `v[x]` and that we can use this information to index vector `v` as follows:</p>
-<br>
+<p>You may also query values by <b>condition</b>, using logic, in the same manner as above. For example, you may want R to evaluate the statement "vector `v` where value v<sub>x</sub> is greater than two".</p>
 
-```{r vector index review, eval = FALSE}
-# Use indexing to subset a vector:
-
-v[3]
-
-v[3:4]
-
-v[c(1,3)]
-
-```
-
-<br>
-<p>In indexing the vector with `v[3]` above, you essentially instructed R to evaluate and return the statement "vector `v` where position v<sub>x</sub> is equal to 3". R returned all of the values from vector `v` for which this statement was `TRUE`. In other words, you conducted a query of vector `v` by <b>position</b>.</p>
-<br>
-
-<p>You may also query values by <b>condition</b>, using logic, in the same manner as above. For example, you may want R to evaluate the statement "vector `v` where value v<sub>x</sub> is greater than two":</p>
-<br>
-
-```{r logic query vector, eval = FALSE}
-# Use logic to subset a vector:
-
+```{r logic_query_vector, exercise = TRUE, exercise.lines = 6}
 v
 
 v > 2
@@ -324,108 +488,215 @@ v[v > 2]
 
 <br>
 <p>Notice in the above that the line `v > 2` returned logical values of `v` associated with that test. The next line of code, `v[v > 2]` returned values from `v` that met this condition.</p>
-<br>
 
-<p>Why does this work? Let's take a quick look under the hood. The function `which` provides the index location of a logical statement. Using the `v > 2` query above, we can see that:</p>
-<br>
+<p>Why does this work? Let's take a quick look under the hood. The function `which` provides the index location (i.e.,position) in which a logical statement evaluates as true. Using the `v > 2` query above, we can see that:</p>
 
-```{r logic query with which, eval = FALSE}
-# At which indices does our logical statement evaluate to TRUE?
-
+```{r logic_query_vector_which, exercise = TRUE, exercise.lines = 10}
 v
 
 v > 2
 
 which(v > 2)
 
-v[4:6]
-
 v[v > 2]
 ```
 <br>
-<p>All of the various logical statements can be applied in the same manner. Please take a moment to query vector `v` based on the following conditions:</p>
+
+<p>All of the various logical statements can be applied in the same manner.</p> 
+
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use indexing to query vector `v` based on the following conditions:</p>
 <ul>
 <li>Values greater than or equal to 3</li>
+```{r index1, exercise = TRUE, exercise.lines = 3}
+v
+```
+
+```{r index1-hint-1}
+v[...]
+```
+
+```{r index1-hint-2}
+v[v ...]
+```
+
+```{r index1-hint-3}
+v[v >= 3]
+```
+
 <li>Values that do not equal 2</li>
+```{r index2, exercise = TRUE, exercise.lines = 3}
+v
+```
+
+```{r index2-hint-1}
+v[...]
+```
+
+```{r index2-hint-2}
+v[v ...]
+```
+
+```{r index2-hint-3}
+v[v != 2]
+```
+
+
 <li>Values that equal 2</li>
+```{r index3, exercise = TRUE, exercise.lines = 3}
+v
+```
+
+```{r index3-hint-1}
+v[...]
+```
+
+```{r index3-hint-2}
+v[v ...]
+```
+
+```{r index3-hint-3}
+v[v == 2]
+```
+
 <li>Values that are greater than or equal to 3 but do not equal 5</li>
+```{r index4, exercise = TRUE, exercise.lines = 3}
+v
+```
+
+```{r index4-hint-1}
+v[...]
+```
+
+```{r index4-hint-2}
+v[v ...]
+```
+
+```{r index4-hint-3}
+v[v > 3 ...]
+```
+
+```{r index4-hint-4}
+v[v > 3 & ...]
+```
+
+```{r index4-hint-5}
+v[v > 3 & v != 5]
+```
+
 <li>Values that are 3 or 5</li>
+```{r index5, exercise = TRUE, exercise.lines = 3}
+v
+```
+
+```{r index5-hint-1}
+v[...]
+```
+
+```{r index5-hint-2}
+v[v ...]
+```
+
+```{r index5-hint-3}
+# Using or:
+
+v[v == 3|...]
+
+# Using in:
+
+v[v %in% ...]
+```
+
+```{r index5-hint-4}
+# Using or:
+
+v[v == 3|v == 5]
+
+# Using in:
+
+v[v %in% c(3, 5)]
+```
 </ul>
+</div>
 <br>
 
-<h3>Querying matrices</h3>
 
-<br>
-<p>Recall that the position of value `x,y` (row, column) in a matrix, `m`, can be notated as `m[x,y]`. We can use this information to index matrix `m` as follows:</p>
-<br>
+## Querying matrices
 
-```{r matrix index, eval = FALSE}
-# Index by matrix m by row (x) and column (y) position [x,y]:
+<h4>Review: Index matrices by position</h4>
+<p>Recall that the position of value `x,y` (row, column) in a matrix, `m`, can be notated as `m[x,y]`. Supplying a value or set values for `x`and/or `y` allows us to index matrix `m` by position. For example, the notation `m[1,2]` returns the value of matrix `m` in the first row of the second column.</p>
 
+<p>If the `x` or `y` position is left blank, all values for that dimension are returned. For example, the notation `m[,]` would return all the rows and columns of matrix `m`. The notation `m[,y]` would return all values in column `y` of matrix `m`. Likewise, the notation `m[x,]` returns all values in row `x` of matrix `m`</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use indexing by position to subset matrix `m` as described below:</p>
+<ul>
+<li>The value in the first row and first column</li>
+```{r matrix_pIndex1, exercise = TRUE, exercise.lines = 3}
+m
+```
+
+```{r matrix_pIndex1-solution}
 m[1,1]
-
-m[2,2]
-
-m[2, ]
-
-m[ ,2]
-
-m[1:2,2]
-
 ```
 
+<li>All values in the first row</li>
 
-<br>
-<p>Working with what is often called "matrix notation" to query objects can be a bit tricky to wrap your head around at first. Let's start by evaluating `m[,]`, which returns all of the rows and columns of matrix `m`:</p>
-<br>
-
-```{r mAll, eval = FALSE}
-# All rows and columns of m:
-
-m[,]
-
+```{r matrix_pIndex2, exercise = TRUE, exercise.lines = 3}
+m
 ```
 
-<br>
-<p>The statement `m[,1]` subsets m to all of the rows of the first column. As above, we are evaluating "matrix `m` where position m<sub>y</sub> is equal to 1". </p>
-<br>
+```{r matrix_pIndex2-solution}
+m[1,]
+```
 
-```{r mSubsetColumn, eval = FALSE}
-# A vector of values associated with the first column of matrix m:
+<li>All values in the second column</li>
+
+```{r matrix_pIndex3, exercise = TRUE, exercise.lines = 3}
+m
+```
+
+```{r matrix_pIndex3-solution}
+m[,2]
+```
+
+<li>The first and third values of the second column</li>
+
+```{r matrix_pIndex4, exercise = TRUE, exercise.lines = 3}
+m
+```
+
+```{r matrix_pIndex4-solution}
+m[c(1, 3),2]
+```
+</ul>
+</div>
+
+<br>
+<h4>Indexing with logic</h4>
+
+<p>In the above, note that the object `m[,1]` is a vector. As such, we can query this vector by position using logic. Note the output of the below code, which tests `m[,1]` to determine whether each value is greater than 1:</p>
+```{r matrix_justLogic, exercise = TRUE, exercise.lines = 5}
+m
 
 m[,1]
 
-```
-
-<br>
-<p>We can evaluate vector `m[,1]` using logic. For example, let's test `m[,1]` to determine whether each value is greater than 1:</p>
-<br>
-
-```{r m just logic, eval = FALSE}
-# Logical test of whether the first column of m is greater than 1:
-
 m[,1] > 1
-
 ```
+
 
 <br>
 <p>We see that this statement only evaluates as TRUE at one position in the vector. Let's use `which`, as above, to determine the index associated with this position:</p>
-<br>
 
-```{r m logic with which, eval = FALSE}
-# At which indices does our logical statement evaluate to TRUE?
-
+```{r matrix_justLogic_which, exercise = TRUE, exercise.lines = 5}
 which(m[,1] > 1)
-
 ```
 
 <br>
 <p>Because our `which` statement evaluates to 3, the following queries are equivalent:</p>
-<br>
 
-```{r m query with which, eval = FALSE}
-# Query m by index and logical statement:
-
+```{r matrix_justLogic_whichQuery, exercise = TRUE, exercise.lines = 5}
 m[3, ]
 
 m[m[,1] > 1, ]
@@ -433,496 +704,169 @@ m[m[,1] > 1, ]
 ```
 
 <br>
-<p>Querying using "matrix notation" tends to be hard to read because of the ways that columns have to be specified. For example a query of column two, in which the first column is less than two and the second column is less than 5 would be written as:</p>
-<br>
-
-```{r m query complicated, eval = FALSE}
-# Querying matrix by column 1 less than 2 and column 2 less than 5
-
-which(m[,1] < 2 &  m[,2] < 5)
-
-m[m[,1] < 2 &  m[,2] < 5 , ]
-
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset matrix `m` as described below:</p>
+<ul>
+<li>All values in which the values of column 1 are equal to 1</li>
+```{r matrix_query1, exercise = TRUE, exercise.lines = 3}
+m
 ```
 
+```{r matrix_query1-solution}
+m[m[,1] == 1,]
+```
+
+<li>All values in which the values in column 2 are equal to 3 or 8</li>
+
+```{r matrix_query2, exercise = TRUE, exercise.lines = 3}
+m
+```
+
+```{r matrix_query2-solution}
+m[m[,2] %in% c(3, 8),]
+```
+
+<li>All values in which the values in column 2 are greater than 3</li>
+
+```{r matrix_query3, exercise = TRUE, exercise.lines = 3}
+m
+```
+
+```{r matrix_query3-solution}
+m[m[,2] > 3,]
+```
+
+<li>All values in which the values in column 1 are less than 2</li>
+
+```{r matrix_query4, exercise = TRUE, exercise.lines = 3}
+m
+```
+
+```{r matrix_query4-solution}
+m[m[,1] < 3,]
+```
+</ul>
+</div>
 <br>
 
-<h3>Querying data frames</h3>
+## Querying data frames
 
-<br>
-<p>Recall that the position of value `x,y` (row, column) in a data frame, `df`, can be notated as `df[x,y]`. We can use this information to index data frame `df` as follows:</p>
-<br>
+<h4>Review: Index data frames by position</h4>
 
-```{r data frame index, eval = FALSE}
-# Index by matrix m by row (x) and column (y) position [x,y]:
+<p>Just like matrices, the position of value `x,y` (row, column) in a data frame, `df`, can be notated as `df[x,y]`.</p>
 
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use indexing by position to subset matrix `m` as described below:</p>
+<ul>
+<li>The value in the first row and first column</li>
+```{r df_pIndex1, exercise = TRUE, exercise.lines = 3}
+df
+```
+
+```{r df_pIndex1-solution}
 df[1,1]
-
-df[2,2]
-
-df[2, ]
-
-df[ ,2]
-
-df[1:2,2]
-
 ```
 
-<br>
-<p>As you might expect, querying data frames using "matrix notation" is exactly the same as querying matrices. Recall, however, that data frames has a "names" slot built in:</p>
-<br>
+<li>The value in the second row and second column</li>
 
-```{r data frame attributes, eval = FALSE}
+```{r df_pIndex2, exercise = TRUE, exercise.lines = 3}
+df
+```
+
+```{r df_pIndex2-solution}
+df[2,2]
+```
+
+<li>All values in the second row</li>
+
+```{r df_pIndex3, exercise = TRUE, exercise.lines = 3}
+df
+```
+
+```{r df_pIndex3-solution}
+df[2,]
+```
+
+<li>All values in the second column</li>
+
+```{r df_pIndex4, exercise = TRUE, exercise.lines = 3}
+df
+```
+
+```{r df_pIndex4-solution}
+df[,2]
+```
+
+<li>The first and third values in the second column</li>
+
+```{r df_pIndex5, exercise = TRUE, exercise.lines = 3}
+df
+```
+
+```{r df_pIndex5-solution}
+df[c(1, 3),2]
+```
+</ul>
+</div>
+
+<br>
+<p>An important difference between querying matrices and dataframes is that data frames have a "names" attribute by default:</p>
+```{r df_attributes, exercise = TRUE, exercise.lines = 3}
 # Attributes of object df:
 
 attributes(df)
 ```
 
 <br>
-<p>These names can be set and reset as needed:</p>
+<p>Recall that the component vectors in a data frame (i.e., columns -- in this case `c(1,1,2)`) can be accessed by name using the `$` notation:</p>
 <br>
 
-```{r data frame reset names, eval = FALSE}
-
-# Reset names of object df:
-
-names(df) <- c('hello', 'world')
-
-df
-
-attributes(df)
-```
-
-
-<br>
-<p>Recall that the component vectors in a data frame (i.e., columns -- in this case `c(1,1,2)` and `c(3,5,8)`) can be accessed by name using the `$` notation:</p>
-<br>
-
-```{r data frame extract by name, eval = FALSE}
+```{r df_dollarSign, exercise = TRUE, exercise.lines = 3}
 
 # Data frame indexing by position ...
 
 df[,1]
 
-df[,2]
-
 # ... is equivalent to:
 
 df$hello
-
-df$world
-
 ```
 
 <br>
-<p>The above is very useful for querying data frames, because the `$` notation is much easier to read than "matrix notation". For example:</p>
-<br>
+<p>The above is very useful for querying data frames, because the `$` notation is much easier to read than "matrix notation".</p>
 
-```{r data frame query by position and name, eval = FALSE}
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Convert the following expressions to `$` notation:</p>
+For example:</p>
 
-# Querying data frames using "matrix notation" ...
-
+```{r convert_dollarSign1, exercise = TRUE, exercise.lines = 3}
 df[,1] > 1
+```
 
-which(df[,1] > 1)
-
-df[df[,1] > 1,]
-
-# ... is equivalent to using column names:
-
+```{r convert_dollarSign1-solution}
 df$hello > 1
+```
 
+```{r convert_dollarSign2, exercise = TRUE, exercise.lines = 3}
+which(df[,1] > 1)
+```
+
+```{r convert_dollarSign2-solution}
 which(df$hello > 1)
+```
 
+```{r convert_dollarSign3, exercise = TRUE, exercise.lines = 3}
+df[df[,1] > 1,]
+```
+
+```{r convert_dollarSign3-solution}
 df[df$hello > 1,]
-
 ```
-
-<br>
-<p>In the matrix section, we queried matrix `m` such that values of column one are less than 2 and values of column two are less than 5. Repeat this query on data frame `df` using "matrix notation" and the column names of `df`.</p>
-<br>
-
-## Working with strings
-<br>
-<br>
-<p>Strings are notoriously difficult to work with when cleaning data. Luckily the tidyverse libraries contain the package "stringr" that simplifies the process of working with strings. We won't dive too deeply into the string realm here, but it is important to have some idea of how they work.</p>
-<br>
-
-<br>
-<p>We'll start by loading the tidyverse and an example dataset, "fruit".</p>
-<br>
-
-```{r load fruits, eval = FALSE} 
-library(tidyverse)
-
-fruit
-
-```
-
-<br>
-<p>Note that `fruit` is simply a vector of fruit names. Strings can be indexed like any other value:</p>
-<br>
-
-```{r index fruits, eval = FALSE} 
-
-# Query the first five fruits by index:
-
-fruit[1:5]
-
-```
-
-<br>
-<p>Strings have many different characteristics that can be used for querying. We've already explored the simplest of them, `is equal to`. Let's see how this works:
-
-```{r fruit by full name, eval = FALSE} 
-
-# Let's look at our vector of fruit again:
-
-fruit
-
-# If there are duplicate entries (there are not), you can use "unique":
-
-unique(fruit)
-
-# There is just one apple!
-
-fruit == 'apple'
-
-# Which position in the fruit vector is apple?
-
-which(fruit == 'apple')
-
-# Subsetting to fruits named "apple" by position ...
-
-fruit[1]
-
-# ... is equivalent to:
-
-fruit[which(fruit == 'apple')]
-
-# ... and is also equivalent to subsetting by condition:
-
-fruit[fruit == 'apple']
-```
-
-<br>
-<p>You can use the function `str_sub` to extract characters from strings by their position within the string. It takes as arguments the string being evaluated, the start point of the string, and the end point. Let's take a moment to explore how this function works:</p>
-<br>
-
-```{r hello world str_sub, eval = FALSE}
-# Using str_sub, generate an example phrase: 
-
-examplePhrase <- 'hello world'
-
-examplePhrase
-
-# Subset to just "hello":
-
-str_sub(examplePhrase, start = 1, end = 5)
-
-# Subset to just "world":
-
-str_sub(examplePhrase, start = 7, end = 12)
-
-# You actually don't have to specify the end point here:
-
-str_sub(examplePhrase, start = 7)
-
-# You can also count from the end:
-
-str_sub(examplePhrase, start = -5)
-
-```
-
-<br>
-<p>The function `str_sub` can be used to query a vector of strings. For example, perhaps we wanted to query fruits, subsetting to those that start with the letter "a":</p>
-<br>
-
-```{r fruit by str_sub, eval = FALSE} 
-
-# str_sub can be used to extract the first letter of each value:
-
-fruit
-
-str_sub(fruit, start = 1, end = 1)
-
-# Which fruits start with the letter "a"?
-
-str_sub(fruit, start = 1, end = 1) == 'a'
-
-which(str_sub(fruit, start = 1, end = 1) == 'a')
-
-# Subsetting to fruits with 7 characters by index ...
-
-fruit[1:3]
-
-# ... is equivalent to ...
-
-fruit[which(str_sub(fruit, start = 1, end = 1) == 'a')]
-
-# ... and is also equivalent to subsetting by condition:
-
-fruit[str_sub(fruit, start = 1, end = 1) == 'a']
-```
-
-<br>
-<p>We can also query by the number of characters (i.e., symbols, numbers, or letters) in the string. For example, perhaps we're not interested in "apple" but rather any fruit that has five letters:</p>
-<br>
-
-```{r fruit by str_count, eval = FALSE} 
-
-# str_count can be used to determine the number of letters or symbols in a string:
-
-fruit
-
-str_count(fruit)
-
-# Which fruits have exactly 5 letters?
-
-str_count(fruit) == 5
-
-which(str_count(fruit) == 5)
-
-# Subsetting to fruits with 5 characters by index ...
-
-fruit[c(1,34,36,44,49,53,58)]
-
-# ... is equivalent to ...
-
-fruit[which(str_count(fruit) == 5)]
-
-# ... and is also equivalent to subsetting by condition:
-
-fruit[str_count(fruit) == 5]
-```
-
-<br>
-<p>Probably the most useful function for querying strings is `str_detect`. This function is a logical test of whether a provided pattern is present in a target value. For example, we might explore the example phrase "hello world" as such:</p>
-<br>
-
-```{r hello world str_detect, eval = FALSE} 
-# Detecting a pattern within a string:
-
-examplePhrase
-
-str_detect(examplePhrase, pattern = 'hello')
-
-str_detect(examplePhrase, pattern = 'ello')
-
-str_detect(examplePhrase, pattern = 'lo wo')
-
-str_detect(examplePhrase, pattern = 'world')
-
-str_detect(examplePhrase, pattern = "foo")
-
-str_detect(examplePhrase, pattern = 'helloworld')
-
-```
-
-<br>
-<p> Let's use `str_detect` to subset the `fruit` vector to only fruits that contain the word "apple":</p>
-<br>
-
-```{r fruit by str_detect, eval = FALSE} 
-
-# str_detect can be used to test whether a pattern is present in a string:
-
-fruit
-
-# Which fruits contain the pattern "apple"?
-
-str_detect(fruit, 'apple')
-
-which(str_detect(fruit, 'apple'))
-
-# Subsetting to fruits with the pattern "apple" by index ...
-
-fruit[c(1,62)]
-
-# ... is equivalent to ...
-
-fruit[which(str_detect(fruit, 'apple'))]
-
-# ... and is also equivalent to subsetting by condition:
-
-fruit[str_detect(fruit, 'apple')]
-```
-
-<br>
-
-## Summarizing and queries
-
-<br>
-<p>Querying with indexing and logic can be a great way to summarize your data. Let's generate a fake data frame and explore the `min` (minimum value in a set) and `max` (maximum value in a set) summary functions:</p>
-<br>
-
-```{r dummy data minMax, eval = FALSE}
-
-# Make a dummy data frame:
-
-dummyData <-  data.frame(
-  gen = c('a', 'b', 'a', 'a', 'b'),
-  n = c(3,5,8,13, 21)
-  )
-
-dummyData
-
-# Basic summary statistics of the dummy data frame:
-
-summary(dummyData)
-
-min(dummyData$n)
-
-max(dummyData$n)
-
-```
-
-<br>
-<p>We often want to see summary values associated with treatment levels. Let's explore querying `dummyData` by maximum and minimum values:</p>
-<br>
-
-```{r dummy data minMax subset, eval = FALSE}
-
-# Subset to maximum and minimum values, returning separate results:
-
-dummyData[dummyData$n == min(dummyData$n),]
-
-dummyData[dummyData$n == max(dummyData$n),]
-
-# Subset to maximum and minimum n values, returning both results in one frame:
-
-dummyData[dummyData$n == min(dummyData$n)|
-            dummyData$n == max(dummyData$n),]
-
-```
-
-<br>
-<p>When querying, remember that we can subset by both position and condition. For example, perhaps we were asked to provide the minimum value of n for treatment level "a". We might address this as:</p>
-<br>
-
-```{r dummy data minMax subset extract, eval = FALSE}
-
-# Subset to group "a":
-
-dummyData[dummyData$gen == 'a',]
-
-# As a data frame, we can pull out the second column using indexing ...
-
-dummyData[dummyData$gen == 'a',2]
-
-# ... or by name (my preference):
-
-dummyData[dummyData$gen == 'a',]$n
-
-
-# We can then calculate the minimum value in group "a" as:
-
-min(dummyData[dummyData$gen == 'a',]$n)
-
-```
-
-<br>
-
-## Practice with real data
-
-<br>
-
-<br>
-<p>We will practice on an example data frame built in to the tidyverse package. The data provided are the size of the human population, by country, from 1995 to 2013 (source: World Health Organization's Tuberculosis Report, see http://www.who.int/tb/country/data/download/en/). Let's first load and explore the data:</p>
-<br>
-
-```{r tb data load, eval = FALSE}
-
-# Load WHO's TB dataset:
-
-population
-```
-
-<br>
-<p>Notice that this is a tibble data frame. Loading the data as a tibble was very helpful, because only the first 10 records (rows), out of a total of 4,060 total records, are displayed.</p>
-<br>
-
-<br>
-<p>Let's explore the population of the United States. We'll start by subsetting the data to records where the "country" value is the "United States".</p>
-<br>
-```{r us population data fail, eval = FALSE}
-
-# Subset population data to the United States:
-
-population[population$country == 'United States', ]
-
-```
-<br>
-<p>We've done something wrong! There were 0 rows associated with the United States! Perhaps US data are missing or something else is wrong. Let's use our `str_detect` function to query countries that contain the name "United" and adjust the statement above:</p>
-<br>
-
-```{r us population United query, eval = FALSE}
-
-# What are the country names?
-
-population$country
-
-# That is a very messy result, how about just a vector of unique names?
-
-unique(population$country)
-
-# Which of these countries contain the pattern "United"?
-
-str_detect(unique(population$country), 'United')
-
-unique(population$country)[str_detect(unique(population$country), 'United')]
-
-# They call the United States "United States of America", so the query could be written as:
-
-population[population$country == 'United States of America',]
-
-```
-
-<br>
-<p>You can use the above query techniques to extract meaningful data from this dataset. For example, perhaps you are interested in what the population of the United States was in 2004. Query the data to the year 2004 and return the population size, as below:</p>
-<br>
-
-```{r us population 2004, eval = FALSE}
-
-# To determine the size of a population in 2004:
-
-population[population$year == 2004,]
-
-# Therefore, the data frame reduced to the population of the United States in 2004:
-
-population[population$country == 'United States of America' &
-             population$year == 2004,]
-
-# To return just the population information:
-
-population[population$country == 'United States of America' & 
-             population$year == 2004,]$population
-
-```
-
-<br>
-<p>As another example, you have been asked which years the population of the United States was greater than 300 million. To determine this, subset the population data to only years in which the population was greater than 300,000,000 and return the years vector, as below:</p>
-<br>
-
-```{r us population greater than 300M, eval = FALSE}
-
-# Subset the population data frame to records with a population of greater than 300 million:
-
-population[population$population > 300000000,]
-
-# Repeat the above, but subset the records to the United States:
-
-# Therefore, the data frame reduced to the population of the United States in 2004:
-
-population[population$country == 'United States of America' &
-             population$population > 300000000,]
-
-# To return just the years:
-
-population[population$country == 'United States of America' &
-             population$population > 300000000, ]$year
-
-
-```
-
+</div>
 <hr>
+
+<hr style="border-width: 10px;">
+<img style="float: right; margin: 0px 0px 15px 15px" src="images/nzpLogoSideways2.png" width="50%" />
+
+
+<b>End of lesson!</b>
