@@ -33,7 +33,7 @@ output: html_document
 </li>
 <li><b><a href = "https://smbc.shinyapps.io/mb2018-L1-rValues" target="_blank">Lesson 1: Values</a></b>. Learn the primary classes of values you will use in this course</li>
 <li><b><a href = "https://smbc.shinyapps.io/mb2018-L2-rObjects" target="_blank">Lesson 2: Objects</a></b>. Learn the primary types of objects that are used to store values</li>
-<li><b><a href = "https://smbc-nzp.github.io/mb2018/mb2018-L3-indexing.html" target="_blank">Lesson 3: Indexing</a></b>. Learn how to query objects using indexing in base R</li>
+<li><b><a href = "https://smbc.shinyapps.io/mb2018-L3-indexing" target="_blank">Lesson 3: Indexing</a></b>. Learn how to query objects using indexing in base R</li>
 <li><b><a href = "https://smbc-nzp.github.io/mb2018/mb2018-L4-functions.html" target="_blank">Lesson 4: Functions</a></b>. Learn how to write custom functions</li>
 <li><b><a href = "https://smbc-nzp.github.io/mb2018/mb2018-L5-forLoops.html" target="_blank">Lesson 5: For loops</a></b>. Learn how to write simple for loops</li>
 </ul>
