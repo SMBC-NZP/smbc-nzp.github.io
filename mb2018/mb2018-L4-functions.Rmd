@@ -203,6 +203,17 @@ birdCounts <- tbl_df(
   read.csv(text = countsURL, stringsAsFactors = FALSE)
   )
 
+
+# Clean up iris for analysis:
+
+irisTbl <- tbl_df(iris)
+
+names(irisTbl) <-
+  c('sepalLength',
+    'sepalWidth',
+    'petalLength',
+    'petalWidth',
+    'species')
 ```
 
 <br>
