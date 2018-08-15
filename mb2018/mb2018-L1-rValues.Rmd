@@ -65,6 +65,8 @@ exampleFactor <-
 
 <p>To print the R object in your Console panel, you can simply type the name of the object. For example, we can view the values of the object named "bunnies" by typing `bunnies` in the R console.</p>
 
+<p><i>Please note: Throughout the documents of this introduction, code input may be run by clicking the "Run Code" button or the keyboard shortcut CTRL+Enter. All lines of code will be run simultaneously. If the code block includes an object assignment (`<-`) there may be no output. Typing the name you assigned to the object in the code block will print the object's values. Check your answer, when applicable, by cycling through the "Hints" button.</i></p>
+
 <div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Please complete the following steps to generate an R object and store that object in your system's memory:</p>
 <ul>
