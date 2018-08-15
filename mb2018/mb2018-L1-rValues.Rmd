@@ -411,7 +411,7 @@ typeof(
 </div>
 
 <br>
-<p>Similarly, we can the function `as.numeric()` to convert a value to a double numeric value.</p>
+<p>Similarly, we can use the function `as.numeric()` to convert a value to a double numeric value.</p>
 
 <div class = "reviewDiv">
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use a nested coding structure and `as.numeric()` to convert a set of integers to double numeric values.</p>
@@ -483,7 +483,7 @@ typeof(
 
 
 ```{r charMake, exercise = TRUE, exercise.lines = 5}
-# Create an object representing the months, March, February, January, and Januray:
+# Create an object representing the months, March, February, January, and January:
 
 
 ```
@@ -930,16 +930,14 @@ FALSE + TRUE + TRUE
 <br>
 
 ```{r echo = FALSE}
-require(knitr)
-require(kableExtra)
-
 df <-
   data.frame(
-  `Operator` = c('==', '!=', '|', '&', '<', '<=', '%in%','>', '>='),
-  `Usage` = c('x == y', 'x != y', 'x | y', 'x & y','x %in% yz', 'x < y', 'x <= y', 'x > y', 'x >= y'),
+  `Operator` = c('==', '!=','!', '|', '&','%in%', '<', '<=', '>', '>='),
+  `Usage` = c('x == y', 'x != y', '!(x)','x | y', 'x & y','x %in% yz', 'x < y', 'x <= y', 'x > y', 'x >= y'),
   `Meaning` = c(
     'x is equal to y',
     'x is NOT equal to y',
+    'not x',
     'x OR y',
     'x AND y',
     'x is in the vector c(y,z)',
@@ -950,13 +948,13 @@ df <-
   )
 
 kable(df, "html") %>%
-  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE, position = 'left', font_size = 14)
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE, position = 'left', font_size = 14)
 ```
 
 <br>
 
 <div class = "reviewDiv">
-<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use the logical operator `==` to test whether the each set of values is equivalent ($\equiv$). For example, the first set of expression would be written as `3 == 3`.</p>
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use the logical operator `==` to test whether each set of values is equivalent ($\equiv$). For example, the first set of expressions would be written as `3 == 3`.</p>
 
 <p>$3 \equiv 3$</p>
 
