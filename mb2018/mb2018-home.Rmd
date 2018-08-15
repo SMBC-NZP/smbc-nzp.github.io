@@ -26,8 +26,6 @@ output: html_document
 <hr>
 <p>We ask that, regardless of your current level of R knowledge, you please complete the following preliminary exercises prior to attending the course. Please feel free to email Brian Evans with any questions at <a href="mailto:evansbr@si.edu">evansbr@si.edu</a></p>
  
- 
-
 <ul>
 <li><b><a href = "https://smbc.shinyapps.io/mb2018-L0-intro_RStudio" target="_blank">Introduction to R Studio</a></b>. This lesson will provide new R users with the baseline knowledge necessary to use R and R Studio and align experienced R users with some of the terminology and best management practices used throughout this course.
 </li>
@@ -35,10 +33,10 @@ output: html_document
 <li><b><a href = "https://smbc.shinyapps.io/mb2018-L2-rObjects" target="_blank">Lesson 2: Objects</a></b>. Learn the primary types of objects that are used to store values</li>
 <li><b><a href = "https://smbc.shinyapps.io/mb2018-L3-indexing" target="_blank">Lesson 3: Indexing</a></b>. Learn how to query objects using indexing in base R</li>
 </ul>
-<br>
-<div class = "row">
-<br>
+
 <p>Do you want to do more course preparation or practice your R skills? If so, we strongly recommend completing these <a href = "https://smbc-nzp.github.io/mb2018/mb2018-swirl.html" target = "_blank"><b>SWIRL courses</b></a> prior to the course.</p>
+
+<div class = "row">
 <hr>
 <img src = "images/robotBird.jpg"
   style = "float:left;
