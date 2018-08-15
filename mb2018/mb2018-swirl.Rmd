@@ -1,0 +1,87 @@
+---
+output: html_document
+---
+
+# SWIRL self-guided learning exercises for R
+_Brian S. Evans  
+Smithsonian Conservation Biology Institute  
+Migratory Bird Center_
+
+The R community has created a number of interactive learning exercises that will help you get your R skills up to speed for the Migratory Birds course. Regardless of your skill level, you will undoubtedly be able to learn a considerable amount from these courses. 
+
+### Before you begin: 
+
+1. If you do not yet have a current version R on your computer, download and install Program R ([link](https://cran.r-project.org/)).
+2. Download and install R Studio onto your computer ([link](https://www.rstudio.com/products/rstudio/download/)).
+3. Download the SWIRL courses to "Downloads" folder of your computer ([link](https://github.com/swirldev/swirl_courses/archive/master.zip)). Make a note of the location of the downloads folder on your computer.
+
+### Install SWIRL:
+
+Open R Studio.
+
+SWIRL is essentially a user-generated program (also called a **package** or **library**) for use in R. To access this, you must add the program to your R folder. In the Console panel (bottom left), type the following and press Enter:
+
+```{r, eval=FALSE}
+install.packages("swirl")
+
+require(swirl)
+```
+_Note: You may be prompted to select a "mirror" from which to download the package. If this is the case, it is recommended that you choose the mirror that is geographically closest to you._
+
+In the Console panel, type the following to determine your current working directory (_Note: This is the location on your computer that R reads and writes data from/to._)
+
+```{r, eval=FALSE}
+getwd()
+```
+
+In the console panel, use the "setwd" function (set working directory) to set your working directory to the location of the SWIRL courses. Below is an example of the address of Brian's Downloads folder on his computer. Replace the script between the quotation marks with the directory location from "Before you begin Step 3".
+
+```{r, eval=FALSE}
+setwd('C:/Users/Brian/Downloads/')
+```
+
+In the console panel, copy-and-paste the following code to add the SWIRL course packs to your R environment:
+
+```{r, eval=FALSE}
+install_course_zip(
+  "swirl_courses-master.zip", 
+  multi=TRUE, 
+  which_course="R Programming"
+)
+
+install_course_zip(
+  "swirl_courses-master.zip", 
+  multi=TRUE,
+  which_course="Getting_and_Cleaning_Data"
+)
+```
+### SWIRL Lessons:
+
+To best prepare you for the Migratory birds course, we ask that you complete the following lessons (_Note: Once SWIRL is loaded (below) you will be given the option of which lessons to run_). 
+
+<ul>
+<li>Basic Building Blocks</li>
+<li>Workspace and Files</li>
+<li>Sequences of Numbers</li>
+<li>Vectors</li>               
+<li>Subsetting Vectors</li>
+<li>Matrices and Data Frames</li>
+<li>Logic</li>                   
+<li>Looking at Data</li>
+</ul>
+    
+
+### Run SWIRL!
+
+Type the following to begin using SWIRL:
+
+```{r, eval=FALSE}
+swirl()
+```
+
+Have fun!
+
+----
+
+<img style="float: right; margin: 0px 0px 15px 15px" src="images/nzpLogoSideways2.png" width="50%" />
+
