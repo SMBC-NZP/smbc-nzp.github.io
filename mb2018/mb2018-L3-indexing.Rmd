@@ -16,12 +16,8 @@ theme: yeti
 
 
 ```{r setup, include = FALSE}
-
 library(learnr)
-library(RCurl)
-library(lubridate)
 library(knitr)
-library(kableExtra)
 library(tidyverse)
 
 knitr::opts_chunk$set(echo = TRUE)
@@ -233,7 +229,7 @@ df == 3
 ```{r echo = FALSE}
 df <-
   data.frame(
-  `Operator` = c('==', '!=','!', '|', '&', '<', '<=', '%in%','>', '>='),
+  `Operator` = c('==', '!=','!', '|', '&','%in%', '<', '<=', '>', '>='),
   `Usage` = c('x == y', 'x != y', '!(x)','x | y', 'x & y','x %in% yz', 'x < y', 'x <= y', 'x > y', 'x >= y'),
   `Meaning` = c(
     'x is equal to y',
@@ -249,7 +245,7 @@ df <-
   )
 
 kable(df, "html") %>%
-  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE, position = 'left', font_size = 14)
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE, position = 'left', font_size = 14)
 ```
 <br>
 <p>Each of the logical operators above can be applied in the same way that we have applied `==` thus far.</p>
@@ -440,7 +436,7 @@ v
 ```
 
 ```{r logic_operators_and-hint-1}
-v < 5 ...
+v < 5 
 ```
 
 ```{r logic_operators_and-hint-2}
@@ -518,7 +514,7 @@ v[...]
 ```
 
 ```{r index1-hint-2}
-v[v ...]
+v[v ]
 ```
 
 ```{r index1-hint-3}
@@ -535,7 +531,7 @@ v[...]
 ```
 
 ```{r index2-hint-2}
-v[v ...]
+v[v ]
 ```
 
 ```{r index2-hint-3}
@@ -553,7 +549,7 @@ v[...]
 ```
 
 ```{r index3-hint-2}
-v[v ...]
+v[v ]
 ```
 
 ```{r index3-hint-3}
@@ -570,11 +566,11 @@ v[...]
 ```
 
 ```{r index4-hint-2}
-v[v ...]
+v[v ]
 ```
 
 ```{r index4-hint-3}
-v[v > 3 ...]
+v[v > 3 ]
 ```
 
 ```{r index4-hint-4}
@@ -595,7 +591,7 @@ v[...]
 ```
 
 ```{r index5-hint-2}
-v[v ...]
+v[v ]
 ```
 
 ```{r index5-hint-3}
@@ -864,9 +860,9 @@ df[df$hello > 1,]
 ```
 </div>
 <hr>
-
+<b>End of lesson!</b>
 <hr style="border-width: 10px;">
 <img style="float: right; margin: 0px 0px 15px 15px" src="images/nzpLogoSideways2.png" width="50%" />
 
 
-<b>End of lesson!</b>
+
