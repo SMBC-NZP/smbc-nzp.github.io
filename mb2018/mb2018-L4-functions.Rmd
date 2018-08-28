@@ -129,10 +129,15 @@ str(birdCounts)
 ## Writing functions
 
 <p>In the previous lessons, we worked with several functions (e.g., "c", "mean"). Functions allow you to simplify complex tasks, which is especially useful if you need to run a task multiple times. Program R contains many functions and many more still are created by R users and provided to the R community as collections of functions known as packages (or libraries). As datasets and data handling needs are often distinct, relying exclusively on built-in and community-defined functions is limiting.</p>
-<p><b>Why would you write your own functions?</b> Learning how to create your own functions, or customize existing functions, provides you with the flexibility to solve unique problems, shorten your script, and make your R code more legible for others. Writing your own functions is easy, as long as you follow the correct syntax. The basic structure is:</p>
-<br>
-<img style="float: right; margin: 0px 0px 15px 15px" src="images/function_syntax.png" width="100%" />
-<br>
+<p><b>Why would you write your own functions?</b> Learning how to create your own functions, or customize existing functions, provides you with the flexibility to solve unique problems, shorten your script, and make your R code more legible for others. Writing your own functions is easy, as long as you follow the correct syntax. The basic structure is (do not run):</p>
+
+```{r basicFun, exercise = TRUE, exercise.lines = 5}
+# functionName <-
+#  function(functionArgument){
+#   functionBody: What you want to happen when the function runs
+#  }
+```
+
 
 <br>
 
@@ -170,7 +175,7 @@ addOne(
 ```
 
 <br>
-<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> The mean of a vector of numbers is the sum of that vector (`sum(x)`), divided by the number of values in the vector (`length(x)`). Write a function called `myMean` that will calculate the mean of a vector and text this function on the vector `c(3,5,8)`:</p>
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> The mean of a vector of numbers is the sum of that vector (`sum(x)`), divided by the number of values in the vector (`length(x)`). Write a function called `myMean` that will calculate the mean of a vector and test this function on the vector `c(3,5,8)`:</p>
 ```{r myMean, exercise = TRUE, exercise.lines = 5}
 
 ```
@@ -251,7 +256,7 @@ myMean(
 <br>
 <p>A general rule of thumb in function writing is that the first argument (i.e., `x` in `function(x,y)`) in a function should be the data you would like the function to act on. Any additional arguments (i.e., `y` in `function(x,y)`) should be provided to the right.</p>
 
-<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Write a function, `addY()` that will add some value (`y`) to a numeric vector. Test this function with the vector `c(3, 5, 8)` and a `y` value of `1`.</p>
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Write a function, `addY()` that will add some value, `y`, to a numeric vector, `x`. Test this function with the vector `c(3, 5, 8)` and a `y` value of `1`.</p>
 ```{r addY_example, exercise = TRUE, exercise.lines = 5}
 addY <-
 
@@ -305,7 +310,7 @@ addY(
 
 ## Writing meaningful functions
 
-<p>The previous examples were a bit silly. Adding `1` to some vector, `x`, could be more easily written as `x+1`. Likewise, you probably would not be interested in calculating the mean of some numeric vector by hand, because the function `mean()` already does that. Let's explore at writing a function that is more meaningful, for example, the type of function you can use to query data. First, however, let's do a quick refresher on how to use <b>indexing</b> to query a data frame.</p>
+<p>The previous examples were a bit silly. Adding `1` to some vector, `x`, could be more easily written as `x+1`. Likewise, you probably would not be interested in calculating the mean of some numeric vector by hand, because the function `mean()` already does that. Let's explore writing a function that is more meaningful. We'll write a function that you can use to query data. Before we do so, however, let's do a quick refresher on how to use <b>indexing</b> to query a data frame.</p>
 
 <p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Query the `birdTraits` data frame to rows in which the species (`species`) is Gray catbird (`grca`):</p>
 
@@ -350,7 +355,7 @@ birdTraits[birdTraits$species == 'grca',]
 ```
 
 <br>
-<p>I find indexing code to be rather hard to read. If you are doing a lot of data querying writing your own query functions can be a great way to make your code more legible. Let's use the `birdTraits` data to explore writing custom query functions.</p>
+<p>I find indexing queries to be rather hard to read. If you are doing a lot of data querying, writing your own query functions can be a great way to make your code more legible. Let's use the `birdTraits` data to explore writing custom query functions.</p>
 
 <p>As described above, the function we will write, `querySpecies`, should begin with an argument expressing the data the function will act upon. In this case, the function will act on the data frame `birdTraits`.</p>
 
@@ -422,7 +427,7 @@ querySpecies(
 )
 ```
 
-<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Write a function called `querySite` that will subset the data frame `birdCounts` to of a given `site`. Use this function to subset the data frame to sites named `banana`:</p>
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Write a function called `querySite` that will subset the data frame `birdCounts` to count data from a given `site`. Use this function to subset the data frame to sites named `banana`:</p>
 
 ```{r querySite, exercise = TRUE, exercise.lines = 10}
 querySite <-
