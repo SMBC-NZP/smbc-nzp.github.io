@@ -1,176 +1,41 @@
 ---
-output:
- html_document:
-  theme: yeti
+title: "Lesson four: Functions"
+author: "Brian S. Evans, Ph.D."
+output: learnr::tutorial
+runtime: shiny_prerendered
+theme: yeti
 ---
+
+<!-- html head --> 
 
 <head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+<!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
 </head>
 
-<style>
+```{r setup, include=FALSE}
+# Load libraries:
 
-code{
-  background-color:#f2f2f2;
-  border-radius: 25px;
-}
- 
-span.co{
-  color:#000080;
-  font-weight: bold;
-}
- 
-img{
-  display: block;
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
+library(learnr)
+library(RCurl)
+library(lubridate)
+library(knitr)
+library(kableExtra)
+library(tidyverse)
 
-p{
-  text-align: left;
-  font-size: 18px;
-}
+knitr::opts_chunk$set(echo = FALSE)
+options(knitr.table.format = "html")
 
-ul, ol{
-  line-height: 27px;
-  text-align: left;
-  font-size: 18px;
-  margin-left: 0px;
-}
- 
-blockquote{
-  font-size: 18px;
-  border-left: 8px solid #292093;
-  background-color: #e6ffff;
-  padding-left: 16px;
-  padding-right: 16px;
-}
- 
-.row{
-  margin: auto;
-}
- 
-table {
-  border-collapse: collapse;
-}
+# Objects used:
 
-table, td, th {
-  border: 1px solid black;
-  padding: 5px;
-  text-align: center;
-  vertical-align: middle;
-}
- 
- /* Create two equal columns that floats next to each other */
-.column {
-  float: left;
-  width: 50%;
-  padding: 10px;
-}
+numberObject <-
+  c(1, 1, 2, 3)
 
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.roundBorder {
-  border-radius: 25px;
-  border: 5px solid #30288C;
-  background: #D6EAF8;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-.roundBorderBlack {
-  border-radius: 25px;
-  border: 10px solid #D3D3D3;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-.roundBorderBlackEx {
-  border-radius: 5px;
-  border: 5px solid #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-top: 2px;
-}
-
-.roundBorderEx {
-  border-radius: 3px;
-  border: 5px solid #30288C;
-  background: #D6EAF8;
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-top: 2px;
-}
-
-.tt {
-    position: relative;
-    display: inline-block;
-    class: inline; 
-    font-weight: bold;
-    font-family: "Avenir";
-    font-size: 18px;
-    border-bottom: 1px black;
-}
-
-/* Tooltip text */
-.tt .ttText {
-    visibility: hidden;
-    font-weight: normal;
-    font-size: 18px;
-    width: 200px;
-    background-color: black;
-    border: 1px solid black;
-    color: white;
-    text-align: left;
-    padding: 5px;
-    border-radius: 6px;
-    position: absolute;
-    z-index: 1;
-}
-
-/* Show the tooltip text when you mouse over the tooltip container */
-.tt:hover .ttText {
-    visibility: visible;
-}
-
-</style>
-
-<h1 style="text-align: center;">Introduction to data science in R, Lesson 3:<br/>Writing functions</h1>
-<br>
-<!img style="float: left; margin: 0px 0px 15px 15px;" src="nzpLogo.jpg" width="150" />
-<p style = "text-align: center; font-size: 14px;">Brian S. Evans, Ph.D.<br />
-Migratory Bird Center<br/>
-Smithsonian Conservation Biology Institute</p>
-<hr>
-
-<p>In this lesson we will explore <b><i>for loops</i></b> and <b>functions</b>. A <b><i>for loop</i></b> is code that allows you to repeat an operation a set number of iterations. A function is code that allows you to create or modify objects in a repeatable way. As data analysis often includes many repeated tasks,  <i>for loops</i> and user-defined functions can save considerable time, shorten R scripts, and make your scripts more legible. Understanding how they work is crucial to developing good coding practices.</p>
-
-</p>
-
-<hr>
-
-<h2>Setup for the lesson:</h2>
-
-<p>For this lesson, we will use three example data frames: Iris sepal and petal measurements collected by botanist Edgar Anderson in the 1920's, bird traits collected by Wilman et al. (2014), and bird point count observations from Washington, DC (Evans et al. 2016).</p>
-
-<p>Open R Studio and run the following lines of code to load the data into R:</p>
-<br>
-
-```{r, eval=FALSE}
-#=================================================================================*
-# ---- set up ----
-#=================================================================================*
+exampleFactor <- 
+  factor(
+    c('one', 'one', 'two', 'three')
+    )
 
 # Load libraries
 
@@ -195,7 +60,7 @@ countsURL <- getURL(
 
 # Read in the data:
 
-birdHabits <- tbl_df(
+birdTraits <- tbl_df(
   read.csv(text = habitsURL, stringsAsFactors = FALSE)
   )
 
@@ -214,209 +79,408 @@ names(irisTbl) <-
     'petalLength',
     'petalWidth',
     'species')
+
+# Functions used:
+
+addOne <-
+  function(x){
+    x + 1
+  }
+```
+<br>
+
+## Introduction  
+
+<p>In this lesson we will explore <b>functions</b>. A function is code that allows you to create or modify objects in a repeatable way. As data analysis often includes many repeated tasks, user-defined functions can save considerable time, shorten R scripts, and make your scripts more legible. Understanding how they work is crucial to developing good coding practices.</p>
+
+## Explore data
+
+
+<p>For this lesson, we will use two example data frames: Bird traits collected by Wilman et al. (2014), and bird point count observations from Washington, DC (Evans et al. 2018). These data frames are titled `birdTraits` and `birdCounts`, respectively. The data are pre-loaded as tibbles on this webpage. To view the data, you simply need to type the name assigned to the data frame.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use the tools that you learned to explore data in Lessons 1 and 2, take a moment to explore `birdTraits` and `birdCounts`.</p>
+```{r df_explore_birdTraits, exercise = TRUE, exercise.lines = 5}
+birdTraits
+```
+
+```{r df_explore_birdTraits-hint-1}
+# For example:
+
+str(birdTraits)
 ```
 
 <br>
-<p>For the iris dataset, I think it's best to do some familiar cleaning steps:</p>
-<br>
-
-```{r, eval=FALSE}
-
-# Clean up iris for analysis:
-
-irisTbl <- tbl_df(iris)
-
-names(irisTbl) <-
-  c('sepalLength',
-    'sepalWidth',
-    'petalLength',
-    'petalWidth',
-    'species')
+```{r df_explore_birdCounts, exercise = TRUE, exercise.lines = 5}
+birdCounts
 ```
+
+```{r df_explore_birdCounts-hint-1}
+# For example:
+
+str(birdCounts)
+```
+</div>
+
 <hr>
+<p>Evans, B.S., R. Reitsma, A.H. Hurlbert, and P.P. Marra. In press. Environmental filtering of avian communities along a rural-to-urban gradient in Greater Washington, D.C., USA. Ecosphere. DOI:10.1002/ecs2.2402</p>
+<p>Wilman, H., J. Belmaker, J. Simpson, C. de la Rosa, M. Rivadeneira, and W. Jetz. 2014. EltonTraits 1.0: Species-level foraging attributes of the world’s birds and mammals. Ecology 95: 2027.</p>
+
+## Writing functions
 
 <p>In the previous lessons, we worked with several functions (e.g., "c", "mean"). Functions allow you to simplify complex tasks, which is especially useful if you need to run a task multiple times. Program R contains many functions and many more still are created by R users and provided to the R community as collections of functions known as packages (or libraries). As datasets and data handling needs are often distinct, relying exclusively on built-in and community-defined functions is limiting.</p>
-<p><b>Why would you write your own functions?</b> Learning how to create your own functions, or customize existing functions, provides you with the flexibility to solve unique problems, shorten your script, and make your R code more legible for others. Writing your own functions is easy, as long as you follow the correct syntax. The basic structure is (<b>DO NOT RUN</b>):</p>
+<p><b>Why would you write your own functions?</b> Learning how to create your own functions, or customize existing functions, provides you with the flexibility to solve unique problems, shorten your script, and make your R code more legible for others. Writing your own functions is easy, as long as you follow the correct syntax. The basic structure is:</p>
+<br>
+<img style="float: right; margin: 0px 0px 15px 15px" src="images/function_syntax.png" width="100%" />
 <br>
 
-```{r, eval=FALSE}
-functionName <- function(functionTarget) {
-	functionBody: What you would like to happen when you run your function
-}
-```
 <br>
 
 <p>Let's illustrate writing functions with a pretty silly example -- a function that will add 1 to any value. Below, we assign a name to the function, `addOneFun <-`, tell R that the code in the enclosing curly brackets is a function of some object `x` (`function(x)`), and provide the argument the function will be evaluated and returned (`x + 1`). </p>
-<br>
 
-```{r, eval=FALSE}
-
-# First function:
-
-addOneFun <- function(x){
-	x+1
-}
-
-# Testing the function on a numeric value:
-
-42+1
-
-addOneFun(42)
-
-# Testing the function on a vector of numeric values:
-
-v <- c(1,1,2,3,5)
-
-v + 1
-
-addOneFun(v)
-```
-<br>
-
-<p>If you are doing a lot of data <b>querying</b>, writing your own query functions can be a great way to make your code more legible. Let's use the `birdCounts` data to explore writing custom query functions. For example, perhaps you frequently need to query the number of individuals of a given species at each site:</p>
-<br>
-
-```{r queryFun, eval = FALSE}
-
-# Query by species function:
-
-speciesSubset <- function(spp){
-  birdCounts[birdCounts$species == spp, ]
-}
-
-# Test function:
-
-birdCounts[birdCounts$species == 'grca', ]
-
-speciesSubset('grca')
-
-```
-<br>
-<p>It's best to write your functions as general as possible. For example, the species subset function above is great if you are going to query just the `birdCounts` data frame. If you also intend to query the `birdHabits` frame by species, you may want to make the data frame one of the arguments.</p>
-<br>
-
-```{r query generalize fun, eval = FALSE}
-
-# Query by species function, generalized:
-
-speciesSubset <- function(dfIn, spp){
-  dfIn[dfIn$species == spp, ]
-}
-
-# Test function, birdCounts:
-
-birdCounts[birdCounts$species == 'grca', ]
-
-speciesSubset(birdCounts, 'grca')
-
-# Test function, birdHabits:
-
-birdHabits[birdHabits$species == 'grca', ]
-
-speciesSubset(birdHabits, 'grca')
+```{r addOne, exercise = TRUE, exercise.lines = 5}
+addOne <-
+  function(x){
+    x + 1
+  }
 ```
 
 <br>
-<p>Another way to generalize a query function is to make the query field one of the arguments of the function. Note that the below statements are equivalent:</p>
+<p>Using the function above, we can replace `x` with any numeric vector and it will add `1` to each number.</p>
 <br>
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use the `addOne()` to add `1` to the numeric vector of your choosing.</p>
+```{r addOne_example, exercise = TRUE, exercise.lines = 3}
 
-```{r query generalize fun 2, eval = FALSE}
-# Subset to catbirds using $ and matrix notation:
+```
 
-birdHabits[birdHabits$species == 'grca', ]
+```{r addOne_example-hint-1}
+addOne()
+```
 
-birdHabits[birdHabits[,'species'] == 'grca',]
+```{r addOne_example-hint-2}
+addOne(
+  c()
+)
+```
+
+```{r addOne_example-hint-3}
+addOne(
+  c(3,5,8)
+)
 ```
 
 <br>
-<p>Because of this, we can write a VERY general function to query any data frame!</p>
-<br>
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> The mean of a vector of numbers is the sum of that vector (`sum(x)`), divided by the number of values in the vector (`length(x)`). Write a function called `myMean` that will calculate the mean of a vector and text this function on the vector `c(3,5,8)`:</p>
+```{r myMean, exercise = TRUE, exercise.lines = 5}
 
-```{r query generalize fun 3, eval = FALSE}
-# Very generalized query:
+```
 
-query <- function(dfIn, variable, condition){
-  dfIn[dfIn[,variable] == condition,]
-}
+```{r myMean-hint-1}
+myMean <- ...
+```
 
-# Test query:
+```{r myMean-hint-2}
+myMean <-
+  function(x)
+```
 
-birdHabits[birdHabits$species == 'grca', ]
+```{r myMean-hint-3}
+myMean <-
+  function(x){
+    ...
+  }
+```
 
-birdHabits[birdHabits[,'species'] == 'grca',]
+```{r myMean-hint-4}
+myMean <-
+  function(x){
+    sum(...)
+  }
+```
 
-query(birdHabits, 'species', 'grca')
+```{r myMean-hint-5}
+myMean <-
+  function(x){
+    sum(x)
+  }
+```
+
+```{r myMean-hint-6}
+myMean <-
+  function(x){
+    sum(x)/...
+  }
+```
+
+```{r myMean-hint-7}
+myMean <-
+  function(x){
+    sum(x)/length()
+  }
+```
+
+```{r myMean-hint-8}
+myMean <-
+  function(x){
+    sum(x)/length(x)
+  }
+```
+
+
+```{r myMean-hint-9}
+myMean <-
+  function(x){
+    sum(x)/length(x)
+  }
+
+myMean(...)
+```
+
+
+```{r myMean-hint-10}
+myMean <-
+  function(x){
+    sum(x)/length(x)
+  }
+
+myMean(
+  c(3, 5, 8)
+)
 ```
 
 <br>
-<blockquote>
-<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h3>
-<br>
-<ol>
-<li>Write a function to subset the `birdHabits` data frame to just ground foraging birds.</li>
-<li>Write a function that will calculate the total number of individuals observed of a given species in the `birdCounts` data frame(i.e., the sum of count for a data frame subset by species)</li>
-</ol>
-<br>
-</blockquote>
-<br>
-<hr>
-<br>
+<p>A general rule of thumb in function writing is that the first argument (i.e., `x` in `function(x,y)`) in a function should be the data you would like the function to act on. Any additional arguments (i.e., `y` in `function(x,y)`) should be provided to the right.</p>
 
-<p>Functions can sometimes get pretty long and include multiple objects. When this is the case, it's good practice to include `return` to illustrate which object is being returned. Let's write a function in multiple steps that calculates the average (mean) number of individuals of a given species observed on a point count.</p>
-<br>
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Write a function, `addY()` that will add some value (`y`) to a numeric vector. Test this function with the vector `c(3, 5, 8)` and a `y` value of `1`.</p>
+```{r addY_example, exercise = TRUE, exercise.lines = 5}
+addY <-
 
-```{r query mean fun, eval = FALSE}
-
-# Query function, mean count:
-
-meanSpeciesCounts <- function(spp){
-  # Number of unique site values:
-  nSites <- length(unique(birdCounts$site))
-  # Subset birdCounts to the species of interest:
-  birdCounts_sppSubset <- birdCounts[birdCounts$species == spp, ]
-  # Calculate the total number of birds observed:
-  nBirds <- sum(birdCounts_sppSubset$count)
-  # Return mean number of birds per site:
-  return(nBirds/nSites)
-}
-
-# What is the average number of observed catbirds?
-
-meanSpeciesCounts('grca')
 ```
-<br>
-<p>Note in the above that the objects nSites, birdCounts_sppSubset, and nBirds were not placed in your <b>global environment</b>. Objects defined within the function body are only defined inside the function, not the global environment.</p>
-<p>Functions can also be <b>nested</b>. In other words, functions can include user-defined functions written inside the function body. We have already done this quite a bit with functions in base R. For example, the `length` function above is nested inside our user-defined function `meanSpeciesCounts`. Let's try to nest our `speciesSubset` function inside the `meanSpeciesCounts` function above.</p>
-<br>
-```{r query mean fun2, eval = FALSE}
 
-# Query by species function, generalized:
-
-meanSpeciesCounts <- function(dfIn, spp){
-  # Number of unique site values:
-  nSites <- length(unique(dfIn$site))
-  # Calculate the total number of birds observed:
-  nBirds <- sum(speciesSubset(dfIn, spp)$count)
-  # Return mean number of birds per site:
-  return(nBirds/nSites)
-}
-
-# What is the average number of observed catbirds?
-
-meanSpeciesCounts(birdCounts, 'grca')
+```{r addY_example-hint-1}
+addY <-
+  function(...){
+    ...
+  }
 ```
-<br>
 
-<blockquote>
-<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h3>
+
+```{r addY_example-hint-2}
+addY <-
+  function(x,y){
+    ...
+  }
+```
+
+```{r addY_example-hint-3}
+addY <-
+  function(x,y){
+    x + y
+  }
+```
+
+```{r addY_example-hint-4}
+addY <-
+  function(x,y){
+    x + y
+  }
+
+addY(
+ x = ...,
+ y = ...
+)
+```
+
+```{r addY_example-hint-5}
+addY <-
+  function(x,y){
+    x + y
+  }
+
+addY(
+ x = c(3, 5, 8),
+ y = 1
+)
+```
+
+## Writing meaningful functions
+
+<p>The previous examples were a bit silly. Adding `1` to some vector, `x`, could be more easily written as `x+1`. Likewise, you probably would not be interested in calculating the mean of some numeric vector by hand, because the function `mean()` already does that. Let's explore at writing a function that is more meaningful, for example, the type of function you can use to query data. First, however, let's do a quick refresher on how to use <b>indexing</b> to query a data frame.</p>
+
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Query the `birdTraits` data frame to rows in which the species (`species`) is Gray catbird (`grca`):</p>
+
+```{r sppQuery, exercise = TRUE, exercise.lines = 5}
+
+```
+
+```{r sppQuery-hint-1}
+birdTraits
+```
+
+```{r sppQuery-hint-2}
+birdTraits[...]
+```
+
+```{r sppQuery-hint-3}
+birdTraits[..., ...]
+```
+
+```{r sppQuery-hint-4}
+birdTraits[birdTraits,...]
+```
+
+```{r sppQuery-hint-5}
+birdTraits[birdTraits$...,]
+```
+
+```{r sppQuery-hint-6}
+birdTraits[birdTraits$species...,...]
+```
+
+```{r sppQuery-hint-7}
+birdTraits[birdTraits$species == ...,...]
+```
+
+```{r sppQuery-hint-8}
+birdTraits[birdTraits$species == 'grca',...]
+```
+
+```{r sppQuery-hint-9}
+birdTraits[birdTraits$species == 'grca',]
+```
+
 <br>
-<ol>
-<li>Using the `birdHabits` data frame, write a function to count the number of species in a given diet and foraging guild.</li>
-<li>The mathematical formula for standard error is provided below. Convert this to an R function (<b>Note</b>: the function for standard deviation is `sd` and the function for square root is `sqrt`):</li>
-$$StdErr (x) = \frac{StDev(x)}{\sqrt{n}}$$
-</ol>
+<p>I find indexing code to be rather hard to read. If you are doing a lot of data querying writing your own query functions can be a great way to make your code more legible. Let's use the `birdTraits` data to explore writing custom query functions.</p>
+
+<p>As described above, the function we will write, `querySpecies`, should begin with an argument expressing the data the function will act upon. In this case, the function will act on the data frame `birdTraits`.</p>
+
+```{r querySpecies1, exercise = TRUE, exercise.lines = 5}
+querySpecies <-
+  function(data){
+    ...
+  }
+```
+
 <br>
-</blockquote>
+<p>The argument `data` represents some user input data frame. In our indexing operation can replace any reference to the name assigned to the data frame with `data`:</p>
+```{r querySpecies2, exercise = TRUE, exercise.lines = 5}
+querySpecies <-
+  function(data){
+    data[data$species == ...]
+  }
+```
+
 <br>
-<hr>
-<br>
+<p>The next argument we would add represents the name of the species for which we are querying. Let's call this user input `spp`:</p>
+```{r querySpecies3, exercise = TRUE, exercise.lines = 5}
+querySpecies <-
+  function(data, spp){
+    data[data$species == spp, ]
+  }
+```
+
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use the function `querySpecies()` to subset the data frame `birdTraits` to rows in which the species (`species`) is Gray catbird (`grca`):</p>
+```{r querySpecies4, exercise = TRUE, exercise.lines = 10}
+querySpecies <-
+  function(data, spp){
+    data[data$species == spp, ]
+  }
+
+
+```
+
+```{r querySpecies4-hint-1}
+querySpecies <-
+  function(data, spp){
+    data[data$species == spp,]
+  }
+
+querySpecies()
+```
+
+```{r querySpecies4-hint-2}
+querySpecies <-
+  function(data, spp){
+    data[data$species == spp,]
+  }
+
+querySpecies(
+  data = ...,
+  spp = ...
+)
+```
+
+```{r querySpecies4-hint-3}
+querySpecies <-
+  function(data, spp){
+    data[data$species == spp,]
+  }
+
+querySpecies(
+  data = birdTraits,
+  spp = 'grca'
+)
+```
+
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Write a function called `querySite` that will subset the data frame `birdCounts` to of a given `site`. Use this function to subset the data frame to sites named `banana`:</p>
+
+```{r querySite, exercise = TRUE, exercise.lines = 10}
+querySite <-
+  function(...){
+    ...
+  }
+```
+
+```{r querySite-hint-1}
+querySite <-
+  function(data, siteValue){
+    ...
+  }
+```
+
+```{r querySite-hint-2}
+querySite <-
+  function(data, siteValue){
+    data[...]
+  }
+```
+
+```{r querySite-hint-3}
+querySite <-
+  function(data, siteValue){
+    data[data...]
+  }
+
+```
+
+```{r querySite-hint-4}
+querySite <-
+  function(data, siteValue){
+    data[data$site == siteValue,]
+  }
+
+querySite(
+  data = ..., 
+  site = ...
+  )
+```
+
+```{r querySite-hint-5}
+querySite <-
+  function(data, siteValue){
+    data[data$site == siteValue,]
+  }
+
+querySite(
+  data = birdCounts, 
+  site = 'banana'
+  )
+```
+
+
+<hr style="border-width: 10px;">
+<img style="float: right; margin: 0px 0px 15px 15px" src="images/nzpLogoSideways2.png" width="50%" />
+
+
+<b>End of lesson!</b>
+
