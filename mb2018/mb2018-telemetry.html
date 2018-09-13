@@ -211,7 +211,7 @@ telemetryData_sp</code></pre>
     kmlfile = &#39;telemetryData.kml&#39;,
   )</code></pre>
 <p>Now open Google Earth. On the menu in the upper left hand corner, click File/Open…and select the file telemetryData.kml. This loads your point file into the Temporary Places folder in Google Earth. The image you see should be similar to the image below:</p>
-<p><img style="border:none" src="images/kml_init.jpg" width = "700px"/></p>
+<p><img style="border:none" src="images/kml_init.JPG" width = "700px"/></p>
 <p>If you expand the “telemetryData.kml” file, you can see that each point, displayed as “site <i>x</i>” is its own subfile. If you right-click on the point subfile or on the map point and select “Properties”, you can modify how the point is displayed.</p>
 <p>An alternate to setting the display by hand in Google Earth is to use R to code some display options in when writing the file. For example, the code below adds a custom icon to the points and changes how the name of the file will be displayed in Google Earth. Let’s move back to R and set the name and icons used (<i>Note: icons can be found on the Google Maps development website found <a href = "http://sites.google.com/site/gmapsdevelopment" target="_blank">here</a></i>).</p>
 <pre class="r"><code>telemetryData %&gt;%
@@ -226,7 +226,7 @@ telemetryData_sp</code></pre>
     icon = &#39;http://maps.google.com/mapfiles/ms/micons/sunny.png&#39;
   )</code></pre>
 <p>Move back to Google Earth, load the file as above, and accept that you be overwriting the data. Your new map should look something like this:</p>
-<p><img style="border:none" src="images/kml_sunnyPoint.jpg" width = "700px"/></p>
+<p><img style="border:none" src="images/kml_sunnyPoint.JPG" width = "700px"/></p>
 </div>
 <div id="signal-location-frames" class="section level2">
 <h2>Signal-location frames</h2>
@@ -385,7 +385,7 @@ summary(telemetryData)</code></pre>
     col = &#39;white&#39;,
     lwd = 2)</code></pre>
 <p>Let’s step outside of R for a moment to look at the bearing lines in Google Earth.</p>
-<p><img style="border:none" src="images/kml_bearing.jpg" width = "700px"/></p>
+<p><img style="border:none" src="images/kml_bearing.JPG" width = "700px"/></p>
 </div>
 <div id="find-intersection-points" class="section level2">
 <h2>Find intersection points</h2>
@@ -414,7 +414,7 @@ crossPoints %&gt;%
     kmlfile = &#39;crossPoints.kml&#39;,
     kmlname = &#39;Cross points&#39;
   )</code></pre>
-<p><img style="border:none" src="images/kml_cross.jpg" width = "700px"/></p>
+<p><img style="border:none" src="images/kml_cross.JPG" width = "700px"/></p>
 <p>We might think that we are there. In fact, a lot of triangulation efforts might stop at this point with the assumption that the location of the transmitter lies somewhere between the three cross points. We’ve got one more function to go …</p>
 </div>
 <div id="maximum-likelihood-estimation-of-the-transmitter-location" class="section level2">
@@ -462,7 +462,7 @@ loc_df %&gt;%
              lwd = 2,
              border = &#39;blue&#39;) </code></pre>
 <p>Have a look at the output in Google Earth. It should look something like the below:</p>
-<p><img style="border:none" src="images/kml_estimate.jpg" width = "700px"/></p>
+<p><img style="border:none" src="images/kml_estimate.JPG" width = "700px"/></p>
 </div>
 <div id="citations" class="section level2">
 <h2>Citations</h2>

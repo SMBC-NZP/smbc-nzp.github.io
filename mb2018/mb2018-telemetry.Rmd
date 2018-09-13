@@ -138,7 +138,7 @@ telemetryData %>%
 
 Now open Google Earth. On the menu in the upper left hand corner, click File/Open...and select the file telemetryData.kml. This loads your point file into the Temporary Places folder in Google Earth. The image you see should be similar to the image below:
 
-<img style="border:none" src="images/kml_init.jpg" width = "700px"/>
+<img style="border:none" src="images/kml_init.JPG" width = "700px"/>
 
 If you expand the "telemetryData.kml" file, you can see that each point, displayed as "site <i>x</i>" is its own subfile. If you right-click on the point subfile or on the map point and select "Properties", you can modify how the point is displayed.  
 
@@ -160,7 +160,7 @@ telemetryData %>%
 
 Move back to Google Earth, load the file as above, and accept that you be overwriting the data. Your new map should look something like this:
 
-<img style="border:none" src="images/kml_sunnyPoint.jpg" width = "700px"/>
+<img style="border:none" src="images/kml_sunnyPoint.JPG" width = "700px"/>
 
 ## Signal-location frames
 
@@ -237,7 +237,7 @@ make_bearingLines(telemetryData) %>%
 
 Let's step outside of R for a moment to look at the bearing lines in Google Earth.
 
-<img style="border:none" src="images/kml_bearing.jpg" width = "700px"/>
+<img style="border:none" src="images/kml_bearing.JPG" width = "700px"/>
 
 ## Find intersection points
 
@@ -267,7 +267,7 @@ crossPoints %>%
   )
 ```
 
-<img style="border:none" src="images/kml_cross.jpg" width = "700px"/>
+<img style="border:none" src="images/kml_cross.JPG" width = "700px"/>
 
 We might think that we are there. In fact, a lot of triangulation efforts might stop at this point with the assumption that the location of the transmitter lies somewhere between the three cross points. We've got one more function to go ...
 
@@ -328,7 +328,7 @@ loc %>%
 
 Have a look at the output in Google Earth. It should look something like the below:
 
-<img style="border:none" src="images/kml_estimate.jpg" width = "700px"/>
+<img style="border:none" src="images/kml_estimate.JPG" width = "700px"/>
 
 ## Citations
 
