@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title></title>
+
+<script src="mb2018-gisR_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="mb2018-gisR_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="mb2018-gisR_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="mb2018-gisR_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="mb2018-gisR_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="mb2018-gisR_files/navigation-1.1/tabsets.js"></script>
+<link href="mb2018-gisR_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="mb2018-gisR_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<head>
+<link rel="stylesheet" href=""N:/Capacity Building and Academic Programs/SI-Mason Grad & Prof Training/Individual Courses--Folders/Bird Migration/2018/Materials/Distance"> <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<p><img style="float:right;padding-left:25px;border:none" src="images/smsc_logo.jpg" width = "500px"/></p>
+<div id="using-r-as-a-gis" class="section level1">
+<h1>Using R as a GIS:</h1>
+<p>
+<i>Brian S. Evans, Ph.D.</i>
+</p>
+<p><img style="float:right;padding-left:10px;border:none" src="images/temp_crop.png" width = "350px"/></p>
+<div id="project-description-and-context" class="section level2">
+<h2>Project Description and Context</h2>
+<p>In this module you will learn how to use R as a geographic information system (GIS). In doing so, we will be exploring 4 km resolution minimum temperature data from the [<strong>PRISM climate group</strong>] (<a href="http://prism.oregonstate.edu/" class="uri">http://prism.oregonstate.edu/</a>) from the first of September to the present. PRISM provides a continuous grid of modeled temperature and precipitation values across the conterminous United States.</p>
+</div>
+<div id="exercise-objectives" class="section level2">
+<h2>Exercise Objectives</h2>
+<ul>
+<li>Become familiar with importing and formatting spatial data</li>
+<li>Learn how to explore your raster data visually and quantitatively</li>
+<li>Learn how to extract raster data to sampling points</li>
+<li>Learn how to export spatial data to Google Earth</li>
+</ul>
+</div>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<p>We will start by loading the primary libraries that provide us with the tools for using R as a geographic information system.</p>
+<pre class="r"><code>library(raster) # Package for working with raster files
+library(dismo)  # Lots of great tools for distribution modeling
+library(gstat)
+library(maps) # Provides some predefined map layers
+library(rasterVis)
+library(prism) # Download and prepare prism temperature data</code></pre>
+<p>We will set some options for this session:</p>
+<pre class="r"><code>select &lt;- 
+  dplyr::select
+
+options(prism.path = &quot;~/prismtmp&quot;)</code></pre>
+</div>
+<div id="loading-raster-files" class="section level2">
+<h2>Loading raster files</h2>
+<p>Download raster files that provides minimum temperature data for the conterminous United States:</p>
+<pre class="r"><code>get_prism_dailys(
+  &#39;tmin&#39;, 
+  minDate = &#39;2018-09-01&#39;,
+  maxDate = &#39;2018-09-05&#39;,
+  keepZip = FALSE)</code></pre>
+<p>We can view the files as below:</p>
+<pre class="r"><code>ls_prism_data(absPath = TRUE)</code></pre>
+<p>Take a moment to explore how these data are indexed:</p>
+<pre class="r"><code>ls_prism_data(absPath = TRUE)[1,1]
+
+ls_prism_data(absPath = TRUE)[1,]
+
+ls_prism_data(absPath = TRUE)[,1]</code></pre>
+<p>Now, let’s create a raster-format object from this file and assign a name. A raster is a continuous matrix of cells (also called pixels), where each defined by its value and position (x and y location). In a geographic raster, the position is georeferenced to a location on Earth by the bounding box of the raster (the extent), resolution (the size of the pixels), and the coordinate reference system (how the pixels are projected onto the Earth’s surface). The function <code>raster</code> reads a raster file into R. The argument of this function is the path to the file.</p>
+<pre class="r"><code>tmin_20180901 &lt;-
+  raster(ls_prism_data(absPath = TRUE)[1,2])</code></pre>
+<p>Let’s take a moment to explore this file:</p>
+<pre class="r"><code>tmin_20180901</code></pre>
+<pre><code>## class       : RasterLayer 
+## dimensions  : 621, 1405, 872505  (nrow, ncol, ncell)
+## resolution  : 0.04166667, 0.04166667  (x, y)
+## extent      : -125.0208, -66.47917, 24.0625, 49.9375  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0 
+## data source : C:\Users\Guest user\Documents\prismtmp\PRISM_tmin_early_4kmD1_20180901_bil\PRISM_tmin_early_4kmD1_20180901_bil.bil 
+## names       : PRISM_tmin_early_4kmD1_20180901_bil 
+## values      : -5.071, 31.193  (min, max)</code></pre>
+<p>There are several things that are important to note in this output, for example the resolution provides the size of each raster cells (here shown in degrees), the extent gives the bounding box of the raster, and values prints the range of values of the raster cells. Perhaps the most important output of these summary data is “coord. ref”, which describes the coordinate reference system (CRS) of the raster object. You will notice that the coordinate reference system was already defined for this object (the data are provided as latitude and longitude values with “North American 1983 datum”). This hints at some of what is under the hood when you run the function <code>raster</code>. Please take a moment to explore the raster file in your computer’s file management system.</p>
+<p>We might also choose to read in all of our rasters at once and store them as a single object. An object that holds multiple raster layers is known as a “raster stack”. Rasters in a stack are spatially identical. All rasters in a stack have the same spatial extent and resolution – only the values of the cells may differ. Stacks are useful when you want to compare between rasters or run the same function on a set of raster layers (such as loading them into R). Using stacks can help us avoid having to write complex functions or <i>for loops</i>. We can load a raster stack using the <code>stack</code> function:</p>
+<pre class="r"><code>tminStack &lt;-
+  stack(ls_prism_data(absPath = TRUE)[,2])
+
+tminStack</code></pre>
+<pre><code>## class       : RasterStack 
+## dimensions  : 621, 1405, 872505, 5  (nrow, ncol, ncell, nlayers)
+## resolution  : 0.04166667, 0.04166667  (x, y)
+## extent      : -125.0208, -66.47917, 24.0625, 49.9375  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0 
+## names       : PRISM_tmin_early_4kmD1_20180901_bil, PRISM_tmin_early_4kmD1_20180902_bil, PRISM_tmin_early_4kmD1_20180903_bil, PRISM_tmin_early_4kmD1_20180904_bil, PRISM_tmin_early_4kmD1_20180905_bil 
+## min values  :                              -5.071,                              -6.393,                              -6.716,                              -5.778,                              -5.684 
+## max values  :                              31.193,                              29.157,                              29.255,                              31.372,                              30.654</code></pre>
+<p>We can call a single raster layer from the stack object in the same way that we would index a list object:</p>
+<pre class="r"><code>tminStack[[1]]</code></pre>
+<pre><code>## class       : RasterLayer 
+## dimensions  : 621, 1405, 872505  (nrow, ncol, ncell)
+## resolution  : 0.04166667, 0.04166667  (x, y)
+## extent      : -125.0208, -66.47917, 24.0625, 49.9375  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0 
+## data source : C:\Users\Guest user\Documents\prismtmp\PRISM_tmin_early_4kmD1_20180901_bil\PRISM_tmin_early_4kmD1_20180901_bil.bil 
+## names       : PRISM_tmin_early_4kmD1_20180901_bil 
+## values      : -5.071, 31.193  (min, max)</code></pre>
+<pre class="r"><code>tminStack[[1:2]]</code></pre>
+<pre><code>## class       : RasterStack 
+## dimensions  : 621, 1405, 872505, 2  (nrow, ncol, ncell, nlayers)
+## resolution  : 0.04166667, 0.04166667  (x, y)
+## extent      : -125.0208, -66.47917, 24.0625, 49.9375  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0 
+## names       : PRISM_tmin_early_4kmD1_20180901_bil, PRISM_tmin_early_4kmD1_20180902_bil 
+## min values  :                              -5.071,                              -6.393 
+## max values  :                              31.193,                              29.157</code></pre>
+<p>We can name raster layers in the same way that we name objects in a list or data frame:</p>
+<pre class="r"><code>names(tminStack[[1]]) &lt;- 
+  &#39;sept1&#39;</code></pre>
+<p>If we are only interested in one raster object, we can assign a name based on the location of the object within the raster stack:</p>
+<pre class="r"><code>tmin_sept1 &lt;- 
+  tminStack[[1]]</code></pre>
+</div>
+<div id="coordinate-reference-systems-and-transformation" class="section level2">
+<h2>Coordinate reference systems and transformation</h2>
+<p>The projection information for a raster is so important that it deserves it’s own section. As mentioned above, the coordinate reference system provides the geodetic datum (i.e., the point of reference for which locations are measured – Google Earth is WGS 1984) and the type of coordinates used (e.g., latitude, longitude or UTM). There is a bit more to the CRS, but that’s enough to get us started (<i>Note: We have placed an excellent guide to CRS, published by the National Center for Ecological Analysis and Synthesis, in your Dropbox folder</i>). When we typed the name of the raster and raster stack above the CRS was printed in the output. We can also explicitly query the CRS information using the functions <code>crs</code> or <code>projection</code>.</p>
+<pre class="r"><code>crs(tminStack)</code></pre>
+<pre><code>## CRS arguments:
+##  +proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0</code></pre>
+<pre class="r"><code>projection(tminStack)</code></pre>
+<pre><code>## [1] &quot;+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0&quot;</code></pre>
+<p>The CRS is important because when comparing between objects, such as raster values at the locations of points that you have recorded with a GPS unit, you need to ensure that both datasets are using the same CRS. If you do not do so, the alignment of objects can be quite different. If this occurs, you might see strange results when making maps or, even worse, extract the wrong data to points (we will cover point extraction below). To ensure that this does not occur, you can transform a raster to a new coordinate system using the function <code>projectRaster</code>. Later in this lab we will be projecting our files onto Google Earth, which uses a different CRS than our raster objects (WGS84, which really almost identical, but not quite). Let’s transform our raster stack with the following code:</p>
+<pre class="r"><code>newProj &lt;-
+  &#39;+proj=longlat +ellps=WGS84 +datum=WGS84&#39;
+
+tminStack_prj &lt;-
+  projectRaster(tminStack, crs = newProj)
+
+projection(tminStack)</code></pre>
+<pre><code>## [1] &quot;+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0&quot;</code></pre>
+<pre class="r"><code>projection(tminStack_prj)</code></pre>
+<pre><code>## [1] &quot;+proj=longlat +ellps=WGS84 +datum=WGS84 +towgs84=0,0,0&quot;</code></pre>
+<hr />
+<blockquote>
+<p><strong>Exercise 1:</strong></p>
+<p>Transform the raster file tmin_sept1 to the CRS defined in newproj. Assign the name tmin_sept1_prj to the file.</p>
+</blockquote>
+<hr />
+</div>
+<div id="plotting-rasters." class="section level2">
+<h2>Plotting rasters.</h2>
+<p>We can plot the entire stack at once in a single diagram using:</p>
+<pre class="r"><code>plot(tminStack_prj)</code></pre>
+<p><img src="mb2018-gisR_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>We can index the raster stack (double brackets) to plot a single raster.</p>
+<pre class="r"><code>plot(tminStack_prj[[1]])</code></pre>
+<p><img src="mb2018-gisR_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>You can also add state boundaries to a map. For example, let’s add US state boundaries to the 14 September map you made above:</p>
+<pre class="r"><code>map(&#39;state&#39;)
+
+plot(tminStack_prj[[1]])
+
+map(&#39;state&#39;, add = T)</code></pre>
+<p><img src="https://raw.githubusercontent.com/SCBI-MigBirds/MigBirds/master/data/Tmin/tminSept01WithStates.png" /></p>
+<p>We can also change the color scheme:</p>
+<pre class="r"><code>plot(
+  tmin_sept1_prj,
+  col = rev(rainbow(100)))
+
+map(&#39;state&#39;, add = T)</code></pre>
+<p>Or add the state boundaries layer to the above in one step:</p>
+<pre class="r"><code>plot(
+  tmin_sept1_prj,
+  col = rev(rainbow(100)),
+  addfun = map(&#39;state&#39;, add=T))</code></pre>
+<p><img src="https://raw.githubusercontent.com/SCBI-MigBirds/MigBirds/master/data/Tmin/newColors.png" /></p>
+<p>Plots can be useful for exploring raster objects. For example, we can determine the value at a given point using the <code>click</code> function (<strong>Note: Hit ‘Escape’ to exit turn off the clicker</strong>):</p>
+<pre class="r"><code>click(tmin_sept1_prj)</code></pre>
+<p>If you do not provide the name of the raster, <code>click()</code> will return the location of the cell you click on (also useful information!).</p>
+<pre class="r"><code>click()</code></pre>
+</div>
+<div id="cropping-rasters" class="section level2">
+<h2>Cropping rasters</h2>
+<p>We can zoom into the map by clicking the upper left and lower right hand corner of a bounding box:</p>
+<pre class="r"><code>zoom(
+  tmin_sept1_prj,
+  col = rev(rainbow(100)))</code></pre>
+<p>To create a raster for a reduced extent, draw a new extent around Virginia by clicking the upper left and lower right hand corner of a bounding box that contains the state boundaries:</p>
+<pre class="r"><code>extentVirginia &lt;-
+  drawExtent()</code></pre>
+<p>Crop the raster to the new extent and assign the name tminVirginia:</p>
+<pre class="r"><code>tminVirginia &lt;- 
+  crop(tmin_sept1_prj, extentVirginia)</code></pre>
+<p>Plot the new reduced raster:</p>
+<pre class="r"><code>plot(
+  tminVirginia,
+  col = rev(rainbow(100)),
+  addfun = map(&#39;state&#39;, add=T))</code></pre>
+<p><img src="https://raw.githubusercontent.com/SCBI-MigBirds/MigBirds/master/data/Tmin/tminVirg.png" /></p>
+<hr />
+<blockquote>
+<p><strong>Exercise 2:</strong></p>
+<ol style="list-style-type: decimal">
+<li>Assign the name “tmin14Sept” to the raster file that represents the minimum temperatures for the 14th of September, 2018.<br />
+</li>
+<li>Plot the minimum temperatures for 14, September, 2018.</li>
+<li>Change the color scheme to <code>rainbow</code>.<br />
+</li>
+<li>Add the state boundaries to your plot.</li>
+</ol>
+</blockquote>
+<hr />
+</div>
+<div id="raster-summary-data-and-math" class="section level2">
+<h2>Raster summary data and math</h2>
+<p>An advantage to using R for working with rasters is that it is super simple to explore summary statistics and calculate new rasters using math.</p>
+<p>Let’s start by looking again at the summary information for the raster layer that we created:</p>
+<pre class="r"><code>tmin_sept1_prj</code></pre>
+<pre><code>## class       : RasterLayer 
+## dimensions  : 631, 1414, 892234  (nrow, ncol, ncell)
+## resolution  : 0.0417, 0.0417  (x, y)
+## extent      : -125.2293, -66.26553, 23.8333, 50.146  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +towgs84=0,0,0 
+## data source : in memory
+## names       : sept1 
+## values      : -4.352329, 31.0922  (min, max)</code></pre>
+<p>We can calculate descriptive statistics using the <code>cellstats</code> function:</p>
+<pre class="r"><code>cellStats(tmin_sept1_prj, &#39;mean&#39;)</code></pre>
+<pre><code>## [1] 15.14463</code></pre>
+<pre class="r"><code>cellStats(tmin_sept1_prj, &#39;min&#39;)</code></pre>
+<pre><code>## [1] -4.352329</code></pre>
+<pre class="r"><code>cellStats(tmin_sept1_prj, &#39;max&#39;)</code></pre>
+<pre><code>## [1] 31.0922</code></pre>
+<pre class="r"><code>cellStats(tmin_sept1_prj, &#39;sd&#39;)</code></pre>
+<pre><code>## [1] 6.084061</code></pre>
+<p>How are the temperature data distributed? Let’s plot a histogram:</p>
+<pre class="r"><code>hist(tmin_sept1_prj)</code></pre>
+<p><img src="mb2018-gisR_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p>Note the warning message we received! We can change the argument <code>maxpixels</code> to include all of the pixels, though this will lead to a longer calculation time:</p>
+<pre class="r"><code>hist(tmin_sept1_prj, maxpixels = Inf)</code></pre>
+<p><img src="mb2018-gisR_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<p>There are many arguments that can be used when plotting histograms of rasters. Type <code>?hist</code> to learn more. Below is the code for a more advanced histogram:</p>
+<pre class="r"><code>hist(
+  tmin_sept1_prj,
+  maxpixels = Inf,
+  freq = F,
+  xlab = expression(&#39;Temperature (&#39; * degree * C * &#39;)&#39;),
+  xlim = c(0, 32),
+  ylim = c(0, .12),
+  cex.lab = 1.5,
+  cex.main = 1.5,
+  col = rev(rainbow(19))
+  )</code></pre>
+<p><img src="mb2018-gisR_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p>We can also perform calculations on a cell-by-cell basis. For example, we can create a raster in which each cell represents the average of values at that location across the entire cell stack simply by using the <code>mean</code> function.</p>
+<pre class="r"><code>mean(tminStack_prj)</code></pre>
+<pre><code>## class       : RasterLayer 
+## dimensions  : 631, 1414, 892234  (nrow, ncol, ncell)
+## resolution  : 0.0417, 0.0417  (x, y)
+## extent      : -125.2293, -66.26553, 23.8333, 50.146  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +towgs84=0,0,0 
+## data source : in memory
+## names       : layer 
+## values      : -5.099613, 28.56446  (min, max)</code></pre>
+<p>Let’s view the raster object that this function creates:</p>
+<pre class="r"><code>plot(
+  mean(tminStack_prj),
+  col = rev(rainbow(100)))</code></pre>
+<p><img src="mb2018-gisR_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p>We can also do more complex mathematical operations on a cell-by-cell basis. For example, perhaps we were interested in the deviation of the values on a given day relative to the mean of a period. Let’s first look at how this would work with a vector object:</p>
+<pre class="r"><code>v &lt;- c(3, 5, 8)
+
+mean(v)</code></pre>
+<pre><code>## [1] 5.333333</code></pre>
+<pre class="r"><code>v[1] - mean(v)</code></pre>
+<pre><code>## [1] -2.333333</code></pre>
+<p>Doing this operation with a raster works in exactly the same way. To determine how the temperature on the first day of a stack compares to the average across days, we would write:</p>
+<pre class="r"><code>tminStack_prj[[1]] - mean(tminStack_prj)</code></pre>
+<pre><code>## class       : RasterLayer 
+## dimensions  : 631, 1414, 892234  (nrow, ncol, ncell)
+## resolution  : 0.0417, 0.0417  (x, y)
+## extent      : -125.2293, -66.26553, 23.8333, 50.146  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +towgs84=0,0,0 
+## data source : in memory
+## names       : layer 
+## values      : -8.218798, 8.523455  (min, max)</code></pre>
+<p>This can be plotted as:</p>
+<pre class="r"><code>plot(
+  tminStack_prj[[1]] - mean(tminStack_prj),
+  col = rev(rainbow(100)))</code></pre>
+<p><img src="mb2018-gisR_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<hr />
+<blockquote>
+<p><strong>Exercise 3:</strong></p>
+<p>In the above plot, it looks as though temperatures in the Eastern United States were slightly below the daily average, while temperatures in the Western United States were slightly higher than the average for the period. Determine whether overall temperatures in the conterminous United States (i.e., across raster cells) were higher or lower on September 1 than the average for the period. <i>Note: There are several ways to do this using the tools addressed above!</i></p>
+</blockquote>
+<hr />
+</div>
+<div id="working-with-point-data" class="section level2">
+<h2>Working with point data</h2>
+<p>Spatial points are defined by their longitude and latitude (or x and y location). Our banding station is located at the following coordinates (a vector of longitude and latitude):</p>
+<pre class="r"><code>bandingLL &lt;-
+  data.frame(
+    x = -78.1621,
+    y = 38.8926)</code></pre>
+<p>We can convert the latitude and longitude data to a spatial points object:</p>
+<pre class="r"><code>bandingPt &lt;- 
+  SpatialPoints(
+    coordinates(bandingLL))
+
+bandingPt</code></pre>
+<pre><code>## class       : SpatialPoints 
+## features    : 1 
+## extent      : -78.1621, -78.1621, 38.8926, 38.8926  (xmin, xmax, ymin, ymax)
+## coord. ref. : NA</code></pre>
+<p>We need to set the projection of the points object, using the <code>crs</code> function to copy the coordinate system of the temperature raster:</p>
+<pre class="r"><code>crs(bandingPt) &lt;-
+  newProj
+
+bandingPt</code></pre>
+<pre><code>## class       : SpatialPoints 
+## features    : 1 
+## extent      : -78.1621, -78.1621, 38.8926, 38.8926  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +towgs84=0,0,0</code></pre>
+<p>We can complete the above using one step. If we do not have to use the data frame “bandingLL” again, this would be the preferred method (why?):</p>
+<pre class="r"><code>bandingPt &lt;-
+  data.frame(
+    x = -78.1621,
+    y = 38.8926) %&gt;%
+  coordinates %&gt;%
+  SpatialPoints(proj4string = CRS(newProj))</code></pre>
+<p>Remember that it is <b>absolutely crucial</b> that all data layers are in the same projection. If this is not the case, the function <code>spTransform</code> is used to transform points and shape files to a new projection. For example:</p>
+<pre class="r"><code>spTransform(bandingPt, newProj)</code></pre>
+<p>Once we have created a point and are certain that it is in the correct CRS, we can add our banding station location to a map (here using tmin_sept1):</p>
+<pre class="r"><code>plot(
+  tmin_sept1_prj,
+  col = rev(rainbow(100)))
+
+points(bandingPt)</code></pre>
+<p><img src="mb2018-gisR_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p>If you’re having a hard time seeing it, you can use the argument <code>pch</code> to change the type of point displayed. Let’s use <code>pch = 19</code> and see what the new point object looks like:</p>
+<pre class="r"><code>plot(
+  tmin_sept1_prj,
+  col = rev(rainbow(100)))
+
+points(
+  bandingPt, 
+  pch = 19)</code></pre>
+<p><img src="mb2018-gisR_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<p>Still a little hard to see? Let’s use the <code>col</code> argument to change the color of the point:</p>
+<pre class="r"><code>plot(
+  tmin_sept1_prj,
+  col = rev(rainbow(100)))
+
+points(bandingPt, 
+       pch = 19, 
+       col = &#39;white&#39;)</code></pre>
+<p><img src="mb2018-gisR_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<p>To make our points even easier to see might want to surround our points with a border (<code>pch = 21</code>) and give them a background color (<code>bg = 'white'</code>):</p>
+<pre class="r"><code>plot(
+  tmin_sept1_prj,
+  col = rev(rainbow(100)))
+
+points(bandingPt, 
+       pch = 21, 
+       bg = &#39;white&#39;)</code></pre>
+<p><img src="mb2018-gisR_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<p>See <code>?par</code> for all of the different parameters that can be set with graphic objects.</p>
+</div>
+<div id="extracting-values-to-points" class="section level2">
+<h2>Extracting values to points</h2>
+<p>We can easily extract raster values to points using the <code>extract</code> function. For example, to extract the minimum temperature at our banding station on 14 September, we would write:</p>
+<pre class="r"><code>extract(tmin_sept1_prj,
+        bandingPt)</code></pre>
+<p>Uh-oh. It doesn’t work! This is because there are multiple R packages that include the function <code>extract</code>. You can tell R which package you would like to use by giving the name of the package, in this case <code>raster</code>, followed by “::” and the name of the function.</p>
+<pre class="r"><code>raster::extract(tmin_sept1_prj,
+                bandingPt)</code></pre>
+<pre><code>##          
+## 20.43724</code></pre>
+<p>We can use the function and the stack object above to see the minimum temperature at our banding station since the first of September:</p>
+<pre class="r"><code>raster::extract(tminStack_prj,
+                bandingPt)</code></pre>
+<pre><code>##         sept1 PRISM_tmin_early_4kmD1_20180902_bil
+## [1,] 20.43724                            18.91267
+##      PRISM_tmin_early_4kmD1_20180903_bil
+## [1,]                            19.72301
+##      PRISM_tmin_early_4kmD1_20180904_bil
+## [1,]                            20.50141
+##      PRISM_tmin_early_4kmD1_20180905_bil
+## [1,]                            21.19654</code></pre>
+<p>You can also extract the values of a raster within a given radius around a given point (or multiple points). Let’s look at the average minimum temperature within 10 km of the banding point:</p>
+<pre class="r"><code>raster::extract(tmin_sept1_prj,
+                bandingPt,
+                buffer = 10000,
+                fun = mean,
+                na.rm = T)</code></pre>
+<pre><code>## [1] 20.5196</code></pre>
+<p>It is often necessary to save point values to your point object. Let’s run the following code with the argument <code>sp=T</code> to attach values to our banding point:</p>
+<pre class="r"><code>bandingPt_spDf &lt;-
+  raster::extract(
+    tmin_sept1_prj,
+    bandingPt,
+    sp = T)
+
+bandingPt_spDf</code></pre>
+<pre><code>## class       : SpatialPointsDataFrame 
+## features    : 1 
+## extent      : -78.1621, -78.1621, 38.8926, 38.8926  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +towgs84=0,0,0 
+## variables   : 1
+## names       :            sept1 
+## value       : 20.4372380742669</code></pre>
+<p>The object you created above is called a spatial points data frame. This is a spatial points object in which there is a data frame containing the values for each point location. You can view just the data frame using the <code>@data</code> argument, as below:</p>
+<pre class="r"><code>bandingPt_spDf@data</code></pre>
+<pre><code>##      sept1
+## 1 20.43724</code></pre>
+</div>
+<div id="generating-and-extracting-values-to-random-points." class="section level2">
+<h2>Generating and extracting values to random points.</h2>
+<p>In R, it is quite easy to generate random points within a raster:</p>
+<pre class="r"><code># Generate points:
+
+rPoints &lt;-
+  randomPoints(tmin_sept1_prj, 500)
+
+# Make points spatial:
+
+rPoints_sp &lt;- 
+  SpatialPoints(rPoints)
+
+# Project points:
+
+crs(rPoints_sp) &lt;-
+  crs(tmin_sept1_prj)</code></pre>
+<p>Let’s add the random points to the map:</p>
+<pre class="r"><code>plot(
+  tmin_sept1_prj,
+  col = rev(rainbow(100)))
+
+points(
+  rPoints_sp,
+  pch = 21,
+  cex = .75,
+  col = 1,
+  bg = &#39;white&#39;)</code></pre>
+<p><img src="mb2018-gisR_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
+<p>Just as we extracted to individual points, we can extract temperatures for each point:</p>
+<pre class="r"><code>tmin_rPoints &lt;-
+  raster::extract(
+    tmin_sept1_prj,
+    rPoints_sp,
+    sp = T)</code></pre>
+<p>Let’s view the minimum temperature records as a tibble:</p>
+<pre class="r"><code>tmin_rPoints@data %&gt;%
+  as_tibble</code></pre>
+<pre><code>## # A tibble: 500 x 1
+##    sept1
+##  * &lt;dbl&gt;
+##  1 25.1 
+##  2  6.17
+##  3 21.9 
+##  4 20.6 
+##  5  4.05
+##  6 18.9 
+##  7 20.2 
+##  8  3.45
+##  9 17.9 
+## 10  9.97
+## # ... with 490 more rows</code></pre>
+<p>A great thing about working with raster stacks is that you can extract values across the entire stack. Let’s extract the values of each of the layers in the raster stack <code>tminStack_prj</code> to the random points we created and view the data frame as a tibble.</p>
+<pre class="r"><code>raster::extract(
+    tminStack_prj,
+    rPoints_sp,
+    sp = T)@data %&gt;%
+  as_tibble</code></pre>
+<pre><code>## # A tibble: 500 x 5
+##    sept1 PRISM_tmin_early_4km~ PRISM_tmin_early_4km~ PRISM_tmin_early_4km~
+##  * &lt;dbl&gt;                 &lt;dbl&gt;                 &lt;dbl&gt;                 &lt;dbl&gt;
+##  1 25.1                  24.6                  24.8                  25.1 
+##  2  6.17                  3.99                  3.69                  3.52
+##  3 21.9                  19.3                  19.1                  18.6 
+##  4 20.6                  20.5                  21.3                  21.6 
+##  5  4.05                  4.35                  6.09                  7.36
+##  6 18.9                  18.4                  18.0                  18.8 
+##  7 20.2                  21.7                  21.6                  21.9 
+##  8  3.45                  5.23                  7.41                  7.83
+##  9 17.9                  18.2                  18.7                  20.0 
+## 10  9.97                 11.1                  10.6                  11.6 
+## # ... with 490 more rows, and 1 more variable:
+## #   PRISM_tmin_early_4kmD1_20180905_bil &lt;dbl&gt;</code></pre>
+<p>Nothings perfect, what’s wrong with the object we created above (think about the rules of data science we have covered)?</p>
+<hr />
+<blockquote>
+<p><strong>Exercise 3</strong>:</p>
+<ol style="list-style-type: decimal">
+<li>Generate 300 spatial points within the raster tminVirginia. Assign the name “rPoints” to the object.<br />
+</li>
+<li>Convert to a spatial object and assign the name “rPointsSp” to the object.<br />
+</li>
+<li>Extract values of tminVirginia to rPointsSp (Note: Use <code>sp = T</code>) and convert the output to a tibble. Assign the name “rPointsV” to the resultant object.<br />
+</li>
+<li>Use the functions <code>class</code>, <code>str</code>, <code>names</code>, <code>head</code>, and <code>summary</code> to explore the structure and values of rPointsV.</li>
+</ol>
+</blockquote>
+</div>
+<div id="viewing-and-sharing-your-files-interactively-say-no-to-cartography" class="section level2">
+<h2>Viewing and sharing your files interactively! Say no to cartography!</h2>
+<p>There are lots of ways to explore maps interactively, one way that’s fun is to share maps via Google Earth:</p>
+<pre class="r"><code>KML(tminVirginia, &#39;tminVirginia.kml&#39;, col = rev(rainbow(100)), colNA=NA)</code></pre>
+<p>Open up Google Earth and add your data and take a look! To do so, navigate to, and double-click on your KML file in your file explorer.</p>
+<hr />
+<p>The above is, of course, just a few basic GIS tasks and really represents the tip-of-the-iceburg of what R can do as a GIS. We will be exploring spatial data much further in labs throughout the week. For a further look at using R as a GIS, check out this <a href="http://cran.r-project.org/web/views/Spatial.htm"><strong>website</strong></a> to see the variety of packages and analyses available.</p>
+<hr />
+<p><img align = "center" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Git-logo.svg/512px-Git-logo.svg.png" height="150px" width = "150px"/></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

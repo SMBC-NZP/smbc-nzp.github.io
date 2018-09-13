@@ -1,0 +1,25 @@
+[general]
+creator=R package 'raster'
+created=2018-09-13 04:32:29
+[georeference]
+nrows=621
+ncols=1405
+xmin=-125.020833333
+ymin=24.0625
+xmax=-66.479166666
+ymax=49.9375
+projection=+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0
+[data]
+datatype=FLT4S
+byteorder=little
+nbands=5
+bandorder=BIL
+minvalue=-5.07100009918213:-6.39300012588501:-6.71600008010864:-5.77799987792969:-5.68400001525879
+maxvalue=31.193000793457:29.1569995880127:29.2549991607666:31.3719997406006:30.6539993286133
+nodatavalue=-3.4e+38
+[legend]
+legendtype=
+values=
+color=
+[description]
+layername=sept1:PRISM_tmin_early_4kmD1_20180902_bil:PRISM_tmin_early_4kmD1_20180903_bil:PRISM_tmin_early_4kmD1_20180904_bil:PRISM_tmin_early_4kmD1_20180905_bil
