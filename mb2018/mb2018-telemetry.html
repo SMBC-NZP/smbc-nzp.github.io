@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title></title>
+
+<script src="mb2018-telemetry_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="mb2018-telemetry_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="mb2018-telemetry_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="mb2018-telemetry_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="mb2018-telemetry_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="mb2018-telemetry_files/navigation-1.1/tabsets.js"></script>
+<link href="mb2018-telemetry_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="mb2018-telemetry_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<head>
+<link rel="stylesheet" href=""N:/Capacity Building and Academic Programs/SI-Mason Grad & Prof Training/Individual Courses--Folders/Bird Migration/2018/Materials/Distance"> <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<p><img style="float:right;padding-left:25px;border:none" src="images/smsc_logo.jpg" width = "500px"/></p>
+<div id="triangulation-of-radio-telemetry-data-in-r" class="section level1">
+<h1>Triangulation of radio telemetry data in R</h1>
+<p>
+<i>Brian S. Evans, Ph.D.</i>
+</p>
+<div id="project-description-and-context" class="section level2">
+<h2>Project Description and Context</h2>
+<p><img style="float:right;padding-left:10px;border:none" src="images/radioAntenna1.jpg" width = "300px"/></p>
+<p>
+Radio telemetry, using very high frequency (VHF) transmitters, provides researchers with the ability to determine (homing) or estimate (triangulation) the location of tagged individuals. In this module you will learn how to use triangulation to estimate where birds are. We will use Google Earth heavily in this module, because I believe that interacting with the data in Google Earth is very helpful for visualizing and exploring the data.
+</p>
+<p>
+To find out more about the use of radio telemetry to study birds and other animals, see this <a target="_blank" href=" http://www.migratoryconnectivityproject.org/vhf-radios/"> link</a>.
+</p>
+</div>
+<div id="exercise-objectives" class="section level2">
+<h2>Exercise Objectives</h2>
+<ul>
+<li>Practice and expand upon the process of exporting point data to Google Earth</li>
+<li>Learn the basics of using triangulation to estimate point locations</li>
+<li>Learn how to make error ellipses with triangulation data</li>
+<li>Learn how to export shape files to Google Earth</li>
+</ul>
+</div>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<p>We will start by loading the primary libraries that provide us with the tools for analyzing triangulation data.</p>
+<pre class="r"><code>library(tidyverse)
+library(sp)
+library(rgdal)
+library(maptools)
+library(nleqslv)
+library(ellipse)</code></pre>
+<p>Then set some options for this session:</p>
+<pre class="r"><code>select &lt;- 
+  dplyr::select</code></pre>
+<p>For this lab, you will be interacting with data through your computer’s file system. Be sure you know what directory R is reading and writing from/to (<i>Note: your output will be different than mine here</i>).</p>
+<pre class="r"><code>getwd()</code></pre>
+<p>Unfortunately, the R package that is best suited for analyzing triangulation data is no longer available in the Comprehensive R Archive Network (CRAN) where packages are stored. Luckily the package has a Github repository that we can read into R using the function <code>source</code>. This repository provides the functions necessary for analyzing triangulation data. The functions were written by Berg (2015) to provide an open-source and free method of analyzing triangulation data that is comparable in performance to expensive software packages.</p>
+<pre class="r"><code>source(&#39;https://raw.githubusercontent.com/cran/sigloc/master/R/sigloc.R&#39;)</code></pre>
+<p>The package provides a rigorous set of triangulation tools that are elsewhere only available in programs that cost money. I found the package to be a little limiting in regards to some of the output it generates, so I wrote some custom functions to aid our efforts. We can load the additional functions using the <code>source</code> function. These functions will continue to be available to you in your Dropbox folder after the course is completed.</p>
+<pre class="r"><code>source(&#39;https://www.dropbox.com/s/t4bxf2olztv8alx/packages_and_setup.R?dl=1&#39;)</code></pre>
+</div>
+<div id="loading-telemetry-data-in-r-and-google-earth" class="section level2">
+<h2>Loading telemetry data in R and Google Earth</h2>
+<p>We’ll next load example telemetry data that will we use in this module. Please take a moment to load and explore these data.</p>
+<pre class="r"><code>telemetryData &lt;-
+  read.csv(&#39;https://www.dropbox.com/s/rzi1ghq0bg24coh/exampleTelemetry.csv?dl=1&#39;)
+
+telemetryData</code></pre>
+<pre><code>##           x       y bearing
+## 1 -78.16463 38.8848     358
+## 2 -78.16356 38.8872     264
+## 3 -78.16654 38.8882     128</code></pre>
+<p>The data consist of three points. Each point has a longitude (x), latitude (y), and compass bearing. The data were gathered with a GPS unit and recorded in decimal degrees with the World Geodetic System 1984 datum (WGS 84). Using this information, we can define the coordinate reference system (CRS) of the data and transform the data frame to a spatial points object.</p>
+<pre class="r"><code>telemetryData_sp &lt;-
+  telemetryData %&gt;%
+  select(x, y) %&gt;%
+  SpatialPointsDataFrame(
+    data = telemetryData,
+    proj4string = CRS(&#39;+proj=longlat +ellps=WGS84 +datum=WGS84&#39;)
+  )
+
+telemetryData_sp</code></pre>
+<pre><code>##            coordinates         x       y bearing
+## 1 (-78.16463, 38.8848) -78.16463 38.8848     358
+## 2 (-78.16356, 38.8872) -78.16356 38.8872     264
+## 3 (-78.16654, 38.8882) -78.16654 38.8882     128</code></pre>
+<p>We’ll now convert this file to a KML (keyhole markup language) file for viewing in Google Earth. To do so, we’ll use the function <code>kmlPoints</code>. In the simplest version of this function, you specify the spatial point file you would like to save to KML and the name of file you would like to create.</p>
+<pre class="r"><code>kmlPoints(
+    telemetryData_sp,
+    kmlfile = &#39;telemetryData.kml&#39;)</code></pre>
+<p>Of course, we could have written the above code more parsimoniously using piping.</p>
+<pre class="r"><code>telemetryData %&gt;%
+  select(x, y) %&gt;%
+  SpatialPointsDataFrame(
+    data = telemetryData,
+    proj4string = CRS(&#39;+proj=longlat +ellps=WGS84 +datum=WGS84&#39;)
+  ) %&gt;%
+  kmlPoints(
+    kmlfile = &#39;telemetryData.kml&#39;,
+  )</code></pre>
+<p>Now open Google Earth. On the menu in the upper left hand corner, click File/Open…and select the file telemetryData.kml. This loads your point file into the Temporary Places folder in Google Earth. The image you see should be similar to the image below:</p>
+<p><img style="border:none" src="images/kml_init.jpg" width = "700px"/></p>
+<p>If you expand the “telemetryData.kml” file, you can see that each point, displayed as “site <i>x</i>” is its own subfile. If you right-click on the point subfile or on the map point and select “Properties”, you can modify how the point is displayed.</p>
+<p>An alternate to setting the display by hand in Google Earth is to use R to code some display options in when writing the file. For example, the code below adds a custom icon to the points and changes how the name of the file will be displayed in Google Earth. Let’s move back to R and set the name and icons used (<i>Note: icons can be found on the Google Maps development website found <a href = "http://sites.google.com/site/gmapsdevelopment" target="_blank">here</a></i>).</p>
+<pre class="r"><code>telemetryData %&gt;%
+  select(x, y) %&gt;%
+  SpatialPointsDataFrame(
+    data = telemetryData,
+    proj4string = CRS(&#39;+proj=longlat +ellps=WGS84 +datum=WGS84&#39;)
+  ) %&gt;%
+  kmlPoints(
+    kmlfile = &#39;telemetryData.kml&#39;,
+    kmlname = &#39;Example telemetry data&#39;,
+    icon = &#39;http://maps.google.com/mapfiles/ms/micons/sunny.png&#39;
+  )</code></pre>
+<p>Move back to Google Earth, load the file as above, and accept that you be overwriting the data. Your new map should look something like this:</p>
+<p><img style="border:none" src="images/kml_sunnyPoint.jpg" width = "700px"/></p>
+</div>
+<div id="signal-location-frames" class="section level2">
+<h2>Signal-location frames</h2>
+<p>Our first real analytic goal in triangulating telemetry data is generating what is known as a <b>signal-location frame</b>. We do so using the function <code>make_sigFrame</code> on the file. In doing so, it is necessary that the latitude, latitude, longitude, and bearings are labeled in the same way as the file <code>telemetryData</code>.</p>
+<pre class="r"><code>observations &lt;- 
+  telemetryData %&gt;%
+  make_sigFrame
+
+observations</code></pre>
+<pre><code>##   Date GID Time   Easting Northing Azimuth
+## 1   NA   1   NA -78.16463  38.8848     358
+## 2   NA   1   NA -78.16356  38.8872     264
+## 3   NA   1   NA -78.16654  38.8882     128</code></pre>
+<p>
+The variables in this object include:
+</p>
+<ul>
+<li>
+Date: Date of the observation, which is set as NA
+</li>
+<li>
+GID: Group identifier, which is set as 1
+</li>
+<li>
+Time: Time of observation, which is set as NA
+</li>
+<li>
+Easting: The longitude of the observation
+</li>
+<li>
+Northing: the latitude of the observation
+</li>
+<li>
+Azimuth: The compass bearing in which the antenna was pointed
+</li>
+</ul>
+<p>Careful looking will show you that the object may look like a data frame, but it is not. Take a moment to explore the class and structure of the above object:</p>
+<pre class="r"><code># Compare class of objects:
+
+class(telemetryData)</code></pre>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<pre class="r"><code>class(observations)</code></pre>
+<pre><code>## [1] &quot;receiver&quot;</code></pre>
+<pre class="r"><code># Compare structure of objects:
+
+str(telemetryData)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    3 obs. of  3 variables:
+##  $ x      : num  -78.2 -78.2 -78.2
+##  $ y      : num  38.9 38.9 38.9
+##  $ bearing: int  358 264 128</code></pre>
+<pre class="r"><code>str(observations)</code></pre>
+<pre><code>## List of 6
+##  $ Date    : logi [1:3] NA NA NA
+##  $ GID     : num [1:3] 1 1 1
+##  $ Time    : logi [1:3] NA NA NA
+##  $ Easting : num [1:3] -78.2 -78.2 -78.2
+##  $ Northing: num [1:3] 38.9 38.9 38.9
+##  $ Azimuth : int [1:3] 358 264 128
+##  - attr(*, &quot;class&quot;)= chr &quot;receiver&quot;
+##  - attr(*, &quot;row.names&quot;)= int [1:3] 1 2 3</code></pre>
+<pre class="r"><code># Compare object summary information:
+
+summary(telemetryData)</code></pre>
+<pre><code>##        x                y            bearing   
+##  Min.   :-78.17   Min.   :38.88   Min.   :128  
+##  1st Qu.:-78.17   1st Qu.:38.89   1st Qu.:196  
+##  Median :-78.16   Median :38.89   Median :264  
+##  Mean   :-78.16   Mean   :38.89   Mean   :250  
+##  3rd Qu.:-78.16   3rd Qu.:38.89   3rd Qu.:311  
+##  Max.   :-78.16   Max.   :38.89   Max.   :358</code></pre>
+<pre class="r"><code>summary(observations)</code></pre>
+<pre><code>##          Length Class  Mode   
+## Date     3      -none- logical
+## GID      3      -none- numeric
+## Time     3      -none- logical
+## Easting  3      -none- numeric
+## Northing 3      -none- numeric
+## Azimuth  3      -none- numeric</code></pre>
+<p>The <code>observations</code> object that we created is a special type of object called a <code>receiver</code> object (a type of list). This object is actually very cool. Among other things that are under-the-hood. The <code>plot</code> function acts differently on a <code>receiver</code> object than a normal data frame. Running <code>plot</code> with the following line of code shows the three observation points:</p>
+<pre class="r"><code>plot(observations)</code></pre>
+<p><img src="mb2018-telemetry_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Plotting <code>observations</code> with the additional argument <code>bearings = TRUE</code> provides us with our first look at where our transmitter might be located:</p>
+<pre class="r"><code>plot(observations, bearings = TRUE)</code></pre>
+<p><img src="mb2018-telemetry_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>It still isn’t very useful without viewing it on a map. Let’s use a custom function <code>made_bearingLines</code> to change the bearing lines to a spatial object.</p>
+<pre class="r"><code>make_bearingLines(telemetryData)</code></pre>
+<pre><code>## An object of class &quot;SpatialLinesDataFrame&quot;
+## Slot &quot;data&quot;:
+##   id
+## 1  1
+## 2  2
+## 3  3
+## 
+## Slot &quot;lines&quot;:
+## [[1]]
+## An object of class &quot;Lines&quot;
+## Slot &quot;Lines&quot;:
+## [[1]]
+## An object of class &quot;Line&quot;
+## Slot &quot;coords&quot;:
+##              x        y
+## [1,] -78.16463 38.88480
+## [2,] -78.16498 38.89479
+## 
+## 
+## 
+## Slot &quot;ID&quot;:
+## [1] &quot;1&quot;
+## 
+## 
+## [[2]]
+## An object of class &quot;Lines&quot;
+## Slot &quot;Lines&quot;:
+## [[1]]
+## An object of class &quot;Line&quot;
+## Slot &quot;coords&quot;:
+##              x        y
+## [1,] -78.16356 38.88720
+## [2,] -78.17351 38.88615
+## 
+## 
+## 
+## Slot &quot;ID&quot;:
+## [1] &quot;2&quot;
+## 
+## 
+## [[3]]
+## An object of class &quot;Lines&quot;
+## Slot &quot;Lines&quot;:
+## [[1]]
+## An object of class &quot;Line&quot;
+## Slot &quot;coords&quot;:
+##              x        y
+## [1,] -78.16654 38.88820
+## [2,] -78.15866 38.88204
+## 
+## 
+## 
+## Slot &quot;ID&quot;:
+## [1] &quot;3&quot;
+## 
+## 
+## 
+## Slot &quot;bbox&quot;:
+##         min       max
+## x -78.17351 -78.15866
+## y  38.88204  38.89479
+## 
+## Slot &quot;proj4string&quot;:
+## CRS arguments:
+##  +proj=longlat +ellps=WGS84 +datum=WGS84 +towgs84=0,0,0</code></pre>
+<p>We can use the function <code>kmlLines</code> to save the line data as a KML that we can view in Google Earth:</p>
+<pre class="r"><code>make_bearingLines(telemetryData) %&gt;%
+  kmlLines(
+    kmlfile = &#39;bearingLines.kml&#39;,
+    col = &#39;white&#39;,
+    lwd = 2)</code></pre>
+<p>Let’s step outside of R for a moment to look at the bearing lines in Google Earth.</p>
+<p><img style="border:none" src="images/kml_bearing.jpg" width = "700px"/></p>
+</div>
+<div id="find-intersection-points" class="section level2">
+<h2>Find intersection points</h2>
+<p>Our next task is to find the intersection points where our trajectories (bearing lines) cross. We do so with a custom function called <code>findintersects</code>:</p>
+<pre class="r"><code>crossPoints &lt;- 
+  findintersects(observations)
+
+crossPoints</code></pre>
+<pre><code>##   GID         X        Y
+## 1   1 -78.16471 38.88708
+## 2   1 -78.16470 38.88676
+## 3   1 -78.16471 38.88708
+## 4   1 -78.16506 38.88704
+## 5   1 -78.16470 38.88676
+## 6   1 -78.16506 38.88704</code></pre>
+<pre class="r"><code>plot(observations, bearings = TRUE)
+
+plot(crossPoints, add = TRUE)</code></pre>
+<p><img src="mb2018-telemetry_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>We can use the custom function <code>get_intersects_sp</code> to transform the data object <code>crossPoints</code> to a spatialPointsDataFrame. We will use the <code>kmlPoints</code> method to add these points to Google Earth, as above.</p>
+<pre class="r"><code># Let&#39;s add these intersects to our Google Earth map:
+
+crossPoints %&gt;%
+  get_intersects_sp %&gt;%
+  kmlPoints(
+    kmlfile = &#39;crossPoints.kml&#39;,
+    kmlname = &#39;Cross points&#39;
+  )</code></pre>
+<p><img style="border:none" src="images/kml_cross.jpg" width = "700px"/></p>
+<p>We might think that we are there. In fact, a lot of triangulation efforts might stop at this point with the assumption that the location of the transmitter lies somewhere between the three cross points. We’ve got one more function to go …</p>
+</div>
+<div id="maximum-likelihood-estimation-of-the-transmitter-location" class="section level2">
+<h2>Maximum likelihood estimation of the transmitter location</h2>
+<p>The <code>locate</code> function provides a maximum likelihood approach to estimate location and developed by Lenth (1981) and adapted by Berg (2015). The input of this function is simply the observatino file.</p>
+<pre class="r"><code>loc &lt;- 
+  locate(observations)
+
+loc</code></pre>
+<pre><code>##           X        Y BadPoint       Var_X        Var_Y        Cov_XY
+## 1 -78.16481 38.88703        0 9.00544e-09 3.386408e-09 -5.504177e-10
+##   AngleDiff Date Time
+## 1  2.784808   NA   NA</code></pre>
+<p>The <code>locate</code> function output can be plotted to provide a 95% confidence interval error ellipse and estimated location of the point. We can plot these data as follows:</p>
+<pre class="r"><code>loc &lt;- 
+  locate(observations)
+
+plot(observations, bearings = TRUE)
+
+plot(crossPoints, add = TRUE)
+
+plot(loc, add = TRUE)</code></pre>
+<p><img src="mb2018-telemetry_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>Of course, we’ll want to view these data in Google Earth. Let’s first make a kml file of our point estimate:</p>
+<pre class="r"><code>loc_df &lt;-
+  data.frame(loc)
+
+loc_df %&gt;%
+  select(X, Y) %&gt;%
+  SpatialPointsDataFrame(
+    data = loc_df,
+    proj4string = CRS(&#39;+proj=longlat +ellps=WGS84 +datum=WGS84&#39;)
+  ) %&gt;%
+  kmlPoints(
+    kmlfile = &#39;pointEstimate.kml&#39;,
+    kmlname = &#39;Point estimate&#39;,
+    name = &quot;Point estimate&quot;,
+    icon = &#39;http://maps.google.com/mapfiles/kml/paddle/grn-stars.png&#39;
+  )</code></pre>
+<p>Next, we’ll add the error ellipse. To do so we’ll need to use the custom function <code>make_ellipsePolygon</code>, which transforms the ellipse into a spatial polygon. The spatial polygon is then saved as a KML file using the function <code>kmlPolygon</code>. In the script below, I define the appearance of the polygon as it is generated (see <code>?kmlPolygon</code>).</p>
+<pre class="r"><code>loc %&gt;% 
+  make_ellipsePolygon %&gt;%
+  kmlPolygon(&#39;errorEllipse.kml&#39;,
+             col = &#39;red&#39;,
+             lwd = 2,
+             border = &#39;blue&#39;) </code></pre>
+<p>Have a look at the output in Google Earth. It should look something like the below:</p>
+<p><img style="border:none" src="images/kml_estimate.jpg" width = "700px"/></p>
+</div>
+<div id="citations" class="section level2">
+<h2>Citations</h2>
+<p>Lenth, R.V. (1981). On Finding the Source of a Signal. Technometrics, 23(2), 149-154.</p>
+<p>Berg, S. S. (2015). The Package “sigloc” for the R Software: A Tool for Triangulating Transmitter Locations in Ground‐Based Telemetry Studies of Wildlife Populations. The Bulletin of the Ecological Society of America, 96(3), 500-507.</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
