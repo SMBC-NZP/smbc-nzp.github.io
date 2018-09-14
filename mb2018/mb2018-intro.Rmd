@@ -205,6 +205,7 @@ numericVector <- c(1, 1, 2, 3)
 <br>
 <hr>
 
+
 <p>The gray boxes below include code but no output. Please run the code and study the output within the context of the text in the document. To deepen or test your understanding of a given subject matter, please play around with the inputs to see if you fully understand the results.</i></p>
 </div>
 
