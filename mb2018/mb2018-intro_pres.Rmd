@@ -1401,8 +1401,92 @@ tbl_df(mtcars)
 </div>
 </div>
 
-## Summary
-<hr>
-<div style = "text-align: center;text-size: 1.2em;">
-<p style = "text-align: center; text-size: 1.2em;">By next Wednesday, please complete <a href = "http://scbi-migbirds.github.io/IntroductionToR.html"><b>this worksheet</b></a>.</p>
-</div>
+## Functions
+
+
+<br>
+<p>The basic structure functions (<b>DO NOT RUN</b>):</p>
+```{r, eval=FALSE}
+functionName <- function(function_argruments) {
+	functionBody
+}
+```
+<br>
+
+## Functions 
+<p>A function may have one or many arguments. Typically (but, unfortunately, not always), the first argument in a function is the data the function is acting on. For example, the function `mean` acts on a vector of numbers.</p>
+
+```{r}
+v <- 
+  c(1, 1, 2)
+
+mean(v)
+```
+
+## Functions
+<p>Subsequent arguments are often used to modify the behavior of the function. Let's look, for example, at the behavior of the function `mean` with and without the argument `na.rm = TRUE`</p>
+
+
+```{r}
+v <- 
+  c(1, 1, 2, NA)
+
+mean(v)
+
+mean(v, na.rm = TRUE)
+```
+
+## Functions
+<p>Almost everything we do in R requires a function. For example, reading in data:</p>
+
+```{r}
+read.csv('https://www.dropbox.com/s/rzi1ghq0bg24coh/exampleTelemetry.csv?dl=1')
+```
+
+## Functions
+<p>Almost everything we do in R requires a function. For example, reading in data:</p>
+
+```{r}
+read_csv('https://www.dropbox.com/s/rzi1ghq0bg24coh/exampleTelemetry.csv?dl=1')
+```
+
+## Writing custom functions
+
+```{r}
+
+# First function:
+
+addOneFun <- function(x){
+	x+1
+}
+```
+
+## Writing custom functions
+
+```{r}
+# Testing the function on a numeric value:
+
+42+1
+
+addOneFun(42)
+```
+
+## Writing custom functions
+
+```{r}
+
+# Testing the function on a vector of numeric values:
+
+v <- c(1,1,2,3,5)
+
+v + 1
+
+addOneFun(v)
+```
+<br>
+
+## Exercise
+<br>
+<p>The mathematical formula for standard error is provided below. Convert this to an R function (<i>Note: the function for standard deviation is `sd` and the function for square root is `sqrt`</i>):
+$$StdErr (x) = \frac{StDev(x)}{\sqrt{n}}$$
+</p>
