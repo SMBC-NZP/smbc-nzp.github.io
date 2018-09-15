@@ -28,7 +28,6 @@ tmin_20180901 <-
 ```
 
 <head>
-<link rel="stylesheet" href=""N:/Capacity Building and Academic Programs/SI-Mason Grad & Prof Training/Individual Courses--Folders/Bird Migration/2018/Materials/Distance">
 <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
@@ -41,7 +40,7 @@ tmin_20180901 <-
 
 ## Project Description and Context
 
-In this module you will learn how to use R as a geographic information system (GIS). In doing so, we will be exploring 4 km resolution minimum temperature data from the [**PRISM climate group**] (http://prism.oregonstate.edu/) from the first of September to the present. PRISM provides a continuous grid of modeled temperature and precipitation values across the conterminous United States.
+In this module you will learn how to use R as a geographic information system (GIS). In doing so, we will be exploring 4 km resolution minimum temperature data from the <a href = "http://prism.oregonstate.edu/" target = "_blank">PRISM Climate Group</a> from the first of September to the present. PRISM provides a continuous grid of modeled temperature and precipitation values across the conterminous United States.
 
 ## Exercise Objectives
   * Become familiar with importing and formatting spatial data
@@ -56,10 +55,8 @@ We will start by loading the primary libraries that provide us with the tools fo
 ```{r, eval=F}
 library(raster) # Package for working with raster files
 library(dismo)  # Lots of great tools for distribution modeling
-library(gstat)
-library(maps) # Provides some predefined map layers
-library(rasterVis)
-library(prism) # Download and prepare prism temperature data
+library(maps)   # Provides some predefined map layers
+library(prism)  # Download and prepare prism temperature data
 ```
 
 We will set some options for this session:
@@ -183,7 +180,7 @@ tmin_sept1_prj <-
 
 ----
 
-## Plotting rasters.
+## Plotting rasters
 
 We can plot the entire stack at once in a single diagram using:
 
@@ -232,7 +229,7 @@ plot(
 
 <img src="https://raw.githubusercontent.com/SCBI-MigBirds/MigBirds/master/data/Tmin/newColors.png" />
 
-Plots can be useful for exploring raster objects. For example, we can determine the value at a given point using the `click` function (**Note: Hit 'Escape' to exit turn off the clicker**):
+Plots can be useful for exploring raster objects. For example, we can determine the value at a given point using the `click` function (**Note: Hit 'Escape' to exit the clicker**):
 
 ```{r eval=F}
 click(tmin_sept1_prj)
@@ -301,7 +298,7 @@ Let's start by looking again at the summary information for the raster layer tha
 tmin_sept1_prj
 ```
 
-We can calculate descriptive statistics using the `cellstats` function:
+We can calculate descriptive statistics using the `cellStats` function:
 
 ```{r}
 cellStats(tmin_sept1_prj, 'mean')
@@ -532,7 +529,7 @@ bandingPt_spDf@data
 
 ## Generating and extracting values to random points.
 
-In R, it is quite easy to generate random points within a raster:
+In R, it is quite easy to generate random points within a raster. This is useful in a variety of applications. For example, you can generate random points to determine sampling locations of point counts. To do so, you would run the following:
 
 ```{r}
 # Generate points:
@@ -593,11 +590,11 @@ raster::extract(
   as_tibble
 ```
 
-Nothings perfect, what's wrong with the object we created above (think about the rules of data science we have covered)?
+Nothing's perfect, what's wrong with the object we created above (think about the rules of data science we have covered)?
 
 ----
 
-> **Exercise 3**: 
+> **Exercise 4**: 
 >
 > 1. Generate 300 spatial points within the raster tminVirginia. Assign the name "rPoints" to the object.    
 > 2. Convert to a spatial object and assign the name "rPointsSp" to the object.    
@@ -607,7 +604,7 @@ Nothings perfect, what's wrong with the object we created above (think about the
 
 ## Viewing and sharing your files interactively! Say no to cartography!
 
-There are lots of ways to explore maps interactively, one way that's fun is to share maps via Google Earth:
+There are plenty of applications where it is necessary to make official maps (e.g., publications). Most of the time, however, we use maps to communicate information to our colleagues. In these instances, isn't it better to produce a map that folks can actually interact with? There are lots of ways to explore maps interactively, one way that's fun is to share maps via Google Earth:
 
 ```{r eval=F}
 KML(tminVirginia, 'tminVirginia.kml', col = rev(rainbow(100)), colNA=NA)

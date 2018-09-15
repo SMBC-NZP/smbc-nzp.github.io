@@ -90,6 +90,9 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
 }
@@ -122,7 +125,7 @@ $(document).ready(function () {
 
 
 <head>
-<link rel="stylesheet" href=""N:/Capacity Building and Academic Programs/SI-Mason Grad & Prof Training/Individual Courses--Folders/Bird Migration/2018/Materials/Distance"> <link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <p><img style="float:right;padding-left:25px;border:none" src="images/smsc_logo.jpg" width = "500px"/></p>
 <div id="using-r-as-a-gis" class="section level1">
@@ -133,7 +136,7 @@ $(document).ready(function () {
 <p><img style="float:right;padding-left:10px;border:none" src="images/temp_crop.png" width = "350px"/></p>
 <div id="project-description-and-context" class="section level2">
 <h2>Project Description and Context</h2>
-<p>In this module you will learn how to use R as a geographic information system (GIS). In doing so, we will be exploring 4 km resolution minimum temperature data from the [<strong>PRISM climate group</strong>] (<a href="http://prism.oregonstate.edu/" class="uri">http://prism.oregonstate.edu/</a>) from the first of September to the present. PRISM provides a continuous grid of modeled temperature and precipitation values across the conterminous United States.</p>
+<p>In this module you will learn how to use R as a geographic information system (GIS). In doing so, we will be exploring 4 km resolution minimum temperature data from the <a href = "http://prism.oregonstate.edu/" target = "_blank">PRISM Climate Group</a> from the first of September to the present. PRISM provides a continuous grid of modeled temperature and precipitation values across the conterminous United States.</p>
 </div>
 <div id="exercise-objectives" class="section level2">
 <h2>Exercise Objectives</h2>
@@ -149,10 +152,8 @@ $(document).ready(function () {
 <p>We will start by loading the primary libraries that provide us with the tools for using R as a geographic information system.</p>
 <pre class="r"><code>library(raster) # Package for working with raster files
 library(dismo)  # Lots of great tools for distribution modeling
-library(gstat)
-library(maps) # Provides some predefined map layers
-library(rasterVis)
-library(prism) # Download and prepare prism temperature data</code></pre>
+library(maps)   # Provides some predefined map layers
+library(prism)  # Download and prepare prism temperature data</code></pre>
 <p>We will set some options for this session:</p>
 <pre class="r"><code>select &lt;- 
   dplyr::select
@@ -254,8 +255,8 @@ projection(tminStack)</code></pre>
 </blockquote>
 <hr />
 </div>
-<div id="plotting-rasters." class="section level2">
-<h2>Plotting rasters.</h2>
+<div id="plotting-rasters" class="section level2">
+<h2>Plotting rasters</h2>
 <p>We can plot the entire stack at once in a single diagram using:</p>
 <pre class="r"><code>plot(tminStack_prj)</code></pre>
 <p><img src="mb2018-gisR_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
@@ -281,7 +282,7 @@ map(&#39;state&#39;, add = T)</code></pre>
   col = rev(rainbow(100)),
   addfun = map(&#39;state&#39;, add=T))</code></pre>
 <p><img src="https://raw.githubusercontent.com/SCBI-MigBirds/MigBirds/master/data/Tmin/newColors.png" /></p>
-<p>Plots can be useful for exploring raster objects. For example, we can determine the value at a given point using the <code>click</code> function (<strong>Note: Hit ‘Escape’ to exit turn off the clicker</strong>):</p>
+<p>Plots can be useful for exploring raster objects. For example, we can determine the value at a given point using the <code>click</code> function (<strong>Note: Hit ‘Escape’ to exit the clicker</strong>):</p>
 <pre class="r"><code>click(tmin_sept1_prj)</code></pre>
 <p>If you do not provide the name of the raster, <code>click()</code> will return the location of the cell you click on (also useful information!).</p>
 <pre class="r"><code>click()</code></pre>
@@ -331,7 +332,7 @@ map(&#39;state&#39;, add = T)</code></pre>
 ## data source : in memory
 ## names       : sept1 
 ## values      : -4.352329, 31.0922  (min, max)</code></pre>
-<p>We can calculate descriptive statistics using the <code>cellstats</code> function:</p>
+<p>We can calculate descriptive statistics using the <code>cellStats</code> function:</p>
 <pre class="r"><code>cellStats(tmin_sept1_prj, &#39;mean&#39;)</code></pre>
 <pre><code>## [1] 15.14463</code></pre>
 <pre class="r"><code>cellStats(tmin_sept1_prj, &#39;min&#39;)</code></pre>
@@ -524,7 +525,7 @@ bandingPt_spDf</code></pre>
 </div>
 <div id="generating-and-extracting-values-to-random-points." class="section level2">
 <h2>Generating and extracting values to random points.</h2>
-<p>In R, it is quite easy to generate random points within a raster:</p>
+<p>In R, it is quite easy to generate random points within a raster. This is useful in a variety of applications. For example, you can generate random points to determine sampling locations of point counts. To do so, you would run the following:</p>
 <pre class="r"><code># Generate points:
 
 rPoints &lt;-
@@ -563,16 +564,16 @@ points(
 <pre><code>## # A tibble: 500 x 1
 ##    sept1
 ##  * &lt;dbl&gt;
-##  1 25.1 
-##  2  6.17
-##  3 21.9 
-##  4 20.6 
-##  5  4.05
-##  6 18.9 
-##  7 20.2 
-##  8  3.45
-##  9 17.9 
-## 10  9.97
+##  1 22.0 
+##  2 14.3 
+##  3 19.5 
+##  4  5.84
+##  5 13.8 
+##  6 13.3 
+##  7 16.2 
+##  8 14.6 
+##  9 20.9 
+## 10 21.9 
 ## # ... with 490 more rows</code></pre>
 <p>A great thing about working with raster stacks is that you can extract values across the entire stack. Let’s extract the values of each of the layers in the raster stack <code>tminStack_prj</code> to the random points we created and view the data frame as a tibble.</p>
 <pre class="r"><code>raster::extract(
@@ -581,24 +582,24 @@ points(
     sp = T)@data %&gt;%
   as_tibble</code></pre>
 <pre><code>## # A tibble: 500 x 5
-##    sept1 PRISM_tmin_early_4km~ PRISM_tmin_early_4km~ PRISM_tmin_early_4km~
-##  * &lt;dbl&gt;                 &lt;dbl&gt;                 &lt;dbl&gt;                 &lt;dbl&gt;
-##  1 25.1                  24.6                  24.8                  25.1 
-##  2  6.17                  3.99                  3.69                  3.52
-##  3 21.9                  19.3                  19.1                  18.6 
-##  4 20.6                  20.5                  21.3                  21.6 
-##  5  4.05                  4.35                  6.09                  7.36
-##  6 18.9                  18.4                  18.0                  18.8 
-##  7 20.2                  21.7                  21.6                  21.9 
-##  8  3.45                  5.23                  7.41                  7.83
-##  9 17.9                  18.2                  18.7                  20.0 
-## 10  9.97                 11.1                  10.6                  11.6 
+##    sept1 PRISM_tmin_earl~ PRISM_tmin_earl~ PRISM_tmin_earl~
+##  * &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+##  1 22.0            23.2             23.6             22.6  
+##  2 14.3            17.1             12.3             12.3  
+##  3 19.5            21.3             22.1             21.2  
+##  4  5.84           -0.639           -0.487            0.741
+##  5 13.8            14.1             12.9             17.1  
+##  6 13.3            16.4             15.4             16.2  
+##  7 16.2            16.3             17.9             18.0  
+##  8 14.6            19.0             19.3             20.0  
+##  9 20.9            18.7             16.1             15.9  
+## 10 21.9            20.6             21.1             22.0  
 ## # ... with 490 more rows, and 1 more variable:
 ## #   PRISM_tmin_early_4kmD1_20180905_bil &lt;dbl&gt;</code></pre>
-<p>Nothings perfect, what’s wrong with the object we created above (think about the rules of data science we have covered)?</p>
+<p>Nothing’s perfect, what’s wrong with the object we created above (think about the rules of data science we have covered)?</p>
 <hr />
 <blockquote>
-<p><strong>Exercise 3</strong>:</p>
+<p><strong>Exercise 4</strong>:</p>
 <ol style="list-style-type: decimal">
 <li>Generate 300 spatial points within the raster tminVirginia. Assign the name “rPoints” to the object.<br />
 </li>
@@ -612,7 +613,7 @@ points(
 </div>
 <div id="viewing-and-sharing-your-files-interactively-say-no-to-cartography" class="section level2">
 <h2>Viewing and sharing your files interactively! Say no to cartography!</h2>
-<p>There are lots of ways to explore maps interactively, one way that’s fun is to share maps via Google Earth:</p>
+<p>There are plenty of applications where it is necessary to make official maps (e.g., publications). Most of the time, however, we use maps to communicate information to our colleagues. In these instances, isn’t it better to produce a map that folks can actually interact with? There are lots of ways to explore maps interactively, one way that’s fun is to share maps via Google Earth:</p>
 <pre class="r"><code>KML(tminVirginia, &#39;tminVirginia.kml&#39;, col = rev(rainbow(100)), colNA=NA)</code></pre>
 <p>Open up Google Earth and add your data and take a look! To do so, navigate to, and double-click on your KML file in your file explorer.</p>
 <hr />
