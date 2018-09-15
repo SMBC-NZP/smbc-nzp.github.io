@@ -107,7 +107,7 @@ numericVector <- c(1, 1, 2, 3)
 <div class = "row">
 <p>We will spend the next two weeks exploring new ways to think about and analyze bird data in program R. R is a user-friendly programming language/software environment that is a great tool for data management and analysis.</p>
 
-<p>People without much previous coding experience often find the process of learning R a grueling uphill climb. I believe one of the biggest impediments to this learning process involves using R as a tool to replace current steps in your data science workflow. When new tools are incorporated, especially in regards to learning to code, it is best to assess your workflow and modify as necessary. The latter requires us to better understand R as a language and develop new ways of processing data.</p>
+<p>People without much previous coding experience often find the process of learning R a grueling uphill climb. I believe one of the biggest impediments to this learning process involves using R as a tool to replace current steps in your data science workflow instead of rethinking your workflow from the ground up. As you incorporate new tools (e.g., R), it is best to assess your workflow and modify as necessary. This requires us to better understand R as a language and develop new ways of processing data.</p>
 </div>
 
 <div class = "row">
@@ -324,7 +324,7 @@ str(exampleFactor)
 summary(exampleFactor)
 ```
 <br>
-<p>Note that `exampleFactor`, as written, would produce the following output when plotted (<i>Note: plotting will be covered in a later lesson, your code will not generate a plot output</i>). The plot below shows factor values on the x axis and the number of records associated with those values on the y axis. What's wrong with this plot?</p>
+<p>Note that `exampleFactor`, as written, would produce the following output when plotted. The plot below shows factor values on the x axis and the number of records associated with those values on the y axis. What's wrong with this plot?</p>
 
 <img src="images/exampleFactorPlot.png" 
 	title="Example factor"
@@ -1134,9 +1134,9 @@ tbl_df(iris)
 <br>
 <h2>Functions</h2>
 
-<p>Above, we worked with several functions (e.g., "c", "mean"). Functions are a special type of R object allow you to simplify complex tasks, which is especially useful if you need to run a task multiple times. Program R contains many functions and many more still are created by R users and provided to the R community as collections of functions known as packages (or libraries).</p>
+<p>Above, we worked with several functions (e.g., "c", "mean"). Functions are a special type of R object that allow you to simplify complex tasks, which is especially useful if you need to run a task multiple times. Program R contains many functions and many more still are created by R users and provided to the R community as collections of functions known as packages (or libraries).</p>
 <br>
-<p>The basic structure functions is as follows (<b>DO NOT RUN</b>):</p>
+<p>The basic structure of functions is as follows (<b>DO NOT RUN</b>):</p>
 ```{r, eval=FALSE}
 functionName <- function(function_argruments) {
 	functionBody: What you would like to happen when you run your function
@@ -1152,8 +1152,17 @@ v <-
 mean(v)
 ```
 
-<p>Subsequent arguments are often used to modify the behavior of the function. Let's look, for example, at the behavior of the function `mean` with and without the argument `na.rm = TRUE`</p>
+<p>Almost everything we do in R requires a function. For example, reading in data:</p>
 
+```{r}
+read.csv('https://www.dropbox.com/s/rzi1ghq0bg24coh/exampleTelemetry.csv?dl=1')
+
+read_csv('https://www.dropbox.com/s/rzi1ghq0bg24coh/exampleTelemetry.csv?dl=1')
+```
+
+<p style = "color:blue">How is the output from the two functions above different?</p>
+
+<p>Subsequent arguments are often used to modify the behavior of the function. Let's look, for example, at the behavior of the function `mean` with and without the argument `na.rm = TRUE`</p>
 
 ```{r}
 v <- 
@@ -1164,13 +1173,6 @@ mean(v)
 mean(v, na.rm = TRUE)
 ```
 
-<p>Almost everything we do in R requires a function. For example, reading in data:</p>
-
-```{r}
-read.csv('https://www.dropbox.com/s/rzi1ghq0bg24coh/exampleTelemetry.csv?dl=1')
-
-read_csv('https://www.dropbox.com/s/rzi1ghq0bg24coh/exampleTelemetry.csv?dl=1')
-```
 
 <p>As datasets and data handling needs are often distinct, relying exclusively on built-in and community-defined functions is limiting.</p>
 <p><b>Why would you write your own functions?</b> Learning how to create your own functions, or customize existing functions, provides you with the flexibility to solve unique problems, shorten your script, and make your R code more legible for others. Writing your own functions is easy, as long as you follow the correct syntax.</p>
@@ -1201,6 +1203,18 @@ v + 1
 addOneFun(v)
 ```
 <br>
+<p>Functions can have more than one data argument. For example, let's consider a function that includes two unknown values:</p>
+
+```{r, eval=FALSE}
+
+# First function:
+
+addValues <- function(x, y){
+	x+y
+}
+
+addValues(1, 2)
+```
 
 <blockquote>
 <h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise:</h3>
