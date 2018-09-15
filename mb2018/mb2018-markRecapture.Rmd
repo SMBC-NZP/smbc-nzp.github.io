@@ -1,0 +1,746 @@
+---
+output: 
+  html_document:
+    self_contained: no
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Set up ------------------------------------------------------------------
+
+# The package is located online, not on CRAN:
+
+source('https://raw.githubusercontent.com/cran/sigloc/master/R/sigloc.R')
+
+# Some additional functions are needed:
+
+source('https://www.dropbox.com/s/t4bxf2olztv8alx/packages_and_setup.R?dl=1')
+
+# Additional packages we will be using for this lab:
+
+library(tidyverse)
+library(lubridate)
+library(marked)
+library(kableExtra)
+
+# Load data:
+
+sites <-
+  read_csv('https://www.dropbox.com/s/wepk383tdqv54oo/sites.csv?dl=1')
+
+bandingRecords <-
+  read_csv('https://www.dropbox.com/s/fxiyavgbmwtfmrz/bandingRecords.csv?dl=1')#  %>%
+  # filter(sex != 'noData') %>%
+  # filter(!is.na(sex)) %>%
+  # group_by(bandNumber) %>%
+  # filter(!(enc != 'B' & date == min(date))) %>%
+  # filter(!bandNumber == '2251-80348') %>%
+  # ungroup %>%
+  # write_csv('bandingRecords.csv')
+
+resights <-
+  read_csv('https://www.dropbox.com/s/psp8ssrwwopaz5l/resights.csv?dl=1') #%>%
+  # filter(bandNumber %in% bandingRecords$bandNumber) %>%
+  # write_csv('resights.csv')
+```
+
+<head>
+<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<img style="float:right;padding-left:25px;border:none" src="images/smsc_logo.jpg" width = "500px"/>
+
+# Estimating survivorship with mark-recapture data in R
+<p><i>Brian S. Evans, Ph.D.</i></p>
+
+## Project Description and Context
+
+<img style="float:right;padding-left:10px;border:none" src="images/catbirdLermanHand.jpg" width = "300px"/>
+
+<p>In this module, we will import and analyze banding and re-encounter data on three species of birds: the gray catbird (*Dumetella carolinensis*), northern cardinal (*Cardinalis cardinalis*), and song sparrow (*Melospiza melodia*). The data were collected between the years 2012 and 2017 from 128 banding stations in the metropolitan areas of Washington D.C.,  Gainesville Florida, and Springfield Massachussetts. Banding efforts are associated with the Smithsonian's <a target = "_blank" href = "https://nationalzoo.si.edu/migratory-birds/about-neighborhood-nestwatch">Neighborhood Nestwatch</a> project -- a citizen science program in which Smithsonian scientists band birds in participants backyards one day per year. In addition to banding, the scientists search for previously color-banded birds (resighting) and conduct point counts and habitat surveys during their visit. The participants contribute data to the project by reporting color-banded birds observed throughout the year. We will use these data collected to construct and compare Cormack-Jolly-Seber (CJS) models in the R package <a target = "_blank" href = "https://cran.r-project.org/web/packages/marked/index.html">marked</a>.</p>
+
+## Exercise Objectives
+  * Practice and expand upon data summarizing and reshaping steps
+  * Learn how to construct and interpret CJS models
+  * Learn how to plot CJS model output
+  
+## Setup
+
+We will start by loading the primary libraries that provide us with the tools for analyzing mark-recapture data.
+
+```{r, eval=F}
+library(tidyverse)
+library(lubridate)
+library(marked)
+```
+
+Then set some options for this session:
+
+```{r, eval=F}
+select <- 
+  dplyr::select
+```
+
+We will read the data directly from the internet. If you were to read these files from your computer, the location of the file on your hard drive would be used in place of the URL:
+
+```{r getFiles, eval=F}
+sites <-
+  read_csv('https://www.dropbox.com/s/wepk383tdqv54oo/sites.csv?dl=1')
+
+bandingRecords <-
+  read_csv('https://www.dropbox.com/s/fxiyavgbmwtfmrz/bandingRecords.csv?dl=1')
+
+resights <-
+  read_csv('https://www.dropbox.com/s/psp8ssrwwopaz5l/resights.csv?dl=1')
+```
+
+## Data exploration
+
+Let's take a moment to explore each of these files. 
+
+### Sites
+
+The sites file consists of three variables:
+<ul>
+<li><b>siteID:</b> a unique identifier of the site</li>
+<li><b>region:</b> the metropolitan area the site is associated with</li>
+<li><b>imp:</b> the percent cover of impervious surface (e.g., pavement, sidewalks, and roofs) within 500 meters of the site center. This variable is used as a proxy fo the degree of urban landcover at a site.</li>
+</ul>
+
+```{r}
+sites
+```
+
+Let's use the tools we learned yesterday to view the number of sites per region:
+
+```{r}
+sites %>%
+  group_by(region) %>%
+  summarize(n = n())
+```
+
+We can also calculate the amount of impervious surface in each region in our summary table:
+
+```{r}
+sites %>%
+  group_by(region) %>%
+  summarize(
+    n = n(),
+    meanImp = mean(imp))
+```
+
+<p style = "color:blue">If urban land cover influences survival, would a simple analysis of survival by region be appropriate? Why or why not?</p>
+
+### Banding records
+
+<p>The bandingRecords file consists of several variables describing a banding event:</p>
+<ul>
+<li><b>siteID:</b> a unique identifier of the site</li>
+<li><b>date:</b> the date a site was visited, in ISO 8601 date format</li>
+<li><b>time:</b> time in military-clock format. Time values of 0001 represent no data</li>
+<li><b>enc:</b> the type of encounter, where R is a recapture and B is a banding event</li>
+<li><b>spp:</b> four letter species alpha code</li>
+<li><b>bandNumber:</b> the band number, with a dash separating the band prefix and suffix</li>
+<li><b>colorCombo:</b> color bands placed on the bird, with the left and right legs separated by a comma</li>
+<li><b>mass:</b> the weight of the bird in grams. 99999 represents no data.</li>
+<li><b>wing:</b> the length of the wing in mm. 99999 represents no data.</li>
+<li><b>tl:</b> the length of the tail in mm. 99999 represents no data.</li>
+<li><b>age:</b> the age of the bird (AHY = after hatch year, SY = second year, ASY = after second year)</li>
+<li><b>sex:</b> the sex of the bird (M = male, F = female)</li>
+</ul>
+
+```{r}
+bandingRecords
+```
+
+There are a lot of NA values in the measurement data. Let's explore how many of the records have valid mass, wing, and tail lengths:
+
+```{r}
+bandingRecords %>%
+  filter(mass != 99999) %>%
+  nrow
+
+bandingRecords %>%
+  filter(wing != 99999) %>%
+  nrow
+
+bandingRecords %>%
+  filter(tl != 99999) %>%
+  nrow
+```
+
+This highlights the importance of exploring data prior to running analyses. Sample sizes for mass and wing are likely adequate to use these as covariates in a survival model. At 494 samples, however, there are probably not enough tail measurements to run the models.  
+
+If we wanted to determine how many birds were banded by region, we first have to join the bandingRecords file with the sites file by the common column "siteID" and then group and summarize the data:
+
+```{r}
+bandingRecords %>%
+  left_join(
+    sites,
+    by = 'siteID'
+  ) %>%
+  group_by(region) %>%
+  summarize(n = length(unique(bandNumber)))
+```
+
+<p style = "color:blue">Why would we have to use `length(unique(bandNumber))` instead of simply  `n()` as we did in the previous section?</p>
+
+<p>We can evaluate the number of banded and recaptured birds per region by using "region" and "type" grouping variables:
+
+```{r}
+bandingRecords %>%
+  left_join(
+    sites,
+    by = 'siteID'
+  ) %>%
+  group_by(region, enc) %>%
+  summarize(n = length(unique(bandNumber)))
+```
+
+<p>We can view our summary table in wide format using the function `spread`:</p>
+
+```{r}
+bandingRecords %>%
+  left_join(
+    sites,
+    by = 'siteID'
+  ) %>%
+  group_by(region, enc) %>%
+  summarize(n = length(unique(bandNumber))) %>%
+  spread(key = enc, value = n)
+```
+
+<p>If we want to know the proportion of birds that were recaptured, expressed as a percentage, we can use mutate to add a new column:</p>
+
+```{r}
+bandingRecords %>%
+  left_join(
+    sites,
+    by = 'siteID'
+  ) %>%
+  group_by(region, enc) %>%
+  summarize(n = length(unique(bandNumber))) %>%
+  spread(key = enc, value = n) %>%
+  mutate(percentRecap = R/B*100)
+```
+
+### Resights
+
+<p>The resights file consists of three variables describing a resight event:</p>
+<ul>
+<li><b>date:</b> the date a site was visited, in ISO 8601 date format</li>
+<li><b>bandNumber:</b> the band number, with a dash separating the band prefix and suffix</li>
+<li><b>type:</b> the type of encounter, where P is a participant (citizen scientist) resight and T is a resight by a Smithsonian technician</li>
+</ul>
+
+```{r}
+resights
+```
+
+We can determine the number of resights by type, as above:
+
+```{r}
+resights %>%
+  group_by(type) %>%
+  summarize(n = n())
+```
+
+If we wanted to know how many resights there were by species, we would have to do join the bandingRecords and resights files by the common column 'bandNumber' prior to grouping and summarizing the data:
+
+```{r}
+resights %>%
+  left_join(
+    bandingRecords,
+    by = 'bandNumber') %>%
+  group_by(spp) %>%
+  summarize(n = n())
+```
+
+We can use the additional grouping variable "type" to view the number of birds resighted by type and species:
+
+```{r}
+resights %>%
+  left_join(
+    bandingRecords,
+    by = 'bandNumber') %>%
+  group_by(spp, type) %>%
+  summarize(n = length(unique(bandNumber)))
+```
+
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h3>
+<br>
+<p>Create a wide-format summary table that provides the number of birds banded, recaptured, and resighted (across types) per region. Include additional columns that provides the proportion of birds recaptured and resighted, expressed as a percentage.</p>
+</blockquote>
+
+<hr>
+
+## Preparing data for analysis
+
+<p>The goal of this section is to generate a data frame that is ready to be evaluated using CJS models. It's a bit of a long process, so it's good to see what we're aiming for (a light at the end of the tunnel?). The final product will look something like the table below:</p>
+
+```{r, echo = FALSE, message = FALSE}
+read_csv('data/encounterHistory.csv')
+```
+
+<br>
+
+<p>To prepare data for analysis, you first have to turn your encounter records into a wide format data frame that represents the encounter history for a bird (also called a capture history). The columns for this data frame represent the band number (the first column) and time of encounter (subsequent columns). The encounter table, with encounters summarized by year, looks something like the table below, where 1 means a bird was encountered in the time period and 0 mean that it was not:</p>
+
+<br>
+```{r, echo = FALSE}
+data.frame(
+  bandNumber = c('111-22222', '222-33333', '444-55555'),
+  `2001` = c(1, 1, 1),
+  `2002` = c(0, 1,0),
+  `2003` = c(1, 0, 1)
+) %>%
+  kable("html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+<br>
+<p>Because the encounter history is used to construct models, this led many researchers to store their data in tables, such as the one below:</p>
+<br>
+
+```{r, echo = FALSE}
+data.frame(
+  bandNumber = c('111-22222', '222-33333', '444-55555'),
+  `2001` = c('banded 5/16; recap 7/24; resight 9/15', 'banded 5/16', 'banded 5/16'),
+  `2002` = c('-', 'recap 7/12 resight 10/14','-'),
+  `2003` = c('resight 8/15', '-', 'recap 6/14; resight 9/18')
+) %>%
+  kable("html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+<br>
+<p style = "color:blue">Why is the table above a good way to store encounter records? Why is it a really bad way to store encounter records?</p>
+<br>
+
+### Generating encounter histories with long-format data
+
+<p>We can use our long format data frame to generate an encounter history in just a few simple steps. First, we will use the select function to select just the band number and date columns from the bandingRecords and resights data frames:</p>
+
+
+```{r}
+bandingRecords %>%
+      select(bandNumber, date)
+
+resights %>%
+      select(bandNumber, date)
+```
+
+<p>Because these two data frames have the same column names, we can safely bind them into a single frame using `bind_rows()`:</p>
+
+```{r}
+bind_rows(
+  bandingRecords %>%
+    select(bandNumber, date),
+  resights %>%
+    select(bandNumber, date)
+)
+```
+
+<p>We can use the `transmute` function with `year()` (a function from the lubridate package) to make a data frame of just band number and year:</p>
+
+```{r}
+bind_rows(
+  bandingRecords %>%
+    select(bandNumber, date),
+  resights %>%
+    select(bandNumber, date)
+) %>%
+  transmute(
+    bandNumber,
+    year = year(date))
+```
+
+<p>If we arrange these data by band number, however, we can quickly notice that we have generated duplicate records:</p>
+
+
+```{r}
+bind_rows(
+  bandingRecords %>%
+    select(bandNumber, date),
+  resights %>%
+    select(bandNumber, date)
+) %>%
+  transmute(
+    bandNumber,
+    year = year(date)) %>%
+  arrange(bandNumber)
+```
+
+<p>To counter this problem, we can use the function `distinct` to remove duplicate records:</p>
+
+```{r}
+bind_rows(
+  bandingRecords %>%
+    select(bandNumber, date),
+  resights %>%
+    select(bandNumber, date)
+) %>%
+  transmute(
+    bandNumber,
+    year = year(date)) %>%
+  distinct
+```
+
+<p>This frame is now a long-form record of bandNumber by year and forms the basis of the encounter histories. Let's assign the name `encountersLong` to the object:</p>
+
+```{r make_encountersLong}
+encountersLong <-
+  bind_rows(
+    bandingRecords %>%
+      select(bandNumber, date),
+    resights %>%
+      select(bandNumber, date)
+  ) %>%
+  transmute(
+    bandNumber,
+    year = year(date)) %>%
+  distinct
+```
+
+<p>We are now ready to make the encounter history file! To do so, we start by adding a dummy column where all encounters are defined as 1:</p>
+
+
+```{r}
+encountersLong %>%
+  mutate(enc = 1)
+```
+
+<p>We now use `spread()` make `encountersLong` into a wide-format object. The dummy column `enc` is useful here, because that is the value that is provided to the cells. We use the argument `fill = 0` to fill any missing values with 0:</p>
+
+```{r}
+encountersLong %>%
+  mutate(enc = 1) %>%
+  spread(key = year, value = enc, fill = 0)
+```
+
+<p>The input to a CJS model is actually a vector character values called the "capture history" in which the 1s and 0s across the columns of the encounter history are collapsed into a single value. For example, the capture history for the first bird in our `encountersWide` frame is "110000". To make the capture history we will use a new function, `unite`, as below:</p>
+
+```{r}
+encountersLong %>%
+  mutate(enc = 1) %>%
+  spread(key = year, value = enc, fill = 0) %>%
+  unite(ch, -bandNumber, sep = '')
+```
+
+### Including banding and environmental data into encounter histories
+
+<p>The above is a great start, and we could run a simple CJS model with these data, but thus far we only have what it takes to model apparent survival and detection probabilities with no other variables -- not even species!</p>
+
+<p>Using band number as the common column, we can bring in some banding data to inform our models. Let's select some columns from `bandingRecords` that we would like to include in our models. We'll subset the records to just those associated with the initial banding event.</b>
+
+```{r}
+bandingRecords %>%
+  filter(enc == 'B') %>%
+  select(bandNumber, siteID, spp, mass, age, sex)
+```
+
+<p>We will now join this file to our encounter history. We'll remove the `bandNumber` column, because we no longer need it:</p>
+
+```{r}
+encountersLong %>%
+  mutate(enc = 1) %>%
+  spread(key = year, value = enc, fill = 0) %>%
+  unite(ch, -bandNumber, sep = '') %>%
+  left_join(
+    bandingRecords %>%
+      filter(enc == 'B') %>%
+      select(bandNumber, siteID, spp, mass, age, sex),
+    by = 'bandNumber'
+  ) %>%
+  select(-bandNumber)
+```
+
+<p>If we want to see how survival varies by region or impervious surface, there is one more step we might want to take. Because the encounter and site data both contain the common column `siteID`, we can join the two tables to include our environmental variables. We then remove the siteID column, as it is no longer needed. This is the final step, so we will name the resultant frame `encounterHistory` for use in modeling.</p>
+
+```{r makeCh}
+encounterHistory <-
+  encountersLong %>%
+  mutate(enc = 1) %>%
+  spread(key = year, value = enc, fill = 0) %>%
+  unite(ch, -bandNumber, sep = '') %>%
+  left_join(
+    bandingRecords %>%
+      filter(enc == 'B') %>%
+      select(bandNumber, siteID, spp, mass, age, sex),
+    by = 'bandNumber'
+  ) %>%
+  select(-bandNumber) %>%
+  left_join(
+    sites,
+    by = 'siteID'
+  ) %>%
+  select(-siteID)
+```
+
+
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h3>
+<br>
+<ul>
+<li>Subset the banding records to just those associated with the northern cardinal (NOCA).</li>
+<li>Make a long-form encounterHistory for the northern cardinal. Assign the name `encountersLong_noca`.</li>
+<li>Create an encounter history file (that includes environmental and banding data) for the northern cardinal, as above. Assign the name `encounterHistory_noca` resultant file.</li>
+<li><b>Extra credit</b> (only complete this if you have extra time): Using the file `encountersLong_noca`, create a summary table of the number of times cardinals were encountered (for example, the number of cardinals that were encountered five times). 
+</ul>
+</blockquote>
+
+<hr>
+
+```{r, include = FALSE}
+
+encounterHistory_noca <-
+  encounterHistory %>%
+  filter(spp == 'NOCA')
+```
+
+## Simple CJS models
+
+<p>We will start by making a simple model with no covariates. To do so, let's first select just the capture history column and convert the output to data frame (because tibble objects confuse `marked`). We'll assign the name `noca_simple` to the resultant object:</p>
+
+```{r}
+noca_simple <-
+  encounterHistory_noca %>%
+  select(ch) %>%
+  data.frame
+```
+
+<p>We can use the function `process.data` to initialize the CJS model. Let's run this function on `noca_simple`. Note that I use `.` as a separator in the assigned name. This is because `.` is used to describe file types.</p> 
+
+```{r}
+noca_simple.proc <-
+  process.data(noca_simple)
+```
+
+<p>This function outputs a list of objects that inform the CJS model. For now, let's look at the `data` output, which describes the frequency of occurence for each capture history:</p>
+
+```{r}
+noca_simple.proc$data
+```
+
+<p>We can now run our first CJS model using the function `crm`:</p>
+
+```{r}
+model_null <- 
+  crm(noca_simple.proc)
+
+model_null
+```
+
+<p>The model we ran held both the parameters for survival (&Phi;) and detectability (p) constant. The model output provides the number of parameters, -2log-likelihood, Akaike's Information Criteria (AIC), and beta parameter estimates for apparent survival (Phi) and detectability (p). If we would like to see the error about the beta parameter estimates, we can run the function `cjs.hession` on the modelled output:</p>
+
+```{r}
+cjs.hessian(model_null)
+```
+
+<p>To view the real estimates for parameters, we use the `compute.real` function:</p>
+
+```{r}
+compute.real(model_null)
+```
+
+<p>In the above, we see that the estimate apparent annual survival for the cardinal is about 0.65. The survival is "apparent" because this is the probability that a cardinal survives and does not emigrate between sampling occasions. The probability of detecting the cardinal in a sampling period, given that it has survived and has not emigrated, is 0.37.</p>
+
+<p>If we would like to see the error around the real estimates, we can re-run the model with the additional argument `hessian = TRUE`.</p>
+
+```{r}
+crm(noca_simple.proc, hessian = TRUE) %>%
+  compute.real
+```
+
+<p>The above provides standard error and confidence regions for our real parameter estimates.</p>
+
+## Adding covariates:
+
+<p>We rarely want to know simply the apparent survival of birds, or the probability to detect them if they are at a site. To add covariates of interest, let's start by making a new `process.data` file. We'll include the variable sex and region into the new frame.</p>
+
+```{r}
+noca.proc <-
+  encounterHistory_noca %>%
+  data.frame %>%
+  select(ch, sex, region) %>%
+  process.data
+```
+
+<p>Note in the below that the process data files are of different dimensions. <span style = "color:blue">Any idea why this is the case?</span></p>
+
+```{r}
+dim(noca_simple.proc$data)
+
+dim(noca.proc$data)
+```
+
+<p>Now we need to use the function `make.design.data` to make our data model-ready. The arguments for this function are is the output from `process.data` and a list of the parameters of interest. As an example, we will add sex to our model.
+
+```{r}
+noca.ddl <-
+  noca.proc %>%
+  make.design.data
+```
+
+<p>We then provide the formula that we would like to test. In this case, let's write a formula in which apparent survival is allowed to vary as a function of sex:</p>
+
+```{r}
+Phi.sex <-
+  list(formula = ~sex)
+```
+
+<p>We now define and run the CJS model in which Phi varies by sex:</p>
+
+```{r}
+model_sexPhi <-
+  crm(
+    data = noca.proc,
+    ddl = noca.ddl,
+    model.parameters = list(Phi = Phi.sex),
+    accumulate = FALSE,
+    hessian = TRUE)
+
+model_sexPhi
+```
+
+<p>It appears that male cardinals may survive longer than female cardinals! Let's look at the real parameter estimates:</p>
+
+```{r}
+compute.real(model_sexPhi)
+```
+
+<p>Looking at the standard error and overlapping confidence regions in the beta and real parameter estimates, the data may not support differential survival between males and females. To really assess whether the inclusion of the sex covariate improved model performance, however, we should use a model selection approach. To do so, we will make and run a custom function (`fit_models()`). This function includes: formula specifications for Phi and p (as above), a new function `create.model.list` that generates a list of models to run based on the provided formulas, and a new function `crm.wrapper`, that runs all of the models in the provided model list.</p>
+
+```{r}
+fit_models <-
+  function(){
+    Phi.dot <-
+      list(formula = ~ 1)
+    Phi.sex <- 
+      list(formula = ~sex)
+    p.dot <- 
+      list(formula = ~1)
+    cml <-
+      create.model.list(c('Phi','p'))
+    results <-
+      crm.wrapper(
+        cml,
+        data = noca.proc,
+        ddl = noca.ddl,
+        external = FALSE,
+        accumulate = FALSE,
+        hessian = TRUE
+      )
+    return(results)
+  }
+```
+
+<p>We can view the results in a model selection table by calling the `fit_models` function:</p>
+
+```{r, message = FALSE}
+modList <- 
+  fit_models()
+
+modList
+```
+
+<p>The more complicated model has an AIC that is 3.14 lower than the null model. This provides supportive evidence (&Delta;AIC > 2) that apparent survival varies by sex.</p>
+
+<p>We can add additional variables quite simply. For example, let's generate a model where detectability varies by region and evaluate the results:</p>
+
+```{r, message = FALSE}
+fit_models <-
+  function(){
+    Phi.dot <-
+      list(formula = ~ 1)
+    Phi.sex <- 
+      list(formula = ~sex)
+    p.dot <- 
+      list(formula = ~1)
+    p.region <- 
+      list(formula = ~region)
+    cml <-
+      create.model.list(c('Phi','p'))
+    results <-
+      crm.wrapper(
+        cml,
+        data = noca.proc,
+        ddl = noca.ddl,
+        external = FALSE,
+        accumulate = FALSE,
+        hessian = TRUE
+      )
+    return(results)
+  }
+
+modList_sexRegion <- 
+  fit_models()
+
+modList_sexRegion
+```
+
+<p>It turns out that region as a covariate of the detectability parameter has a huge influence on model performance! Let's have a look at the real parameter estimates. You can call a specific model by name from the model results list:</p>
+
+```{r}
+names(modList_sexRegion)
+
+compute.real(modList_sexRegion$Phi.sex.p.region)
+```
+
+<p>We can see that estimates of detectability are considerably higher in Springfield than the other study regions! <span style = "color:blue">Any ideas regarding why this is the case?</span></p>
+
+<p>Of course, we might expect that region may have a strong impact on survival as well -- these three regions are at considerably different latitudes and represent very different habitats. We can add covariates to our survival parameter as follows:</p>
+
+```{r, message = FALSE}
+fit_models <-
+  function(){
+    Phi.dot <-
+      list(formula = ~ 1)
+    Phi.sex <- 
+      list(formula = ~sex)
+    Phi.region <-
+      list(formula = ~region)
+    Phi.sex.region <- 
+      list(formula = ~sex + region)
+    p.dot <- 
+      list(formula = ~1)
+    p.region <- 
+      list(formula = ~region)
+    cml <-
+      create.model.list(c('Phi','p'))
+    results <-
+      crm.wrapper(
+        cml,
+        data = noca.proc,
+        ddl = noca.ddl,
+        external = FALSE,
+        accumulate = FALSE,
+        hessian = TRUE
+      )
+    return(results)
+  }
+
+modList_sexRegion_additive <- 
+  fit_models()
+
+modList_sexRegion_additive
+```
+
+<p>It seems that the additive model that includes sex and region were supported equivalently (&Delta;AIC within 2). As such, there is not strong evidence that the addition of the region covariate for the survival parameter improved model performance. Despite lack of support, let's have a look at the real parameter estimates for that model. It is a very good idea to do so, in order to ensure that spurious results are not generated (for example, if Springfield's high detectability is accompanied by abnormally low survival estimates.</p>
+
+```{r}
+names(modList_sexRegion_additive)
+
+compute.real(modList_sexRegion_additive$Phi.sex.region.p.region)
+```
+
+<p>With no evidence of problems with the model, it is now on us to determine why detectability is so much higher in Springfield!</p>
+
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h3>
+<br>
+<ul>
+<p>Develop and evaluate set of models that compares the influence of region and sex on survival for the gray catbird or song sparrow. Do the results differ from that of the northern cardinal? Why do you think that this is or is not the case?</p>
+</blockquote>

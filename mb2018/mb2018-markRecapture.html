@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title></title>
+
+<script src="mb2018-markRecapture_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="mb2018-markRecapture_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="mb2018-markRecapture_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="mb2018-markRecapture_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="mb2018-markRecapture_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="mb2018-markRecapture_files/navigation-1.1/tabsets.js"></script>
+<link href="mb2018-markRecapture_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="mb2018-markRecapture_files/highlightjs-9.12.0/highlight.js"></script>
+<script src="mb2018-markRecapture_files/kePrint-0.0.1/kePrint.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<head>
+<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<p><img style="float:right;padding-left:25px;border:none" src="images/smsc_logo.jpg" width = "500px"/></p>
+<div id="estimating-survivorship-with-mark-recapture-data-in-r" class="section level1">
+<h1>Estimating survivorship with mark-recapture data in R</h1>
+<p>
+<i>Brian S. Evans, Ph.D.</i>
+</p>
+<div id="project-description-and-context" class="section level2">
+<h2>Project Description and Context</h2>
+<p><img style="float:right;padding-left:10px;border:none" src="images/catbirdLermanHand.jpg" width = "300px"/></p>
+<p>
+In this module, we will import and analyze banding and re-encounter data on three species of birds: the gray catbird (<em>Dumetella carolinensis</em>), northern cardinal (<em>Cardinalis cardinalis</em>), and song sparrow (<em>Melospiza melodia</em>). The data were collected between the years 2012 and 2017 from 128 banding stations in the metropolitan areas of Washington D.C., Gainesville Florida, and Springfield Massachussetts. Banding efforts are associated with the Smithsonian’s <a target = "_blank" href = "https://nationalzoo.si.edu/migratory-birds/about-neighborhood-nestwatch">Neighborhood Nestwatch</a> project – a citizen science program in which Smithsonian scientists band birds in participants backyards one day per year. In addition to banding, the scientists search for previously color-banded birds (resighting) and conduct point counts and habitat surveys during their visit. The participants contribute data to the project by reporting color-banded birds observed throughout the year. We will use these data collected to construct and compare Cormack-Jolly-Seber (CJS) models in the R package <a target = "_blank" href = "https://cran.r-project.org/web/packages/marked/index.html">marked</a>.
+</p>
+</div>
+<div id="exercise-objectives" class="section level2">
+<h2>Exercise Objectives</h2>
+<ul>
+<li>Practice and expand upon data summarizing and reshaping steps</li>
+<li>Learn how to construct and interpret CJS models</li>
+<li>Learn how to plot CJS model output</li>
+</ul>
+</div>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<p>We will start by loading the primary libraries that provide us with the tools for analyzing mark-recapture data.</p>
+<pre class="r"><code>library(tidyverse)
+library(lubridate)
+library(marked)</code></pre>
+<p>Then set some options for this session:</p>
+<pre class="r"><code>select &lt;- 
+  dplyr::select</code></pre>
+<p>We will read the data directly from the internet. If you were to read these files from your computer, the location of the file on your hard drive would be used in place of the URL:</p>
+<pre class="r"><code>sites &lt;-
+  read_csv(&#39;https://www.dropbox.com/s/wepk383tdqv54oo/sites.csv?dl=1&#39;)
+
+bandingRecords &lt;-
+  read_csv(&#39;https://www.dropbox.com/s/fxiyavgbmwtfmrz/bandingRecords.csv?dl=1&#39;)
+
+resights &lt;-
+  read_csv(&#39;https://www.dropbox.com/s/psp8ssrwwopaz5l/resights.csv?dl=1&#39;)</code></pre>
+</div>
+<div id="data-exploration" class="section level2">
+<h2>Data exploration</h2>
+<p>Let’s take a moment to explore each of these files.</p>
+<div id="sites" class="section level3">
+<h3>Sites</h3>
+The sites file consists of three variables:
+<ul>
+<li>
+<b>siteID:</b> a unique identifier of the site
+</li>
+<li>
+<b>region:</b> the metropolitan area the site is associated with
+</li>
+<li>
+<b>imp:</b> the percent cover of impervious surface (e.g., pavement, sidewalks, and roofs) within 500 meters of the site center. This variable is used as a proxy fo the degree of urban landcover at a site.
+</li>
+</ul>
+<pre class="r"><code>sites</code></pre>
+<pre><code>## # A tibble: 128 x 3
+##    siteID region   imp
+##    &lt;chr&gt;  &lt;chr&gt;  &lt;dbl&gt;
+##  1 dc_1   dc     12.1 
+##  2 dc_2   dc     17.8 
+##  3 dc_3   dc     16.3 
+##  4 dc_4   dc     14.9 
+##  5 dc_5   dc     13.6 
+##  6 dc_6   dc     23.7 
+##  7 dc_7   dc      7.39
+##  8 dc_8   dc     22.6 
+##  9 dc_9   dc      9.79
+## 10 dc_10  dc     16.1 
+## # ... with 118 more rows</code></pre>
+<p>Let’s use the tools we learned yesterday to view the number of sites per region:</p>
+<pre class="r"><code>sites %&gt;%
+  group_by(region) %&gt;%
+  summarize(n = n())</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##   region          n
+##   &lt;chr&gt;       &lt;int&gt;
+## 1 dc             80
+## 2 gainesville    21
+## 3 springfield    27</code></pre>
+<p>We can also calculate the amount of impervious surface in each region in our summary table:</p>
+<pre class="r"><code>sites %&gt;%
+  group_by(region) %&gt;%
+  summarize(
+    n = n(),
+    meanImp = mean(imp))</code></pre>
+<pre><code>## # A tibble: 3 x 3
+##   region          n meanImp
+##   &lt;chr&gt;       &lt;int&gt;   &lt;dbl&gt;
+## 1 dc             80    18.9
+## 2 gainesville    21    11.4
+## 3 springfield    27    12.9</code></pre>
+<p style="color:blue">
+If urban land cover influences survival, would a simple analysis of survival by region be appropriate? Why or why not?
+</p>
+</div>
+<div id="banding-records" class="section level3">
+<h3>Banding records</h3>
+<p>
+The bandingRecords file consists of several variables describing a banding event:
+</p>
+<ul>
+<li>
+<b>siteID:</b> a unique identifier of the site
+</li>
+<li>
+<b>date:</b> the date a site was visited, in ISO 8601 date format
+</li>
+<li>
+<b>time:</b> time in military-clock format. Time values of 0001 represent no data
+</li>
+<li>
+<b>enc:</b> the type of encounter, where R is a recapture and B is a banding event
+</li>
+<li>
+<b>spp:</b> four letter species alpha code
+</li>
+<li>
+<b>bandNumber:</b> the band number, with a dash separating the band prefix and suffix
+</li>
+<li>
+<b>colorCombo:</b> color bands placed on the bird, with the left and right legs separated by a comma
+</li>
+<li>
+<b>mass:</b> the weight of the bird in grams. 99999 represents no data.
+</li>
+<li>
+<b>wing:</b> the length of the wing in mm. 99999 represents no data.
+</li>
+<li>
+<b>tl:</b> the length of the tail in mm. 99999 represents no data.
+</li>
+<li>
+<b>age:</b> the age of the bird (AHY = after hatch year, SY = second year, ASY = after second year)
+</li>
+<li>
+<b>sex:</b> the sex of the bird (M = male, F = female)
+</li>
+</ul>
+<pre class="r"><code>bandingRecords</code></pre>
+<pre><code>## # A tibble: 1,117 x 12
+##    siteID date       time  enc   spp   bandNumber colorCombo  mass  wing
+##    &lt;chr&gt;  &lt;date&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;
+##  1 dc_61  2012-04-18 0930  B     NOCA  791-17230  YY,X        39.6  95.5
+##  2 dc_38  2012-05-04 0001  B     GRCA  791-17233  WX,B        38.8  91  
+##  3 dc_38  2012-05-04 0001  B     SOSP  2441-96447 Y,XG        22.4  70  
+##  4 dc_38  2012-05-04 0001  B     SOSP  2441-96448 OB,X        20.6  64  
+##  5 dc_69  2012-05-10 0001  B     GRCA  791-17238  OB,X        37.7  91  
+##  6 dc_69  2012-05-10 0001  B     GRCA  791-17239  R,XR        43.3  89  
+##  7 dc_69  2012-05-10 0001  B     SOSP  2441-96450 YX,Y        19.4  67  
+##  8 dc_69  2012-05-10 0001  B     SOSP  2441-96451 WX,O        22    70  
+##  9 dc_6   2012-05-12 0001  B     GRCA  791-17246  WX,B        36.9  91  
+## 10 dc_6   2012-05-12 0001  B     GRCA  791-17247  O,MX        41.2  90  
+## # ... with 1,107 more rows, and 3 more variables: tl &lt;dbl&gt;, age &lt;chr&gt;,
+## #   sex &lt;chr&gt;</code></pre>
+<p>There are a lot of NA values in the measurement data. Let’s explore how many of the records have valid mass, wing, and tail lengths:</p>
+<pre class="r"><code>bandingRecords %&gt;%
+  filter(mass != 99999) %&gt;%
+  nrow</code></pre>
+<pre><code>## [1] 1092</code></pre>
+<pre class="r"><code>bandingRecords %&gt;%
+  filter(wing != 99999) %&gt;%
+  nrow</code></pre>
+<pre><code>## [1] 1029</code></pre>
+<pre class="r"><code>bandingRecords %&gt;%
+  filter(tl != 99999) %&gt;%
+  nrow</code></pre>
+<pre><code>## [1] 489</code></pre>
+<p>This highlights the importance of exploring data prior to running analyses. Sample sizes for mass and wing are likely adequate to use these as covariates in a survival model. At 494 samples, however, there are probably not enough tail measurements to run the models.</p>
+<p>If we wanted to determine how many birds were banded by region, we first have to join the bandingRecords file with the sites file by the common column “siteID” and then group and summarize the data:</p>
+<pre class="r"><code>bandingRecords %&gt;%
+  left_join(
+    sites,
+    by = &#39;siteID&#39;
+  ) %&gt;%
+  group_by(region) %&gt;%
+  summarize(n = length(unique(bandNumber)))</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##   region          n
+##   &lt;chr&gt;       &lt;int&gt;
+## 1 dc            658
+## 2 gainesville   141
+## 3 springfield   224</code></pre>
+<p style="color:blue">
+Why would we have to use <code>length(unique(bandNumber))</code> instead of simply <code>n()</code> as we did in the previous section?
+</p>
+<p>
+<p>We can evaluate the number of banded and recaptured birds per region by using “region” and “type” grouping variables:</p>
+<pre class="r"><code>bandingRecords %&gt;%
+  left_join(
+    sites,
+    by = &#39;siteID&#39;
+  ) %&gt;%
+  group_by(region, enc) %&gt;%
+  summarize(n = length(unique(bandNumber)))</code></pre>
+<pre><code>## # A tibble: 6 x 3
+## # Groups:   region [?]
+##   region      enc       n
+##   &lt;chr&gt;       &lt;chr&gt; &lt;int&gt;
+## 1 dc          B       658
+## 2 dc          R        46
+## 3 gainesville B       141
+## 4 gainesville R        12
+## 5 springfield B       224
+## 6 springfield R        22</code></pre>
+<p>
+We can view our summary table in wide format using the function <code>spread</code>:
+</p>
+<pre class="r"><code>bandingRecords %&gt;%
+  left_join(
+    sites,
+    by = &#39;siteID&#39;
+  ) %&gt;%
+  group_by(region, enc) %&gt;%
+  summarize(n = length(unique(bandNumber))) %&gt;%
+  spread(key = enc, value = n)</code></pre>
+<pre><code>## # A tibble: 3 x 3
+## # Groups:   region [3]
+##   region          B     R
+##   &lt;chr&gt;       &lt;int&gt; &lt;int&gt;
+## 1 dc            658    46
+## 2 gainesville   141    12
+## 3 springfield   224    22</code></pre>
+<p>
+If we want to know the proportion of birds that were recaptured, expressed as a percentage, we can use mutate to add a new column:
+</p>
+<pre class="r"><code>bandingRecords %&gt;%
+  left_join(
+    sites,
+    by = &#39;siteID&#39;
+  ) %&gt;%
+  group_by(region, enc) %&gt;%
+  summarize(n = length(unique(bandNumber))) %&gt;%
+  spread(key = enc, value = n) %&gt;%
+  mutate(percentRecap = R/B*100)</code></pre>
+<pre><code>## # A tibble: 3 x 4
+## # Groups:   region [3]
+##   region          B     R percentRecap
+##   &lt;chr&gt;       &lt;int&gt; &lt;int&gt;        &lt;dbl&gt;
+## 1 dc            658    46         6.99
+## 2 gainesville   141    12         8.51
+## 3 springfield   224    22         9.82</code></pre>
+</div>
+<div id="resights" class="section level3">
+<h3>Resights</h3>
+<p>
+The resights file consists of three variables describing a resight event:
+</p>
+<ul>
+<li>
+<b>date:</b> the date a site was visited, in ISO 8601 date format
+</li>
+<li>
+<b>bandNumber:</b> the band number, with a dash separating the band prefix and suffix
+</li>
+<li>
+<b>type:</b> the type of encounter, where P is a participant (citizen scientist) resight and T is a resight by a Smithsonian technician
+</li>
+</ul>
+<pre class="r"><code>resights</code></pre>
+<pre><code>## # A tibble: 602 x 3
+##    date       bandNumber type 
+##    &lt;date&gt;     &lt;chr&gt;      &lt;chr&gt;
+##  1 2012-01-23 2531-91135 P    
+##  2 2012-01-31 1991-18070 T    
+##  3 2012-01-31 1991-18072 T    
+##  4 2012-01-31 1991-18075 T    
+##  5 2012-01-31 1991-18078 T    
+##  6 2012-02-25 2531-91135 P    
+##  7 2012-07-03 1991-18078 P    
+##  8 2012-07-12 1991-18077 P    
+##  9 2012-07-12 1991-18080 P    
+## 10 2012-07-13 1991-18077 P    
+## # ... with 592 more rows</code></pre>
+<p>We can determine the number of resights by type, as above:</p>
+<pre class="r"><code>resights %&gt;%
+  group_by(type) %&gt;%
+  summarize(n = n())</code></pre>
+<pre><code>## # A tibble: 2 x 2
+##   type      n
+##   &lt;chr&gt; &lt;int&gt;
+## 1 P       370
+## 2 T       232</code></pre>
+<p>If we wanted to know how many resights there were by species, we would have to do join the bandingRecords and resights files by the common column ‘bandNumber’ prior to grouping and summarizing the data:</p>
+<pre class="r"><code>resights %&gt;%
+  left_join(
+    bandingRecords,
+    by = &#39;bandNumber&#39;) %&gt;%
+  group_by(spp) %&gt;%
+  summarize(n = n())</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##   spp       n
+##   &lt;chr&gt; &lt;int&gt;
+## 1 GRCA    116
+## 2 NOCA    526
+## 3 SOSP     76</code></pre>
+<p>We can use the additional grouping variable “type” to view the number of birds resighted by type and species:</p>
+<pre class="r"><code>resights %&gt;%
+  left_join(
+    bandingRecords,
+    by = &#39;bandNumber&#39;) %&gt;%
+  group_by(spp, type) %&gt;%
+  summarize(n = length(unique(bandNumber)))</code></pre>
+<pre><code>## # A tibble: 6 x 3
+## # Groups:   spp [?]
+##   spp   type      n
+##   &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
+## 1 GRCA  P        26
+## 2 GRCA  T        37
+## 3 NOCA  P        85
+## 4 NOCA  T        79
+## 5 SOSP  P         9
+## 6 SOSP  T        37</code></pre>
+<blockquote>
+<h3>
+<i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:
+</h3>
+<br>
+<p>
+Create a wide-format summary table that provides the number of birds banded, recaptured, and resighted (across types) per region. Include additional columns that provides the proportion of birds recaptured and resighted, expressed as a percentage.
+</p>
+</blockquote>
+<hr>
+</div>
+</div>
+<div id="preparing-data-for-analysis" class="section level2">
+<h2>Preparing data for analysis</h2>
+<p>
+The goal of this section is to generate a data frame that is ready to be evaluated using CJS models. It’s a bit of a long process, so it’s good to see what we’re aiming for (a light at the end of the tunnel?). The final product will look something like the table below:
+</p>
+<pre><code>## # A tibble: 1,067 x 8
+##    ch     siteID         spp    mass age   sex   region         imp
+##    &lt;chr&gt;  &lt;chr&gt;          &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;
+##  1 110000 gainesville_7  NOCA   40.9 AHY   M     gainesville  0.796
+##  2 100000 gainesville_16 NOCA   39.5 AHY   M     gainesville  5.43 
+##  3 100000 gainesville_9  NOCA   43.5 AHY   M     gainesville  9.39 
+##  4 100000 springfield_5  GRCA   37   SY    F     springfield 32.2  
+##  5 111000 springfield_5  NOCA   43.3 AHY   M     springfield 32.2  
+##  6 100000 springfield_10 GRCA   37   AHY   M     springfield 14.5  
+##  7 100000 springfield_10 GRCA   39   AHY   F     springfield 14.5  
+##  8 100000 springfield_10 NOCA   40   AHY   M     springfield 14.5  
+##  9 100000 springfield_1  GRCA   34   AHY   M     springfield 20.5  
+## 10 110000 springfield_2  NOCA   43   AHY   M     springfield  1.69 
+## # ... with 1,057 more rows</code></pre>
+<p><br></p>
+<p>
+To prepare data for analysis, you first have to turn your encounter records into a wide format data frame that represents the encounter history for a bird (also called a capture history). The columns for this data frame represent the band number (the first column) and time of encounter (subsequent columns). The encounter table, with encounters summarized by year, looks something like the table below, where 1 means a bird was encountered in the time period and 0 mean that it was not:
+</p>
+<br>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+bandNumber
+</th>
+<th style="text-align:right;">
+X2001
+</th>
+<th style="text-align:right;">
+X2002
+</th>
+<th style="text-align:right;">
+X2003
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+111-22222
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+222-33333
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+444-55555
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+<p>
+Because the encounter history is used to construct models, this led many researchers to store their data in tables, such as the one below:
+</p>
+<p><br></p>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+bandNumber
+</th>
+<th style="text-align:left;">
+X2001
+</th>
+<th style="text-align:left;">
+X2002
+</th>
+<th style="text-align:left;">
+X2003
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+111-22222
+</td>
+<td style="text-align:left;">
+banded 5/16; recap 7/24; resight 9/15
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+resight 8/15
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+222-33333
+</td>
+<td style="text-align:left;">
+banded 5/16
+</td>
+<td style="text-align:left;">
+recap 7/12 resight 10/14
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+444-55555
+</td>
+<td style="text-align:left;">
+banded 5/16
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+recap 6/14; resight 9/18
+</td>
+</tr>
+</tbody>
+</table></li>
+</ul></li>
+</ul></li>
+</ul>
+<br>
+<p style="color:blue">
+Why is the table above a good way to store encounter records? Why is it a really bad way to store encounter records?
+</p>
+<p><br></p>
+<div id="generating-encounter-histories-with-long-format-data" class="section level3">
+<h3>Generating encounter histories with long-format data</h3>
+<p>
+We can use our long format data frame to generate an encounter history in just a few simple steps. First, we will use the select function to select just the band number and date columns from the bandingRecords and resights data frames:
+</p>
+<pre class="r"><code>bandingRecords %&gt;%
+      select(bandNumber, date)</code></pre>
+<pre><code>## # A tibble: 1,117 x 2
+##    bandNumber date      
+##    &lt;chr&gt;      &lt;date&gt;    
+##  1 791-17230  2012-04-18
+##  2 791-17233  2012-05-04
+##  3 2441-96447 2012-05-04
+##  4 2441-96448 2012-05-04
+##  5 791-17238  2012-05-10
+##  6 791-17239  2012-05-10
+##  7 2441-96450 2012-05-10
+##  8 2441-96451 2012-05-10
+##  9 791-17246  2012-05-12
+## 10 791-17247  2012-05-12
+## # ... with 1,107 more rows</code></pre>
+<pre class="r"><code>resights %&gt;%
+      select(bandNumber, date)</code></pre>
+<pre><code>## # A tibble: 602 x 2
+##    bandNumber date      
+##    &lt;chr&gt;      &lt;date&gt;    
+##  1 2531-91135 2012-01-23
+##  2 1991-18070 2012-01-31
+##  3 1991-18072 2012-01-31
+##  4 1991-18075 2012-01-31
+##  5 1991-18078 2012-01-31
+##  6 2531-91135 2012-02-25
+##  7 1991-18078 2012-07-03
+##  8 1991-18077 2012-07-12
+##  9 1991-18080 2012-07-12
+## 10 1991-18077 2012-07-13
+## # ... with 592 more rows</code></pre>
+<p>
+Because these two data frames have the same column names, we can safely bind them into a single frame using <code>bind_rows()</code>:
+</p>
+<pre class="r"><code>bind_rows(
+  bandingRecords %&gt;%
+    select(bandNumber, date),
+  resights %&gt;%
+    select(bandNumber, date)
+)</code></pre>
+<pre><code>## # A tibble: 1,719 x 2
+##    bandNumber date      
+##    &lt;chr&gt;      &lt;date&gt;    
+##  1 791-17230  2012-04-18
+##  2 791-17233  2012-05-04
+##  3 2441-96447 2012-05-04
+##  4 2441-96448 2012-05-04
+##  5 791-17238  2012-05-10
+##  6 791-17239  2012-05-10
+##  7 2441-96450 2012-05-10
+##  8 2441-96451 2012-05-10
+##  9 791-17246  2012-05-12
+## 10 791-17247  2012-05-12
+## # ... with 1,709 more rows</code></pre>
+<p>
+We can use the <code>transmute</code> function with <code>year()</code> (a function from the lubridate package) to make a data frame of just band number and year:
+</p>
+<pre class="r"><code>bind_rows(
+  bandingRecords %&gt;%
+    select(bandNumber, date),
+  resights %&gt;%
+    select(bandNumber, date)
+) %&gt;%
+  transmute(
+    bandNumber,
+    year = year(date))</code></pre>
+<pre><code>## # A tibble: 1,719 x 2
+##    bandNumber  year
+##    &lt;chr&gt;      &lt;dbl&gt;
+##  1 791-17230   2012
+##  2 791-17233   2012
+##  3 2441-96447  2012
+##  4 2441-96448  2012
+##  5 791-17238   2012
+##  6 791-17239   2012
+##  7 2441-96450  2012
+##  8 2441-96451  2012
+##  9 791-17246   2012
+## 10 791-17247   2012
+## # ... with 1,709 more rows</code></pre>
+<p>
+If we arrange these data by band number, however, we can quickly notice that we have generated duplicate records:
+</p>
+<pre class="r"><code>bind_rows(
+  bandingRecords %&gt;%
+    select(bandNumber, date),
+  resights %&gt;%
+    select(bandNumber, date)
+) %&gt;%
+  transmute(
+    bandNumber,
+    year = year(date)) %&gt;%
+  arrange(bandNumber)</code></pre>
+<pre><code>## # A tibble: 1,719 x 2
+##    bandNumber  year
+##    &lt;chr&gt;      &lt;dbl&gt;
+##  1 1292-71301  2012
+##  2 1292-71301  2013
+##  3 1292-71311  2012
+##  4 1292-71313  2012
+##  5 1891-11010  2012
+##  6 1891-11011  2012
+##  7 1891-11011  2012
+##  8 1891-11011  2013
+##  9 1891-11011  2013
+## 10 1891-11011  2013
+## # ... with 1,709 more rows</code></pre>
+<p>
+To counter this problem, we can use the function <code>distinct</code> to remove duplicate records:
+</p>
+<pre class="r"><code>bind_rows(
+  bandingRecords %&gt;%
+    select(bandNumber, date),
+  resights %&gt;%
+    select(bandNumber, date)
+) %&gt;%
+  transmute(
+    bandNumber,
+    year = year(date)) %&gt;%
+  distinct</code></pre>
+<pre><code>## # A tibble: 1,407 x 2
+##    bandNumber  year
+##    &lt;chr&gt;      &lt;dbl&gt;
+##  1 791-17230   2012
+##  2 791-17233   2012
+##  3 2441-96447  2012
+##  4 2441-96448  2012
+##  5 791-17238   2012
+##  6 791-17239   2012
+##  7 2441-96450  2012
+##  8 2441-96451  2012
+##  9 791-17246   2012
+## 10 791-17247   2012
+## # ... with 1,397 more rows</code></pre>
+<p>
+This frame is now a long-form record of bandNumber by year and forms the basis of the encounter histories. Let’s assign the name <code>encountersLong</code> to the object:
+</p>
+<pre class="r"><code>encountersLong &lt;-
+  bind_rows(
+    bandingRecords %&gt;%
+      select(bandNumber, date),
+    resights %&gt;%
+      select(bandNumber, date)
+  ) %&gt;%
+  transmute(
+    bandNumber,
+    year = year(date)) %&gt;%
+  distinct</code></pre>
+<p>
+We are now ready to make the encounter history file! To do so, we start by adding a dummy column where all encounters are defined as 1:
+</p>
+<pre class="r"><code>encountersLong %&gt;%
+  mutate(enc = 1)</code></pre>
+<pre><code>## # A tibble: 1,407 x 3
+##    bandNumber  year   enc
+##    &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;
+##  1 791-17230   2012     1
+##  2 791-17233   2012     1
+##  3 2441-96447  2012     1
+##  4 2441-96448  2012     1
+##  5 791-17238   2012     1
+##  6 791-17239   2012     1
+##  7 2441-96450  2012     1
+##  8 2441-96451  2012     1
+##  9 791-17246   2012     1
+## 10 791-17247   2012     1
+## # ... with 1,397 more rows</code></pre>
+<p>
+We now use <code>spread()</code> make <code>encountersLong</code> into a wide-format object. The dummy column <code>enc</code> is useful here, because that is the value that is provided to the cells. We use the argument <code>fill = 0</code> to fill any missing values with 0:
+</p>
+<pre class="r"><code>encountersLong %&gt;%
+  mutate(enc = 1) %&gt;%
+  spread(key = year, value = enc, fill = 0)</code></pre>
+<pre><code>## # A tibble: 1,023 x 7
+##    bandNumber `2012` `2013` `2014` `2015` `2016` `2017`
+##    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1 1292-71301      1      1      0      0      0      0
+##  2 1292-71311      1      0      0      0      0      0
+##  3 1292-71313      1      0      0      0      0      0
+##  4 1891-11010      1      0      0      0      0      0
+##  5 1891-11011      1      1      1      0      0      0
+##  6 1891-11017      1      0      0      0      0      0
+##  7 1891-11018      1      0      0      0      0      0
+##  8 1891-11019      1      0      0      0      0      0
+##  9 1891-11020      1      0      0      0      0      0
+## 10 1891-11021      1      1      0      0      0      0
+## # ... with 1,013 more rows</code></pre>
+<p>
+The input to a CJS model is actually a vector character values called the “capture history” in which the 1s and 0s across the columns of the encounter history are collapsed into a single value. For example, the capture history for the first bird in our <code>encountersWide</code> frame is “110000”. To make the capture history we will use a new function, <code>unite</code>, as below:
+</p>
+<pre class="r"><code>encountersLong %&gt;%
+  mutate(enc = 1) %&gt;%
+  spread(key = year, value = enc, fill = 0) %&gt;%
+  unite(ch, -bandNumber, sep = &#39;&#39;)</code></pre>
+<pre><code>## # A tibble: 1,023 x 2
+##    bandNumber ch    
+##    &lt;chr&gt;      &lt;chr&gt; 
+##  1 1292-71301 110000
+##  2 1292-71311 100000
+##  3 1292-71313 100000
+##  4 1891-11010 100000
+##  5 1891-11011 111000
+##  6 1891-11017 100000
+##  7 1891-11018 100000
+##  8 1891-11019 100000
+##  9 1891-11020 100000
+## 10 1891-11021 110000
+## # ... with 1,013 more rows</code></pre>
+</div>
+<div id="including-banding-and-environmental-data-into-encounter-histories" class="section level3">
+<h3>Including banding and environmental data into encounter histories</h3>
+<p>
+The above is a great start, and we could run a simple CJS model with these data, but thus far we only have what it takes to model apparent survival and detection probabilities with no other variables – not even species!
+</p>
+<p>
+<p>Using band number as the common column, we can bring in some banding data to inform our models. Let’s select some columns from <code>bandingRecords</code> that we would like to include in our models. We’ll subset the records to just those associated with the initial banding event.</b></p>
+<pre class="r"><code>bandingRecords %&gt;%
+  filter(enc == &#39;B&#39;) %&gt;%
+  select(bandNumber, siteID, spp, mass, age, sex)</code></pre>
+<pre><code>## # A tibble: 1,032 x 6
+##    bandNumber siteID spp    mass age   sex  
+##    &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
+##  1 791-17230  dc_61  NOCA   39.6 AHY   F    
+##  2 791-17233  dc_38  GRCA   38.8 AHY   M    
+##  3 2441-96447 dc_38  SOSP   22.4 AHY   M    
+##  4 2441-96448 dc_38  SOSP   20.6 AHY   M    
+##  5 791-17238  dc_69  GRCA   37.7 AHY   M    
+##  6 791-17239  dc_69  GRCA   43.3 AHY   F    
+##  7 2441-96450 dc_69  SOSP   19.4 AHY   M    
+##  8 2441-96451 dc_69  SOSP   22   AHY   M    
+##  9 791-17246  dc_6   GRCA   36.9 AHY   M    
+## 10 791-17247  dc_6   GRCA   41.2 AHY   M    
+## # ... with 1,022 more rows</code></pre>
+<p>
+We will now join this file to our encounter history. We’ll remove the <code>bandNumber</code> column, because we no longer need it:
+</p>
+<pre class="r"><code>encountersLong %&gt;%
+  mutate(enc = 1) %&gt;%
+  spread(key = year, value = enc, fill = 0) %&gt;%
+  unite(ch, -bandNumber, sep = &#39;&#39;) %&gt;%
+  left_join(
+    bandingRecords %&gt;%
+      filter(enc == &#39;B&#39;) %&gt;%
+      select(bandNumber, siteID, spp, mass, age, sex),
+    by = &#39;bandNumber&#39;
+  ) %&gt;%
+  select(-bandNumber)</code></pre>
+<pre><code>## # A tibble: 1,032 x 6
+##    ch     siteID         spp    mass age   sex  
+##    &lt;chr&gt;  &lt;chr&gt;          &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
+##  1 110000 gainesville_7  NOCA   40.9 AHY   M    
+##  2 100000 gainesville_16 NOCA   39.5 AHY   M    
+##  3 100000 gainesville_9  NOCA   43.5 AHY   M    
+##  4 100000 springfield_5  GRCA   37   SY    F    
+##  5 111000 springfield_5  NOCA   43.3 AHY   M    
+##  6 100000 springfield_10 GRCA   37   AHY   M    
+##  7 100000 springfield_10 GRCA   39   AHY   F    
+##  8 100000 springfield_10 NOCA   40   AHY   M    
+##  9 100000 springfield_1  GRCA   34   AHY   M    
+## 10 110000 springfield_2  NOCA   43   AHY   M    
+## # ... with 1,022 more rows</code></pre>
+<p>
+If we want to see how survival varies by region or impervious surface, there is one more step we might want to take. Because the encounter and site data both contain the common column <code>siteID</code>, we can join the two tables to include our environmental variables. We then remove the siteID column, as it is no longer needed. This is the final step, so we will name the resultant frame <code>encounterHistory</code> for use in modeling.
+</p>
+<pre class="r"><code>encounterHistory &lt;-
+  encountersLong %&gt;%
+  mutate(enc = 1) %&gt;%
+  spread(key = year, value = enc, fill = 0) %&gt;%
+  unite(ch, -bandNumber, sep = &#39;&#39;) %&gt;%
+  left_join(
+    bandingRecords %&gt;%
+      filter(enc == &#39;B&#39;) %&gt;%
+      select(bandNumber, siteID, spp, mass, age, sex),
+    by = &#39;bandNumber&#39;
+  ) %&gt;%
+  select(-bandNumber) %&gt;%
+  left_join(
+    sites,
+    by = &#39;siteID&#39;
+  ) %&gt;%
+  select(-siteID)</code></pre>
+<blockquote>
+<h3>
+<i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:
+</h3>
+<br>
+<ul>
+<li>
+Subset the banding records to just those associated with the northern cardinal (NOCA).
+</li>
+<li>
+Make a long-form encounterHistory for the northern cardinal. Assign the name <code>encountersLong_noca</code>.
+</li>
+<li>
+Create an encounter history file (that includes environmental and banding data) for the northern cardinal, as above. Assign the name <code>encounterHistory_noca</code> resultant file.
+</li>
+<li>
+<b>Extra credit</b> (only complete this if you have extra time): Using the file <code>encountersLong_noca</code>, create a summary table of the number of times cardinals were encountered (for example, the number of cardinals that were encountered five times).
+</ul>
+</blockquote>
+<hr>
+</div>
+</div>
+<div id="simple-cjs-models" class="section level2">
+<h2>Simple CJS models</h2>
+<p>
+We will start by making a simple model with no covariates. To do so, let’s first select just the capture history column and convert the output to data frame (because tibble objects confuse <code>marked</code>). We’ll assign the name <code>noca_simple</code> to the resultant object:
+</p>
+<pre class="r"><code>noca_simple &lt;-
+  encounterHistory_noca %&gt;%
+  select(ch) %&gt;%
+  data.frame</code></pre>
+<p>
+We can use the function <code>process.data</code> to initialize the CJS model. Let’s run this function on <code>noca_simple</code>. Note that I use <code>.</code> as a separator in the assigned name. This is because <code>.</code> is used to describe file types.
+</p>
+<pre class="r"><code>noca_simple.proc &lt;-
+  process.data(noca_simple)</code></pre>
+<pre><code>## 432 capture histories collapsed into 37</code></pre>
+<p>
+This function outputs a list of objects that inform the CJS model. For now, let’s look at the <code>data</code> output, which describes the frequency of occurence for each capture history:
+</p>
+<pre class="r"><code>noca_simple.proc$data</code></pre>
+<pre><code>##              ch freq id
+## 74  0,0,0,1,0,0   77  1
+## 181 0,0,0,1,0,1    7  2
+## 73  0,0,0,1,1,0   29  3
+## 83  0,0,0,1,1,1    6  4
+## 104 0,0,1,0,0,0   69  5
+## 116 0,0,1,0,0,1    5  6
+## 175 0,0,1,0,1,0   11  7
+## 173 0,0,1,0,1,1    4  8
+## 107 0,0,1,1,0,0    8  9
+## 177 0,0,1,1,1,0    2 10
+## 108 0,0,1,1,1,1    4 11
+## 8   0,1,0,0,0,0   52 12
+## 191 0,1,0,0,0,1    2 13
+## 48  0,1,0,0,1,0    3 14
+## 60  0,1,0,1,0,0    5 15
+## 152 0,1,0,1,0,1    3 16
+## 190 0,1,0,1,1,0    1 17
+## 10  0,1,0,1,1,1    2 18
+## 9   0,1,1,0,0,0   10 19
+## 67  0,1,1,0,0,1    1 20
+## 251 0,1,1,0,1,1    1 21
+## 150 0,1,1,1,0,0    2 22
+## 169 0,1,1,1,0,1    1 23
+## 249 0,1,1,1,1,0    2 24
+## 12  0,1,1,1,1,1    5 25
+## 2   1,0,0,0,0,0   82 26
+## 231 1,0,0,0,0,1    1 27
+## 138 1,0,0,0,1,0    2 28
+## 28  1,0,0,1,0,0    4 29
+## 94  1,0,1,0,0,0    6 30
+## 1   1,1,0,0,0,0   13 31
+## 102 1,1,0,0,0,1    1 32
+## 37  1,1,0,0,1,0    2 33
+## 131 1,1,0,1,0,0    2 34
+## 35  1,1,0,1,1,0    1 35
+## 4   1,1,1,0,0,0    3 36
+## 34  1,1,1,0,1,0    3 37</code></pre>
+<p>
+We can now run our first CJS model using the function <code>crm</code>:
+</p>
+<pre class="r"><code>model_null &lt;- 
+  crm(noca_simple.proc)</code></pre>
+<pre><code>## Creating design data...</code></pre>
+<pre><code>## Fitting model</code></pre>
+<pre><code>## Computing initial parameter estimates</code></pre>
+<pre><code>## Starting optimization for 2 parameters...</code></pre>
+<pre><code>## 
+## Elapsed time in minutes:  0.0043</code></pre>
+<pre class="r"><code>model_null</code></pre>
+<pre><code>## 
+## crm Model Summary
+## 
+## Npar :  2
+## -2lnL:  1155.333
+## AIC  :  1159.333
+## 
+## Beta
+##                   Estimate
+## Phi.(Intercept)  0.6072404
+## p.(Intercept)   -0.5040519</code></pre>
+<p>
+The model we ran held both the parameters for survival (Φ) and detectability (p) constant. The model output provides the number of parameters, -2log-likelihood, Akaike’s Information Criteria (AIC), and beta parameter estimates for apparent survival (Phi) and detectability (p). If we would like to see the error about the beta parameter estimates, we can run the function <code>cjs.hession</code> on the modelled output:
+</p>
+<pre class="r"><code>cjs.hessian(model_null)</code></pre>
+<pre><code>## 
+## crm Model Summary
+## 
+## Npar :  2
+## -2lnL:  1155.333
+## AIC  :  1159.333
+## 
+## Beta
+##                   Estimate        se        lcl        ucl
+## Phi.(Intercept)  0.6072404 0.1284175  0.3555421  0.8589388
+## p.(Intercept)   -0.5040519 0.1415570 -0.7815035 -0.2266002</code></pre>
+<p>
+To view the real estimates for parameters, we use the <code>compute.real</code> function:
+</p>
+<pre class="r"><code>compute.real(model_null)</code></pre>
+<pre><code>## $Phi
+##   occ  estimate
+## 1   4 0.6473111
+## 
+## $p
+##   occ  estimate
+## 1   5 0.3765889</code></pre>
+<p>
+In the above, we see that the estimate apparent annual survival for the cardinal is about 0.65. The survival is “apparent” because this is the probability that a cardinal survives and does not emigrate between sampling occasions. The probability of detecting the cardinal in a sampling period, given that it has survived and has not emigrated, is 0.37.
+</p>
+<p>
+If we would like to see the error around the real estimates, we can re-run the model with the additional argument <code>hessian = TRUE</code>.
+</p>
+<pre class="r"><code>crm(noca_simple.proc, hessian = TRUE) %&gt;%
+  compute.real</code></pre>
+<pre><code>## Creating design data...</code></pre>
+<pre><code>## Fitting model</code></pre>
+<pre><code>## Computing initial parameter estimates</code></pre>
+<pre><code>## Starting optimization for 2 parameters...</code></pre>
+<pre><code>## Computing hessian...</code></pre>
+<pre><code>## 
+## Elapsed time in minutes:  0.0033</code></pre>
+<pre><code>## $Phi
+##   occ  estimate         se       lcl       ucl
+## 1   4 0.6473111 0.02931765 0.5879609 0.7024389
+## 
+## $p
+##   occ  estimate         se       lcl       ucl
+## 1   5 0.3765889 0.03323329 0.3139959 0.4435911</code></pre>
+<p>
+The above provides standard error and confidence regions for our real parameter estimates.
+</p>
+</div>
+<div id="adding-covariates" class="section level2">
+<h2>Adding covariates:</h2>
+<p>
+We rarely want to know simply the apparent survival of birds, or the probability to detect them if they are at a site. To add covariates of interest, let’s start by making a new <code>process.data</code> file. We’ll include the variable sex and region into the new frame.
+</p>
+<pre class="r"><code>noca.proc &lt;-
+  encounterHistory_noca %&gt;%
+  data.frame %&gt;%
+  select(ch, sex, region) %&gt;%
+  process.data</code></pre>
+<pre><code>## 432 capture histories collapsed into 104</code></pre>
+<p>
+Note in the below that the process data files are of different dimensions. <span style="color:blue">Any idea why this is the case?</span>
+</p>
+<pre class="r"><code>dim(noca_simple.proc$data)</code></pre>
+<pre><code>## [1] 37  3</code></pre>
+<pre class="r"><code>dim(noca.proc$data)</code></pre>
+<pre><code>## [1] 104   5</code></pre>
+<p>
+<p>Now we need to use the function <code>make.design.data</code> to make our data model-ready. The arguments for this function are is the output from <code>process.data</code> and a list of the parameters of interest. As an example, we will add sex to our model.</p>
+<pre class="r"><code>noca.ddl &lt;-
+  noca.proc %&gt;%
+  make.design.data</code></pre>
+<p>
+We then provide the formula that we would like to test. In this case, let’s write a formula in which apparent survival is allowed to vary as a function of sex:
+</p>
+<pre class="r"><code>Phi.sex &lt;-
+  list(formula = ~sex)</code></pre>
+<p>
+We now define and run the CJS model in which Phi varies by sex:
+</p>
+<pre class="r"><code>model_sexPhi &lt;-
+  crm(
+    data = noca.proc,
+    ddl = noca.ddl,
+    model.parameters = list(Phi = Phi.sex),
+    accumulate = FALSE,
+    hessian = TRUE)</code></pre>
+<pre><code>## Fitting model</code></pre>
+<pre><code>## Computing initial parameter estimates</code></pre>
+<pre><code>## Starting optimization for 3 parameters...</code></pre>
+<pre><code>## 
+ Number of evaluations:  100  -2lnl: 1150.190707</code></pre>
+<pre><code>## Computing hessian...</code></pre>
+<pre><code>## 
+## Elapsed time in minutes:  0.0033</code></pre>
+<pre class="r"><code>model_sexPhi</code></pre>
+<pre><code>## 
+## crm Model Summary
+## 
+## Npar :  3
+## -2lnL:  1150.191
+## AIC  :  1156.191
+## 
+## Beta
+##                   Estimate        se         lcl        ucl
+## Phi.(Intercept)  0.3701063 0.1585840  0.05928164  0.6809311
+## Phi.sexM         0.4361497 0.1932308  0.05741729  0.8148821
+## p.(Intercept)   -0.4962493 0.1413719 -0.77333815 -0.2191605</code></pre>
+<p>
+It appears that male cardinals may survive longer than female cardinals! Let’s look at the real parameter estimates:
+</p>
+<pre class="r"><code>compute.real(model_sexPhi)</code></pre>
+<pre><code>## $Phi
+##   sex occ  estimate         se       lcl       ucl
+## 1   F   4 0.5914847 0.03831875 0.5148161 0.6639465
+## 2   M   4 0.6913111 0.03485822 0.6191864 0.7551768
+## 
+## $p
+##   occ  estimate         se       lcl       ucl
+## 1   5 0.3784225 0.03325333 0.3157574 0.4454281</code></pre>
+<p>
+Looking at the standard error and overlapping confidence regions in the beta and real parameter estimates, the data may not support differential survival between males and females. To really assess whether the inclusion of the sex covariate improved model performance, however, we should use a model selection approach. To do so, we will make and run a custom function (<code>fit_models()</code>). This function includes: formula specifications for Phi and p (as above), a new function <code>create.model.list</code> that generates a list of models to run based on the provided formulas, and a new function <code>crm.wrapper</code>, that runs all of the models in the provided model list.
+</p>
+<pre class="r"><code>fit_models &lt;-
+  function(){
+    Phi.dot &lt;-
+      list(formula = ~ 1)
+    Phi.sex &lt;- 
+      list(formula = ~sex)
+    p.dot &lt;- 
+      list(formula = ~1)
+    cml &lt;-
+      create.model.list(c(&#39;Phi&#39;,&#39;p&#39;))
+    results &lt;-
+      crm.wrapper(
+        cml,
+        data = noca.proc,
+        ddl = noca.ddl,
+        external = FALSE,
+        accumulate = FALSE,
+        hessian = TRUE
+      )
+    return(results)
+  }</code></pre>
+<p>
+We can view the results in a model selection table by calling the <code>fit_models</code> function:
+</p>
+<pre class="r"><code>modList &lt;- 
+  fit_models()</code></pre>
+<pre><code>## Phi.dot.p.dot 
+## 
+## Elapsed time in minutes:  0.0032 
+## Phi.sex.p.dot 
+## 
+ Number of evaluations:  100  -2lnl: 1150.190707
+## Elapsed time in minutes:  0.0037</code></pre>
+<pre class="r"><code>modList</code></pre>
+<pre><code>##            model npar      AIC DeltaAIC    weight  neg2lnl convergence
+## 2 Phi(~sex)p(~1)    3 1156.191  0.00000 0.8279724 1150.191           0
+## 1   Phi(~1)p(~1)    2 1159.333  3.14265 0.1720276 1155.333           0</code></pre>
+<p>
+The more complicated model has an AIC that is 3.14 lower than the null model. This provides supportive evidence (ΔAIC &gt; 2) that apparent survival varies by sex.
+</p>
+<p>
+We can add additional variables quite simply. For example, let’s generate a model where detectability varies by region and evaluate the results:
+</p>
+<pre class="r"><code>fit_models &lt;-
+  function(){
+    Phi.dot &lt;-
+      list(formula = ~ 1)
+    Phi.sex &lt;- 
+      list(formula = ~sex)
+    p.dot &lt;- 
+      list(formula = ~1)
+    p.region &lt;- 
+      list(formula = ~region)
+    cml &lt;-
+      create.model.list(c(&#39;Phi&#39;,&#39;p&#39;))
+    results &lt;-
+      crm.wrapper(
+        cml,
+        data = noca.proc,
+        ddl = noca.ddl,
+        external = FALSE,
+        accumulate = FALSE,
+        hessian = TRUE
+      )
+    return(results)
+  }
+
+modList_sexRegion &lt;- 
+  fit_models()</code></pre>
+<pre><code>## Phi.dot.p.dot 
+## 
+## Elapsed time in minutes:  0.0032 
+## Phi.dot.p.region 
+## 
+ Number of evaluations:  100  -2lnl: 1137.953052
+ Number of evaluations:  200  -2lnl: 1137.492791
+## Elapsed time in minutes:  0.0038 
+## Phi.sex.p.dot 
+## 
+ Number of evaluations:  100  -2lnl: 1150.190707
+## Elapsed time in minutes:  0.0033 
+## Phi.sex.p.region 
+## 
+ Number of evaluations:  100  -2lnl: 1132.129418
+ Number of evaluations:  200  -2lnl:  1132.19412
+ Number of evaluations:  300  -2lnl: 1131.925121
+ Number of evaluations:  100  -2lnl: 1132.249789
+## Elapsed time in minutes:  0.004</code></pre>
+<pre class="r"><code>modList_sexRegion</code></pre>
+<pre><code>##                 model npar      AIC  DeltaAIC       weight  neg2lnl
+## 4 Phi(~sex)p(~region)    5 1141.925  0.000000 0.8554633770 1131.925
+## 2   Phi(~1)p(~region)    4 1145.493  3.567669 0.1437116248 1137.493
+## 3      Phi(~sex)p(~1)    3 1156.191 14.265585 0.0006830758 1150.191
+## 1        Phi(~1)p(~1)    2 1159.333 17.408236 0.0001419224 1155.333
+##   convergence
+## 4           0
+## 2           0
+## 3           0
+## 1           0</code></pre>
+<p>
+It turns out that region as a covariate of the detectability parameter has a huge influence on model performance! Let’s have a look at the real parameter estimates. You can call a specific model by name from the model results list:
+</p>
+<pre class="r"><code>names(modList_sexRegion)</code></pre>
+<pre><code>## [1] &quot;Phi.dot.p.dot&quot;    &quot;Phi.dot.p.region&quot; &quot;Phi.sex.p.dot&quot;   
+## [4] &quot;Phi.sex.p.region&quot; &quot;model.table&quot;</code></pre>
+<pre class="r"><code>compute.real(modList_sexRegion$Phi.sex.p.region)</code></pre>
+<pre><code>## $Phi
+##   sex occ  estimate         se       lcl       ucl
+## 1   F   4 0.6025633 0.03850033 0.5252425 0.6750813
+## 2   M   4 0.7074233 0.03551513 0.6333427 0.7719263
+## 
+## $p
+##        region occ  estimate         se       lcl       ucl
+## 1          dc   5 0.3210302 0.03568431 0.2554188 0.3945645
+## 2 gainesville   5 0.3379819 0.04867822 0.2499816 0.4388352
+## 3 springfield   5 0.6566718 0.07768590 0.4932828 0.7898241</code></pre>
+<p>
+We can see that estimates of detectability are considerably higher in Springfield than the other study regions! <span style="color:blue">Any ideas regarding why this is the case?</span>
+</p>
+<p>
+Of course, we might expect that region may have a strong impact on survival as well – these three regions are at considerably different latitudes and represent very different habitats. We can add covariates to our survival parameter as follows:
+</p>
+<pre class="r"><code>fit_models &lt;-
+  function(){
+    Phi.dot &lt;-
+      list(formula = ~ 1)
+    Phi.sex &lt;- 
+      list(formula = ~sex)
+    Phi.region &lt;-
+      list(formula = ~region)
+    Phi.sex.region &lt;- 
+      list(formula = ~sex + region)
+    p.dot &lt;- 
+      list(formula = ~1)
+    p.region &lt;- 
+      list(formula = ~region)
+    cml &lt;-
+      create.model.list(c(&#39;Phi&#39;,&#39;p&#39;))
+    results &lt;-
+      crm.wrapper(
+        cml,
+        data = noca.proc,
+        ddl = noca.ddl,
+        external = FALSE,
+        accumulate = FALSE,
+        hessian = TRUE
+      )
+    return(results)
+  }
+
+modList_sexRegion_additive &lt;- 
+  fit_models()</code></pre>
+<pre><code>## Phi.dot.p.dot 
+## 
+## Elapsed time in minutes:  0.0033 
+## Phi.dot.p.region 
+## 
+ Number of evaluations:  100  -2lnl: 1137.953052
+ Number of evaluations:  200  -2lnl: 1137.492791
+## Elapsed time in minutes:  0.0037 
+## Phi.region.p.dot 
+## 
+ Number of evaluations:  100  -2lnl: 1148.626229
+ Number of evaluations:  200  -2lnl: 1148.623806
+## Elapsed time in minutes:  0.0037 
+## Phi.region.p.region 
+## 
+ Number of evaluations:  100  -2lnl: 1136.499251
+ Number of evaluations:  200  -2lnl: 1135.844862
+ Number of evaluations:  300  -2lnl: 1135.253907
+ Number of evaluations:  100  -2lnl: 1136.076181
+## Elapsed time in minutes:  0.0042 
+## Phi.sex.p.dot 
+## 
+ Number of evaluations:  100  -2lnl: 1150.190707
+## Elapsed time in minutes:  0.0037 
+## Phi.sex.p.region 
+## 
+ Number of evaluations:  100  -2lnl: 1132.129418
+ Number of evaluations:  200  -2lnl:  1132.19412
+ Number of evaluations:  300  -2lnl: 1131.925121
+ Number of evaluations:  100  -2lnl: 1132.249789
+## Elapsed time in minutes:  0.0042 
+## Phi.sex.region.p.dot 
+## 
+ Number of evaluations:  100  -2lnl:  1144.74488
+ Number of evaluations:  200  -2lnl: 1144.728069
+ Number of evaluations:  300  -2lnl: 1144.675107
+ Number of evaluations:  100  -2lnl: 1145.088247
+## Elapsed time in minutes:  0.0038 
+## Phi.sex.region.p.region 
+## 
+ Number of evaluations:  100  -2lnl:    1141.367
+ Number of evaluations:  200  -2lnl: 1129.556129
+ Number of evaluations:  300  -2lnl: 1129.556799
+ Number of evaluations:  400  -2lnl:  1129.55287
+ Number of evaluations:  500  -2lnl: 1129.544896
+ Number of evaluations:  100  -2lnl: 1129.636492
+ Number of evaluations:  200  -2lnl: 1129.563248
+## Elapsed time in minutes:  0.0043</code></pre>
+<pre class="r"><code>modList_sexRegion_additive</code></pre>
+<pre><code>##                          model npar      AIC  DeltaAIC       weight
+## 6          Phi(~sex)p(~region)    5 1141.925  0.000000 5.925076e-01
+## 8 Phi(~sex + region)p(~region)    7 1143.545  1.619775 2.636115e-01
+## 2            Phi(~1)p(~region)    4 1145.493  3.567669 9.953697e-02
+## 4       Phi(~region)p(~region)    6 1147.200  5.275277 4.238206e-02
+## 7      Phi(~sex + region)p(~1)    5 1154.675 12.749985 1.009415e-03
+## 5               Phi(~sex)p(~1)    3 1156.191 14.265585 4.731092e-04
+## 3            Phi(~region)p(~1)    4 1156.624 14.698684 3.809914e-04
+## 1                 Phi(~1)p(~1)    2 1159.333 17.408236 9.829776e-05
+##    neg2lnl convergence
+## 6 1131.925           0
+## 8 1129.545           0
+## 2 1137.493           0
+## 4 1135.200           0
+## 7 1144.675           0
+## 5 1150.191           0
+## 3 1148.624           0
+## 1 1155.333           0</code></pre>
+<p>
+It seems that the additive model that includes sex and region were supported equivalently (ΔAIC within 2). As such, there is not strong evidence that the addition of the region covariate for the survival parameter improved model performance. Despite lack of support, let’s have a look at the real parameter estimates for that model. It is a very good idea to do so, in order to ensure that spurious results are not generated (for example, if Springfield’s high detectability is accompanied by abnormally low survival estimates.
+</p>
+<pre class="r"><code>names(modList_sexRegion_additive)</code></pre>
+<pre><code>## [1] &quot;Phi.dot.p.dot&quot;           &quot;Phi.dot.p.region&quot;       
+## [3] &quot;Phi.region.p.dot&quot;        &quot;Phi.region.p.region&quot;    
+## [5] &quot;Phi.sex.p.dot&quot;           &quot;Phi.sex.p.region&quot;       
+## [7] &quot;Phi.sex.region.p.dot&quot;    &quot;Phi.sex.region.p.region&quot;
+## [9] &quot;model.table&quot;</code></pre>
+<pre class="r"><code>compute.real(modList_sexRegion_additive$Phi.sex.region.p.region)</code></pre>
+<pre><code>## $Phi
+##   sex      region occ  estimate         se       lcl       ucl
+## 1   F          dc   4 0.6450506 0.05033836 0.5415131 0.7365807
+## 2   F gainesville   4 0.5280464 0.06130231 0.4085837 0.6443811
+## 3   F springfield   4 0.5952033 0.07051392 0.4531113 0.7229503
+## 4   M          dc   4 0.7453960 0.04699159 0.6431106 0.8262846
+## 5   M gainesville   4 0.6431714 0.05853866 0.5222907 0.7482103
+## 6   M springfield   4 0.7031557 0.05703500 0.5809804 0.8018571
+## 
+## $p
+##        region occ  estimate         se       lcl       ucl
+## 1          dc   5 0.2945778 0.03993964 0.2227059 0.3783541
+## 2 gainesville   5 0.3939582 0.06589921 0.2745443 0.5275417
+## 3 springfield   5 0.6599088 0.08258585 0.4854151 0.7996539</code></pre>
+<p>
+With no evidence of problems with the model, it is now on us to determine why detectability is so much higher in Springfield!
+</p>
+<blockquote>
+<h3>
+<i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:
+</h3>
+<br>
+<ul>
+<p>
+Develop and evaluate set of models that compares the influence of region and sex on survival for the gray catbird or song sparrow. Do the results differ from that of the northern cardinal? Why do you think that this is or is not the case?
+</p>
+</blockquote>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
