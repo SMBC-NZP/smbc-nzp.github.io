@@ -40,7 +40,7 @@ tmin_20180901 <-
 
 ## Project Description and Context
 
-In this module you will learn how to use R as a geographic information system (GIS). In doing so, we will be exploring 4 km resolution minimum temperature data from the <a href = "http://prism.oregonstate.edu/" target = "_blank">PRISM Climate Group</a> from the first of September to the present. PRISM provides a continuous grid of modeled temperature and precipitation values across the conterminous United States.
+In this module you will learn how to use R as a geographic information system (GIS). In doing so, we will be exploring 4 km resolution minimum temperature data from the <a href = "http://prism.oregonstate.edu/" target = "_blank">PRISM Climate Group</a> from the first of September to the present. PRISM provides a continuous grid of modeled temperature and precipitation values across the conterminous United States. The PRISM team uses data collected from weather stations and advanced models to calculate weather variables.
 
 ## Exercise Objectives
   * Become familiar with importing and formatting spatial data
@@ -70,7 +70,7 @@ options(prism.path = "~/prismtmp")
 
 ## Loading raster files
 
-Download raster files that provides minimum temperature data for the conterminous United States:
+We'll next download raster files that provides minimum temperature data, in degrees Celsius, for the conterminous United States. The `get_prism_dailys` function below loads the variable of interest, defined here as `tmin`, between a range of dates. The additional argument `keepZip = FALSE` tells PRISM that we would like to download the raster files rather than zip files that contain the raster. Changing this argument to `TRUE` would likely save data on your hard drive by compressing the files.
 
 ```{r, eval=F}
 
@@ -614,7 +614,7 @@ Open up Google Earth and add your data and take a look! To do so, navigate to, a
 
 ----
 
-The above is, of course, just a few basic GIS tasks and really represents the tip-of-the-iceburg of what R can do as a GIS.  We will be exploring spatial data much further in labs throughout the week. For a further look at using R as a GIS, check out this [**website**](http://cran.r-project.org/web/views/Spatial.htm) to see the variety of packages and analyses available.
+The above is, of course, just a few basic GIS tasks and really represents the tip-of-the-iceburg of what R can do as a GIS.  We will be exploring spatial data much further in labs throughout the week. For a further look at using R as a GIS, check out this <a href = "http://cran.r-project.org/web/views/Spatial.html" target = "_blank">website</a> to see the variety of packages and analyses available.
 
 ----
 
