@@ -156,27 +156,16 @@ table, td, th {
 
 library(RCurl)
 
-# Load a source script:
-
-script <-
-  getURL(
-    "https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode.R"
-  )
-
-# Evaluate then remove the source script:
-
-eval(parse(text = script))
-
-rm(script)
+source("https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode.R")
 
 library(knitr) ; library(kableExtra)
 
 options(knitr.table.format = "html")
 ```
 
+<img style="float:right;padding-left:25px;border:none" src="images/smsc_logo.jpg" width = "500px"/>
+
 <h1 style="text-align: center;">Data wrangling in the tidyverse</h1>
-<br>
-<!img style="float: left; margin: 0px 0px 15px 15px;" src="nzpLogo.jpg" width="150" />
 <p style = "text-align: center; font-size: 14px;"><i>Brian S. Evans, Ph.D.</i></p>
 <hr>
 
@@ -186,7 +175,7 @@ options(knitr.table.format = "html")
 <img style="PADDING-RIGHT:10px; PADDING-TOP: 10px; PADDING-BOTTOM: 10px; padding-right: 0px" align = "right" src="http://images.nationalgeographic.com/wpf/media-live/photos/000/183/cache/upside-down-bird_18378_990x742.jpg" height="400px" width = "380px" title=" Hideta Nagai, National Geographic"/>
 As a result, researchers in fields outside of data science rarely follow formal data management conventions and tend to format their data for a given analyis, ease of data entry, or for some now-potentially-defunct computer program. This leads to messy, inflexible datasets that are difficult to work with for anything but their initial intention.</p>
 
-<p>The goal of this lesson is to introduce you to the structure of tidy data. Tidy data are datasets that follow the convention of database design. This is the preferable format for data in that:</p>
+<p>The goal of this lesson is to introduce you to how to store your field data in a tidy way and how to work with tidy data. Tidy data are datasets that follow the convention of database design. This is the preferable format for data in that:</p>
 <ul>
 <li><b>Tidy data are not platform-specific</b>: This is not just the preferred data formatting for working in R or using <i>tidyverse</i> packages, this is the preferred format for data as a whole. Considerable research, and really an entire field of study, has gone into the rules that determine what consitutes tidy data.</li>
 <li><b>Tidy data are durable and avoid data entry and modification errors</b>: Tidy data avoids generating and working with duplicate values in data tables and databases. This streamlines the data entry and management processes.</li>
@@ -202,22 +191,11 @@ As a result, researchers in fields outside of data science rarely follow formal 
 <br>
 
 ```{r, eval=FALSE}
-# Load RCurl library:
+# Load data for this lesson:
 
 library(RCurl)
 
-# Load a source script:
-
-script <-
-  getURL(
-    "https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode.R"
-  )
-
-# Evaluate then remove the source script:
-
-eval(parse(text = script))
-
-rm(script)
+source("https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode.R")
 ```
 
 <hr>
@@ -562,7 +540,7 @@ kable(badDate, "html") %>%
 <li><b>sep</b>: The character that defines where to split the columns</li>
 </ul>
 <p>To separate the above into a tidier (but still not tidy) dataset, code the following:</p>
-```{r separate, eval = FALSE}
+```{r separate}
 separate(
   data = badDate,
   col = observationDate,
@@ -591,7 +569,7 @@ kable(badYear, "html") %>%
 </div>
 <br>
 <p>To address this, we must <b>subset data by columns</b>. In our previous lessons we learned how to select columns from a data frame using indexing. Indexing allows us select columns based on their position within the data frame or by name:</p>
-```{r eval = F}
+```{r}
 
 # By position: 
 
@@ -608,7 +586,7 @@ badYear[, c('id', 'birdID', 'observationDate', 'mass')]
 <br>
 <p>We can use the `tidyverse` <b>select</b> function to subset a data frame by column much more easily. Arguments of `select` include the data frame that contains the columns you wish to select and the names (unquoted) or positions of the columns.</p>
 
-```{r eval = F}
+```{r}
 
 # By position: 
 
@@ -699,7 +677,7 @@ kable(wideFrame, "html") %>%
 
 <p>In the above, each observation is of a given species at a given distance class. The grouping of the distance columns is a clear sign that these data are not in tidy format. In the language of the tidyverse, I have split one variable (the count of birds) into multiple columns. As such, we are compelled to tidy our data by collapsing the distances into a single column. In the script below we use the `tidyr` function `gather` as:
 
-```{r gatherCounts, eval = FALSE}
+```{r gatherCounts}
 gather(data = wideFrame, 
   key = distance,
   value = obs, 
@@ -736,7 +714,7 @@ kable(dfTooLong, "html") %>%
 <li>fill: If no match is found, the value to fill (e.g., NA or 0 -- the default is NA)</li>
 </ul>
 
-```{r spread, eval = FALSE}
+```{r spread}
 spread(
   data = dfTooLong,
   key = measurement,
@@ -773,7 +751,7 @@ kable(badBandingRecord, "html") %>%
 
 <p>Above we used the function `select` to remove columns from tables. We can use this function to restructure the banding record into two data frames representing two levels of observations (Note: I am using two levels to avoid the primary and foreign keys here, for simplicity):</p>
 
-```{r, eval = FALSE}
+```{r}
 birdRecord <- 
   select(
     badBandingRecord,
@@ -787,11 +765,15 @@ siteRecord <-
     badBandingRecord,
     site,
     canopyCover)
+
+birdRecord
+
+siteRecord
 ```
 
 <p>The above is a great start, but notice that the `siteRecord` table has duplicate rows. This is a violation of the first normal rule. You can use the tidyverse function <b>distinct</b> to remove any rows that are exact duplicates of one another. The our purposes here, only relevant argument of `distinct` is the data frame. Let's use distinct to remove duplicate site records:</p>
 
-```{r, eval = FALSE}
+```{r}
 distinct(siteRecord)
 ```
 
@@ -826,7 +808,7 @@ Z1 <-
 ```
 <br>
 <p>Next, let's write functions for the second and third steps of this process:</p>
-```{r nested functions, eval = FALSE}
+```{r nested functions}
 # Some very silly functions for illustration:
 
 multiplyByTwo <- 
@@ -841,7 +823,7 @@ addOne <-
 ```
 <br>
 <p>To carry out this chained analysis, one non-nested option is to complete the process by assigning a new object for each step. What are the advantages and disadvantages of the below?</p>
-```{r nested nonnest new object, eval = FALSE}
+```{r nested nonnest new object}
 # Non-nested, new object for each step:
 
 z1 <- 
@@ -854,7 +836,7 @@ addOne(z2)
 ```
 <br>
 <p>Another non-nested option is to complete the process by overwriting the origin object for each step. What are the advantages and disadvantages of the below?</p>
-```{r nested nonnest overwrite object, eval = FALSE}
+```{r nested nonnest overwrite object}
 # Non-nested, overwrite object for each step:
 
 z <- 
@@ -867,7 +849,7 @@ addOne(z)
 ```
 <br>
 <p>We can also write the process as nested functions. What are the advantages and disadvantages of the below?</p> 
-```{r nested version, eval = FALSE}
+```{r nested version}
 # Nested:
 
 addOne(
@@ -904,7 +886,7 @@ addOne(
 <p>Piping makes scripts more readable and easier to write. Moreover, if you didn't do a great job naming your R objects, you may have a hard time remembering what each was. The alternative, nested functions, can be problematically complicated to read. Piping avoids the necessity to assign intermediate objects and makes scripts legible by conducting analyses in sequence.</p>
 
 <p>To illustrate how piping works, let's look again at the nested and non-nested processes that we completed at the start of this section:</p>
-```{r pipe reiterate nest, eval = F}
+```{r pipe reiterate nest}
 # Non-nested, new object for each step:
 
 z1 <- 
@@ -922,7 +904,7 @@ addOne(
 ``` 
 <br>
 <p>To pipe this operation, we use the pipe symbol, `%>%`,  to separate arguments. The pipe represents the word "then". In piping, the output on the left side of the pipe becomes the first argument in the function on the right. We structure our piped statement similar to that of the non-nested version: "multiply `z` by two <i>then</i> add one to this value". Piping the above, our code would read as:</p> 
-```{r pipe version, eval = F}
+```{r pipe version}
 1:5 %>%
   multiplyByTwo %>%
   addOne
@@ -975,7 +957,7 @@ birdCounts %>%
 ```
 <br>
 <p>Note in the table above that count data are bird-level observations while life history traits are species-level observations. To address this, the data need to be separated into individual tables. These tables are provided below (showing just the first 5 records of each table).</p>
-```{r tables to join, eval = FALSE}
+```{r tables to join}
 # Tables to join:
 
 birdCounts
@@ -1011,7 +993,7 @@ kable(birdHabits %>% slice(1:5), "html") %>%
 <b>y</b>: The table to be joined to the target</br>
 <b>by</b>: A character vector of the columns to join by
 </p>
-```{r left_join pipe, eval = FALSE}
+```{r left_join pipe}
 # Join tables:
 
 left_join(
@@ -1036,7 +1018,7 @@ birdCounts %>%
 <p>Above, we used `select` to subset a data frame by column or index (column number). This is accomplished as below.</p>
 
 <p><b>select</b>: Subset a column of a table by column name or index.</p>
-```{r select indexing, eval = FALSE}
+```{r select indexing}
 birdHabits
 
 # Subset columns using select:
@@ -1057,7 +1039,7 @@ birdHabits %>%
 <br>
 <h4>slice</h4>
 <p>Rows can be subset by position (index) using the `slice` function, as below.</p>
-```{r slice pipe, eval = FALSE}
+```{r slice pipe}
 birdHabits
 
 # Subset rows using slice:
@@ -1076,7 +1058,7 @@ birdHabits %>%
 <h4>distinct</h4>
 <br>
 <p>If we were interested in generating a visit table for point counts (the site visited and the date the visit occured), we can use `select` to subset the `birdCounts` frame to just those columns, as below.</p>
-```{r distinct 0 , eval = FALSE}
+```{r distinct 0}
 # Subset birdCounts to site and date columns:
 
 select(
@@ -1091,7 +1073,7 @@ kable(select(birdCounts, site, date) %>% slice(1:5), "html") %>%
 ```
 <br>
 <p>Doing so, however, breaks one of the <b>rules of tidy data</b> -- "Each observation forms a row". To address this, we can use the function `distinct`, which will remove duplicate records.</p>
-```{r distinct pipe, eval = FALSE}
+```{r distinct pipe}
 # Subset birdCounts to distinct records of site and date:
 
 distinct(
@@ -1116,7 +1098,7 @@ birdCounts %>%
 <h4>filter</h4>
 <br>
 <p>The `tidyverse` function `filter` allows us to filter objects to rows that satisfy logical conditions.</p>
-```{r filter pipe, eval = FALSE}
+```{r filter pipe}
 
 # Subset rows by condition using filter:
 
@@ -1132,7 +1114,7 @@ birdHabits %>%
 ```
 <br>
 <p>Using `filter` you can apply multiple conditional filters to a data frame:</p>
-```{r filter multiple, eval = FALSE}
+```{r filter multiple}
 # Subset rows by multiple conditions using filter:
 
 filter(birdHabits,
@@ -1172,11 +1154,11 @@ birdCounts %>%
 <hr>
 <h3>Adding & modifying columns</h3>
 
-<h4>transmute</h4>
+<h4>mutate</h4>
 <p>The function `mutate` can be used to modify an existing column or add a new one.</p>
 
 <p>Modify an existing column:</p>
-```{r mutate existing, eval = FALSE}
+```{r mutate existing}
 # Mutate species column in base R:
 
 birdCounts
@@ -1184,8 +1166,8 @@ birdCounts
 birdCounts$species <- 
   toupper(birdCounts$species)
 
-birdCount$species <- 
-  tolower(birdCount$species)
+birdCounts$species <- 
+  tolower(birdCounts$species)
 
 # Mutate species column using mutate:
 
@@ -1203,7 +1185,7 @@ birdCounts %>%
 <p>Note in the above that the base R version actually overwrote the original species column. This is a big problem that we want to avoid at all costs.</p>
 
 <p>To add a new column using `mutate`, you provide the new column's name:</p>
-```{r mutate new pipe, eval = FALSE}
+```{r mutate new pipe}
 # Add a year column in base R:
 
 birdCounts$year <- 
@@ -1232,7 +1214,7 @@ birdCounts %>%
 <h4>transmute</h4>
 
 <p>The function <b>transmute</b> is similar to `mutate` in that it can be used to calculate or modify a new or existing column. If differs in that it will subset the data frame to only the specified columns (similar to select):</p>
-```{r transmute pipe, eval = FALSE}
+```{r transmute pipe}
 # Add a year column, subset to site and year in base R:
 
 newFrame <- 
@@ -1258,7 +1240,7 @@ birdCounts %>%
 <h3>Renaming columns</h3>
 <h4>select and rename</h4>
 <p>Finally, we may be interested in maintaining the values of a column but changing its name. To do so, we use the function `select` if we would like to subset the columns along the way or `rename` if we would like to change a name without subsetting the data frame.</p>
-```{r select and rename pipe, eval = FALSE}
+```{r select and rename pipe}
 # Rename the species column using select:
 
 select(
@@ -1305,7 +1287,7 @@ birdCounts %>%
 <h2>Grouping data</h2>
 <hr>
 <p>The `tidyverse` function `group_by` allows you to assign groups to a data frame based on a variable in that table. As an example, let's group `birdCounts` by the `site` variable:</p>
-```{r one group pipe, eval = FALSE}
+```{r one group pipe}
 # Group birdCounts by site:
 
 group_by(
@@ -1319,7 +1301,7 @@ birdCounts %>%
 ```
 <br>
 <p><i>What did it do</i>? If you look closely at the output you will see that your tibble now contains "Groups: site [30]". This tells you that your tibble has been split into groups. Functions will be applied to each group separately. For example, let's calculate the species richness (`length(unique(species))`) observed at each site by grouping the data frame and using `mutate` to apply the function:</p>
-```{r species richness, eval = FALSE}
+```{r species richness}
 # Species richness by site (across years):
 
 birdCounts %>%
@@ -1331,7 +1313,7 @@ birdCounts %>%
 <br>
 
 <p>`group_by` can be used to split the data frame into multiple groups as well. The following example calculates the species richness for each site and year of observation:</p>
-```{r two groups pipe, eval = FALSE}
+```{r two groups pipe}
 # Group birdCounts by site and year:
 
 group_by(
@@ -1348,7 +1330,7 @@ birdCounts %>%
 ```
 <br>
 <p><i>Note: If you intend to modify your script after using `group_by` be sure to chain the function `ungroup` in a later line. For example, we might want to use `ungroup` within our species richness-by-site calculation:</i></p>
-```{r ungroup, eval = FALSE}
+```{r ungroup}
 # Calculate species richness by site (across years), then ungroup:
 
 birdCounts %>%
@@ -1381,7 +1363,7 @@ birdCounts %>%
 <h2>Summarizing data</h2>
 
 <p>The `tidyverse` provides use with the function `summarize` that can be used to calculate a summary function across grouped variables. For example<b>summarize</b>: Calculates a summary function for a grouped variable.</p>
-```{r summarize pipe, eval = FALSE}
+```{r summarize pipe}
 # Species richness by site, across years:
 
 summarize(
