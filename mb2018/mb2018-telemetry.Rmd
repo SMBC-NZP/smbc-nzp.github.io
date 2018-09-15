@@ -28,7 +28,6 @@ library(ellipse)
 ```
 
 <head>
-<link rel="stylesheet" href=""N:/Capacity Building and Academic Programs/SI-Mason Grad & Prof Training/Individual Courses--Folders/Bird Migration/2018/Materials/Distance">
 <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
@@ -273,7 +272,7 @@ We might think that we are there. In fact, a lot of triangulation efforts might 
 
 ## Maximum likelihood estimation of the transmitter location
 
-The `locate` function provides a maximum likelihood approach to estimate location and  developed by Lenth (1981) and adapted by Berg (2015). The input of this function is simply the observatino file.
+The `locate` function provides a maximum likelihood approach to estimate location and  developed by Lenth (1981) and adapted by Berg (2015). The input of this function is simply the observations file.
 
 ```{r}
 loc <- 
