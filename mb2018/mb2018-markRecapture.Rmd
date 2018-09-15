@@ -58,7 +58,7 @@ resights <-
 
 <img style="float:right;padding-left:10px;border:none" src="images/catbirdLermanHand.jpg" width = "300px"/>
 
-<p>In this module, we will import and analyze banding and re-encounter data on three species of birds: the gray catbird (*Dumetella carolinensis*), northern cardinal (*Cardinalis cardinalis*), and song sparrow (*Melospiza melodia*). The data were collected between the years 2012 and 2017 from 128 banding stations in the metropolitan areas of Washington D.C.,  Gainesville Florida, and Springfield Massachussetts. Banding efforts are associated with the Smithsonian's <a target = "_blank" href = "https://nationalzoo.si.edu/migratory-birds/about-neighborhood-nestwatch">Neighborhood Nestwatch</a> project -- a citizen science program in which Smithsonian scientists band birds in participants backyards one day per year. In addition to banding, the scientists search for previously color-banded birds (resighting) and conduct point counts and habitat surveys during their visit. The participants contribute data to the project by reporting color-banded birds observed throughout the year. We will use these data collected to construct and compare Cormack-Jolly-Seber (CJS) models in the R package <a target = "_blank" href = "https://cran.r-project.org/web/packages/marked/index.html">marked</a>.</p>
+<p>In this module, we will import and analyze banding and re-encounter data on three species of birds: the Gray catbird (*Dumetella carolinensis*), Northern cardinal (*Cardinalis cardinalis*), and Song sparrow (*Melospiza melodia*). The data were collected between the years 2012 and 2017 from 128 banding stations in the metropolitan areas of Washington D.C.,  Gainesville Florida, and Springfield Massachussetts. Banding efforts are associated with the Smithsonian's <a target = "_blank" href = "https://nationalzoo.si.edu/migratory-birds/about-neighborhood-nestwatch">Neighborhood Nestwatch</a> project -- a citizen science program in which Smithsonian scientists band birds in participants backyards one day per year. In addition to banding, the scientists search for previously color-banded birds (resighting) and conduct point counts and habitat surveys during their visit. The participants contribute data to the project by reporting color-banded birds observed throughout the year. We will use these data collected to construct and compare Cormack-Jolly-Seber (CJS) models in the R package <a target = "_blank" href = "https://cran.r-project.org/web/packages/marked/index.html">marked</a>.</p>
 
 ## Exercise Objectives
   * Practice and expand upon data summarizing and reshaping steps
@@ -484,9 +484,9 @@ encounterHistory <-
 <h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h3>
 <br>
 <ul>
-<li>Subset the banding records to just those associated with the northern cardinal (NOCA).</li>
-<li>Make a long-form encounterHistory for the northern cardinal. Assign the name `encountersLong_noca`.</li>
-<li>Create an encounter history file (that includes environmental and banding data) for the northern cardinal, as above. Assign the name `encounterHistory_noca` resultant file.</li>
+<li>Subset the banding records to just those associated with the Northern cardinal (NOCA).</li>
+<li>Make a long-form encounterHistory for the Northern cardinal. Assign the name `encountersLong_noca`.</li>
+<li>Create an encounter history file (that includes environmental and banding data) for the Northern cardinal, as above. Assign the name `encounterHistory_noca` resultant file.</li>
 <li><b>Extra credit</b> (only complete this if you have extra time): Using the file `encountersLong_noca`, create a summary table of the number of times cardinals were encountered (for example, the number of cardinals that were encountered five times). 
 </ul>
 </blockquote>
@@ -526,7 +526,7 @@ noca_simple.proc$data
 
 <p>We can now run our first CJS model using the function `crm`:</p>
 
-```{r}
+```{r, message = FALSE}
 model_null <- 
   crm(noca_simple.proc)
 
@@ -549,7 +549,7 @@ compute.real(model_null)
 
 <p>If we would like to see the error around the real estimates, we can re-run the model with the additional argument `hessian = TRUE`.</p>
 
-```{r}
+```{r, message = FALSE}
 crm(noca_simple.proc, hessian = TRUE) %>%
   compute.real
 ```
@@ -593,7 +593,7 @@ Phi.sex <-
 
 <p>We now define and run the CJS model in which Phi varies by sex:</p>
 
-```{r}
+```{r, message = FALSE}
 model_sexPhi <-
   crm(
     data = noca.proc,
@@ -742,5 +742,5 @@ compute.real(modList_sexRegion_additive$Phi.sex.region.p.region)
 <h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h3>
 <br>
 <ul>
-<p>Develop and evaluate set of models that compares the influence of region and sex on survival for the gray catbird or song sparrow. Do the results differ from that of the northern cardinal? Why do you think that this is or is not the case?</p>
+<p>Develop and evaluate set of models that compares the influence of region and sex on survival for the Gray catbird or Song sparrow. Do the results differ from that of the Northern cardinal? Why do you think that this is or is not the case?</p>
 </blockquote>

@@ -138,7 +138,7 @@ $(document).ready(function () {
 <h2>Project Description and Context</h2>
 <p><img style="float:right;padding-left:10px;border:none" src="images/catbirdLermanHand.jpg" width = "300px"/></p>
 <p>
-In this module, we will import and analyze banding and re-encounter data on three species of birds: the gray catbird (<em>Dumetella carolinensis</em>), northern cardinal (<em>Cardinalis cardinalis</em>), and song sparrow (<em>Melospiza melodia</em>). The data were collected between the years 2012 and 2017 from 128 banding stations in the metropolitan areas of Washington D.C., Gainesville Florida, and Springfield Massachussetts. Banding efforts are associated with the Smithsonian’s <a target = "_blank" href = "https://nationalzoo.si.edu/migratory-birds/about-neighborhood-nestwatch">Neighborhood Nestwatch</a> project – a citizen science program in which Smithsonian scientists band birds in participants backyards one day per year. In addition to banding, the scientists search for previously color-banded birds (resighting) and conduct point counts and habitat surveys during their visit. The participants contribute data to the project by reporting color-banded birds observed throughout the year. We will use these data collected to construct and compare Cormack-Jolly-Seber (CJS) models in the R package <a target = "_blank" href = "https://cran.r-project.org/web/packages/marked/index.html">marked</a>.
+In this module, we will import and analyze banding and re-encounter data on three species of birds: the Gray catbird (<em>Dumetella carolinensis</em>), Northern cardinal (<em>Cardinalis cardinalis</em>), and Song sparrow (<em>Melospiza melodia</em>). The data were collected between the years 2012 and 2017 from 128 banding stations in the metropolitan areas of Washington D.C., Gainesville Florida, and Springfield Massachussetts. Banding efforts are associated with the Smithsonian’s <a target = "_blank" href = "https://nationalzoo.si.edu/migratory-birds/about-neighborhood-nestwatch">Neighborhood Nestwatch</a> project – a citizen science program in which Smithsonian scientists band birds in participants backyards one day per year. In addition to banding, the scientists search for previously color-banded birds (resighting) and conduct point counts and habitat surveys during their visit. The participants contribute data to the project by reporting color-banded birds observed throughout the year. We will use these data collected to construct and compare Cormack-Jolly-Seber (CJS) models in the R package <a target = "_blank" href = "https://cran.r-project.org/web/packages/marked/index.html">marked</a>.
 </p>
 </div>
 <div id="exercise-objectives" class="section level2">
@@ -910,13 +910,13 @@ If we want to see how survival varies by region or impervious surface, there is 
 <br>
 <ul>
 <li>
-Subset the banding records to just those associated with the northern cardinal (NOCA).
+Subset the banding records to just those associated with the Northern cardinal (NOCA).
 </li>
 <li>
-Make a long-form encounterHistory for the northern cardinal. Assign the name <code>encountersLong_noca</code>.
+Make a long-form encounterHistory for the Northern cardinal. Assign the name <code>encountersLong_noca</code>.
 </li>
 <li>
-Create an encounter history file (that includes environmental and banding data) for the northern cardinal, as above. Assign the name <code>encounterHistory_noca</code> resultant file.
+Create an encounter history file (that includes environmental and banding data) for the Northern cardinal, as above. Assign the name <code>encounterHistory_noca</code> resultant file.
 </li>
 <li>
 <b>Extra credit</b> (only complete this if you have extra time): Using the file <code>encountersLong_noca</code>, create a summary table of the number of times cardinals were encountered (for example, the number of cardinals that were encountered five times).
@@ -987,12 +987,8 @@ We can now run our first CJS model using the function <code>crm</code>:
 </p>
 <pre class="r"><code>model_null &lt;- 
   crm(noca_simple.proc)</code></pre>
-<pre><code>## Creating design data...</code></pre>
-<pre><code>## Fitting model</code></pre>
-<pre><code>## Computing initial parameter estimates</code></pre>
-<pre><code>## Starting optimization for 2 parameters...</code></pre>
 <pre><code>## 
-## Elapsed time in minutes:  0.0043</code></pre>
+## Elapsed time in minutes:  0.0042</code></pre>
 <pre class="r"><code>model_null</code></pre>
 <pre><code>## 
 ## crm Model Summary
@@ -1039,11 +1035,6 @@ If we would like to see the error around the real estimates, we can re-run the m
 </p>
 <pre class="r"><code>crm(noca_simple.proc, hessian = TRUE) %&gt;%
   compute.real</code></pre>
-<pre><code>## Creating design data...</code></pre>
-<pre><code>## Fitting model</code></pre>
-<pre><code>## Computing initial parameter estimates</code></pre>
-<pre><code>## Starting optimization for 2 parameters...</code></pre>
-<pre><code>## Computing hessian...</code></pre>
 <pre><code>## 
 ## Elapsed time in minutes:  0.0033</code></pre>
 <pre><code>## $Phi
@@ -1095,14 +1086,9 @@ We now define and run the CJS model in which Phi varies by sex:
     model.parameters = list(Phi = Phi.sex),
     accumulate = FALSE,
     hessian = TRUE)</code></pre>
-<pre><code>## Fitting model</code></pre>
-<pre><code>## Computing initial parameter estimates</code></pre>
-<pre><code>## Starting optimization for 3 parameters...</code></pre>
 <pre><code>## 
- Number of evaluations:  100  -2lnl: 1150.190707</code></pre>
-<pre><code>## Computing hessian...</code></pre>
-<pre><code>## 
-## Elapsed time in minutes:  0.0033</code></pre>
+ Number of evaluations:  100  -2lnl: 1150.190707
+## Elapsed time in minutes:  0.0037</code></pre>
 <pre class="r"><code>model_sexPhi</code></pre>
 <pre><code>## 
 ## crm Model Summary
@@ -1159,11 +1145,11 @@ We can view the results in a model selection table by calling the <code>fit_mode
   fit_models()</code></pre>
 <pre><code>## Phi.dot.p.dot 
 ## 
-## Elapsed time in minutes:  0.0032 
+## Elapsed time in minutes:  0.0033 
 ## Phi.sex.p.dot 
 ## 
  Number of evaluations:  100  -2lnl: 1150.190707
-## Elapsed time in minutes:  0.0037</code></pre>
+## Elapsed time in minutes:  0.0033</code></pre>
 <pre class="r"><code>modList</code></pre>
 <pre><code>##            model npar      AIC DeltaAIC    weight  neg2lnl convergence
 ## 2 Phi(~sex)p(~1)    3 1156.191  0.00000 0.8279724 1150.191           0
@@ -1207,18 +1193,18 @@ modList_sexRegion &lt;-
 ## 
  Number of evaluations:  100  -2lnl: 1137.953052
  Number of evaluations:  200  -2lnl: 1137.492791
-## Elapsed time in minutes:  0.0038 
+## Elapsed time in minutes:  0.0037 
 ## Phi.sex.p.dot 
 ## 
  Number of evaluations:  100  -2lnl: 1150.190707
-## Elapsed time in minutes:  0.0033 
+## Elapsed time in minutes:  0.0037 
 ## Phi.sex.p.region 
 ## 
  Number of evaluations:  100  -2lnl: 1132.129418
  Number of evaluations:  200  -2lnl:  1132.19412
  Number of evaluations:  300  -2lnl: 1131.925121
  Number of evaluations:  100  -2lnl: 1132.249789
-## Elapsed time in minutes:  0.004</code></pre>
+## Elapsed time in minutes:  0.0038</code></pre>
 <pre class="r"><code>modList_sexRegion</code></pre>
 <pre><code>##                 model npar      AIC  DeltaAIC       weight  neg2lnl
 ## 4 Phi(~sex)p(~region)    5 1141.925  0.000000 0.8554633770 1131.925
@@ -1285,7 +1271,7 @@ modList_sexRegion_additive &lt;-
   fit_models()</code></pre>
 <pre><code>## Phi.dot.p.dot 
 ## 
-## Elapsed time in minutes:  0.0033 
+## Elapsed time in minutes:  0.0032 
 ## Phi.dot.p.region 
 ## 
  Number of evaluations:  100  -2lnl: 1137.953052
@@ -1295,7 +1281,7 @@ modList_sexRegion_additive &lt;-
 ## 
  Number of evaluations:  100  -2lnl: 1148.626229
  Number of evaluations:  200  -2lnl: 1148.623806
-## Elapsed time in minutes:  0.0037 
+## Elapsed time in minutes:  0.0033 
 ## Phi.region.p.region 
 ## 
  Number of evaluations:  100  -2lnl: 1136.499251
@@ -1313,7 +1299,7 @@ modList_sexRegion_additive &lt;-
  Number of evaluations:  200  -2lnl:  1132.19412
  Number of evaluations:  300  -2lnl: 1131.925121
  Number of evaluations:  100  -2lnl: 1132.249789
-## Elapsed time in minutes:  0.0042 
+## Elapsed time in minutes:  0.004 
 ## Phi.sex.region.p.dot 
 ## 
  Number of evaluations:  100  -2lnl:  1144.74488
@@ -1330,7 +1316,7 @@ modList_sexRegion_additive &lt;-
  Number of evaluations:  500  -2lnl: 1129.544896
  Number of evaluations:  100  -2lnl: 1129.636492
  Number of evaluations:  200  -2lnl: 1129.563248
-## Elapsed time in minutes:  0.0043</code></pre>
+## Elapsed time in minutes:  0.0047</code></pre>
 <pre class="r"><code>modList_sexRegion_additive</code></pre>
 <pre><code>##                          model npar      AIC  DeltaAIC       weight
 ## 6          Phi(~sex)p(~region)    5 1141.925  0.000000 5.925076e-01
@@ -1384,7 +1370,7 @@ With no evidence of problems with the model, it is now on us to determine why de
 <br>
 <ul>
 <p>
-Develop and evaluate set of models that compares the influence of region and sex on survival for the gray catbird or song sparrow. Do the results differ from that of the northern cardinal? Why do you think that this is or is not the case?
+Develop and evaluate set of models that compares the influence of region and sex on survival for the Gray catbird or Song sparrow. Do the results differ from that of the Northern cardinal? Why do you think that this is or is not the case?
 </p>
 </blockquote>
 </div>
