@@ -1,5 +1,7 @@
 ---
-output: html_document
+output:
+  html_document:
+    theme: yeti
 ---
 
 <!-- html head --> 
@@ -10,16 +12,24 @@ output: html_document
 <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
 </head>
 
-<h2 style="text-align: center;"><b>The Ecology and Conservation of Migratory Birds</b></h2>
+<div class = "row">
+<img style="float:right;padding-left:25px;border:none" src="images/smsc_logo.jpg" width = "500px"/>
+</div>
+
+<br>
+<div class = "row">
+
+<h2 style="text-align: left;">The Ecology and Conservation of Migratory Birds</h2>
 <hr>
+<img style="float:right;padding-left:10px;border:none" src="images/catbirdBanded.jpg" width = "250px"/>
 
 <p>Welcome to the Ecology and Conservation of Migratory Birds, 2018! This website will be our home base for the R portion of the course. R has become the universal quantitative interface for ecologists - it's free, powerful, flexible enough to do everything but write manuscripts for you, and is relatively user-friendly. Each lesson has accompanying hyperlinks that may include:</p>
 <ul>
 <li><b>Lesson instructions</b>: Website with written-out instructions and exercises associated with a presentation or lab activity (<i>Note: The instructions hyperlinks are the highlighted lesson titles</i>).</li>
-<li><b>Lesson code</b>: The R code that accompanies a lesson (<i>Note: These links will download an R file</i>).</li>
-<li><b>Lesson data</b>: Data that will accompany a lesson (<i>Note: These links will download a data file</i>).</li>
+<li><b>Lesson code</b>: The R code that accompanies a lesson, when applicable (<i>Note: These links will download an R file</i>).</li>
+<li><b>Exercises</b>: Some labs will have accompanying exercises to be completed separately after the instructor demonstrates the material (<i>Note: The hyperlinks are the highlighted exercise titles</i>).</li>
 </ul>
-
+</div>
 <br>
 
 <h3>Preliminary exercises</h3>
@@ -36,6 +46,15 @@ output: html_document
 </ul>
 
 <p>Do you want to do more course preparation or practice your R skills? If so, we strongly recommend completing these <a href = "https://smbc-nzp.github.io/mb2018/mb2018-swirl.html" target = "_blank"><b>SWIRL courses</b></a> prior to the course.</p>
+
+<br>
+<h3>Classroom exercises</h3>
+<hr>
+<p>In this section you will find links to the exercises that we will complete in the computer classroom. I will provide the links at the beginning of each day.</p> 
+
+<ul>
+<li><b><a href = "https://smbc-nzp.github.io/mb2018/mb2018-intro.html" target="_blank">Introduction to R and review</a></b>. Re-thinking our ideas about data while reviewing the course preparation materials above.</li>
+</ul>
 
 <div class = "row">
 <hr>
