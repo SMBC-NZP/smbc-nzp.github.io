@@ -242,7 +242,12 @@ Through this process, participants are expected to develop a flexible skillset f
 <ul>
 <li><a href = "https://smbc-nzp.github.io/lesson8_pres.html">Presentation website</a></li>
 </ul>
-
+<h3>Lab exercises</h3>
+<p>Below you will find links to the exercises we will complete in the computer lab. I will be adding the day's lesson to this webpage at the start of each day.</p>
+<ul>
+<li><a href = "https://smbc-nzp.github.io/lesson7_pres.html" target = "_blank">Presentation website</a></li></li>
+</ul>
+ 
 <hr>
 <div class = "row">
 <img src = "rWorkshop/images/robotBird.jpg"
