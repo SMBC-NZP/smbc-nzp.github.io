@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Project Description and Context
 
-<img style="float:right" src="images/amakihiPic.png" />
+<img style="float:right" src="images/amakihi.png" />
 
 In this module, you will import point transect data on individual Amakihi (*Hemignathus virens*), a common type of honeycreeper in Hawaii. These data were collected as part of a larger translocation experiment, where data was collected on a suite of bird species (Fancy et al. 1997). Point transect surveys were performed at seven survey periods between July 1992 and April 1995. There were 41 point-count stations, though they were not all surveyed in some survey periods. We'll be using this as an example where the use of covariates is appropriate. There are 3 potential covariates available in this case study: Observer ID (OBs), and time in minutes (MAS) and hours (HAS) after sunrise for observations. The goal of the project is to calculate the most unbiased and precise estimate of density of this species within each study period. The study is used as an illustrative example in Marques et al. (2007), and this is one of the Sample Projects provided with the program DISTANCE.
 
