@@ -55,7 +55,8 @@ output:
 <ul>
 <li><b><a href = "https://smbc-nzp.github.io/mb2018/mb2018-intro.html" target="_blank">Introduction to R and review</a></b>. Re-thinking our ideas about data while reviewing the course preparation materials above.</li>
 <li><b><a href = "https://smbc-nzp.github.io/mb2018/mb2018-wrangling.html" target="_blank">Data wrangling in the tidyverse</a></b>. Learn how to store and modify data for easy analysis.</li>
-<li>a href = "https://smbc-nzp.github.io/mb2018/mb2018-markRecapture.html" target="_blank">marked</a></li>
+<li><a href = "https://smbc-nzp.github.io/mb2018/mb2018-markRecapture.html" target="_blank"><b>Mark-recapture lab</b></a></li>
+<li><a href = "https://smbc-nzp.github.io/mb2018/HouseWrenExercise_distance_2.html" target="_blank"><b>Distance</b></a>
 </ul>
 
 <div class = "row">
