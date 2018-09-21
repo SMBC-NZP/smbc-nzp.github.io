@@ -120,7 +120,7 @@ $(document).ready(function () {
 
 
 <head>
-<link rel="stylesheet" href="N:/Capacity Building and Academic Programs/SI-Mason Grad & Prof Training/Individual Courses--Folders/Bird Migration/2018/Materials/Distance/Exercises"> <link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <div id="house-wren-distance-sampling-analysis" class="section level1">
 <h1>House Wren Distance Sampling Analysis</h1>
@@ -129,7 +129,7 @@ $(document).ready(function () {
 </p>
 <div id="project-description-and-context" class="section level2">
 <h2>Project Description and Context</h2>
-<p><img style="float:right" src="images/House_Wren_b57-13-170_l_crop.png" /></p>
+<p><img style="float:right" src="images/howr.png" /></p>
 <p>In this module, we will import point transect data on individual house wrens (<em>Troglodytes aedon</em>). The data were collected from 155 points, with 14-16 points within each of 10 study blocks. The blocks were 16 hectares each and were situated in riparian vegetation along 30km of South Platte River bottomland near Crook, Colorado, USA. The data were collected by 4 observers, who each visited each point. The study is used as an illustrative example in section 8.6 of the Buckland et al. (2001) text and this is one of the Sample Projects provided with the program DISTANCE. Here we will conduct a similar analysis of this data set using the R package “Distance”.</p>
 </div>
 <div id="exercise-objectives" class="section level2">
@@ -320,7 +320,7 @@ wren.haz.simp &lt;-
 <td align="left">wren.haz.simp</td>
 <td align="left">Hazard-rate with simple polynomial adjustment term of order 2</td>
 <td align="left">~1</td>
-<td align="right">0.4105046</td>
+<td align="right">0.4105034</td>
 <td align="right">0.2889584</td>
 <td align="right">0.0323858</td>
 <td align="right">0.0000000</td>
@@ -329,17 +329,17 @@ wren.haz.simp &lt;-
 <td align="left">wren.uni.cos</td>
 <td align="left">Uniform with cosine adjustment terms of order 1,2,3</td>
 <td align="left">NA</td>
-<td align="right">0.4541816</td>
-<td align="right">0.2624159</td>
-<td align="right">0.0221951</td>
+<td align="right">0.4541797</td>
+<td align="right">0.2624165</td>
+<td align="right">0.0221952</td>
 <td align="right">0.4719736</td>
 </tr>
 <tr class="odd">
 <td align="left">wren.hn.cos</td>
 <td align="left">Half-normal with cosine adjustment term of order 2</td>
 <td align="left">~1</td>
-<td align="right">0.4392924</td>
-<td align="right">0.2618924</td>
+<td align="right">0.4392927</td>
+<td align="right">0.2618925</td>
 <td align="right">0.0221206</td>
 <td align="right">1.6137685</td>
 </tr>
@@ -401,23 +401,23 @@ fit.wren.haz.simp &lt;-
 <p><img src="HouseWrenExercise_distance_2_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <pre class="r"><code>fit.wren.hn.cos$dsgof$CvM</code></pre>
 <pre><code>## $W
-## [1] 0.134832
+## [1] 0.1348319
 ## 
 ## $p
-## [1] 0.4392924</code></pre>
+## [1] 0.4392927</code></pre>
 <pre class="r"><code>fit.wren.uni.cos$dsgof$CvM</code></pre>
 <pre><code>## $W
-## [1] 0.130687
+## [1] 0.1306875
 ## 
 ## $p
-## [1] 0.4541816</code></pre>
+## [1] 0.4541797</code></pre>
 <pre class="r"><code>fit.wren.haz.simp$dsgof$CvM</code></pre>
 <pre><code>## $W
-## [1] 0.1433457
+## [1] 0.1433461
 ## 
 ## $p
-## [1] 0.4105046</code></pre>
-<p>Let’s move forward looking at the results of the top model then, just to summarize and interpret the results. One can easily use <code>summary(wren.haz.simp)</code> to view a summary of the input data and all the relevant results. You can also pick and choose elements of the dsmodel object. For example density estimates can be pulled with <code>wren.haz.simp$dht$indviduals$D</code>. Here I’m using the <code>kable</code> function from the <code>knitr</code> package just to create easily viewable tables in a markdown file. Although results are shown for each region/block, we are here just looking at the total value for density and abundance. Our density value here is 7.5661101 birds per hectare.</p>
+## [1] 0.4105034</code></pre>
+<p>Let’s move forward looking at the results of the top model then, just to summarize and interpret the results. One can easily use <code>summary(wren.haz.simp)</code> to view a summary of the input data and all the relevant results. You can also pick and choose elements of the dsmodel object. For example density estimates can be pulled with <code>wren.haz.simp$dht$indviduals$D</code>. Here I’m using the <code>kable</code> function from the <code>knitr</code> package just to create easily viewable tables in a markdown file. Although results are shown for each region/block, we are here just looking at the total value for density and abundance. Our density value here is 7.5661114 birds per hectare.</p>
 <table>
 <thead>
 <tr class="header">
@@ -571,102 +571,102 @@ fit.wren.haz.simp &lt;-
 <tbody>
 <tr class="odd">
 <td align="left">0</td>
-<td align="right">4.000553</td>
-<td align="right">0.9756589</td>
-<td align="right">0.2438810</td>
-<td align="right">2.436151</td>
-<td align="right">6.569554</td>
-<td align="right">24.07309</td>
+<td align="right">4.000554</td>
+<td align="right">0.9756588</td>
+<td align="right">0.2438809</td>
+<td align="right">2.436152</td>
+<td align="right">6.569555</td>
+<td align="right">24.07306</td>
 </tr>
 <tr class="even">
 <td align="left">1</td>
-<td align="right">8.781702</td>
-<td align="right">1.4849739</td>
-<td align="right">0.1690986</td>
-<td align="right">6.264559</td>
+<td align="right">8.781704</td>
+<td align="right">1.4849732</td>
+<td align="right">0.1690985</td>
+<td align="right">6.264561</td>
 <td align="right">12.310251</td>
-<td align="right">47.13550</td>
+<td align="right">47.13538</td>
 </tr>
 <tr class="odd">
 <td align="left">2</td>
-<td align="right">10.147745</td>
-<td align="right">1.5977534</td>
-<td align="right">0.1574491</td>
-<td align="right">7.420692</td>
-<td align="right">13.876970</td>
-<td align="right">60.37415</td>
+<td align="right">10.147746</td>
+<td align="right">1.5977525</td>
+<td align="right">0.1574490</td>
+<td align="right">7.420695</td>
+<td align="right">13.876969</td>
+<td align="right">60.37398</td>
 </tr>
 <tr class="even">
 <td align="left">3</td>
-<td align="right">6.537489</td>
-<td align="right">1.1459147</td>
-<td align="right">0.1752836</td>
-<td align="right">4.602575</td>
+<td align="right">6.537490</td>
+<td align="right">1.1459143</td>
+<td align="right">0.1752835</td>
+<td align="right">4.602576</td>
 <td align="right">9.285839</td>
-<td align="right">42.51742</td>
+<td align="right">42.51732</td>
 </tr>
 <tr class="odd">
 <td align="left">4</td>
-<td align="right">8.001106</td>
-<td align="right">1.4911017</td>
-<td align="right">0.1863619</td>
-<td align="right">5.501649</td>
+<td align="right">8.001108</td>
+<td align="right">1.4911012</td>
+<td align="right">0.1863618</td>
+<td align="right">5.501651</td>
 <td align="right">11.636093</td>
-<td align="right">36.58018</td>
+<td align="right">36.58010</td>
 </tr>
 <tr class="even">
 <td align="left">5</td>
-<td align="right">7.513234</td>
-<td align="right">1.5225266</td>
-<td align="right">0.2026460</td>
-<td align="right">4.990447</td>
+<td align="right">7.513235</td>
+<td align="right">1.5225262</td>
+<td align="right">0.2026459</td>
+<td align="right">4.990448</td>
 <td align="right">11.311349</td>
-<td align="right">31.01386</td>
+<td align="right">31.01380</td>
 </tr>
 <tr class="odd">
 <td align="left">6</td>
-<td align="right">7.610809</td>
-<td align="right">1.2562388</td>
-<td align="right">0.1650598</td>
-<td align="right">5.476174</td>
+<td align="right">7.610810</td>
+<td align="right">1.2562382</td>
+<td align="right">0.1650597</td>
+<td align="right">5.476176</td>
 <td align="right">10.577532</td>
-<td align="right">50.90054</td>
+<td align="right">50.90041</td>
 </tr>
 <tr class="even">
 <td align="left">7</td>
-<td align="right">7.181481</td>
-<td align="right">1.2901740</td>
-<td align="right">0.1796529</td>
-<td align="right">5.005118</td>
+<td align="right">7.181482</td>
+<td align="right">1.2901735</td>
+<td align="right">0.1796528</td>
+<td align="right">5.005120</td>
 <td align="right">10.304185</td>
-<td align="right">37.24439</td>
+<td align="right">37.24431</td>
 </tr>
 <tr class="odd">
 <td align="left">8</td>
-<td align="right">7.248389</td>
-<td align="right">1.3420673</td>
-<td align="right">0.1851539</td>
-<td align="right">4.987312</td>
+<td align="right">7.248390</td>
+<td align="right">1.3420668</td>
+<td align="right">0.1851538</td>
+<td align="right">4.987314</td>
 <td align="right">10.534561</td>
-<td align="right">32.19833</td>
+<td align="right">32.19826</td>
 </tr>
 <tr class="even">
 <td align="left">9</td>
-<td align="right">8.638593</td>
-<td align="right">1.6637600</td>
-<td align="right">0.1925962</td>
-<td align="right">5.855786</td>
+<td align="right">8.638594</td>
+<td align="right">1.6637595</td>
+<td align="right">0.1925961</td>
+<td align="right">5.855788</td>
 <td align="right">12.743855</td>
-<td align="right">31.85267</td>
+<td align="right">31.85260</td>
 </tr>
 <tr class="odd">
 <td align="left">Total</td>
-<td align="right">7.566110</td>
-<td align="right">0.9154200</td>
-<td align="right">0.1209895</td>
-<td align="right">5.972001</td>
-<td align="right">9.585736</td>
-<td align="right">886.54614</td>
+<td align="right">7.566111</td>
+<td align="right">0.9154190</td>
+<td align="right">0.1209894</td>
+<td align="right">5.972003</td>
+<td align="right">9.585735</td>
+<td align="right">886.54619</td>
 </tr>
 </tbody>
 </table>
