@@ -230,15 +230,17 @@ Take a moment to explore the data … for example, what does each column represe
     LightThreshold=3,    # Here is where you set the threshold level
     ask=FALSE)           # Here you can go through every twilight</code></pre>
 <p><img src="mb2018-geolocator_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<hr />
+<hr>
 <blockquote>
-<p><strong>Exercise One:</strong> Using indexing (i.e., data[x, y]), subset the oven data to the first 30 records and assign the name <code>oven_sub</code> to the resultant object. Go through and assign a few twilights to the file <code>oven_sub</code>.<br />
+<strong>Exercise One:</strong> Using indexing (i.e., data[x, y]), subset the oven data to the first 30 records and assign the name <code>oven_sub</code> to the resultant object. Go through and assign a few twilights to the file <code>oven_sub</code>.<br />
 * How did you decide to either accept or reject twilight events?<br />
-* How do you think accepting / rejecting twilight events would influence the end result? * Change the threshold to a higher value - how does that change the number of shading events?</p>
+* How do you think accepting / rejecting twilight events would influence the end result? * Change the threshold to a higher value - how does that change the number of shading events?
+<hr>
 </blockquote>
-<hr />
 <p><br></p>
-<p>Once you have gone through the process of accepting or rejecting the transition events the data will look like this. <code>tFirst</code> and <code>tSecond</code> correspond to the time of the transitions and type illustrates whether the location will be dervied from relative ‘noon’ or ‘midnight’ locations.</p>
+<p>
+Once you have gone through the process of accepting or rejecting the transition events the data will look like this. <code>tFirst</code> and <code>tSecond</code> correspond to the time of the transitions and type illustrates whether the location will be dervied from relative ‘noon’ or ‘midnight’ locations.
+</p>
 <pre class="r"><code>head(oven_transitions)</code></pre>
 <pre><code>##                tFirst             tSecond type
 ## 1 2011-06-11 00:16:10 2011-06-11 08:52:10    2
@@ -250,7 +252,9 @@ Take a moment to explore the data … for example, what does each column represe
 </div>
 <div id="sun-elevation-angle" class="section level2">
 <h2>Sun-elevation angle</h2>
-<p>The next step is to calculate the sun-elevation angle of a known capture location. The sun-elevation angle is the angle of the sun with respect to the horizon at the time the geolocator light data passed the threshold set by the user. Thus, the sun-elevation angle is unique to the threshold used in the analysis.</p>
+<p>
+The next step is to calculate the sun-elevation angle of a known capture location. The sun-elevation angle is the angle of the sun with respect to the horizon at the time the geolocator light data passed the threshold set by the user. Thus, the sun-elevation angle is unique to the threshold used in the analysis.
+</p>
 <p><img src="images/sunAngle_cartoon.png" height="300px" width="350px"/></p>
 <p><img src="images/sunAngle_cartoon2.png" height="300px" width="350px"/></p>
 <p>Here I chose the dates between deployment of the geolocator and July 31 to ensure that only transitions when the bird was at the capture location were used to calculate the sun-elevation angle.</p>
@@ -330,14 +334,14 @@ maps::map(
   &#39;world&#39;,
   add = TRUE)</code></pre>
 <p><img src="mb2018-geolocator_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
-<hr />
+<hr>
 <blockquote>
 <h4 id="exercise-two">Exercise Two:</h4>
 <p>
 There are some extreme outliers in the data. Take a look at the species distribution of the Ovenbird at this <a href = 'https://www.allaboutbirds.org/guide/ovenbird' target = "_blank"><b>link</b></a>. Use this information (and perhaps Google Earth?) to filter the geolocator output to points that are reasonable (<i>Hint: use the tidyverse function <code>filter</code></i>). Assign the name <code>ovenLocations_sub</code> to the resultant object.
 </p>
-<hr />
 </blockquote>
+<hr>
 </div>
 <div id="create-kernel-density-estimates-kde-around-the-stationary-periods" class="section level2">
 <h2>Create Kernel Density Estimates (KDE) around the stationary periods</h2>
@@ -448,7 +452,7 @@ maps::map(
   &#39;world&#39;,
   add=TRUE)</code></pre>
 <p><img src="mb2018-geolocator_files/figure-html/unnamed-chunk-22-1.png" width="768" /></p>
-<hr />
+<hr>
 <blockquote>
 <h4 id="exercise-three">Exercise Three:</h4>
 <p>Calculate the mean and median (<code>median()</code>) location for the non-breeding period (Nov 1 - March 31).</p>
@@ -466,12 +470,13 @@ maps::map(
 <p>
 Notice in the above figure how the non-breeding KDE is over the Caribbean. The sun-elevation angle (described above) can make a big difference in the latitude of the locations. The sun-elevation angle can be influenced by a variatey of factors such as habitat type, topography, weather, and bird behavior. Thus, using multiple sun-elevation angles for different portions of the year may be justified. The following code demonstrates how the sun-elevation angle for different portions of the year can be determined. Few studies have in-habitat calibrations for both breeding and non-breeding periods of the year (but see Hallworth et al. 2015, Stanley et al. 2014, McKinnon et al. 2013). Thus the sun-elevation angle for different portions of the year need to be estimated. In GeoLight there is a function called <code>HillEkstromCalib</code> which determines the sun-elevation angle based on the transition events in the data.
 </p>
-<hr />
+<hr>
 <blockquote>
 <h4 id="exercise-four-take-home">Exercise Four (take “home”):</h4>
-<p>Repeat the above geolocator analysis for the Wood thrush. * What is your best estimate of where the observed Wood thrush spends the non-breeding period? * Provide a map of your kernel density estimates for the breeding and non-breeding periods.</p>
-</blockquote>
+Repeat the above geolocator analysis for the Wood thrush. * What is your best estimate of where the observed Wood thrush spends the non-breeding period? * Provide a map of your kernel density estimates for the breeding and non-breeding periods.<br />
+
 <hr>
+</blockquote>
 </div>
 </div>
 

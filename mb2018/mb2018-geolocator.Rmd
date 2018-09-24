@@ -36,13 +36,15 @@ library(tidyverse)
 <img style="float:right;padding-left:25px;border:none" src="images/smsc_logo.jpg" width = "500px"/>
 
 # Light-Level geolocator analysis using the GeoLight package
+
 <p><i>Hallworth, M.T., Cooper, N.W., and B.S. Evans</i><br>
 Smithsonian Conservation Biology Institute<br>
 Migratory Bird Center</p>
 
 <img style = "float: right" src="http://mthallworth.weebly.com/uploads/1/8/3/8/18383927/2593529_orig.jpg" height = "150px" width= "150px"/>
 
-## Introduction to Archival light-level geolocators
+## Introduction to Archival light-level geolocators  
+
 <p>The following document outlines the steps for analyzing data from archival light-level geolocators (hereafter geolocators). Geolocators have been used to track individuals since the early 1990s but were restricted to large organisms because of their large size. Recently, with the miniturization of geolocators, researchers are now able to deploy geolocators on smaller and smaller species.  Geolocators are devices that record ambient light levels every 2, 5, or 10 min depending on the model. Geolocators are attached to individuals which then migrate with the device while it records ambient light-levels throughout the year. Once recovered, the data are downloaded and analyzed to determine the time of sunrise and sunset. From the sunrise/sunset data the time of relative noon and midnight are determine. Geographical cooridnates are then derived from the relative 'noon' and 'midnight' times to give an approximate location of where the individual was throughout the year.</p>
 
 <p>This tutorial uses geolocator data from a male Ovenbird (*Seiurus aurocapilla*) breeding at Hubbard Brook Experimental Forest, NH and a Wood Thrush (*Hylocichla mustelina*) breeding in Indiana and is part of an ongoing study modeling regional source-sink dynamics of a migratory songbird. Click [here](http://nationalzoo.si.edu/scbi/migratorybirds/research/marra/wood-thrush.cfm) for more information regarding the Wood Thrush project. The geolocators used for the two projects were purchased from [British Antarctic Survey](http://www.antarctica.ac.uk/bas_research/instruments/instrument7.php) (BAS) and [Lotek](htt://www.lotek.com/archival-birds.html) (LightBug). These models operate in the same manner but format the data differently. In order to use `GeoLight` to analyze the data, the data needed to be formatted correctly so `GeoLight` can read the data.</p>
@@ -78,8 +80,6 @@ source('https://www.dropbox.com/s/t4bxf2olztv8alx/packages_and_setup.R?dl=1')
 <br>
 
 <p>Note that your global environment now includes the functions `read_lig()` and `read_lightBug()`. These functions simply format the files. For the purposes of this tutorial, you do not to need how the functions are constructed, but if you're curious you can click on their names in the Environment pane to view the details of the functions.</p>
-
-
 
 ### Read in the data
 
@@ -141,18 +141,18 @@ plot(
 abline(h=1,col="blue",lty=2)
 ```
   
-***
+<hr>
 > **Exercise One:**
 > Using indexing (i.e., data[x, y]), subset the oven data to the first 30 records and assign the name `oven_sub` to the resultant object.
 > Go through and assign a few twilights to the file `oven_sub`.  
 > *  How did you decide to either accept or reject twilight events?  
 > *  How do you think accepting / rejecting twilight events would influence the end result?
 > *  Change the threshold to a higher value - how does that change the number of shading events?
+<hr>
 
-***
 <br>
 
-Once you have gone through the process of accepting or rejecting the transition events the data will look like this. `tFirst` and `tSecond` correspond to the time of the transitions and type illustrates whether the location will be dervied from relative 'noon' or 'midnight' locations. 
+<p>Once you have gone through the process of accepting or rejecting the transition events the data will look like this. `tFirst` and `tSecond` correspond to the time of the transitions and type illustrates whether the location will be dervied from relative 'noon' or 'midnight' locations.</p>
 
 ```{r}
 head(oven_transitions)
@@ -160,7 +160,7 @@ head(oven_transitions)
 
 ## Sun-elevation angle
 
-The next step is to calculate the sun-elevation angle of a known capture location. The sun-elevation angle is the angle of the sun with respect to the horizon at the time the geolocator light data passed the threshold set by the user. Thus, the sun-elevation angle is unique to the threshold used in the analysis. 
+<p>The next step is to calculate the sun-elevation angle of a known capture location. The sun-elevation angle is the angle of the sun with respect to the horizon at the time the geolocator light data passed the threshold set by the user. Thus, the sun-elevation angle is unique to the threshold used in the analysis.</p>
 
 <img src="images/sunAngle_cartoon.png" height="300px" width="350px"/> 
 
@@ -168,7 +168,7 @@ The next step is to calculate the sun-elevation angle of a known capture locatio
 
 Here I chose the dates between deployment of the geolocator and July 31 to ensure that only transitions when the bird was at the capture location were used to calculate the sun-elevation angle. 
 
-*The coordinates also need to be entered - (X,Y) in that order*
+*The coordinates also need to be entered - (X,Y) in that order*  
 
 *This Ovenbird was captured at Hubbard Brook Experimental Forest, NH (-71.45,43.945)*  
  
@@ -237,10 +237,11 @@ maps::map(
   add = TRUE)
 ```
 
-***
-> #### Exercise Two:
-> <p>There are some extreme outliers in the data. Take a look at the species distribution of the Ovenbird at this <a href = 'https://www.allaboutbirds.org/guide/ovenbird' target = "_blank"><b>link</b></a>. Use this information (and perhaps Google Earth?) to filter the geolocator output to points that are reasonable (<i>Hint: use the tidyverse function `filter`</i>). Assign the name `ovenLocations_sub` to the resultant object.</p>
-***
+<hr>
+>#### Exercise Two:
+><p>There are some extreme outliers in the data. Take a look at the species distribution of the Ovenbird at this <a href = 'https://www.allaboutbirds.org/guide/ovenbird' target = "_blank"><b>link</b></a>. Use this information (and perhaps Google Earth?) to filter the geolocator output to points that are reasonable (<i>Hint: use the tidyverse function `filter`</i>). Assign the name `ovenLocations_sub` to the resultant object.</p>
+
+<hr>
 
 ```{r, echo = FALSE}
 ovenLocations_sub <-
@@ -370,7 +371,7 @@ maps::map(
   add=TRUE)
 ```
 
-***
+<hr>
 > #### Exercise Three:
 > Calculate the mean and median (`median()`) location for the non-breeding period (Nov 1 - March 31). 
 >
@@ -382,11 +383,9 @@ maps::map(
 
 <p>Notice in the above figure how the non-breeding KDE is over the Caribbean. The sun-elevation angle (described above) can make a big difference in the latitude of the locations. The sun-elevation angle can be influenced by a variatey of factors such as habitat type, topography, weather, and bird behavior. Thus, using multiple sun-elevation angles for different portions of the year may be justified. The following code demonstrates how the sun-elevation angle for different portions of the year can be determined. Few studies have in-habitat calibrations for both breeding and non-breeding periods of the year (but see Hallworth et al. 2015, Stanley et al. 2014, McKinnon et al. 2013). Thus the sun-elevation angle for different portions of the year need to be estimated. In GeoLight there is a function called  `HillEkstromCalib` which determines the sun-elevation angle based on the transition events in the data.</p>
 
-***
-
+<hr>
 > #### Exercise Four (take "home"):
 > Repeat the above geolocator analysis for the Wood thrush. 
 > * What is your best estimate of where the observed Wood thrush spends the non-breeding period?
 > * Provide a map of your kernel density estimates for the breeding and non-breeding periods.  
-
 <hr>
