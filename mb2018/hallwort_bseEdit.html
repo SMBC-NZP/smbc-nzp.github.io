@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title></title>
+
+<script src="hallwort_bseEdit_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="hallwort_bseEdit_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="hallwort_bseEdit_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="hallwort_bseEdit_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="hallwort_bseEdit_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="hallwort_bseEdit_files/navigation-1.1/tabsets.js"></script>
+<link href="hallwort_bseEdit_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="hallwort_bseEdit_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<head>
+<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<p><img style="float:right;padding-left:25px;border:none" src="images/smsc_logo.jpg" width = "500px"/></p>
+<div id="light-level-geolocator-analysis-using-the-geolight-package" class="section level1">
+<h1>Light-Level geolocator analysis using the GeoLight package</h1>
+<p>
+<i>Hallworth, M.T. and B.S. Evans</i><br> Smithsonian Conservation Biology Institute<br> Migratory Bird Center
+</p>
+<p><img style = "float: right" src="http://mthallworth.weebly.com/uploads/1/8/3/8/18383927/2593529_orig.jpg" height = "150px" width= "150px"/></p>
+<div id="introduction-to-archival-light-level-geolocators" class="section level2">
+<h2>Introduction to Archival light-level geolocators</h2>
+<p>
+The following document outlines the steps for analyzing data from archival light-level geolocators (hereafter geolocators). Geolocators have been used to track individuals since the early 1990s but were restricted to large organisms because of their large size. Recently, with the miniturization of geolocators, researchers are now able to deploy geolocators on smaller and smaller species. Geolocators are devices that record ambient light levels every 2, 5, or 10 min depending on the model. Geolocators are attached to individuals which then migrate with the device while it records ambient light-levels throughout the year. Once recovered, the data are downloaded and analyzed to determine the time of sunrise and sunset. From the sunrise/sunset data the time of relative noon and midnight are determine. Geographical cooridnates are then derived from the relative ‘noon’ and ‘midnight’ times to give an approximate location of where the individual was throughout the year.
+</p>
+<p>
+This tutorial uses geolocator data from a male Ovenbird (<em>Seiurus aurocapilla</em>) breeding at Hubbard Brook Experimental Forest, NH and a Wood Thrush (<em>Hylocichla mustelina</em>) breeding in Indiana and is part of an ongoing study modeling regional source-sink dynamics of a migratory songbird. Click <a href="http://nationalzoo.si.edu/scbi/migratorybirds/research/marra/wood-thrush.cfm">here</a> for more information regarding the Wood Thrush project. The geolocators used for the two projects were purchased from <a href="http://www.antarctica.ac.uk/bas_research/instruments/instrument7.php">British Antarctic Survey</a> (BAS) and <a href="htt://www.lotek.com/archival-birds.html">Lotek</a> (LightBug). These models operate in the same manner but format the data differently. In order to use <code>GeoLight</code> to analyze the data, the data needed to be formatted correctly so <code>GeoLight</code> can read the data.
+</p>
+</div>
+<div id="set-up" class="section level2">
+<h2>Set up</h2>
+<p>
+Let’s start by removing all of the items in your global environment. Do so using the following code:
+</p>
+<pre class="r"><code>rm(list = ls())</code></pre>
+<p><br></p>
+<p>
+The following R packages need to be loaded to conduct the tutorial:
+</p>
+<pre class="r"><code>library(GeoLight)
+library(maps)
+library(raster)
+library(ks)
+library(RColorBrewer)
+library(RCurl)
+library(tidyverse)</code></pre>
+<p><br></p>
+<p>
+The data format of geolocators purchased from different vendors are slightly different and need to be converted into a file format that is recognized by <code>GeoLight</code>. We wrote the custom functions <code>read_lig()</code> to read <strong>British Antarctic Survey (.lig)</strong> files and <code>read_lightBug()</code> to read the files generated by <i>Lotek Light Bug</i> device files (.txt). To load these functions, run the following script (<i>Note: the code below may take a long time to run if several packages need to be installed.</i>):
+<p>
+<pre class="r"><code>source(&#39;https://www.dropbox.com/s/t4bxf2olztv8alx/packages_and_setup.R?dl=1&#39;)</code></pre>
+<p><br></p>
+<p>
+Note that your global environment now includes the functions <code>read_lig()</code> and <code>read_lightBug()</code>. These functions simply format the files. For the purposes of this tutorial, you do not to need how the functions are constructed, but if you’re curious you can click on their names in the Environment pane to view the details of the functions.
+</p>
+<div id="read-in-the-data" class="section level3">
+<h3>Read in the data</h3>
+<p>
+Ovenbird data from <strong>British Antarctic Survey</strong>:
+</p>
+<pre class="r"><code>oven &lt;-
+  read_lig(&#39;https://www.dropbox.com/s/9qr0wl7zb2jdzwt/oven.lig?dl=1&#39;) </code></pre>
+<br>
+<p>
+Wood thrush data from <i>Lotek LightBug</i> devices:
+</p>
+<pre class="r"><code>woth &lt;-
+  read_lightBug(&#39;https://www.dropbox.com/s/e69h0og3mwdwafv/woth.txt?dl=1&#39;) </code></pre>
+</div>
+<div id="explore-the-data" class="section level3">
+<h3>Explore the data:</h3>
+<p>
+Take a moment to explore the data … for example, what does each column represent and how is it formatted?
+</p>
+<pre class="r"><code>head(oven)</code></pre>
+<pre><code>##   valid            dateTime   julian light
+## 1    ok 2011-06-10 22:37:30 40704.94    64
+## 2    ok 2011-06-10 22:39:30 40704.94    64
+## 3    ok 2011-06-10 22:41:30 40704.95    64
+## 4    ok 2011-06-10 22:43:30 40704.95    64
+## 5    ok 2011-06-10 22:45:30 40704.95    64
+## 6    ok 2011-06-10 22:47:30 40704.95    64</code></pre>
+<pre class="r"><code>head(woth)</code></pre>
+<pre><code>##              dateTime light
+## 1 2011-07-27 00:07:00   236
+## 2 2011-07-27 00:14:00   236
+## 3 2011-07-27 00:21:00   236
+## 4 2011-07-27 00:28:00   236
+## 5 2011-07-27 00:35:00   236
+## 6 2011-07-27 00:43:00   234</code></pre>
+<pre class="r"><code>str(oven)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    269864 obs. of  4 variables:
+##  $ valid   : chr  &quot;ok&quot; &quot;ok&quot; &quot;ok&quot; &quot;ok&quot; ...
+##  $ dateTime: POSIXct, format: &quot;2011-06-10 22:37:30&quot; &quot;2011-06-10 22:39:30&quot; ...
+##  $ julian  : num  40705 40705 40705 40705 40705 ...
+##  $ light   : int  64 64 64 64 64 64 64 64 48 50 ...</code></pre>
+<pre class="r"><code>str(woth)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    56000 obs. of  2 variables:
+##  $ dateTime: POSIXct, format: &quot;2011-07-27 00:07:00&quot; &quot;2011-07-27 00:14:00&quot; ...
+##  $ light   : int  236 236 236 236 236 234 236 236 236 236 ...</code></pre>
+</div>
+</div>
+<div id="determine-transitions" class="section level2">
+<h2>Determine transitions</h2>
+<p>Now that the data are formatted - you can use <code>GeoLight</code> to determine transitions (sunrise/sunset)</p>
+<p>In this example - a threshold of 5 was used - a larger or smaller value can be used but it will decrease/increase the number of transitions that need to be scored.</p>
+<p><code>LightThreshold</code> - determines light levels over 5 as “sun has risen/set” and asks you to accept/reject them.</p>
+<p><strong>Note - determining the transitions in this file took approx. 45mins - 1hr</strong></p>
+<p>The following code produces an interactive plot which asks the user to either accept or reject each light transition that passes over the threshold specified in the code. This document does not support interactive plots but the plot you will see should look similar to the one below. The blue line identifies the threshold level set in the code.</p>
+<pre class="r"><code>oven_transitions &lt;-
+  twilightCalc(
+    datetime = oven[,2],
+    light= oven[,4],
+    LightThreshold=3,    # Here is where you set the threshold level
+    ask=FALSE)           # Here you can go through every twilight</code></pre>
+<p><img src="hallwort_bseEdit_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<hr />
+<blockquote>
+<p><strong>Exercise One:</strong> Using indexing (i.e., data[x, y]), subset the oven data to the first 30 records and assign the name <code>oven_sub</code> to the resultant object. Go through and assign a few twilights to the file <code>oven_sub</code>.<br />
+* How did you decide to either accept or reject twilight events?<br />
+* How do you think accepting / rejecting twilight events would influence the end result? * Change the threshold to a higher value - how does that change the number of shading events?</p>
+</blockquote>
+<hr />
+<p><br></p>
+<p>Once you have gone through the process of accepting or rejecting the transition events the data will look like this. <code>tFirst</code> and <code>tSecond</code> correspond to the time of the transitions and type illustrates whether the location will be dervied from relative ‘noon’ or ‘midnight’ locations.</p>
+<pre class="r"><code>head(oven_transitions)</code></pre>
+<pre><code>##                tFirst             tSecond type
+## 1 2011-06-11 00:16:10 2011-06-11 08:52:10    2
+## 2 2011-06-11 08:52:10 2011-06-11 23:57:30    1
+## 3 2011-06-11 23:57:30 2011-06-12 08:57:30    2
+## 4 2011-06-12 08:57:30 2011-06-13 00:15:20    1
+## 5 2011-06-13 00:15:20 2011-06-13 08:46:10    2
+## 6 2011-06-13 08:46:10 2011-06-14 00:12:54    1</code></pre>
+</div>
+<div id="sun-elevation-angle" class="section level2">
+<h2>Sun-elevation angle</h2>
+<p>The next step is to calculate the sun-elevation angle of a known capture location. The sun-elevation angle is the angle of the sun with respect to the horizon at the time the geolocator light data passed the threshold set by the user. Thus, the sun-elevation angle is unique to the threshold used in the analysis.</p>
+<p><img src="images/sunAngle_cartoon.png" height="300px" width="350px"/> <img src="images/sunAngle_cartoon2.png" height="300px" width="350px"/></p>
+<p>Here I chose the dates between deployment of the geolocator and July 31 to ensure that only transitions when the bird was at the capture location were used to calculate the sun-elevation angle.</p>
+<p><em>The coordinates also need to be entered - (X,Y) in that order</em></p>
+<p><em>This Ovenbird was captured at Hubbard Brook Experimental Forest, NH (-71.45,43.945)</em></p>
+<pre class="r"><code>oven_breeding &lt;-
+  oven_transitions %&gt;%
+  filter(tFirst &lt; &#39;2012-07-31&#39;)
+
+SunElev &lt;-
+  getElevation(
+    tFirst = oven_breeding$tFirst,
+    tSecond = oven_breeding$tSecond,
+    type = oven_breeding$type,
+    known.coord = c(-71.45,43.945),
+    plot=TRUE)</code></pre>
+<p><img src="hallwort_bseEdit_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre class="r"><code>SunElev</code></pre>
+<pre><code>## med.elev 
+## -3.57395</code></pre>
+<div id="location-estimates-assuming-no-change-in-sun-elevation-angle-throughout-the-year" class="section level3">
+<h3>Location estimates assuming no change in sun elevation angle throughout the year</h3>
+<p>
+We can now use the function <code>coord</code> which will estimate the location of observations from consecutive twilights:
+</p>
+<pre class="r"><code>ovenLocations &lt;-
+  coord(
+    tFirst= oven_transitions$tFirst,
+    tSecond= oven_transitions$tSecond,
+    type=oven_transitions$type, 
+    degElevation = SunElev)</code></pre>
+<pre><code>## Note: Out of 769 twilight pairs, the calculation of 29 latitudes failed (3 %)</code></pre>
+<pre class="r"><code>head(ovenLocations)</code></pre>
+<pre><code>##            lon      lat
+## [1,] -68.66260 38.91153
+## [2,] -66.30430 35.97007
+## [3,] -66.94543 35.08806
+## [4,] -69.14859 37.83808
+## [5,] -67.70630 39.48753
+## [6,] -67.37613 39.07447</code></pre>
+<p>
+The values returned are a matrix of <code>lon</code> (longitude) and <code>lat</code> (latitude), as the first and second columns. Let’s convert this object into a data frame and bring in the date of observation:
+</p>
+<pre class="r"><code>ovenLocations &lt;-
+  coord(
+    tFirst= oven_transitions$tFirst,
+    tSecond= oven_transitions$tSecond,
+    type=oven_transitions$type, 
+    degElevation = SunElev) %&gt;%
+  as.data.frame %&gt;%
+  bind_cols(
+    oven_transitions
+  )</code></pre>
+<pre><code>## Note: Out of 769 twilight pairs, the calculation of 29 latitudes failed (3 %)</code></pre>
+<pre class="r"><code>head(ovenLocations)</code></pre>
+<pre><code>##         lon      lat              tFirst             tSecond type
+## 1 -68.66260 38.91153 2011-06-11 00:16:10 2011-06-11 08:52:10    2
+## 2 -66.30430 35.97007 2011-06-11 08:52:10 2011-06-11 23:57:30    1
+## 3 -66.94543 35.08806 2011-06-11 23:57:30 2011-06-12 08:57:30    2
+## 4 -69.14859 37.83808 2011-06-12 08:57:30 2011-06-13 00:15:20    1
+## 5 -67.70630 39.48753 2011-06-13 00:15:20 2011-06-13 08:46:10    2
+## 6 -67.37613 39.07447 2011-06-13 08:46:10 2011-06-14 00:12:54    1</code></pre>
+</div>
+</div>
+<div id="plot-the-location-data" class="section level2">
+<h2>Plot the location data</h2>
+<p>Note - We accepted all twilights with the original .lig file. That file includes all transtions the geolocator recorded. Therefore, it may include transitions before it was attached to the bird, or after it was taken off.</p>
+<pre class="r"><code>ovenLocations %&gt;%
+  select(lon, lat) %&gt;%
+  plot(
+    pch = &quot;*&quot;, 
+    col = &quot;red&quot;,
+    xlab = &quot;Longitude&quot;,
+    ylab = &quot;Latitude&quot;)
+
+maps::map(
+  &#39;world&#39;,
+  add = TRUE)</code></pre>
+<p><img src="hallwort_bseEdit_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<hr />
+<blockquote>
+<h4 id="exercise-two">Exercise Two:</h4>
+<p>
+There are some extreme outliers in the data. Take a look at the species distribution of the Ovenbird at this <a href = 'https://www.allaboutbirds.org/guide/ovenbird' target = "_blank"><b>link</b></a>. Use this information (and perhaps Google Earth?) to filter the geolocator output to points that are reasonable (<i>Hint: use the tidyverse function <code>filter</code></i>). Assign the name <code>ovenLocations_sub</code> to the resultant object.
+</p>
+<hr />
+</blockquote>
+</div>
+<div id="create-kernel-density-estimates-kde-around-the-stationary-periods" class="section level2">
+<h2>Create Kernel Density Estimates (KDE) around the stationary periods</h2>
+<p>Breeding locations were determined using location data described earlier in determining the sun-elevation angle. The non-breeding period determined as 1 November - 3 March (the start of spring Equinox period). See <a href="https://www.researchgate.net/publication/273131898_Migratory_connectivity_of_a_Neotropical_migratory_songbird_revealed_by_archival_light-level_geolocators">Hallworth et al. 2015</a> for details.</p>
+<pre class="r"><code>breeding_oven &lt;-
+  ovenLocations_sub %&gt;%
+  filter(tFirst &lt; &#39;2011-07-31&#39;)
+
+NB_oven &lt;-
+  ovenLocations_sub %&gt;%
+  filter(
+    tFirst &gt; &#39;2011-10-31&#39;,
+    tFirst &lt; &#39;2012-03-03&#39;
+  )</code></pre>
+<br>
+<p>
+Determine bandwidth for the Kernel density estimate - the bandwidth parameter sets the ‘smoothness’ of the KDE. The bandwidth was estimated using least-square cross validation.
+</p>
+<pre class="r"><code>Bwidth &lt;- 
+  Hlscv(breeding_oven[,1:2])
+
+NBwidth &lt;-
+  Hlscv(NB_oven[,1:2])</code></pre>
+<p><br></p>
+<p>
+The following script creates the KDE and converts the KDE to a raster:
+</p>
+<pre class="r"><code>Breeding_KDE &lt;- 
+  breeding_oven[,1:2] %&gt;%
+  kde(H = Bwidth) %&gt;%
+  raster
+
+NonBreeding_KDE &lt;- 
+  NB_oven[,1:2] %&gt;%
+  kde(H = NBwidth) %&gt;%
+  raster</code></pre>
+<p><br></p>
+<div id="plotting-the-kernel-density-estimates" class="section level3">
+<h3>Plotting the kernel density estimates</h3>
+<p>
+For better viewing, we can set values with a KDE of zero to NA as below:
+</p>
+<pre class="r"><code>Breeding_KDE[values(Breeding_KDE) == 0] &lt;- 
+  NA
+
+NonBreeding_KDE[values(NonBreeding_KDE) == 0] &lt;- 
+  NA</code></pre>
+<br>
+<p>
+We will next set breaks (similar to the breaks in the histograms in the distance lab)to color the KDE for the breeding and non-breeding periods similarly:
+</p>
+<pre class="r"><code>Breed.breaks &lt;-
+  seq(
+    from = 0,
+    to = maxValue(Breeding_KDE),
+    (maxValue(Breeding_KDE) / 100))
+
+NB.breaks &lt;-
+  seq(
+    from = 0,
+    to = maxValue(NonBreeding_KDE),
+    (maxValue(NonBreeding_KDE) / 100))</code></pre>
+<br>
+<p>
+We will use RColorBrewer to make a color palette for coloring our KDE:
+</p>
+<pre class="r"><code>colorPal &lt;-
+  colorRampPalette(
+    brewer.pal(9,&quot;Blues&quot;))(100)</code></pre>
+<p><br></p>
+<p>
+To plot the data, we should first determine the appropriate extent for our plot window. Let’s define the extent based on the two KDEs and create a new extent object called <code>plotExtent</code> (<i>Note: extent can be defined as <code>extent(xMin, xMax, yMin, yMax)</code></i>):
+</p>
+<pre class="r"><code>extent(Breeding_KDE)</code></pre>
+<pre><code>## class       : Extent 
+## xmin        : -73.23975 
+## xmax        : -63.45226 
+## ymin        : 33.93893 
+## ymax        : 45.35177</code></pre>
+<pre class="r"><code>extent(NonBreeding_KDE)</code></pre>
+<pre><code>## class       : Extent 
+## xmin        : -77.20676 
+## xmax        : -66.56487 
+## ymin        : 9.211111 
+## ymax        : 32.04117</code></pre>
+<p>
+Plot the results (<em>not elegant but you can dress it up from here anyway you want</em>):
+</p>
+<pre class="r"><code>plot(plotExtent)
+
+plot(
+  Breeding_KDE,
+  axes=FALSE,
+  breaks=Breed.breaks,
+  col=colorPal,
+  legend=FALSE, 
+  add = TRUE)
+
+plot(
+  NonBreeding_KDE,
+  axes=FALSE,
+  breaks=NB.breaks,
+  col=colorPal,
+  legend=FALSE,
+  add=TRUE)
+
+maps::map(
+  &#39;world&#39;,
+  add=TRUE)</code></pre>
+<p><img src="hallwort_bseEdit_files/figure-html/unnamed-chunk-22-1.png" width="768" /></p>
+<hr />
+<blockquote>
+<h4 id="exercise-three">Exercise Three:</h4>
+<p>Plot the mean and median location for the non-breeding period (Nov 1 - March 31).</p>
+<ul>
+<li>Do your conclusions about where the bird wintered change based on how you plot the data (mean, median, kernel density estimate)?<br />
+</li>
+<li>How might your conclusions change if the bird wintered in South America and not in the Caribbean. Would the way you present the data change your conclusions about where the bird wintered?</li>
+</ul>
+</blockquote>
+<hr>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

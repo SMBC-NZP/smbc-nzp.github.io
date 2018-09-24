@@ -4,6 +4,13 @@
 
 rm(list = ls())
 
+# Some additional functions are needed:
+
+library(RCurl)
+
+source('https://www.dropbox.com/s/t4bxf2olztv8alx/packages_and_setup.R?dl=1')
+
+
 # Packages you will be using for this module:
 
 library(GeoLight)
@@ -11,12 +18,7 @@ library(maps)
 library(raster)
 library(ks)
 library(RColorBrewer)
-library(RCurl)
 library(tidyverse)
-
-# Some additional functions are needed:
-
-source('https://www.dropbox.com/s/t4bxf2olztv8alx/packages_and_setup.R?dl=1')
 
 # Load data:
 
@@ -46,6 +48,13 @@ oven_transitions <-
     light= oven[,4],
     LightThreshold=3,    # Here is where you set the threshold level
     ask=FALSE)           # Here you can go through every twilight
+
+
+# exercise 1 --------------------------------------------------------------
+
+oven_sub <-
+  oven %>%   #
+  filter %>% #
 
 # sun elevation angle -----------------------------------------------------
 
@@ -108,21 +117,6 @@ maps::map(
   'world',
   add = TRUE)
 
-
-# delete me ---------------------------------------------------------------
-
-ovenLocations_sub <-
-  ovenLocations %>%
-  filter(
-    between(lon, -140, -67),
-    between(lat, 6, 68))
-
-ovenLocations_sub <-
-  ovenLocations %>%
-  filter(
-    between(lon, -180, 0),
-    between(lat, 0, 90))
-
 # kernel density estimates ------------------------------------------------
 
 # Filter to breeding and non-breeding periods:
@@ -160,69 +154,25 @@ NonBreeding_KDE <-
 
 # plotting kde ------------------------------------------------------------
 
-# Set KDE values of 0 to NA (for better viewing):
+# For better viewing, we can set values with a KDE of close to zero as 
+# below:
 
-Breeding_KDE[values(Breeding_KDE) == 0] <- 
+Breeding_KDE[values(Breeding_KDE) < 0.01] <- 
   NA
 
-NonBreeding_KDE[values(NonBreeding_KDE) == 0] <- 
+NonBreeding_KDE[values(NonBreeding_KDE) < 0.01] <- 
   NA
 
-# Set breaks to define colors:
+# Save as KML files:
 
-Breed.breaks <-
-  seq(
-    from = 0,
-    to = maxValue(Breeding_KDE),
-    (maxValue(Breeding_KDE) / 100))
-
-NB.breaks <-
-  seq(
-    from = 0,
-    to = maxValue(NonBreeding_KDE),
-    (maxValue(NonBreeding_KDE) / 100))
-
-# Set a color palette:
-
-colorPal <-
-  colorRampPalette(
-    brewer.pal(9,"Blues"))(100)
-
-# Use the extent values of the two kde rasters to make a new plot extent:
-
-extent(Breeding_KDE)
-
-extent(NonBreeding_KDE)
-
-# Delete me:
-
-plotExtent <-
-  extent(-78, -63, 9, 47)
-
-# Plot the results:
-
-plot(
+KML(
   Breeding_KDE,
-  axes=FALSE,
-  breaks=Breed.breaks,
-  col=colorPal,
-  legend=FALSE,
-  add = TRUE)
+  'breeding_kde.kml',
+  overwrite = TRUE)
 
-plot(
+KML(
   NonBreeding_KDE,
-  axes=FALSE,
-  breaks=NB.breaks,
-  col=colorPal,
-  legend=FALSE,
-  add=TRUE)
-
-plot(test, add = TRUE)
-
-maps::map(
-  'world',
-  add=TRUE)
-
-
+  'nonBreeding_kde.kml',
+  overwrite = TRUE)
 
 
