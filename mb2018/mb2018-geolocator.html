@@ -379,79 +379,32 @@ NonBreeding_KDE &lt;-
   kde(H = NBwidth) %&gt;%
   raster</code></pre>
 <p><br></p>
-<div id="plotting-the-kernel-density-estimates" class="section level3">
-<h3>Plotting the kernel density estimates</h3>
+<div id="viewing-the-kernel-density-estimates" class="section level3">
+<h3>Viewing the kernel density estimates:</h3>
 <p>
-For better viewing, we can set values with a KDE of zero to NA as below:
+At this point, let’s save these rasters as KML files and view our kernel density estimates in Google Earth:
 </p>
-<pre class="r"><code>Breeding_KDE[values(Breeding_KDE) == 0] &lt;- 
+<p>
+For better viewing, we can set values with a KDE of close to zero as below:
+</p>
+<pre class="r"><code>Breeding_KDE[values(Breeding_KDE) &lt; 0.01] &lt;- 
   NA
 
-NonBreeding_KDE[values(NonBreeding_KDE) == 0] &lt;- 
+NonBreeding_KDE[values(NonBreeding_KDE) &lt; 0.01] &lt;- 
   NA</code></pre>
-<br>
-<p>
-We will next set breaks (similar to the breaks in the histograms in the distance lab)to color the KDE for the breeding and non-breeding periods similarly:
-</p>
-<pre class="r"><code>Breed.breaks &lt;-
-  seq(
-    from = 0,
-    to = maxValue(Breeding_KDE),
-    (maxValue(Breeding_KDE) / 100))
-
-NB.breaks &lt;-
-  seq(
-    from = 0,
-    to = maxValue(NonBreeding_KDE),
-    (maxValue(NonBreeding_KDE) / 100))</code></pre>
-<br>
-<p>
-We will use RColorBrewer to make a color palette for coloring our KDE:
-</p>
-<pre class="r"><code>colorPal &lt;-
-  colorRampPalette(
-    brewer.pal(9,&quot;Blues&quot;))(100)</code></pre>
-<p><br></p>
-<p>
-To plot the data, we should first determine the appropriate extent for our plot window. Let’s define the extent based on the two KDEs and create a new extent object called <code>plotExtent</code> (<i>Note: extent can be defined as <code>extent(xMin, xMax, yMin, yMax)</code></i>):
-</p>
-<pre class="r"><code>extent(Breeding_KDE)</code></pre>
-<pre><code>## class       : Extent 
-## xmin        : -73.23975 
-## xmax        : -63.45226 
-## ymin        : 33.93893 
-## ymax        : 45.35177</code></pre>
-<pre class="r"><code>extent(NonBreeding_KDE)</code></pre>
-<pre><code>## class       : Extent 
-## xmin        : -77.20516 
-## xmax        : -66.56646 
-## ymin        : 9.215947 
-## ymax        : 32.03634</code></pre>
-<p>
-Plot the results (<em>not elegant but you can dress it up from here anyway you want</em>):
-</p>
-<pre class="r"><code>plot(plotExtent, add = FALSE)
-
-plot(
+<pre class="r"><code>KML(
   Breeding_KDE,
-  axes=FALSE,
-  breaks=Breed.breaks,
-  col=colorPal,
-  legend=FALSE, 
-  add = TRUE)
+  &#39;breeding_kde.kml&#39;,
+  overwrite = TRUE)
 
-plot(
+KML(
   NonBreeding_KDE,
-  axes=FALSE,
-  breaks=NB.breaks,
-  col=colorPal,
-  legend=FALSE,
-  add=TRUE)
-
-maps::map(
-  &#39;world&#39;,
-  add=TRUE)</code></pre>
-<p><img src="mb2018-geolocator_files/figure-html/unnamed-chunk-22-1.png" width="768" /></p>
+  &#39;nonBreeding_kde.kml&#39;,
+  overwrite = TRUE)</code></pre>
+<div class="row">
+<p><img style="float:right;padding-left:25px;border:none" src="images/kde_example.png" width = "700px"/></p>
+</div>
+<p><br></p>
 <hr>
 <blockquote>
 <h4 id="exercise-three">Exercise Three:</h4>
