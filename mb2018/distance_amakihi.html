@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title></title>
+
+<script src="distance_amakihi_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="distance_amakihi_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="distance_amakihi_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="distance_amakihi_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="distance_amakihi_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="distance_amakihi_files/navigation-1.1/tabsets.js"></script>
+<link href="distance_amakihi_files/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="distance_amakihi_files/highlightjs-1.1/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<head>
+<link rel="stylesheet" href="N:/Capacity Building and Academic Programs/SI-Mason Grad & Prof Training/Individual Courses--Folders/Bird Migration/2018/Materials/Distance/Exercises"> <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<div id="amakihi-distance-sampling-exercise" class="section level1">
+<h1>Amakihi Distance Sampling Exercise</h1>
+<p>
+<i>Joe Kolowski, Ph.D.</i>
+</p>
+<div id="project-description-and-context" class="section level2">
+<h2>Project Description and Context</h2>
+<p><img style="float:right" src="images/amakihi.png" /></p>
+<p>In this module, you will import point transect data on individual Amakihi (<em>Hemignathus virens</em>), a common type of honeycreeper in Hawaii. These data were collected as part of a larger translocation experiment, where data was collected on a suite of bird species (Fancy et al. 1997). Point transect surveys were performed at seven survey periods between July 1992 and April 1995. There were 41 point-count stations, though they were not all surveyed in some survey periods. We’ll be using this as an example where the use of covariates is appropriate. There are 3 potential covariates available in this case study: Observer ID (OBs), and time in minutes (MAS) and hours (HAS) after sunrise for observations. The goal of the project is to calculate the most unbiased and precise estimate of density of this species within each study period. The study is used as an illustrative example in Marques et al. (2007), and this is one of the Sample Projects provided with the program DISTANCE.</p>
+</div>
+<div id="exercise-objectives" class="section level2">
+<h2>Exercise Objectives</h2>
+<ul>
+<li>Continue to practice with importing and exploring data for distance sampling analysis</li>
+<li>Continue to practice with the use of covariates in analyzing distance sampling data</li>
+<li>Assess which combination of covariates is most supported in modelling the detection process in this study</li>
+<li>Independently complete a full analysis work flow, including model selection and results interpretation, to determine an unbiased density of Amakihi</li>
+<li>If you have time, explore survey period to see if each survey period should be analysed independently to better assess overall density of Amakihi</li>
+</ul>
+<div id="librariessetup" class="section level3">
+<h3>Libraries/Setup</h3>
+<pre class="r"><code>library(Distance)</code></pre>
+</div>
+<div id="data-import-and-exploration" class="section level3">
+<h3>Data Import and Exploration</h3>
+<p>STEP1: Let’s first bring in the data, which exists as a .csv file called “amakihi.csv”</p>
+<pre class="r"><code>library(Distance)
+amakihiData &lt;- read.csv(&quot;https://www.dropbox.com/s/9b4mgh36p7p1ynx/amakihi.csv?dl=1&quot;)</code></pre>
+<p>
+STEP2: As always, you should begin by exploring the raw data. Use functions to view the data, look at its structure, and summarize the data.
+<p>
+<p><strong>Q1. What is the maximum distance at which a bird was observed?</strong></p>
+<p>
+<p>Note that our observer covariate is already recognized as a factor in R, which is what we want. Hours after sunrise could be treated either as a factor, if we want each hour to exist as an independent sample, or we could leave it as is, and its relationship with distance will be assessed in a linear fashion (i.e. detection function parameters will consistently increase or decrease with hour after sunrise).</p>
+<p>
+<p>STEP3: Plot the distance data as a histogram, trying a range of different bin sizes to explore the raw data.</p>
+<p>
+<p><strong>Q2. Do you see any potential problems or issues with the data? If so what are they?</strong></p>
+<p>
+<p>STEP4: Looking at the data with different bin sizes, decide on a reasonable truncation distance or %.</p>
+<p>
+<p><strong>Q3. What did you decide and why?</strong></p>
+<p>
+Let’s now look at our 3 covariates to see how they relate to observed distances. Boxplots are best in this case for factor covariates, regular scatterplots for continuous variables.
+<p>
+STEP5: Create boxplots or scatterplots of our 3 covariates, with distance on the y axes, to look at how these covariates may influence the detection function.
+<p>
+<p><strong>Q4: Which observer tends to observe birds at the longer distances?</strong></p>
+<p>
+<p><strong>Q5: Do observation distances tend to increase or decrease as time after sunrise increases?</strong></p>
+<p>
+<p>Note that we are entertaining three possible covariates in our detection function: observer, hours and minutes since sunrise. Observer and hours are variables that take on values between 1 and 3 in the case of observer, and 1 to 6 in the case of hours. However minutes can take on values from -9 (detections before sunrise) to &gt;300. The disparity in scales of measure between MAS and the other candidate covariates can lead to difficulties in the performance of the optimiser fitting the detection functions in R. The solution to the difficulty is to scale MAS such that it is on a scale (~1 to 5) comparable with the other covariates.</p>
+<p>
+<p>Dividing all the MAS measurements by the standard deviation of those measurements accomplishes the desired compaction of the range of the MAS covariate without changing the shape of the distribution of MAS values. Execute the following code to do this.</p>
+<pre class="r"><code>amakihiData$MAS &lt;- amakihiData$MAS / sd(amakihiData$MAS, na.rm = TRUE)</code></pre>
+</div>
+<div id="basic-conventional-distance-sampling-analysis-of-amakihi-data---no-covariates" class="section level3">
+<h3>Basic Conventional Distance Sampling Analysis of Amakihi Data - no covariates</h3>
+<p>
+It’s always good practice to begin with a basic analysis of your data as a starting point, even if we know we want to explore various covariates.
+<p>
+STEP6: Using your selected truncation amount, run the 4 common detection function models on this data set, with no covariates. These include: Half-normal cosine, Half-normal hermite, Hazard-rate simply polynomial, and Uniform cosine. Compare the AIC values of these 4 models.
+<p>
+<p><em>Remember that you need to think about conversion units here. We want our output to be in hectares (100m by 100m) but our distance units are in meters. Be sure to select an appropriate value for the <code>convert.units</code> argument.</em></p>
+<p>
+<p><strong>Q6: Based on AIC values, which of these 4 models best fits the data?</strong></p>
+<p>
+STEP7: Look at the summary results of your best model. Then plot the results of the best model to look at the fit of the detection function.
+<p>
+<p><strong>Q7: Do you see any issues with the detection function?</strong></p>
+</div>
+<div id="multiple-covariate-distance-sampling-mcds-of-amakihi-data" class="section level3">
+<h3>Multiple Covariate Distance Sampling (MCDS) of Amakihi Data</h3>
+<p>
+Let’s try now to incorporate our 3 covariates into our modeling. We cannot assume that our best model from above will continue to be the best detection function, so we need to investigate not only different combinations of our covariates, but also different key functions. In R, due to it’s optimization engine, models with covariates and adjustment terms do not converge. Thus, the package prevents us from using adjustment terms. This simplifies things here, but is a disadvantage of running these models in R vs. the Windows program DISTANCE.
+<p>
+<p>In any case, let’s first convert HAS to a factor covariate, since the graph of this variable indicates the trend in detection frequencies may not be linear as hours proceed from sunrise.</p>
+<pre class="r"><code>amakihiData$HAS &lt;- as.factor(amakihiData$HAS)</code></pre>
+<p>
+STEP8: Test the following models. Combining them with the 4 models we’ve run above for a total of 14 models, compare them with AIC, as well as the Cramer von-Mises test (using the <code>summarize_ds_models</code> function).
+<p>
+<ul>
+<li>OBS (Half-normal)</li>
+<li>OBS (Hazard rate)</li>
+<li>MAS (Half-normal)</li>
+<li>MAS (Hazard rate)</li>
+<li>HAS (Half-normal)</li>
+<li>HAS (Hazard rate)</li>
+<li>OBS + MAS (Half-normal)</li>
+<li>OBS + MAS (Hazard rate)</li>
+<li>OBS + HAS (Half-normal)</li>
+<li>OBS + HAS (Hazard rate)</li>
+</ul>
+<p>
+<p><strong>Q8: Which model is best and why?</strong></p>
+<p>
+<p>STEP9:Review the summary results of your best model.</p>
+<p>
+<p><strong>Q9: What is the final overall density estimate, per hectare, from your best model? Include the coefficient of variation, and the confidence interval.</strong></p>
+<p>
+<p>STEP10: Use the <code>ddf.gof</code> function to calculate various diagnostics for your best model. Using code from the demo, plot the QQplot and include the Cramer von-Mises test results on the plot</p>
+<p>
+<p><strong>Q10: Do you see any reason to be cautious about our final model here, or do we have evidence that this is a reasonably good fit of the data?</strong></p>
+<p>
+<p>STEP11: Let’s graph our detection functions for each observer. Look in the help menu for the function <code>plot.ds</code> and figure out how to use the <code>subset</code> argument to graph the detection function for each of the three observers separately. Label the main titles with the names of the observers, and set their y axes to go from 0 to 1.5 so we can compare them easily. For some reason the <code>PDF =T</code> does not work in these graphs, so you can graph the standard detection functions here (that is, use the default graph).</p>
+</div>
+<div id="extra-practice---investigating-survey-periods-as-strata" class="section level3">
+<h3>Extra Practice - Investigating Survey Periods as Strata</h3>
+<p>Look again at the <code>summary</code> of your best model and focus on the encounter rate (ER) for each survey time period. Remember that we have 7 different survey periods during which field data was collected. You’ll see that the encounter rate varies quite a bit across these survey periods. In all the analyses above, we’ve created pooled detection functions across all these survey periods, assuming that detection processes were more or less similar across these periods. But this may not be the case. For example encounter rates in December 1992 and July 1992 were substantially lower than during other periods. Using the demo exercise (House Wren) as a guide, where survey blocks were analyzed as separate strata, analyze the Amakihi data again, this time keeping each survey period as a separate strata. For simplicity, try only the half-normal cosine, and the hazard rate simple polynomial models for each survey period. In the end, sum the AIC values of your final 7 models (one for each survey period) and compare with the AIC value of our initial model above which pooled these survey periods (half-normal cosine, no covariates) to see if it is worth estimating separate detection functions for each survey period. Think about how you might go about calculating a final global density estimate when each survey period is analyzed separately like this.</p>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
