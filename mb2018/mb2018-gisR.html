@@ -165,8 +165,8 @@ options(prism.path = &quot;~/prismtmp&quot;)</code></pre>
 <p>We’ll next download raster files that provides minimum temperature data, in degrees Celsius, for the conterminous United States. The <code>get_prism_dailys</code> function below loads the variable of interest, defined here as <code>tmin</code>, between a range of dates. The additional argument <code>keepZip = FALSE</code> tells PRISM that we would like to download the raster files rather than zip files that contain the raster. Changing this argument to <code>TRUE</code> would likely save data on your hard drive by compressing the files.</p>
 <pre class="r"><code>get_prism_dailys(
   &#39;tmin&#39;, 
-  minDate = &#39;2018-09-01&#39;,
-  maxDate = &#39;2018-09-05&#39;,
+  minDate = &#39;2018-09-16&#39;,
+  maxDate = &#39;2018-09-23&#39;,
   keepZip = FALSE)</code></pre>
 <p>We can view the files as below:</p>
 <pre class="r"><code>ls_prism_data(absPath = TRUE)</code></pre>
@@ -177,16 +177,16 @@ ls_prism_data(absPath = TRUE)[1,]
 
 ls_prism_data(absPath = TRUE)[,1]</code></pre>
 <p>Now, let’s create a raster-format object from this file and assign a name. A raster is a continuous matrix of cells (also called pixels), where each defined by its value and position (x and y location). In a geographic raster, the position is georeferenced to a location on Earth by the bounding box of the raster (the extent), resolution (the size of the pixels), and the coordinate reference system (how the pixels are projected onto the Earth’s surface). The function <code>raster</code> reads a raster file into R. The argument of this function is the path to the file.</p>
-<pre class="r"><code>tmin_20180901 &lt;-
+<pre class="r"><code>tmin_20180916 &lt;-
   raster(ls_prism_data(absPath = TRUE)[1,2])</code></pre>
 <p>Let’s take a moment to explore this file:</p>
-<pre class="r"><code>tmin_20180901</code></pre>
+<pre class="r"><code>tmin_20180916</code></pre>
 <pre><code>## class       : RasterLayer 
 ## dimensions  : 621, 1405, 872505  (nrow, ncol, ncell)
 ## resolution  : 0.04166667, 0.04166667  (x, y)
 ## extent      : -125.0208, -66.47917, 24.0625, 49.9375  (xmin, xmax, ymin, ymax)
 ## coord. ref. : +proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0 
-## data source : C:\Users\Guest user\Documents\prismtmp\PRISM_tmin_early_4kmD1_20180901_bil\PRISM_tmin_early_4kmD1_20180901_bil.bil 
+## data source : /Users/evansbr/prismtmp/PRISM_tmin_early_4kmD1_20180901_bil/PRISM_tmin_early_4kmD1_20180901_bil.bil 
 ## names       : PRISM_tmin_early_4kmD1_20180901_bil 
 ## values      : -5.071, 31.193  (min, max)</code></pre>
 <p>There are several things that are important to note in this output, for example the resolution provides the size of each raster cells (here shown in degrees), the extent gives the bounding box of the raster, and values prints the range of values of the raster cells. Perhaps the most important output of these summary data is “coord. ref”, which describes the coordinate reference system (CRS) of the raster object. You will notice that the coordinate reference system was already defined for this object (the data are provided as latitude and longitude values with “North American 1983 datum”). This hints at some of what is under the hood when you run the function <code>raster</code>. Please take a moment to explore the raster file in your computer’s file management system.</p>
@@ -196,13 +196,13 @@ ls_prism_data(absPath = TRUE)[,1]</code></pre>
 
 tminStack</code></pre>
 <pre><code>## class       : RasterStack 
-## dimensions  : 621, 1405, 872505, 5  (nrow, ncol, ncell, nlayers)
+## dimensions  : 621, 1405, 872505, 23  (nrow, ncol, ncell, nlayers)
 ## resolution  : 0.04166667, 0.04166667  (x, y)
 ## extent      : -125.0208, -66.47917, 24.0625, 49.9375  (xmin, xmax, ymin, ymax)
 ## coord. ref. : +proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0 
-## names       : PRISM_tmin_early_4kmD1_20180901_bil, PRISM_tmin_early_4kmD1_20180902_bil, PRISM_tmin_early_4kmD1_20180903_bil, PRISM_tmin_early_4kmD1_20180904_bil, PRISM_tmin_early_4kmD1_20180905_bil 
-## min values  :                              -5.071,                              -6.393,                              -6.716,                              -5.778,                              -5.684 
-## max values  :                              31.193,                              29.157,                              29.255,                              31.372,                              30.654</code></pre>
+## names       : PRISM_tmi//180901_bil, PRISM_tmi//180902_bil, PRISM_tmi//180903_bil, PRISM_tmi//180904_bil, PRISM_tmi//180905_bil, PRISM_tmi//180906_bil, PRISM_tmi//180907_bil, PRISM_tmi//180908_bil, PRISM_tmi//180909_bil, PRISM_tmi//180910_bil, PRISM_tmi//180911_bil, PRISM_tmi//180912_bil, PRISM_tmi//180913_bil, PRISM_tmi//180914_bil, PRISM_tmi//180915_bil, ... 
+## min values  :                -5.071,                -6.393,                -6.716,                -5.778,                -5.684,                -2.516,                -2.328,                -3.433,                -4.657,                -5.302,                -5.962,                -7.320,                -8.732,                -9.187,                -8.719, ... 
+## max values  :                31.193,                29.157,                29.255,                31.372,                30.654,                29.764,                29.824,                31.438,                30.608,                31.272,                30.302,                28.367,                28.758,                27.526,                28.427, ...</code></pre>
 <p>We can call a single raster layer from the stack object in the same way that we would index a list object:</p>
 <pre class="r"><code>tminStack[[1]]</code></pre>
 <pre><code>## class       : RasterLayer 
@@ -210,7 +210,7 @@ tminStack</code></pre>
 ## resolution  : 0.04166667, 0.04166667  (x, y)
 ## extent      : -125.0208, -66.47917, 24.0625, 49.9375  (xmin, xmax, ymin, ymax)
 ## coord. ref. : +proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0 
-## data source : C:\Users\Guest user\Documents\prismtmp\PRISM_tmin_early_4kmD1_20180901_bil\PRISM_tmin_early_4kmD1_20180901_bil.bil 
+## data source : /Users/evansbr/prismtmp/PRISM_tmin_early_4kmD1_20180901_bil/PRISM_tmin_early_4kmD1_20180901_bil.bil 
 ## names       : PRISM_tmin_early_4kmD1_20180901_bil 
 ## values      : -5.071, 31.193  (min, max)</code></pre>
 <pre class="r"><code>tminStack[[1:2]]</code></pre>
@@ -224,9 +224,9 @@ tminStack</code></pre>
 ## max values  :                              31.193,                              29.157</code></pre>
 <p>We can name raster layers in the same way that we name objects in a list or data frame:</p>
 <pre class="r"><code>names(tminStack[[1]]) &lt;- 
-  &#39;sept1&#39;</code></pre>
+  &#39;sept16&#39;</code></pre>
 <p>If we are only interested in one raster object, we can assign a name based on the location of the object within the raster stack:</p>
-<pre class="r"><code>tmin_sept1 &lt;- 
+<pre class="r"><code>tmin_sept16 &lt;- 
   tminStack[[1]]</code></pre>
 </div>
 <div id="coordinate-reference-systems-and-transformation" class="section level2">
@@ -251,7 +251,7 @@ projection(tminStack)</code></pre>
 <hr />
 <blockquote>
 <p><strong>Exercise 1:</strong></p>
-<p>Transform the raster file tmin_sept1 to the CRS defined in newproj. Assign the name tmin_sept1_prj to the file.</p>
+<p>Transform the raster file tmin_sept1 to the CRS defined in newproj. Assign the name tmin_sept16_prj to the file.</p>
 </blockquote>
 <hr />
 </div>
@@ -272,18 +272,18 @@ map(&#39;state&#39;, add = T)</code></pre>
 <p><img src="https://raw.githubusercontent.com/SCBI-MigBirds/MigBirds/master/data/Tmin/tminSept01WithStates.png" /></p>
 <p>We can also change the color scheme:</p>
 <pre class="r"><code>plot(
-  tmin_sept1_prj,
+  tmin_sept16_prj,
   col = rev(rainbow(100)))
 
 map(&#39;state&#39;, add = T)</code></pre>
 <p>Or add the state boundaries layer to the above in one step:</p>
 <pre class="r"><code>plot(
-  tmin_sept1_prj,
+  tmin_sept16_prj,
   col = rev(rainbow(100)),
   addfun = map(&#39;state&#39;, add=T))</code></pre>
 <p><img src="https://raw.githubusercontent.com/SCBI-MigBirds/MigBirds/master/data/Tmin/newColors.png" /></p>
 <p>Plots can be useful for exploring raster objects. For example, we can determine the value at a given point using the <code>click</code> function (<strong>Note: Hit ‘Escape’ to exit the clicker</strong>):</p>
-<pre class="r"><code>click(tmin_sept1_prj)</code></pre>
+<pre class="r"><code>click(tmin_sept16_prj)</code></pre>
 <p>If you do not provide the name of the raster, <code>click()</code> will return the location of the cell you click on (also useful information!).</p>
 <pre class="r"><code>click()</code></pre>
 </div>
@@ -291,14 +291,14 @@ map(&#39;state&#39;, add = T)</code></pre>
 <h2>Cropping rasters</h2>
 <p>We can zoom into the map by clicking the upper left and lower right hand corner of a bounding box:</p>
 <pre class="r"><code>zoom(
-  tmin_sept1_prj,
+  tmin_sept16_prj,
   col = rev(rainbow(100)))</code></pre>
 <p>To create a raster for a reduced extent, draw a new extent around Virginia by clicking the upper left and lower right hand corner of a bounding box that contains the state boundaries:</p>
 <pre class="r"><code>extentVirginia &lt;-
   drawExtent()</code></pre>
 <p>Crop the raster to the new extent and assign the name tminVirginia:</p>
 <pre class="r"><code>tminVirginia &lt;- 
-  crop(tmin_sept1_prj, extentVirginia)</code></pre>
+  crop(tmin_sept16_prj, extentVirginia)</code></pre>
 <p>Plot the new reduced raster:</p>
 <pre class="r"><code>plot(
   tminVirginia,
@@ -323,33 +323,33 @@ map(&#39;state&#39;, add = T)</code></pre>
 <h2>Raster summary data and math</h2>
 <p>An advantage to using R for working with rasters is that it is super simple to explore summary statistics and calculate new rasters using math.</p>
 <p>Let’s start by looking again at the summary information for the raster layer that we created:</p>
-<pre class="r"><code>tmin_sept1_prj</code></pre>
+<pre class="r"><code>tmin_sept16_prj</code></pre>
 <pre><code>## class       : RasterLayer 
 ## dimensions  : 631, 1414, 892234  (nrow, ncol, ncell)
 ## resolution  : 0.0417, 0.0417  (x, y)
 ## extent      : -125.2293, -66.26553, 23.8333, 50.146  (xmin, xmax, ymin, ymax)
 ## coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +towgs84=0,0,0 
 ## data source : in memory
-## names       : sept1 
+## names       : sept16 
 ## values      : -4.352329, 31.0922  (min, max)</code></pre>
 <p>We can calculate descriptive statistics using the <code>cellStats</code> function:</p>
-<pre class="r"><code>cellStats(tmin_sept1_prj, &#39;mean&#39;)</code></pre>
+<pre class="r"><code>cellStats(tmin_sept16_prj, &#39;mean&#39;)</code></pre>
 <pre><code>## [1] 15.14463</code></pre>
-<pre class="r"><code>cellStats(tmin_sept1_prj, &#39;min&#39;)</code></pre>
+<pre class="r"><code>cellStats(tmin_sept16_prj, &#39;min&#39;)</code></pre>
 <pre><code>## [1] -4.352329</code></pre>
-<pre class="r"><code>cellStats(tmin_sept1_prj, &#39;max&#39;)</code></pre>
+<pre class="r"><code>cellStats(tmin_sept16_prj, &#39;max&#39;)</code></pre>
 <pre><code>## [1] 31.0922</code></pre>
-<pre class="r"><code>cellStats(tmin_sept1_prj, &#39;sd&#39;)</code></pre>
+<pre class="r"><code>cellStats(tmin_sept16_prj, &#39;sd&#39;)</code></pre>
 <pre><code>## [1] 6.084061</code></pre>
 <p>How are the temperature data distributed? Let’s plot a histogram:</p>
-<pre class="r"><code>hist(tmin_sept1_prj)</code></pre>
+<pre class="r"><code>hist(tmin_sept16_prj)</code></pre>
 <p><img src="mb2018-gisR_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 <p>Note the warning message we received! We can change the argument <code>maxpixels</code> to include all of the pixels, though this will lead to a longer calculation time:</p>
-<pre class="r"><code>hist(tmin_sept1_prj, maxpixels = Inf)</code></pre>
+<pre class="r"><code>hist(tmin_sept16_prj, maxpixels = Inf)</code></pre>
 <p><img src="mb2018-gisR_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 <p>There are many arguments that can be used when plotting histograms of rasters. Type <code>?hist</code> to learn more. Below is the code for a more advanced histogram:</p>
 <pre class="r"><code>hist(
-  tmin_sept1_prj,
+  tmin_sept16_prj,
   maxpixels = Inf,
   freq = F,
   xlab = expression(&#39;Temperature (&#39; * degree * C * &#39;)&#39;),
@@ -369,7 +369,7 @@ map(&#39;state&#39;, add = T)</code></pre>
 ## coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +towgs84=0,0,0 
 ## data source : in memory
 ## names       : layer 
-## values      : -5.099613, 28.56446  (min, max)</code></pre>
+## values      : -5.284339, 28.37417  (min, max)</code></pre>
 <p>Let’s view the raster object that this function creates:</p>
 <pre class="r"><code>plot(
   mean(tminStack_prj),
@@ -391,7 +391,7 @@ mean(v)</code></pre>
 ## coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +towgs84=0,0,0 
 ## data source : in memory
 ## names       : layer 
-## values      : -8.218798, 8.523455  (min, max)</code></pre>
+## values      : -5.007475, 8.722613  (min, max)</code></pre>
 <p>This can be plotted as:</p>
 <pre class="r"><code>plot(
   tminStack_prj[[1]] - mean(tminStack_prj),
@@ -441,14 +441,14 @@ bandingPt</code></pre>
 <pre class="r"><code>spTransform(bandingPt, newProj)</code></pre>
 <p>Once we have created a point and are certain that it is in the correct CRS, we can add our banding station location to a map (here using tmin_sept1):</p>
 <pre class="r"><code>plot(
-  tmin_sept1_prj,
+  tmin_sept16_prj,
   col = rev(rainbow(100)))
 
 points(bandingPt)</code></pre>
 <p><img src="mb2018-gisR_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 <p>If you’re having a hard time seeing it, you can use the argument <code>pch</code> to change the type of point displayed. Let’s use <code>pch = 19</code> and see what the new point object looks like:</p>
 <pre class="r"><code>plot(
-  tmin_sept1_prj,
+  tmin_sept16_prj,
   col = rev(rainbow(100)))
 
 points(
@@ -457,7 +457,7 @@ points(
 <p><img src="mb2018-gisR_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
 <p>Still a little hard to see? Let’s use the <code>col</code> argument to change the color of the point:</p>
 <pre class="r"><code>plot(
-  tmin_sept1_prj,
+  tmin_sept16_prj,
   col = rev(rainbow(100)))
 
 points(bandingPt, 
@@ -466,7 +466,7 @@ points(bandingPt,
 <p><img src="mb2018-gisR_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
 <p>To make our points even easier to see might want to surround our points with a border (<code>pch = 21</code>) and give them a background color (<code>bg = 'white'</code>):</p>
 <pre class="r"><code>plot(
-  tmin_sept1_prj,
+  tmin_sept16_prj,
   col = rev(rainbow(100)))
 
 points(bandingPt, 
@@ -478,26 +478,62 @@ points(bandingPt,
 <div id="extracting-values-to-points" class="section level2">
 <h2>Extracting values to points</h2>
 <p>We can easily extract raster values to points using the <code>extract</code> function. For example, to extract the minimum temperature at our banding station on 14 September, we would write:</p>
-<pre class="r"><code>extract(tmin_sept1_prj,
+<pre class="r"><code>extract(tmin_sept16_prj,
         bandingPt)</code></pre>
 <p>Uh-oh. It doesn’t work! This is because there are multiple R packages that include the function <code>extract</code>. You can tell R which package you would like to use by giving the name of the package, in this case <code>raster</code>, followed by “::” and the name of the function.</p>
-<pre class="r"><code>raster::extract(tmin_sept1_prj,
+<pre class="r"><code>raster::extract(tmin_sept16_prj,
                 bandingPt)</code></pre>
 <pre><code>##          
 ## 20.43724</code></pre>
 <p>We can use the function and the stack object above to see the minimum temperature at our banding station since the first of September:</p>
 <pre class="r"><code>raster::extract(tminStack_prj,
                 bandingPt)</code></pre>
-<pre><code>##         sept1 PRISM_tmin_early_4kmD1_20180902_bil
+<pre><code>##        sept16 PRISM_tmin_early_4kmD1_20180902_bil
 ## [1,] 20.43724                            18.91267
 ##      PRISM_tmin_early_4kmD1_20180903_bil
 ## [1,]                            19.72301
 ##      PRISM_tmin_early_4kmD1_20180904_bil
 ## [1,]                            20.50141
 ##      PRISM_tmin_early_4kmD1_20180905_bil
-## [1,]                            21.19654</code></pre>
+## [1,]                            21.19654
+##      PRISM_tmin_early_4kmD1_20180906_bil
+## [1,]                            20.70087
+##      PRISM_tmin_early_4kmD1_20180907_bil
+## [1,]                            19.67341
+##      PRISM_tmin_early_4kmD1_20180908_bil
+## [1,]                            18.33025
+##      PRISM_tmin_early_4kmD1_20180909_bil
+## [1,]                            12.19684
+##      PRISM_tmin_early_4kmD1_20180910_bil
+## [1,]                            13.81159
+##      PRISM_tmin_early_4kmD1_20180911_bil
+## [1,]                            16.57712
+##      PRISM_tmin_early_4kmD1_20180912_bil
+## [1,]                            18.89031
+##      PRISM_tmin_early_4kmD1_20180913_bil
+## [1,]                            18.16775
+##      PRISM_tmin_early_4kmD1_20180914_bil
+## [1,]                            20.77186
+##      PRISM_tmin_early_4kmD1_20180915_bil
+## [1,]                            20.22771
+##      PRISM_tmin_early_4kmD1_20180916_bil
+## [1,]                            18.52761
+##      PRISM_tmin_early_4kmD1_20180917_bil
+## [1,]                            18.24443
+##      PRISM_tmin_early_4kmD1_20180918_bil
+## [1,]                            20.05256
+##      PRISM_tmin_early_4kmD1_20180919_bil
+## [1,]                            17.86407
+##      PRISM_tmin_early_4kmD1_20180920_bil
+## [1,]                            16.77707
+##      PRISM_tmin_early_4kmD1_20180921_bil
+## [1,]                            17.39141
+##      PRISM_tmin_early_4kmD1_20180922_bil
+## [1,]                            20.34022
+##      PRISM_tmin_early_4kmD1_20180923_bil
+## [1,]                            12.97026</code></pre>
 <p>You can also extract the values of a raster within a given radius around a given point (or multiple points). Let’s look at the average minimum temperature within 10 km of the banding point:</p>
-<pre class="r"><code>raster::extract(tmin_sept1_prj,
+<pre class="r"><code>raster::extract(tmin_sept16_prj,
                 bandingPt,
                 buffer = 10000,
                 fun = mean,
@@ -506,7 +542,7 @@ points(bandingPt,
 <p>It is often necessary to save point values to your point object. Let’s run the following code with the argument <code>sp=T</code> to attach values to our banding point:</p>
 <pre class="r"><code>bandingPt_spDf &lt;-
   raster::extract(
-    tmin_sept1_prj,
+    tmin_sept16_prj,
     bandingPt,
     sp = T)
 
@@ -516,11 +552,11 @@ bandingPt_spDf</code></pre>
 ## extent      : -78.1621, -78.1621, 38.8926, 38.8926  (xmin, xmax, ymin, ymax)
 ## coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +towgs84=0,0,0 
 ## variables   : 1
-## names       :            sept1 
+## names       :           sept16 
 ## value       : 20.4372380742669</code></pre>
 <p>The object you created above is called a spatial points data frame. This is a spatial points object in which there is a data frame containing the values for each point location. You can view just the data frame using the <code>@data</code> argument, as below:</p>
 <pre class="r"><code>bandingPt_spDf@data</code></pre>
-<pre><code>##      sept1
+<pre><code>##     sept16
 ## 1 20.43724</code></pre>
 </div>
 <div id="generating-and-extracting-values-to-random-points." class="section level2">
@@ -529,7 +565,7 @@ bandingPt_spDf</code></pre>
 <pre class="r"><code># Generate points:
 
 rPoints &lt;-
-  randomPoints(tmin_sept1_prj, 500)
+  randomPoints(tmin_sept16_prj, 500)
 
 # Make points spatial:
 
@@ -539,10 +575,10 @@ rPoints_sp &lt;-
 # Project points:
 
 crs(rPoints_sp) &lt;-
-  crs(tmin_sept1_prj)</code></pre>
+  crs(tmin_sept16_prj)</code></pre>
 <p>Let’s add the random points to the map:</p>
 <pre class="r"><code>plot(
-  tmin_sept1_prj,
+  tmin_sept16_prj,
   col = rev(rainbow(100)))
 
 points(
@@ -555,25 +591,25 @@ points(
 <p>Just as we extracted to individual points, we can extract temperatures for each point:</p>
 <pre class="r"><code>tmin_rPoints &lt;-
   raster::extract(
-    tmin_sept1_prj,
+    tmin_sept16_prj,
     rPoints_sp,
     sp = T)</code></pre>
 <p>Let’s view the minimum temperature records as a tibble:</p>
 <pre class="r"><code>tmin_rPoints@data %&gt;%
   as_tibble</code></pre>
 <pre><code>## # A tibble: 500 x 1
-##    sept1
-##  * &lt;dbl&gt;
-##  1 25.5 
-##  2 21.7 
-##  3  6.23
-##  4 21.6 
-##  5 13.4 
-##  6 15.3 
-##  7 19.7 
-##  8  9.29
-##  9 26.8 
-## 10 19.3 
+##    sept16
+##  *  &lt;dbl&gt;
+##  1  12.6 
+##  2  13.0 
+##  3  10.8 
+##  4   9.01
+##  5  21.7 
+##  6  17.6 
+##  7  19.7 
+##  8  14.1 
+##  9  21.3 
+## 10  16.4 
 ## # ... with 490 more rows</code></pre>
 <p>A great thing about working with raster stacks is that you can extract values across the entire stack. Let’s extract the values of each of the layers in the raster stack <code>tminStack_prj</code> to the random points we created and view the data frame as a tibble.</p>
 <pre class="r"><code>raster::extract(
@@ -581,21 +617,39 @@ points(
     rPoints_sp,
     sp = T)@data %&gt;%
   as_tibble</code></pre>
-<pre><code>## # A tibble: 500 x 5
-##    sept1 PRISM_tmin_earl~ PRISM_tmin_earl~ PRISM_tmin_earl~
-##  * &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
-##  1 25.5             24.6             21.4             21.7 
-##  2 21.7             22.0             22.2             22.4 
-##  3  6.23            10.7             14.8             13.8 
-##  4 21.6             22.9             22.7             22.3 
-##  5 13.4             17.5             18.1             12.7 
-##  6 15.3             15.4             15.3             15.4 
-##  7 19.7             21.6             22.2             22.0 
-##  8  9.29             6.78             7.89             8.10
-##  9 26.8             27.0             27.3             26.4 
-## 10 19.3             19.6             20.5             21.3 
-## # ... with 490 more rows, and 1 more variable:
-## #   PRISM_tmin_early_4kmD1_20180905_bil &lt;dbl&gt;</code></pre>
+<pre><code>## # A tibble: 500 x 23
+##    sept16 PRISM_tmin_early_4km… PRISM_tmin_early_4km… PRISM_tmin_early_4k…
+##  *  &lt;dbl&gt;                 &lt;dbl&gt;                 &lt;dbl&gt;                &lt;dbl&gt;
+##  1  12.6                  11.3                  11.2                 11.4 
+##  2  13.0                   9.64                 10.0                 11.2 
+##  3  10.8                  11.0                  12.2                 14.8 
+##  4   9.01                 14.8                  17.8                 18.7 
+##  5  21.7                  22.5                  22.8                 21.9 
+##  6  17.6                  19.6                  20.7                 20.6 
+##  7  19.7                  20.6                  20.4                 20.5 
+##  8  14.1                  18.8                  19.7                 19.2 
+##  9  21.3                  20.5                  19.8                 20.0 
+## 10  16.4                   9.76                  4.97                 6.67
+## # ... with 490 more rows, and 19 more variables:
+## #   PRISM_tmin_early_4kmD1_20180905_bil &lt;dbl&gt;,
+## #   PRISM_tmin_early_4kmD1_20180906_bil &lt;dbl&gt;,
+## #   PRISM_tmin_early_4kmD1_20180907_bil &lt;dbl&gt;,
+## #   PRISM_tmin_early_4kmD1_20180908_bil &lt;dbl&gt;,
+## #   PRISM_tmin_early_4kmD1_20180909_bil &lt;dbl&gt;,
+## #   PRISM_tmin_early_4kmD1_20180910_bil &lt;dbl&gt;,
+## #   PRISM_tmin_early_4kmD1_20180911_bil &lt;dbl&gt;,
+## #   PRISM_tmin_early_4kmD1_20180912_bil &lt;dbl&gt;,
+## #   PRISM_tmin_early_4kmD1_20180913_bil &lt;dbl&gt;,
+## #   PRISM_tmin_early_4kmD1_20180914_bil &lt;dbl&gt;,
+## #   PRISM_tmin_early_4kmD1_20180915_bil &lt;dbl&gt;,
+## #   PRISM_tmin_early_4kmD1_20180916_bil &lt;dbl&gt;,
+## #   PRISM_tmin_early_4kmD1_20180917_bil &lt;dbl&gt;,
+## #   PRISM_tmin_early_4kmD1_20180918_bil &lt;dbl&gt;,
+## #   PRISM_tmin_early_4kmD1_20180919_bil &lt;dbl&gt;,
+## #   PRISM_tmin_early_4kmD1_20180920_bil &lt;dbl&gt;,
+## #   PRISM_tmin_early_4kmD1_20180921_bil &lt;dbl&gt;,
+## #   PRISM_tmin_early_4kmD1_20180922_bil &lt;dbl&gt;,
+## #   PRISM_tmin_early_4kmD1_20180923_bil &lt;dbl&gt;</code></pre>
 <p>Nothing’s perfect, what’s wrong with the object we created above (think about the rules of data science we have covered)?</p>
 <hr />
 <blockquote>

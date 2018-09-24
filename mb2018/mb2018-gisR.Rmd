@@ -22,7 +22,7 @@ tminStack <-
   stack('data/tminStack')
 
 
-tmin_20180901 <-
+tmin_20180916 <-
   raster(ls_prism_data(absPath = TRUE)[1,2])
 
 ```
@@ -76,8 +76,8 @@ We'll next download raster files that provides minimum temperature data, in degr
 
 get_prism_dailys(
   'tmin', 
-  minDate = '2018-09-01',
-  maxDate = '2018-09-05',
+  minDate = '2018-09-16',
+  maxDate = '2018-09-23',
   keepZip = FALSE)
 ```
 
@@ -100,14 +100,14 @@ ls_prism_data(absPath = TRUE)[,1]
 Now, let's create a raster-format object from this file and assign a name. A raster is a continuous matrix of cells (also called pixels), where each defined by its value and position (x and y location). In a geographic raster, the position is georeferenced to a location on Earth by the bounding box of the raster (the extent), resolution (the size of the pixels), and the coordinate reference system (how the pixels are projected onto the Earth's surface). The function `raster` reads a raster file into R. The argument of this function is the path to the file.
 
 ```{r eval = FALSE}
-tmin_20180901 <-
+tmin_20180916 <-
   raster(ls_prism_data(absPath = TRUE)[1,2])
 ```
 
 Let's take a moment to explore this file:
 
 ```{r}
-tmin_20180901
+tmin_20180916
 ```
 
 There are several things that are important to note in this output, for example the resolution provides the size of each raster cells (here shown in degrees), the extent gives the bounding box of the raster, and values prints the range of values of the raster cells. Perhaps the most important output of these summary data is "coord. ref", which describes the coordinate reference system (CRS) of the raster object. You will notice that the coordinate reference system was already defined for this object (the data are provided as latitude and longitude values with "North American 1983 datum"). This hints at some of what is under the hood when you run the function `raster`. Please take a moment to explore the raster file in your computer's file management system. 
@@ -133,13 +133,13 @@ We can name raster layers in the same way that we name objects in a list or data
 
 ```{r}
 names(tminStack[[1]]) <- 
-  'sept1'
+  'sept16'
 ```
 
 If we are only interested in one raster object, we can assign a name based on the location of the object within the raster stack:
 
 ```{r}
-tmin_sept1 <- 
+tmin_sept16 <- 
   tminStack[[1]]
 ```
 
@@ -168,7 +168,7 @@ projection(tminStack_prj)
 ```
 
 ```{r echo = FALSE}
-tmin_sept1_prj <-
+tmin_sept16_prj <-
   tminStack_prj[[1]]
 ```
 
@@ -176,7 +176,7 @@ tmin_sept1_prj <-
 
 > **Exercise 1:**
 >
-> Transform the raster file tmin_sept1 to the CRS defined in newproj. Assign the name tmin_sept1_prj to the file.
+> Transform the raster file tmin_sept1 to the CRS defined in newproj. Assign the name tmin_sept16_prj to the file.
 
 ----
 
@@ -211,7 +211,7 @@ We can also change the color scheme:
 
 ```{r eval=F}
 plot(
-  tmin_sept1_prj,
+  tmin_sept16_prj,
   col = rev(rainbow(100)))
 
 map('state', add = T)
@@ -222,7 +222,7 @@ Or add the state boundaries layer to the above in one step:
 
 ```{r eval=F}
 plot(
-  tmin_sept1_prj,
+  tmin_sept16_prj,
   col = rev(rainbow(100)),
   addfun = map('state', add=T))
 ```
@@ -232,7 +232,7 @@ plot(
 Plots can be useful for exploring raster objects. For example, we can determine the value at a given point using the `click` function (**Note: Hit 'Escape' to exit the clicker**):
 
 ```{r eval=F}
-click(tmin_sept1_prj)
+click(tmin_sept16_prj)
 ```
 
 If you do not provide the name of the raster, `click()` will return the location of the cell you click on (also useful information!).
@@ -248,7 +248,7 @@ We can zoom into the map by clicking the upper left and lower right hand corner 
 
 ```{r eval=F}
 zoom(
-  tmin_sept1_prj,
+  tmin_sept16_prj,
   col = rev(rainbow(100)))
 ```
 
@@ -263,7 +263,7 @@ Crop the raster to the new extent and assign the name tminVirginia:
 
 ```{r eval=F}
 tminVirginia <- 
-  crop(tmin_sept1_prj, extentVirginia)
+  crop(tmin_sept16_prj, extentVirginia)
 ```
 
 Plot the new reduced raster:
@@ -295,35 +295,35 @@ An advantage to using R for working with rasters is that it is super simple to e
 Let's start by looking again at the summary information for the raster layer that we created:
 
 ```{r}
-tmin_sept1_prj
+tmin_sept16_prj
 ```
 
 We can calculate descriptive statistics using the `cellStats` function:
 
 ```{r}
-cellStats(tmin_sept1_prj, 'mean')
-cellStats(tmin_sept1_prj, 'min')
-cellStats(tmin_sept1_prj, 'max')
-cellStats(tmin_sept1_prj, 'sd')
+cellStats(tmin_sept16_prj, 'mean')
+cellStats(tmin_sept16_prj, 'min')
+cellStats(tmin_sept16_prj, 'max')
+cellStats(tmin_sept16_prj, 'sd')
 ```
 
 How are the temperature data distributed? Let's plot a histogram:
 
 ```{r}
-hist(tmin_sept1_prj)
+hist(tmin_sept16_prj)
 ```
 
 Note the warning message we received! We can change the argument `maxpixels` to include all of the pixels, though this will lead to a longer calculation time:
 
 ```{r}
-hist(tmin_sept1_prj, maxpixels = Inf)
+hist(tmin_sept16_prj, maxpixels = Inf)
 ```
 
 There are many arguments that can be used when plotting histograms of rasters. Type `?hist` to learn more. Below is the code for a more advanced histogram:
 
 ```{r}
 hist(
-  tmin_sept1_prj,
+  tmin_sept16_prj,
   maxpixels = Inf,
   freq = F,
   xlab = expression('Temperature (' * degree * C * ')'),
@@ -432,7 +432,7 @@ Once we have created a point and are certain that it is in the correct CRS, we c
 
 ```{r}
 plot(
-  tmin_sept1_prj,
+  tmin_sept16_prj,
   col = rev(rainbow(100)))
 
 points(bandingPt)
@@ -442,7 +442,7 @@ If you're having a hard time seeing it, you can use the argument `pch` to change
 
 ```{r}
 plot(
-  tmin_sept1_prj,
+  tmin_sept16_prj,
   col = rev(rainbow(100)))
 
 points(
@@ -454,7 +454,7 @@ Still a little hard to see? Let's use the `col` argument to change the color of 
 
 ```{r}
 plot(
-  tmin_sept1_prj,
+  tmin_sept16_prj,
   col = rev(rainbow(100)))
 
 points(bandingPt, 
@@ -466,7 +466,7 @@ To make our points even easier to see might want to surround our points with a b
 
 ```{r}
 plot(
-  tmin_sept1_prj,
+  tmin_sept16_prj,
   col = rev(rainbow(100)))
 
 points(bandingPt, 
@@ -481,14 +481,14 @@ See `?par` for all of the different parameters that can be set with graphic obje
 We can easily extract raster values to points using the `extract` function. For example, to extract the minimum temperature at our banding station on 14 September, we would write:
 
 ```{r, eval = FALSE}
-extract(tmin_sept1_prj,
+extract(tmin_sept16_prj,
         bandingPt)
 ```
 
 Uh-oh. It doesn't work! This is because there are multiple R packages that include the function `extract`. You can tell R which package you would like to use by giving the name of the package, in this case `raster`, followed by "::" and the name of the function.
 
 ```{r}
-raster::extract(tmin_sept1_prj,
+raster::extract(tmin_sept16_prj,
                 bandingPt)
 ```
 
@@ -502,7 +502,7 @@ raster::extract(tminStack_prj,
 You can also extract the values of a raster within a given radius around a given point (or multiple points). Let's look at the average minimum temperature within 10 km of the banding point:
 
 ```{r}
-raster::extract(tmin_sept1_prj,
+raster::extract(tmin_sept16_prj,
                 bandingPt,
                 buffer = 10000,
                 fun = mean,
@@ -514,7 +514,7 @@ It is often necessary to save point values to your point object. Let's run the f
 ```{r}
 bandingPt_spDf <-
   raster::extract(
-    tmin_sept1_prj,
+    tmin_sept16_prj,
     bandingPt,
     sp = T)
 
@@ -535,7 +535,7 @@ In R, it is quite easy to generate random points within a raster. This is useful
 # Generate points:
 
 rPoints <-
-  randomPoints(tmin_sept1_prj, 500)
+  randomPoints(tmin_sept16_prj, 500)
 
 # Make points spatial:
 
@@ -545,14 +545,14 @@ rPoints_sp <-
 # Project points:
 
 crs(rPoints_sp) <-
-  crs(tmin_sept1_prj)
+  crs(tmin_sept16_prj)
 ```
 
 Let's add the random points to the map:
 
 ```{r}
 plot(
-  tmin_sept1_prj,
+  tmin_sept16_prj,
   col = rev(rainbow(100)))
 
 points(
@@ -568,7 +568,7 @@ Just as we extracted to individual points, we can extract temperatures for each 
 ```{r}
 tmin_rPoints <-
   raster::extract(
-    tmin_sept1_prj,
+    tmin_sept16_prj,
     rPoints_sp,
     sp = T)
 ```
