@@ -26,7 +26,6 @@ library(ks)
 library(RColorBrewer)
 library(RCurl)
 library(tidyverse)
-
 ```
 
 <head>
@@ -35,13 +34,11 @@ library(tidyverse)
 
 <img style="float:right;padding-left:25px;border:none" src="images/smsc_logo.jpg" width = "500px"/>
 
-# Light-Level geolocator analysis using the GeoLight package
+# Light-Level geolocator analysis using the GeoLight package  
 
-<p><i>Hallworth, M.T., Cooper, N.W., and B.S. Evans</i><br>
-Smithsonian Conservation Biology Institute<br>
-Migratory Bird Center</p>
+<p><i>Hallworth, M.T., Cooper, N.W., and B.S. Evans</i></p>
 
-<img style = "float: right" src="http://mthallworth.weebly.com/uploads/1/8/3/8/18383927/2593529_orig.jpg" height = "150px" width= "150px"/>
+<img style="float:right;padding-left:10px;border:none" src="http://mthallworth.weebly.com/uploads/1/8/3/8/18383927/2593529_orig.jpg" width = "300px"/>
 
 ## Introduction to Archival light-level geolocators  
 
