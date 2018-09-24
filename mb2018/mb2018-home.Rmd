@@ -58,6 +58,8 @@ output:
 <li><a href = "https://smbc-nzp.github.io/mb2018/mb2018-markRecapture.html" target="_blank"><b>Mark-recapture lab</b></a></li>
 <li><a href = "https://smbc-nzp.github.io/mb2018/HouseWrenExercise_distance_2.html" target="_blank"><b>Distance classroom demo, House wren</b></a></li>
 <li><a href = "https://smbc-nzp.github.io/mb2018/AmakihiDistanceSampling_2018_ExerciseRmd.html" target="_blank"><b>Distance participant exercise, Amakihi</b></a></li>
+<li><a href = "https://smbc-nzp.github.io/mb2018/mb2018-gisR.html" target="_blank"><b>R as a GIS</b></a></li>
+<li><a href = "https://smbc-nzp.github.io/mb2018/mb2018-geolocator.html" target="_blank"><b>Light-level geolocators</b></a></li>
 </ul>
 
 <div class = "row">
