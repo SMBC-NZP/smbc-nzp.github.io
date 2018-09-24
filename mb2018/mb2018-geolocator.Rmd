@@ -318,7 +318,7 @@ KML(
 ```
 
 <div class = "row">
-<img style="float:right;padding-left:25px;border:none" src="images/kde_example.png" width = "700px"/>
+<img style="margin:auto;padding-left:25px;border:none" src="images/kde_example.png" width = "700px"/>
 </div>
 
 <br>
@@ -340,4 +340,5 @@ KML(
 > Repeat the above geolocator analysis for the Wood thrush. 
 > * What is your best estimate of where the observed Wood thrush spends the non-breeding period?
 > * Provide a map of your kernel density estimates for the breeding and non-breeding periods.  
+
 <hr>
