@@ -69,7 +69,7 @@ Set the working directory and import data from a csv file.  The "na.strings" arg
 ```{r, eval=T}
 locs <- 
   read.csv(
-    "RSHomeRangeData.csv", 
+    "https://www.dropbox.com/s/uxrbfxwi8l7k9lx/RSHomeRangeData.csv?dl=1", 
     header = T, 
     na.strings=c("NA", "NULL", "", "."))
 ```
@@ -563,9 +563,10 @@ Now create an empty dataset to put the results of the bootstrap in.
 
 ```{r, eval=T}
 Vol95.1 <- 
-  matrix(0,
-         nrow=20,
-         ncol=nrow(locs1Woth)-4) #nrow is number of samples - 100 would be ideal but will take forever. Only doing 20.
+  matrix(
+    0,
+    nrow=20,
+    ncol=nrow(locs1Woth)-4) #nrow is number of samples - 100 would be ideal but will take forever. Only doing 20.
 ```
 
 The below code is a nested `for()` loop to run the bootstrap. This step does the calculation from sample size 10 until the length of the dataset  
@@ -585,6 +586,7 @@ write.csv(Vol95.1,"asymptoteWOTH.csv")#export data
 ```
 
 Graph the results:
+
 ```{r, eval=T}
 library(ggplot2)
 
