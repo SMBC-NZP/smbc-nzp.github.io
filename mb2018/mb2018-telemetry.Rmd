@@ -55,6 +55,7 @@ library(ellipse)
 We will start by loading the primary libraries that provide us with the tools for analyzing triangulation data.
 
 ```{r, eval=F}
+library(RCurl)
 library(tidyverse)
 library(sp)
 library(rgdal)

@@ -53,8 +53,16 @@ oven_transitions <-
 # exercise 1 --------------------------------------------------------------
 
 oven_sub <-
-  oven %>%   #
-  filter %>% #
+  oven %>%   
+  filter(dateTime <= '2011-07-01')
+
+twilightCalc(
+  datetime = oven_sub[,2],
+  light= oven_sub[,4],
+  LightThreshold=3,    # Here is where you set the threshold level
+  ask=TRUE)           # Here you can go through every twilight
+
+
 
 # sun elevation angle -----------------------------------------------------
 

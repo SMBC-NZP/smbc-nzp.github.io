@@ -53,6 +53,10 @@ In this module you will learn how to use R as a geographic information system (G
 We will start by loading the primary libraries that provide us with the tools for using R as a geographic information system.
 
 ```{r, eval=F}
+library(RCurl)
+
+source('https://www.dropbox.com/s/t4bxf2olztv8alx/packages_and_setup.R?dl=1')
+
 library(raster) # Package for working with raster files
 library(dismo)  # Lots of great tools for distribution modeling
 library(maps)   # Provides some predefined map layers
