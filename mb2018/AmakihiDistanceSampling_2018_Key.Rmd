@@ -1,0 +1,382 @@
+---
+output: 
+  html_document:
+    self_contained: no
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<head>
+<link rel="stylesheet" href="N:/Capacity Building and Academic Programs/SI-Mason Grad & Prof Training/Individual Courses--Folders/Bird Migration/2018/Materials/Distance/Exercises">
+<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+#Amakihi Distance Sampling Exercise - Answer Key
+<p><i>Joe Kolowski, Ph.D.</i></p>
+
+## Project Description and Context
+
+<img style="float:right" src="images/amakihiPic.png" />
+
+In this module, you will import point transect data on individual Amakihi (*Hemignathus virens*), a common type of honeycreeper in Hawaii. These data were collected as part of a larger translocation experiment, where data was collected on a suite of bird species (Fancy et al. 1997). Point transect surveys were performed at seven survey periods between July 1992 and April 1995. There were 41 point-count stations, though they were not all surveyed in some survey periods. We'll be using this as an example where the use of covariates is appropriate. There are 3 potential covariates available in this case study: Observer ID (OBs), and time in minutes (MAS) and hours (HAS) after sunrise for observations. The goal of the project is to calculate the most unbiased and precise estimate of density of this species within each study period. The study is used as an illustrative example in Marques et al. (2007), and this is one of the Sample Projects provided with the program DISTANCE.
+
+##Exercise Objectives
+  * Continue to practice with importing and exploring data for distance sampling analysis 
+  * Continue to practice with the use of covariates in analyzing distance sampling data
+  * Assess which combination of covariates is most supported in modelling the detection process in this study
+  * Independently complete a full analysis work flow, including model selection and results interpretation, to determine an unbiased density of Amakihi
+  * If you have time, explore survey period to see if each survey period should be analysed independently to better assess overall density of Amakihi
+
+###Libraries/Setup
+```{r, warning = FALSE, message = FALSE}
+library(Distance)
+```
+
+###Data Import and Exploration
+
+STEP1: Let's first bring in the data, which exists as a .csv file called "amakihi.csv"
+```{r, message = F}
+library(Distance)
+amakihiData <- read.csv("https://www.dropbox.com/s/9b4mgh36p7p1ynx/amakihi.csv?dl=1")
+```
+
+<p>STEP2: As always, you should begin by exploring the raw data. Use functions to view the data, look at its structure, and summarize the data. 
+<p>**Q1. What is the maximum distance at which a bird was observed?**
+<p>A1. With the `summary` function we can see the maximum distance observation was at 250 meters. We could also use `max(amakihiData$distance)`.
+```{r}
+head(amakihiData)
+str(amakihiData)
+summary(amakihiData)
+```
+
+Note that our observer covariate is already recognized as a factor in R, which is what we want. Hours after sunrise could be treated either as a factor, if we want each hour to exist as an independent sample, or we could leave it as is, and its relationship with distance will be assessed in a linear fashion (i.e. detection function parameters will consistently increase or decrease with hour after sunrise). 
+
+<p>STEP3: Plot the distance data as a histogram, trying a range of different bin sizes to explore the raw data. 
+<p>**Q2. Do you see any potential problems or issues with the data? If so what are they?**
+
+```{r}
+hist(
+  amakihiData$distance,
+  breaks = seq(0, 260),
+  main = "",
+  xlab = "Distance"
+)
+```
+
+<p>A2. There are a few things to consider when looking at our raw data. First, there are a series of long-distance observations which will be challenging to fit to a detection function, and which aren't important to the analysis. They should be truncated. Second, while there is a clear decline in observation frequency after 50m, there is a series of observations at further distances which extend the potential peak in the data. This could be the result of differences across observers, or time periods. Third, there do appear to be rounding errors at certain distances, but there is not much we can do to address this.
+<p>STEP4: Looking at the data with different bin sizes, decide on a reasonable truncation distance or %. 
+<p>**Q3.  What did you decide and why?**
+
+<p> A3. One could decide to truncate the furthest 10% of observations, or we could look at the data and select a distance which removes the bulk of these sporadic far observations. The case study in the Marques paper truncates at 82.5 meters, so that is what I'll proceed with here, but this is not necessarily the only solution. We can look at the data with a few bin sizes, using our new truncation level. We can still see an issue with a second peak in observation frequencies, but perhaps our covariates will help to account for this.
+
+```{r}
+par(mfrow=c(1,2))
+hist(
+  amakihiData$distance[amakihiData$distance < 82.5],
+  breaks = 33,
+  main = "",
+  xlab = "Distance"
+)
+hist(
+  amakihiData$distance[amakihiData$distance < 82.5],
+  breaks = 10,
+  main = "",
+  xlab = "Distance"
+)
+```
+
+<p>Let's now look at our 3 covariates to see how they relate to observed distances. Boxplots are best in this case for factor covariates, regular scatterplots for continuous variables. 
+<p>STEP5: Create boxplots or scatterplots of our 3 covariates, with distance on the y axes, to look at how these covariates may influence the detection function. 
+<p>**Q4: Which observer tends to observe birds at the longer distances?**
+<p>A4: TJS
+<p>**Q5: Do observation distances tend to increase or decrease as time after sunrise increases?**
+<p>A5: As you go further from sunrise, average observation distance tends to decline.
+```{r}
+par(mfrow=c(1,3))
+boxplot(amakihiData$distance ~ amakihiData$OBS,
+        xlab = "Observer",
+        ylab = "Distance(m)")
+
+plot(
+  amakihiData$MAS,
+  amakihiData$distance,
+  xlab = "Minutes after sunrise",
+  ylab = "Distance(m)",
+  pch = 19,
+  cex = 0.6
+  )
+
+abline(reg = lm(amakihiData$distance ~ amakihiData$MAS),
+       lwd = 2)
+
+boxplot(amakihiData$distance ~ amakihiData$HAS,
+        xlab = "Hour",
+        ylab = "Distance(m)")
+```
+
+Note that we are entertaining three possible covariates in our detection function: observer, hours and minutes since sunrise. Observer and hours are variables that take on values between 1 and 3 in the case of observer, and 1 to 6 in the case of hours. However minutes can take on values from -9 (detections before sunrise) to >300. The disparity in scales of measure between MAS and the other candidate covariates can lead to difficulties in the performance of the optimiser fitting the detection functions in R. The solution to the difficulty is to scale MAS such that it is on a scale (~1 to 5) comparable with the other covariates.
+
+<p>Dividing all the MAS measurements by the standard deviation of those measurements accomplishes the desired compaction of the range of the MAS covariate without changing the shape of the distribution of MAS values. Execute the following code to do this.
+```{r}
+amakihiData$MAS <- amakihiData$MAS / sd(amakihiData$MAS, na.rm = TRUE)
+```
+
+### Basic Conventional Distance Sampling Analysis of Amakihi Data - no covariates
+<p>It's always good practice to begin with a basic analysis of your data as a starting point, even if we know we want to explore various covariates. 
+<p>STEP6: Using your selected truncation amount, run the 4 common detection function models on this data set, with no covariates. These include: Half-normal cosine, Half-normal hermite, Hazard-rate simply polynomial, and Uniform cosine. Compare the AIC values of these 4 models.
+<p>*Remember that you need to think about conversion units here. We want our output to be in hectares (100m by 100m) but our distance units are in meters. Be sure to select an appropriate value for the `convert.units` argument.*
+
+```{r, message = F, warning = F}
+amakihi.hn.herm <- ds(
+  amakihiData,
+  truncation = 82.5,
+  transect = "point",
+  key = "hn",
+  adjustment = "herm",
+  convert.units = .01
+  )
+AIC(amakihi.hn.herm)
+
+amakihi.hn.cos <- ds(
+  amakihiData,
+  truncation = 82.5,
+  transect = "point",
+  key = "hn",
+  adjustment = "cos",
+  convert.units = .01
+  )
+AIC(amakihi.hn.cos)
+
+amakihi.uni.cos <- ds(
+  amakihiData,
+  truncation = 82.5,
+  transect = "point",
+  key = "unif",
+  adjustment = "cos",
+  convert.units = .01
+  )
+AIC(amakihi.uni.cos)
+
+amakihi.haz.simp <- ds(
+  amakihiData,
+  truncation = 82.5,
+  transect = "point",
+  key = "hr",
+  adjustment = "poly",
+  convert.units = .01
+  )
+AIC(amakihi.haz.simp)
+
+summary1 <-
+  summarize_ds_models(amakihi.haz.simp,
+  amakihi.uni.cos,
+  amakihi.hn.cos,
+  amakihi.hn.herm,
+  output = "plain")
+```
+```{r, warning = F, message = F}
+library(knitr)
+```
+```{r}
+kable(summary1, format = "markdown")
+```
+<p>**Q6: Based on AIC values, which of these 4 models best fits the data?**
+<p>A6: Based on AIC values the half-normal cosine model with an AIC value of 10799.1 fits the data best.
+<p>STEP7: Look at the summary results of your best model. Then plot the results of the best model to look at the fit of the detection function.
+<p>**Q7: Do you see any issues with the detection function?** 
+```{r}
+summary(amakihi.hn.cos)
+plot(amakihi.hn.cos, main = "Amakihi data pooled, \nhalf-normal cosine detection function",
+     pdf = T)
+```
+<p>A7: You can see from the output of the model run that the half-normal cosine has 4 adjustment parameters and a total of 5 parameters. This is a very complex detection function, primarily because it is attempting to account for the second peak in observations, where a standard/appropriate function should be monotonically decreasing. Hopefully our covariates will help address this.
+
+### Multiple Covariate Distance Sampling (MCDS) of Amakihi Data
+<p>Let's try now to incorporate our 3 covariates into our modeling. We cannot assume that our best model from above will continue to be the best detection function, so we need to investigate not only different combinations of our covariates, but also different key functions. In R, due to it's optimization engine, models with covariates and adjustment terms do not converge. Thus, the package prevents us from using adjustment terms. This simplifies things here, but is a disadvantage of running these models in R vs. the Windows program DISTANCE. 
+<p> In any case, let's first convert HAS to a factor covariate, since the graph of this variable indicates the trend in detection frequencies may not be linear as hours proceed from sunrise.
+```{r}
+amakihiData$HAS <- as.factor(amakihiData$HAS)
+```
+
+<p>STEP8: Test the following models. Combining them with the 4 models we've run above for a total of 14 models, compare them with AIC, as well as the Cramer von-Mises test (using the `summarize_ds_models` function). <p>
+  * OBS (Half-normal)
+  * OBS (Hazard rate)
+  * MAS (Half-normal)
+  * MAS (Hazard rate)
+  * HAS (Half-normal)
+  * HAS (Hazard rate)
+  * OBS + MAS (Half-normal)
+  * OBS + MAS (Hazard rate)
+  * OBS + HAS (Half-normal)
+  * OBS + HAS (Hazard rate)
+```{r, message = F, warning = F}
+amakihi.hn.obs <- ds(
+  amakihiData,
+  truncation = 82.5,
+  transect = "point",
+  key = "hn",
+  formula = ~ OBS,
+  convert.units = .01
+  )
+
+amakihi.hr.obs <- ds(
+  amakihiData,
+  truncation = 82.5,
+  transect = "point",
+  key = "hr",
+  formula = ~ OBS,
+  convert.units = .01
+  )
+
+amakihi.hn.MAS <- ds(
+  amakihiData,
+  truncation = 82.5,
+  transect = "point",
+  key = "hn",
+  formula = ~ MAS,
+  convert.units = .01
+  )
+
+amakihi.hr.MAS <- ds(
+  amakihiData,
+  truncation = 82.5,
+  transect = "point",
+  key = "hr",
+  formula = ~ MAS,
+  convert.units = .01
+  )
+
+amakihi.hn.HAS <- ds(
+  amakihiData,
+  truncation = 82.5,
+  transect = "point",
+  key = "hn",
+  formula = ~ HAS,
+  convert.units = .01
+  )
+
+amakihi.hr.HAS <- ds(
+  amakihiData,
+  truncation = 82.5,
+  transect = "point",
+  key = "hr",
+  formula = ~ HAS,
+  convert.units = .01
+  )
+
+amakihi.hn.obs_HAS <- ds(
+  amakihiData,
+  truncation = 82.5,
+  transect = "point",
+  key = "hn",
+  formula = ~ OBS + HAS,
+  convert.units = .01
+  )
+
+amakihi.hr.obs_HAS <- ds(
+  amakihiData,
+  truncation = 82.5,
+  transect = "point",
+  key = "hr",
+  formula = ~ OBS + HAS,
+  convert.units = .01
+  )
+
+amakihi.hn.obs_MAS <- ds(
+  amakihiData,
+  truncation = 82.5,
+  transect = "point",
+  key = "hn",
+  formula = ~ OBS + MAS,
+  convert.units = .01
+  )
+
+amakihi.hr.obs_MAS <- ds(
+  amakihiData,
+  truncation = 82.5,
+  transect = "point",
+  key = "hr",
+  formula = ~ OBS + MAS,
+  convert.units = .01
+  )
+
+summary2 <-
+  summarize_ds_models(
+  amakihi.hn.herm,
+  amakihi.haz.simp,
+  amakihi.hn.cos,
+  amakihi.uni.cos,
+  amakihi.hn.obs,
+  amakihi.hr.obs,
+  amakihi.hn.MAS,
+  amakihi.hr.MAS,
+  amakihi.hn.HAS,
+  amakihi.hr.HAS,
+  amakihi.hn.obs_HAS,
+  amakihi.hr.obs_HAS,
+  amakihi.hn.obs_MAS,
+  amakihi.hr.obs_MAS,
+  output = "plain"
+  )
+
+kable(summary2, format = "markdown")
+```
+<p>**Q8: Which model is best and why?**
+<p>A8: The model with both OBS and MAS is the best, with a hazard rate key function.
+<p>STEP9:Review the summary results of your best model.
+```{r}
+summary(amakihi.hr.obs_MAS)
+```
+
+<p>**Q9: What is the final overall density estimate, per hectare, from your best model? Include the coefficient of variation, and the confidence interval.**
+<p>A9: The density estimate from the best model is 6.87 birds per hectare with a coefficient of variation of 6.8%. The 95% CI stretches from 6.01 to 7.84. Note that this is a much smaller CV and confidence interval than we had from our basic model with no covariates.
+<p>*It should be noted here that the models fitted with the half-normal function are actually much better when fitted in the program DISTANCE. This is because the model optimization engines used in DISTANCE are better, and they were able to fit these models WITH adjustment terms. In the end, the hazard rate models, even without adjustment terms, were still better than the half-normal models in all cases, but if running these models in DISTANCE, the AIC values of the half-normal models would be much lower.* 
+<p>STEP10: Use the `ddf.gof` function to calculate various diagnostics for your best model. Using code from the demo, plot the QQplot and include the Cramer von-Mises test results on the plot
+```{r}
+amakihi.hr.obs_Mas.fit <- ddf.gof(amakihi.hr.obs_MAS$ddf)
+message <-
+  paste(
+  "Cramer von-Mises W=",
+  round(amakihi.hr.obs_Mas.fit$dsgof$CvM$W, 3),
+  "\nP=",
+  round(amakihi.hr.obs_Mas.fit$dsgof$CvM$p, 3)
+  )
+text(0.6, 0.1, message, cex = 0.8)
+```
+
+<p>**Q10: Do you see any reason to be cautious about our final model here, or do we have evidence that this is a reasonably good fit of the data?**
+<p>A10: The QQ plot, and the lack of significance of the CvM test are both indicating that our model is a reasonable fit to the data.
+<p>STEP11: Let's graph our detection functions for each observer. Look in the help menu for the function `plot.ds` and figure out how to use the `subset` argument to graph the detection function for each of the three observers separately. Label the main titles with the names of the observers, and set their y axes to go from 0 to 1.5 so we can compare them easily. For some reason the `PDF =T` does not work in these graphs, so you can graph the standard detection functions here (that is, use the default graph). 
+```{r}
+par(mfrow=c(1,3))
+plot(
+  amakihi.hr.obs_MAS,
+  subset = OBS == "TJS",
+  nc = 15,
+  ylim = c(0, 1.5),
+  main = "Observer TJS",
+  showpoints = F
+  )
+plot(
+  amakihi.hr.obs_MAS,
+  subset = OBS == "SGF",
+  nc = 15,
+  ylim = c(0, 1.5),
+  main = "Observer SGF",
+  showpoints = F
+  )
+plot(
+  amakihi.hr.obs_MAS,
+  subset = OBS == "TKP",
+  nc = 15,
+  ylim = c(0, 1.5),
+  main = "Observer TKP",
+  showpoints = F
+  )
+```
+
+###Extra Practice - Investigating Survey Periods as Strata
+
+Look again at the `summary` of your best model and focus on the encounter rate (ER) for each survey time period. Remember that we have 7 different survey periods during which field data was collected. You'll see that the encounter rate varies quite a bit across these survey periods. In all the analyses above, we've created pooled detection functions across all these survey periods, assuming that detection processes were more or less similar across these periods. But this may not be the case. For example encounter rates in December 1992 and July 1992 were substantially lower than during other periods. Using the demo exercise (House Wren) as a guide, where survey blocks were analyzed as separate strata, analyze the Amakihi data again, this time keeping each survey period as a separate strata. For simplicity, try only the half-normal cosine, and the hazard rate simple polynomial models for each survey period. In the end, sum the AIC values of your final 7 models (one for each survey period) and compare with the AIC value of our initial model above which pooled these survey periods (half-normal cosine, no covariates) to see if it is worth estimating separate detection functions for each survey period. Think about how you might go about calculating a final global density estimate when each survey period is analyzed separately like this. 
