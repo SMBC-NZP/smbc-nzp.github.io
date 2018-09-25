@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title></title>
+
+<script src="mb2018-homeRange_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="mb2018-homeRange_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="mb2018-homeRange_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="mb2018-homeRange_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="mb2018-homeRange_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="mb2018-homeRange_files/navigation-1.1/tabsets.js"></script>
+<link href="mb2018-homeRange_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="mb2018-homeRange_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<head>
+<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<p><img style="float:right;padding-left:25px;border:none" src="images/smsc_logo.jpg" width = "500px"/></p>
+<div id="home-range-analysis" class="section level1">
+<h1>Home Range Analysis:</h1>
+<p>
+<i>Calandra Stanley, M.Sc., Ph.D. Candidate</i>
+</p>
+<div id="project-description-and-context" class="section level2">
+<h2>Project Description and Context</h2>
+<p>In this module you will learn how to use to calculate animal home ranges in R. We will be using two different datasets from radiotracked songbirds. We will use two different methods (minimum convex poygon and kernel density estimator) using the adehabitatHR package (Calenge 2006) in R. We will also learn how to use satellite remote sensing layers to extract environmental data from our calculated home ranges.</p>
+</div>
+<div id="exercise-objectives" class="section level2">
+<h2>Exercise Objectives</h2>
+<ul>
+<li>Practice importing and formatting spatial data</li>
+<li>Learn how to construct minimum convex polygon and kernel density estimator</li>
+<li>Learn how to extract home range size</li>
+<li>Practice how to explore your raster data visually and quantitatively</li>
+<li>Practice how to extract values from raster data to polygon overlay</li>
+</ul>
+</div>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<p>We will start by loading the primary libraries and some additional functions that provide us with the tools for home range analysis.</p>
+<pre class="r"><code># Some additional functions are needed:
+
+library(RCurl)
+
+source(&#39;https://www.dropbox.com/s/t4bxf2olztv8alx/packages_and_setup.R?dl=1&#39;)
+
+library(raster) # Package for working with raster files
+library(adehabitatHR)  
+library(maptools)
+library(maps)
+library(rgdal)
+library(tidyr)</code></pre>
+</div>
+<div id="points-to-consider-when-performing-home-range-analysis" class="section level2">
+<h2>Points to consider when performing home range analysis</h2>
+<ul>
+<li>usually 30-50 <em>independent</em> points is sufficient (Seaman and Millspaugh 1999)</li>
+<li>consider biological (Lair 1987) vs. statistical independence</li>
+<li>can bootstrap to perform an asymptote analysis to see if home range size stabilizes</li>
+</ul>
+</div>
+<div id="import-data-set" class="section level2">
+<h2>Import Data Set</h2>
+<p>First we will import the first practice data set. These are locations data from songbirds radiotracked in Puerto Rico. Location data is in UTM format, the units are meters.</p>
+<p>Set the working directory and import data from a csv file. The “na.strings” argument replaces missing values with NA.</p>
+<pre class="r"><code>locs &lt;- 
+  read.csv(
+    &quot;https://www.dropbox.com/s/uxrbfxwi8l7k9lx/RSHomeRangeData.csv?dl=1&quot;, 
+    header = T, 
+    na.strings=c(&quot;NA&quot;, &quot;NULL&quot;, &quot;&quot;, &quot;.&quot;))</code></pre>
+<p>Take a quick look at how many location estimates we have for each of three birds:</p>
+<pre class="r"><code>table(locs$bird)</code></pre>
+<pre><code>## 
+##  RSFA_BK,O RSMBK,BK_A   YWFA,Y_G 
+##         99         89         23</code></pre>
+</div>
+<div id="prepare-data-for-home-range-analysis" class="section level2">
+<h2>Prepare data for home range analysis</h2>
+<p>We will first create a SpatialPointsDataFrame of the location data. SpatialPoints or SpatialPointsDataFrame is the object format that the location point data needs to be in to perform the home range analysis (and many spatial analyses in R). Since we have multiple birds we will use a SpatialPointsDataFrame so that we can include a column with IDs.</p>
+<p>Extract the coordinates from the dataframe:</p>
+<pre class="r"><code>xyt &lt;-
+  subset(
+    locs,
+    select = c(X,Y))</code></pre>
+<p>Extract the birds IDs from the dataframe:</p>
+<pre class="r"><code>id &lt;-
+  subset(
+    locs, select = bird)</code></pre>
+<p>Create the SpatialPointsDataFrame:</p>
+<pre class="r"><code>locs1 &lt;- 
+  id
+
+coordinates(locs1) &lt;- 
+  xyt
+
+# Assign coordinate reference system
+
+proj4string(locs1) &lt;-
+  CRS(&quot;+proj=utm +zone=20 +datum=WGS84&quot;)</code></pre>
+<p>Confirm the class of the object and check summary information:</p>
+<pre class="r"><code>class(locs1) </code></pre>
+<pre><code>## [1] &quot;SpatialPointsDataFrame&quot;
+## attr(,&quot;package&quot;)
+## [1] &quot;sp&quot;</code></pre>
+<pre class="r"><code>summary(locs1)</code></pre>
+<pre><code>## Object of class SpatialPointsDataFrame
+## Coordinates:
+##         min     max
+## X  188332.4  188439
+## Y 1997248.6 1997321
+## Is projected: TRUE 
+## proj4string :
+## [+proj=utm +zone=20 +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0]
+## Number of points: 211
+## Data attributes:
+##          bird   
+##  RSFA_BK,O :99  
+##  RSMBK,BK_A:89  
+##  YWFA,Y_G  :23</code></pre>
+<p>Let’s plot the point data:</p>
+<pre class="r"><code>plot(
+  locs1, 
+  col=as.data.frame(locs1)[,1]) #specifies unique color for each bird</code></pre>
+<p><img src="mb2018-homeRange_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>Now let’s plot the point data on a map. First we need to convert the UTMs to longitude and latitude so it can be projected onto a larger map.</p>
+<pre class="r"><code># Create new dataframe for reprojected data
+
+locs1Map &lt;-
+  locs1
+
+locs1Map &lt;-
+  spTransform(
+    locs1,
+    CRS(&quot;+proj=longlat +datum=WGS84&quot;))</code></pre>
+<p>We will use the map function you used earlier this lab to call a map of Puerto Rico. We will turn it into a SpatialPolygon to map the SpatialPoints on top of.</p>
+<pre class="r"><code>pR &lt;- 
+  map(
+    &quot;world&quot;,
+    &quot;Puerto Rico&quot;,
+    fill=T)</code></pre>
+<p><img src="mb2018-homeRange_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<pre class="r"><code>IDs &lt;- sapply(strsplit(pR$names, &quot;:&quot;), function(x) x[1])
+pRP&lt;-map2SpatialPolygons(pR, IDs = IDs, proj4string = CRS(&quot;+proj=longlat +datum=WGS84&quot;))</code></pre>
+<p>Plot polygon of Puerto Rico and locations together:</p>
+<pre class="r"><code>plot(pRP)
+
+points(locs1Map, col=as.data.frame(locs1)[,1])#points overlays the location estimates</code></pre>
+<p><img src="mb2018-homeRange_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+<div id="minimum-convex-polygon" class="section level2">
+<h2>Minimum Convex Polygon</h2>
+<p>This is the most widely used and simplest method for estimating an animal’s home range. It consists of creating the smallest convex polygon than encompasses all the location estimates. To account for outliers in the data, where animals may have temporarily left their home range, a small percentage of points is often omitted.</p>
+<p>Run the 95% minimum convex polygon analysis to create all three home range as a SpatialPolygonDataFrame:</p>
+<pre class="r"><code>cp&lt;-mcp(locs1[,1], percent=95)</code></pre>
+<p>Graph the polygons and the points together:</p>
+<pre class="r"><code>plot(
+  cp, 
+  border=as.data.frame(cp)[,1])
+
+plot(
+  locs1, 
+  col=as.data.frame(locs1)[,1],
+  add=T)</code></pre>
+<p><img src="mb2018-homeRange_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>The area of the three polygons will be listed in ha.</p>
+<pre class="r"><code>cp</code></pre>
+<pre><code>## Object of class &quot;SpatialPolygonsDataFrame&quot; (package sp):
+## 
+## Number of SpatialPolygons:  3
+## 
+## Variables measured:
+##                    id      area
+## RSFA_BK,O   RSFA_BK,O 0.1021694
+## RSMBK,BK_A RSMBK,BK_A 0.2216984
+## YWFA,Y_G     YWFA,Y_G 0.1786882</code></pre>
+<p>The polygons can be written to a shapefile in the source directory so that in can be read into a GIS or GoogleEarth.</p>
+<pre class="r"><code>writeOGR(
+  cp,
+  dsn=&quot;cp.shp&quot;,
+  layer=&quot;cp&quot;,
+  driver=&quot;ESRI Shapefile&quot;)</code></pre>
+<p>Or can be exported as a dataframe.</p>
+<pre class="r"><code>write.csv(
+  as.data.frame(cp),
+  &quot;MCP.csv&quot;)</code></pre>
+</div>
+<div id="kernel-density-estimation" class="section level2">
+<h2>Kernel Density Estimation</h2>
+<p>This section teaches you how to calculate home range size using the kernel density estimator. This provides a more formalized approach to the calculation of home range size based on the <i> utilization distribution </i> (UD). Using this model the animals use of space can be described as a bivariate probability density function (the UD) which gives the animal’s relative frequency of occurrence in a two-dimensional (x,y) distribution (can be extended into 3D as well).</p>
+<p>We will use a Kernel estimator to calculate the utilization distribution (Worton, 1989). The kernel method consists of placing a kernel (a probability density) over each location estimate in the sample. The values of these functions are averaged together (where they overlap), thus the density estimate will be high in areas with many observation, and low in areas with few.</p>
+<p><i> h </i> is the smoothing parameter and controls the width of the kernel functions place over each point. The two most common choices of <i>h</i> are to use a “reference bandwidth” (“href”) or the LSCV (least square cross validation) to compute the <i>h</i>. Here we will use the LSCV method.</p>
+<pre class="r"><code>kud&lt;-kernelUD(locs1[,1], h=&quot;LSCV&quot;)</code></pre>
+<p>This produces a raster of the class SpatialPixelDataFrame:</p>
+<pre class="r"><code>kud</code></pre>
+<pre><code>## ********** Utilization distribution of several Animals ************
+## 
+## Type: probability density
+## Smoothing parameter estimated with a  LSCV smoothing parameter
+## This object is a list with one component per animal.
+## Each component is an object of class estUD
+## See estUD-class for more information</code></pre>
+<p>We can visualize:</p>
+<pre class="r"><code>image(kud)</code></pre>
+<p><img src="mb2018-homeRange_files/figure-html/unnamed-chunk-19-1.png" width="672" /> It is important to check that the cross-validation criterion converges towards a solution in the specified interval, if not the estimate should not be used. This can be visualized in the plots below.</p>
+<pre class="r"><code>plotLSCV(kud)</code></pre>
+<p><img src="mb2018-homeRange_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>To calculate the home range size we can first convert the kernel density function into a SpatialPolygonsDataFrame:</p>
+<pre class="r"><code>homerange &lt;- 
+  getverticeshr(kud)
+
+class(homerange)</code></pre>
+<pre><code>## [1] &quot;SpatialPolygonsDataFrame&quot;
+## attr(,&quot;package&quot;)
+## [1] &quot;sp&quot;</code></pre>
+<p>We can visualize the polygon:</p>
+<pre class="r"><code>plot(
+  homerange,
+  col=1:3) </code></pre>
+<p><img src="mb2018-homeRange_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p>When calculating home ranges we are usually interested in calculating area for different isopleths (utilization distributions [UDs]). For example, the 95% home range corresponds to the smallest area on which the probability to relocate the animal is equal to 0.95. 95% is the standard for “home range size” and 50% is often used for the “core area”. Again areas are in hectares.</p>
+<pre class="r"><code>kde.areas &lt;-
+  kernel.area(
+    kud, 
+    percent=c(50,95))
+
+kde.areas</code></pre>
+<pre><code>##     RSFA_BK.O RSMBK.BK_A   YWFA.Y_G
+## 50 0.03457259 0.05955412 0.01135100
+## 95 0.12737271 0.22303603 0.03405299</code></pre>
+<p>We can plot different isopleths. Let’s try it for the second animal only. <code>getvolumeUD</code> modifies the UD so that each pixel represents the percentage of the smallest home range containing the pixel. I.e. Darker colours represent areas more frequently occupied.</p>
+<pre class="r"><code>vud &lt;-
+  getvolumeUD(kud) 
+
+# Visualize 2nd bird:
+
+image(vud[[2]])
+
+xyzv &lt;-
+  as.image.SpatialGridDataFrame(vud[[2]])
+
+contour(
+  xyzv,
+  add=TRUE)</code></pre>
+<p><img src="mb2018-homeRange_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p>Let’s try calculating the KDE home range using “href” instead of LSCV since those isolated homerange blobs look weird!</p>
+<pre class="r"><code>kud1 &lt;- 
+  kernelUD(
+    locs1[,1],
+    h=&quot;href&quot;)</code></pre>
+<p>We will convert the 95 KDE as vectors</p>
+<pre class="r"><code>homerange1 &lt;- 
+  getverticeshr(
+    kud1,
+    percent = 95)</code></pre>
+<p>Plot the vector and the points</p>
+<pre class="r"><code>plot(
+  homerange1,
+  border=1:3, 
+  lwd=6) 
+
+plot(
+  locs1,
+  col=as.data.frame(locs1)[,1],
+  add=T)</code></pre>
+<p><img src="mb2018-homeRange_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p>This looks better than before. You should use your knowledge of the ecology of the animal to decide which home range method to use.</p>
+<p>Again we can export the shapefiles for the 95% KDE “href” version of the home ranges:</p>
+<pre class="r"><code>writeOGR(
+  homerange1, 
+  dsn=&quot;95KdeHref.shp&quot;,
+  layer=&quot;95kde&quot;,
+  driver=&quot;ESRI Shapefile&quot;)</code></pre>
+<p>As well as the 50 KDE, the “core area”:</p>
+<pre class="r"><code># Convert to polygon/vector
+
+core &lt;- 
+  getverticeshr(
+    kud1,
+    percent = 50) 
+
+# Plot the vector and the points
+
+plot(
+  core,
+  border=1:3,
+  lwd=4, 
+  lty = &quot;dashed&quot;,
+  add = T) </code></pre>
+<p>And export the shapefiles for the 50% KDE href version.</p>
+<pre class="r"><code>writeOGR(
+  homerange1,
+  dsn=&quot;50KdeHref.shp&quot;,
+  layer=&quot;50kde&quot;,
+  driver=&quot;ESRI Shapefile&quot;)</code></pre>
+<p>See bonus code at the end for code to perform a bootstrap to assess sample size requirements for home range determination.</p>
+<hr />
+<blockquote>
+<p><strong>Exercise 1:</strong></p>
+<p>Now let’s take what we have learned and try it out on a new dataset. “BelizeTrackingDataSMSC” is a new set &gt;of locations estimates from radio-tracking wood thrush on their wintering grounds in Belize. Read in these data using the following code:</p>
+</blockquote>
+<pre class="r"><code>BelizeTrackingDataSMSC &lt;- 
+  read.csv(
+    &quot;https://www.dropbox.com/s/iofzreo4nlwh3n4/BelizeTrackingDataSMSC.csv?dl=1&quot;,
+    header = T,
+    na.strings=c(&quot;NA&quot;, &quot;NULL&quot;, &quot;&quot;, &quot;.&quot;))</code></pre>
+<p>Use the tools &gt;above to calculate: &gt; &gt;(1) The area of 95% Minimum Convex Polygon for individual #2 &gt;(2) The area of the 50% and 95% KDE using LSCV smoothing parameter &gt;(3) Plot the 50%, 95% and points of the KDE using LSCV.</p>
+<hr />
+</div>
+</div>
+<div id="remote-sensing" class="section level1">
+<h1>Remote Sensing</h1>
+<p>Often times when we are calculating home range we are also interested in determining the environmental characteristics of the home ranges of different birds. Many of these can be assessed on the ground using vegetation, insect or fruit surveys. Additionally there is a wealth of information that can be assessed from remote sensing data (Pettorelli et al. 2014). This can be particularly useful when tracking data is from geolocator or satellite tracking. In this section I will show you a simple example of how to extract data from a remote sensing layer.</p>
+<p>A huge resource of remote sensing data is available for free online. One thing to keep in mind is many products that are available are not fully processed so additional steps may be required before they can be use to extract environmental conditions. Today we will be using a pre-processed product called Landsat Tree Cover Continuous field. It is available on the Global Land Cover Facility website (<a href="http://glcf.umd.edu/" class="uri">http://glcf.umd.edu/</a>). This layer provides estimate of the percentage of tree cover greater than 5-m in height and is derived from Landsat satellites.</p>
+<p>We are going to use the Landsat Tree Cover Data to estimate the percent tree cover on the 2 wood thrush home ranges from Belize.</p>
+<div id="loading-the-raster-file" class="section level2">
+<h2>Loading the raster file</h2>
+<p>To start off let’s bring in the raster file. I have already downloaded the correct tile from the Global Land Cover Facility website. Most satellites have a shapefile or kml file that can be used to determine the correct tile for your study location. In this case the correct tile is Path # 19 Row #48.</p>
+<pre class="r"><code>treeCover &lt;- 
+  raster(&quot;p019r048_TC_2015.tif&quot;)</code></pre>
+<p>Let’s take a moment to explore this file:</p>
+<pre class="r"><code>treeCover</code></pre>
+<pre><code>## class       : RasterLayer 
+## dimensions  : 7051, 8091, 57049641  (nrow, ncol, ncell)
+## resolution  : 30, 30  (x, y)
+## extent      : 204285, 447015, 1812885, 2024415  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=utm +zone=16 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
+## data source : C:\Users\Guest user\gits\smbc-nzp.github.io\mb2018\p019r048_TC_2015.tif 
+## names       : p019r048_TC_2015 
+## values      : 0, 255  (min, max)</code></pre>
+<p>We can see that the raster has a 30m x 30m resolution, which is pretty good, the coordinate reference system, the extent and the range of values.</p>
+<p>Let’s plot the raster:</p>
+<pre class="r"><code>plot(
+  treeCover,
+  col = rev(terrain.colors(200)))</code></pre>
+<p><img src="mb2018-homeRange_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p>Take note the maximum value over 200, remember each pixel should represent a percentage of tree cover. The values over 100 are where the pixels representing errors are coded. Water = 200, Cloud = 210, Shadow = 211 and Filled Values = 220. Since we are not interested in using those values let’s go ahead and turn them into NAs.</p>
+<pre class="r"><code>#dummy raster to get rid of over 100
+
+treeCoverNa &lt;- 
+  treeCover 
+
+#make &gt;100 NA
+
+treeCoverNa[treeCoverNa&gt;100]&lt;-NA </code></pre>
+<p>Because this raster is large, that took awhile. You can quicken the process by cropping the raster first. Let’s plot the new raster</p>
+<pre class="r"><code>plot(
+  treeCoverNa,
+  col = rev(terrain.colors(100)))</code></pre>
+<p><img src="mb2018-homeRange_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p>That looks much better.</p>
+</div>
+<div id="working-with-polygons" class="section level2">
+<h2>Working with Polygons</h2>
+<p>We can now bring in our home range polygons. For this exercise let’s use the 95% polygons.</p>
+<pre class="r"><code>homeRange95 &lt;-
+  shapefile(&quot;95KdeHrefWOTH.shp&quot;)
+
+# Take a look at the polygon
+
+summary(homeRange95)</code></pre>
+<p>Let’s plot the homeranges on the tree cover raster</p>
+<pre class="r"><code>plot(
+  treeCoverNa,
+  col = rev(terrain.colors(100)))
+
+plot(
+  homeRange95,
+  border=1:2, 
+  lwd=6, 
+  add=T)</code></pre>
+<p>Let’s go ahead and crop the raster to the size of the polygon, working with large rasters will just slow down your computations.</p>
+<pre class="r"><code># Will use extent function *2 in order to crop the raster slightly larger
+# than the extent of the two polygons:
+
+treeCoverCrop &lt;-
+  crop(treeCoverNa,
+       extent(homeRange95)*2)</code></pre>
+<p>Let’s plot again.</p>
+<pre class="r"><code>plot(
+  treeCoverCrop, 
+  col = rev(terrain.colors(100)))
+
+plot(
+  homeRange95, 
+  border=1:2, 
+  lwd=6, 
+  add=T)</code></pre>
+<p>Now that the raster is smaller we can explore some summary data from the raster file.</p>
+<pre class="r"><code>hist(treeCoverCrop)</code></pre>
+<pre class="r"><code>cellStats(treeCoverCrop, &#39;mean&#39;)
+
+cellStats(treeCoverCrop, &#39;min&#39;)
+
+cellStats(treeCoverCrop, &#39;max&#39;)</code></pre>
+</div>
+<div id="extracting-values-to-polygon" class="section level2">
+<h2>Extracting values to polygon</h2>
+<p>We can extract values from the raster values to polygons using the same <code>extract</code> function we used to extract values to points. Let’s look at the average tree cover</p>
+<pre class="r"><code>meanTreeCover&lt;-raster::extract(
+  treeCoverCrop,
+  homeRange95, 
+  fun=mean, 
+  na.rm = TRUE,
+  sp=T) #mean value of all pixels</code></pre>
+<p>Let’s view the mean tree cover:</p>
+<pre class="r"><code>meanTreeCover</code></pre>
+<p>You can also view it as a tibble using the <code>as_tibble</code> function.</p>
+<hr />
+<blockquote>
+<p><strong>Exercise 2:</strong></p>
+<ol style="list-style-type: decimal">
+<li>Extract the median and standard deviation from treeCoverCrop to the homeRange polygons by changing the function argument. View the results as a tibble.</li>
+<li>Extract the mean value from treeCover to the 95% Minimum Convex Polygon you generated from the wood thrush location estimates. How does it compare to the mean value from the 95% KDE estimate?</li>
+</ol>
+<hr />
+</blockquote>
+</div>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+<p>Calenge, C. 2006. The package âadehabitatâ for the R software: A tool for the analysis of space and habitat use by animals. Ecological Modelling 197:516â“519.</p>
+<p>Lair, H. 1987. Estimating the location of the focal center in red squirrel home ranges. Ecology 68:1092â“1101.</p>
+<p>Pettorelli, N., K. Safi, and W. Turner. 2014. Introduction: Satellite remote sensing, biodiversity research and conservation of the future. Philosophical Transactions of the Royal Society of London B Biological Sciences 369:20130190.</p>
+<p>Seaman, D., and J. Millspaugh. 1999. Effects of sample size on kernel home range estimates. The journal of wildlife â¦ 63:739â“747.</p>
+<p>Worton, B. 1989. Kernel methods for estimating the utilization distribution in home-range studies. Ecology 70:164â“168.</p>
+</div>
+<div id="bonus-code-how-many-points-are-enough" class="section level1">
+<h1>Bonus Code: How many points are enough?</h1>
+<p>This is code for one of the Belize birds (164.704).</p>
+<p>First create a spatialPointsDataFrame for the individual bird:</p>
+<pre class="r"><code>locsWoth &lt;-
+  read.csv(
+    &quot;https://www.dropbox.com/s/iofzreo4nlwh3n4/BelizeTrackingDataSMSC.csv?dl=1&quot;,
+    header = T,
+    na.strings=c(&quot;NA&quot;, &quot;NULL&quot;, &quot;&quot;, &quot;.&quot;)) %&gt;%
+  dplyr::filter(ident==&quot;164.704&quot;)
+
+xytWoth &lt;- 
+  subset(locsWoth, 
+         select = c(x_proj,y_proj))
+
+idWoth &lt;- 
+  subset(locsWoth, 
+         select = ident)
+
+locs1Woth &lt;-
+  idWoth
+
+coordinates(locs1Woth) &lt;-
+  xytWoth
+
+# Assign coordinate reference system:
+
+proj4string(locs1Woth) &lt;-CRS(&quot;+proj=utm +zone=16 +datum=WGS84&quot;)</code></pre>
+<p>Now create an empty dataset to put the results of the bootstrap in.</p>
+<pre class="r"><code>Vol95.1 &lt;- 
+  matrix(
+    0,
+    nrow=20,
+    ncol=nrow(locs1Woth)-4) #nrow is number of samples - 100 would be ideal but will take forever. Only doing 20.</code></pre>
+<p>The below code is a nested <code>for()</code> loop to run the bootstrap. This step does the calculation from sample size 10 until the length of the dataset</p>
+<pre class="r"><code>set.seed(0)
+for (x in 10:nrow(locs1Woth)) { 
+  for (k in 1:nrow(Vol95.1)) {  
+    rows &lt;- sample.int(nrow(locs1Woth), x) #creates a random permutation of our spatialDataFrame of size x 
+    kud1 &lt;- kernelUD(locs1Woth[rows,], h=&quot;href&quot;)
+    area&lt;-getverticeshr(kud1, percent = 95)
+    Vol95.1[k,x-4] &lt;- area$area
+  }
+}
+
+write.csv(Vol95.1,&quot;asymptoteWOTH.csv&quot;)#export data</code></pre>
+<p>Graph the results:</p>
+<pre class="r"><code>library(ggplot2)
+
+df&lt;-as.data.frame(Vol95.1)%&gt;%#Reorganize the data matrix in long form for plotting
+  gather(&quot;sampleSize&quot;,&quot;area&quot;,1:44)%&gt;%
+  dplyr::mutate(sampleSize=as.numeric(gsub(&quot;V&quot;, &quot;&quot;, sampleSize)))%&gt;%
+  dplyr::filter(sampleSize&gt;6)
+
+plot(df)</code></pre>
+<p><img src="mb2018-homeRange_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

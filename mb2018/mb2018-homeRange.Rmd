@@ -428,7 +428,7 @@ That looks much better.
 
 We can now bring in our home range polygons. For this exercise let's use the 95% polygons.  
 
-```{r, eval=T}
+```{r, eval=F}
 homeRange95 <-
   shapefile("95KdeHrefWOTH.shp")
 
@@ -438,7 +438,7 @@ summary(homeRange95)
 ```
 
 Let's plot the homeranges on the tree cover raster
-```{r, eval=T}
+```{r, eval=F}
 plot(
   treeCoverNa,
   col = rev(terrain.colors(100)))
@@ -452,7 +452,7 @@ plot(
 
 Let's go ahead and crop the raster to the size of the polygon, working with large rasters will just slow down your computations.
 
-```{r, eval=T}
+```{r, eval=F}
 # Will use extent function *2 in order to crop the raster slightly larger
 # than the extent of the two polygons:
 
@@ -463,7 +463,7 @@ treeCoverCrop <-
 
 Let's plot again.
 
-```{r, eval=T}
+```{r, eval=F}
 plot(
   treeCoverCrop, 
   col = rev(terrain.colors(100)))
@@ -476,10 +476,10 @@ plot(
 ```
 
 Now that the raster is smaller we can explore some summary data from the raster file.   
-```{r, eval=T}
+```{r, eval=F}
 hist(treeCoverCrop)
 ```
-```{r, eval=T}
+```{r, eval=F}
 cellStats(treeCoverCrop, 'mean')
 
 cellStats(treeCoverCrop, 'min')
@@ -491,7 +491,7 @@ cellStats(treeCoverCrop, 'max')
 
 We can extract values from the raster values to polygons using the same `extract` function we used to extract values to points. Let's look at the average tree cover
 
-```{r, eval=T}
+```{r, eval=F}
 meanTreeCover<-raster::extract(
   treeCoverCrop,
   homeRange95, 
@@ -501,7 +501,7 @@ meanTreeCover<-raster::extract(
 ```
 
 Let's view the mean tree cover:
-```{r, eval=T}
+```{r, eval=F}
 meanTreeCover
 ```
 You can also view it as a tibble using the `as_tibble` function.  
