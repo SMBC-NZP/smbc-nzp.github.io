@@ -125,6 +125,15 @@ maps::map(
   'world',
   add = TRUE)
 
+ovenLocations_sub <-
+  ovenLocations %>% 
+  filter(
+    lon > -140,
+    lon < -53,
+    lat > 9,
+    lat < 60)
+  
+
 # kernel density estimates ------------------------------------------------
 
 # Filter to breeding and non-breeding periods:
@@ -183,4 +192,5 @@ KML(
   'nonBreeding_kde.kml',
   overwrite = TRUE)
 
-
+NB_oven %>%
+  summary
