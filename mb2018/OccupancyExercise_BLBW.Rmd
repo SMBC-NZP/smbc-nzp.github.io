@@ -9,9 +9,10 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 <head>
-<link rel="stylesheet" href="N:/Capacity Building and Academic Programs/SI-Mason Grad & Prof Training/Individual Courses--Folders/Bird Migration/2018/Materials/Distance/Exercises">
 <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
+
+<img style="float:right;padding-left:25px;border:none" src="images/smsc_logo.jpg" width = "500px"/>
 
 #Occupancy Modeling Student Exercise - Blackburnian Warbler
 <p><i>Joe Kolowski, Ph.D.</i></p>
@@ -36,7 +37,7 @@ library(unmarked)
 library(tidyverse)
 library(lubridate) #for the `yday` function
 ```
-<p>Remember also when starting a new analysis to clear your environment. This is generally always a good idea, particularly in cases where you might be using models of the same names as previous analyses.
+<p>Remember also when starting a new analysis to clear your environment. This is generally always a good idea, particularly in cases where you might be using models of the same names as previous analyses.</p>
 ```{r, eval = F}
 rm(list = ls())
 ```
@@ -57,39 +58,39 @@ siteCovs <-
 ###Data Formatting
 Since we are using the same data set from the ovenbird demonstration, we need to perform the same formatting steps to prepare the data for analysis. 
 
-<p>Step1: Using the ovenbird demo as a guide, first pull out only the Blackburnian warbler observation from the `counts` object, select out the `plot` and `replicate` columns, and create a new column for counts (`n`) that is set to 1. Remember to keep only unique rows, since we sometimes have more than one observation within a 10 minute period. Review your new counts object to make sure everything worked properly.
+<p>Step1: Using the ovenbird demo as a guide, first pull out only the Blackburnian warbler observation from the `counts` object, select out the `plot` and `replicate` columns, and create a new column for counts (`n`) that is set to 1. Remember to keep only unique rows, since we sometimes have more than one observation within a 10 minute period. Review your new counts object to make sure everything worked properly.</p>
 <p>**Q1: How many observations of Blackburnian Warblers were recorded?**</p>
 
-<p>Step 2: Create a detection frame for these counts, being sure to account for visits where no observations were recorded. This requires use of the `visits` object. View your detection frame to make sure everything worked properly.
+<p>Step 2: Create a detection frame for these counts, being sure to account for visits where no observations were recorded. This requires use of the `visits` object. View your detection frame to make sure everything worked properly.</p>
 
-<p>Step3: Our last step in data formatting will be to create a list of our survey covariates. These are stored in the `visits` object. But now each separate covariates needs to exist in its own data frame within a list. Each data frame should have 296 rows (for each site) and 4 columns (for each ocassion). This code should be the same as in the ovenbird demo, since these covariates are not specific to the species we are analyzing.
+<p>Step3: Our last step in data formatting will be to create a list of our survey covariates. These are stored in the `visits` object. But now each separate covariates needs to exist in its own data frame within a list. Each data frame should have 296 rows (for each site) and 4 columns (for each ocassion). This code should be the same as in the ovenbird demo, since these covariates are not specific to the species we are analyzing.</p>
 
-<p>Our data are now ready for the `unmarkedFrameOccu` function which prepares our data for occupancy analysis.We need to provide three objects, the detection matrix, our site covariates data frame, and a list of dataframes for our observation/survey covariates. 
-<p>Step4: Create an unmarked frame for use in our occupancy models and use `summary` to review 
-<p>**Q2: What is our naive occupancy probability for this species?**
+<p>Our data are now ready for the `unmarkedFrameOccu` function which prepares our data for occupancy analysis.We need to provide three objects, the detection matrix, our site covariates data frame, and a list of dataframes for our observation/survey covariates. </p>
+<p>Step4: Create an unmarked frame for use in our occupancy models and use `summary` to review</p> 
+<p>**Q2: What is our naive occupancy probability for this species?**</p>
 
 ###Model Fitting and Model Selection - Occupancy and Detection Covariates
 <p>We now are ready to run some single-season occupancy models. Remember that it is best practice to first test a range of models that investigate potential hypotheses for what covariates are impacting occupancy, while using a fully general model for detection probability. Once you refine your occupancy variables you can then refine/simplify your detection covariates if possible. Use the ovenbird demo exercise as a guide. Here again, as in the ovenbird demo, you may need to use starting values if some models fail to run.
-<p>Step 5: Conduct a complete model selection and comparison work flow to arrive at a best final model describing occupancy/detection of this species. 
-<p>**Q3: Which covariates are important in determing probability of occupancy of this species?**
-<p>**Q4: What are the most important covariates in determining detection probability of this species?**
+<p>Step 5: Conduct a complete model selection and comparison work flow to arrive at a best final model describing occupancy/detection of this species.</p>
+<p>**Q3: Which covariates are important in determing probability of occupancy of this species?**</p>
+<p>**Q4: What are the most important covariates in determining detection probability of this species?**</p>
 
 ###Model Interpretation and Value Prediction
-<p>Step6: Now that you have identified your best model, use the `summary` function to review the details of the results. Remember that you can look at just the coefficients with the `coef` function as well.
-<p>**Q5: Review the coefficient values of your parameters. Describe the relationship between each parameter and its response variable (i.e. occupancy or detection).**
-<p>Step7: Use the `predict` function to look at estimated probabilities of detection and occupancy based on our actual site data. Use the `summary` function to look at the ranges of values that are predicted for the sites.
-<p>**Q6: What are the average, min and max predicted values of occupancy across our sites? How does this compare to naive occupancy?**
-<p>**Q7: What is our average detection probability across our sites and how does this compare to our value for ovenbird detection probability?**
-<p>**Q8: With this average detection probability, what is the probability of not detecting this species at a site at least once (i.e. missing it 4 times in a row) if it was actually present?**
+<p>Step6: Now that you have identified your best model, use the `summary` function to review the details of the results. Remember that you can look at just the coefficients with the `coef` function as well.</p>
+<p>**Q5: Review the coefficient values of your parameters. Describe the relationship between each parameter and its response variable (i.e. occupancy or detection).**</p>
+<p>Step7: Use the `predict` function to look at estimated probabilities of detection and occupancy based on our actual site data. Use the `summary` function to look at the ranges of values that are predicted for the sites.</p>
+<p>**Q6: What are the average, min and max predicted values of occupancy across our sites? How does this compare to naive occupancy?**</p>
+<p>**Q7: What is our average detection probability across our sites and how does this compare to our value for ovenbird detection probability?**</p>
+<p>**Q8: With this average detection probability, what is the probability of not detecting this species at a site at least once (i.e. missing it 4 times in a row) if it was actually present?**</p>
 
 ###Graphical Interpretation of Model Covariates
-<p> Let's now take a graphical look at how our covariates influence occupancy and detection. 
-<p>Step7: Use the `predict` function to predict values for detection probability, over a range of values for each important covariates. Use these predicted values to create response curves for detection covariates, and occupacy covariates. If observer is an important factor in the deteciton model, have each graph of any other detection covariates show a separate line for each observer. 
-<p>*Hint: If something like time of day, or day of year are important, you'll need to figure out how to set mean or median values of these covariates (which are stored as times or dates in `visits`). Check back for code in the ovenbird demo that shows how we converted them to numeric values.*
-<p>STEP8: Now look at how our covariates influence blackburnian occupancy. As above we need to first create a new dataframe. Create a graph representing the relationship between each of your significant occupancy covariates, and probability of occupancy.
+<p> Let's now take a graphical look at how our covariates influence occupancy and detection.</p>
+<p>Step7: Use the `predict` function to predict values for detection probability, over a range of values for each important covariates. Use these predicted values to create response curves for detection covariates, and occupacy covariates. If observer is an important factor in the deteciton model, have each graph of any other detection covariates show a separate line for each observer.</p>
+<p>*Hint: If something like time of day, or day of year are important, you'll need to figure out how to set mean or median values of these covariates (which are stored as times or dates in `visits`). Check back for code in the ovenbird demo that shows how we converted them to numeric values.*</p>
+<p>STEP8: Now look at how our covariates influence blackburnian occupancy. As above we need to first create a new dataframe. Create a graph representing the relationship between each of your significant occupancy covariates, and probability of occupancy.</p>
 
 ###Final Conclusions
-<p> Our ultimate goal in this analysis was to investigate the factors influencing occupancy of Blackburnian Warblers across the Hubbard Brook valley. To do this in the most robust way, we also wanted to account for imperfect detection, and we included a range of covariates to further assist us in accounting for those factors that may cause detection probability to vary across sites or site visits. 
-<p>**Q9: Describe in a few sentences what we have learned about Blackburnian Warblers in this landscape, with respect to both how they are detected and what influences their occupancy. **
-<p>**Q10: Let's assume the Blackburnian Warbler was endangered. Think about how a manager might use this information from this analysis to better manage this population.** 
-<p>**Q11: This analysis was simplified for this exercise, particularly with respect to the small number of covariates on occupancy. What other covariates might be interesting to test in this situation?**
+<p> Our ultimate goal in this analysis was to investigate the factors influencing occupancy of Blackburnian Warblers across the Hubbard Brook valley. To do this in the most robust way, we also wanted to account for imperfect detection, and we included a range of covariates to further assist us in accounting for those factors that may cause detection probability to vary across sites or site visits.</p> 
+<p>**Q9: Describe in a few sentences what we have learned about Blackburnian Warblers in this landscape, with respect to both how they are detected and what influences their occupancy. **</p>
+<p>**Q10: Let's assume the Blackburnian Warbler was endangered. Think about how a manager might use this information from this analysis to better manage this population.**</p>
+<p>**Q11: This analysis was simplified for this exercise, particularly with respect to the small number of covariates on occupancy. What other covariates might be interesting to test in this situation?**</p>

@@ -12,6 +12,8 @@ knitr::opts_chunk$set(echo = TRUE)
 <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
+<img style="float:right;padding-left:25px;border:none" src="images/smsc_logo.jpg" width = "500px"/>
+
 #Occupancy Modeling Demo Exercise
 <p><i>Joe Kolowski, Ph.D.</i></p>
 

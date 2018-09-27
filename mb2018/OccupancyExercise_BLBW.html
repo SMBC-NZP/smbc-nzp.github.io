@@ -13,15 +13,15 @@
 
 <title></title>
 
-<script src="OccupancyExercise_BLBW_files/jquery-1.11.3/jquery.min.js"></script>
+<script src="occupancyexercise_blbw_files/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="OccupancyExercise_BLBW_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
-<script src="OccupancyExercise_BLBW_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="OccupancyExercise_BLBW_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="OccupancyExercise_BLBW_files/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="OccupancyExercise_BLBW_files/navigation-1.1/tabsets.js"></script>
-<link href="OccupancyExercise_BLBW_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="OccupancyExercise_BLBW_files/highlightjs-9.12.0/highlight.js"></script>
+<link href="occupancyexercise_blbw_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="occupancyexercise_blbw_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="occupancyexercise_blbw_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="occupancyexercise_blbw_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="occupancyexercise_blbw_files/navigation-1.1/tabsets.js"></script>
+<link href="occupancyexercise_blbw_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="occupancyexercise_blbw_files/highlightjs-9.12.0/highlight.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -125,8 +125,9 @@ $(document).ready(function () {
 
 
 <head>
-<link rel="stylesheet" href="N:/Capacity Building and Academic Programs/SI-Mason Grad & Prof Training/Individual Courses--Folders/Bird Migration/2018/Materials/Distance/Exercises"> <link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
+<p><img style="float:right;padding-left:25px;border:none" src="images/smsc_logo.jpg" width = "500px"/></p>
 <div id="occupancy-modeling-student-exercise---blackburnian-warbler" class="section level1">
 <h1>Occupancy Modeling Student Exercise - Blackburnian Warbler</h1>
 <p>
@@ -153,7 +154,8 @@ $(document).ready(function () {
 library(tidyverse)
 library(lubridate) #for the `yday` function</code></pre>
 <p>
-<p>Remember also when starting a new analysis to clear your environment. This is generally always a good idea, particularly in cases where you might be using models of the same names as previous analyses.</p>
+Remember also when starting a new analysis to clear your environment. This is generally always a good idea, particularly in cases where you might be using models of the same names as previous analyses.
+</p>
 <pre class="r"><code>rm(list = ls())</code></pre>
 </div>
 <div id="data-import-and-exploration" class="section level3">
@@ -174,19 +176,25 @@ siteCovs &lt;-
 <p>Since we are using the same data set from the ovenbird demonstration, we need to perform the same formatting steps to prepare the data for analysis.</p>
 <p>
 Step1: Using the ovenbird demo as a guide, first pull out only the Blackburnian warbler observation from the <code>counts</code> object, select out the <code>plot</code> and <code>replicate</code> columns, and create a new column for counts (<code>n</code>) that is set to 1. Remember to keep only unique rows, since we sometimes have more than one observation within a 10 minute period. Review your new counts object to make sure everything worked properly.
+</p>
 <p>
 <strong>Q1: How many observations of Blackburnian Warblers were recorded?</strong>
 </p>
 <p>
-<p>Step 2: Create a detection frame for these counts, being sure to account for visits where no observations were recorded. This requires use of the <code>visits</code> object. View your detection frame to make sure everything worked properly.</p>
+Step 2: Create a detection frame for these counts, being sure to account for visits where no observations were recorded. This requires use of the <code>visits</code> object. View your detection frame to make sure everything worked properly.
+</p>
 <p>
-<p>Step3: Our last step in data formatting will be to create a list of our survey covariates. These are stored in the <code>visits</code> object. But now each separate covariates needs to exist in its own data frame within a list. Each data frame should have 296 rows (for each site) and 4 columns (for each ocassion). This code should be the same as in the ovenbird demo, since these covariates are not specific to the species we are analyzing.</p>
+Step3: Our last step in data formatting will be to create a list of our survey covariates. These are stored in the <code>visits</code> object. But now each separate covariates needs to exist in its own data frame within a list. Each data frame should have 296 rows (for each site) and 4 columns (for each ocassion). This code should be the same as in the ovenbird demo, since these covariates are not specific to the species we are analyzing.
+</p>
 <p>
 Our data are now ready for the <code>unmarkedFrameOccu</code> function which prepares our data for occupancy analysis.We need to provide three objects, the detection matrix, our site covariates data frame, and a list of dataframes for our observation/survey covariates.
+</p>
 <p>
 Step4: Create an unmarked frame for use in our occupancy models and use <code>summary</code> to review
+</p>
 <p>
-<p><strong>Q2: What is our naive occupancy probability for this species?</strong></p>
+<strong>Q2: What is our naive occupancy probability for this species?</strong>
+</p>
 </div>
 <div id="model-fitting-and-model-selection---occupancy-and-detection-covariates" class="section level3">
 <h3>Model Fitting and Model Selection - Occupancy and Detection Covariates</h3>
@@ -194,47 +202,64 @@ Step4: Create an unmarked frame for use in our occupancy models and use <code>su
 We now are ready to run some single-season occupancy models. Remember that it is best practice to first test a range of models that investigate potential hypotheses for what covariates are impacting occupancy, while using a fully general model for detection probability. Once you refine your occupancy variables you can then refine/simplify your detection covariates if possible. Use the ovenbird demo exercise as a guide. Here again, as in the ovenbird demo, you may need to use starting values if some models fail to run.
 <p>
 Step 5: Conduct a complete model selection and comparison work flow to arrive at a best final model describing occupancy/detection of this species.
+</p>
 <p>
 <strong>Q3: Which covariates are important in determing probability of occupancy of this species?</strong>
+</p>
 <p>
-<p><strong>Q4: What are the most important covariates in determining detection probability of this species?</strong></p>
+<strong>Q4: What are the most important covariates in determining detection probability of this species?</strong>
+</p>
 </div>
 <div id="model-interpretation-and-value-prediction" class="section level3">
 <h3>Model Interpretation and Value Prediction</h3>
 <p>
 Step6: Now that you have identified your best model, use the <code>summary</code> function to review the details of the results. Remember that you can look at just the coefficients with the <code>coef</code> function as well.
+</p>
 <p>
 <strong>Q5: Review the coefficient values of your parameters. Describe the relationship between each parameter and its response variable (i.e. occupancy or detection).</strong>
+</p>
 <p>
 Step7: Use the <code>predict</code> function to look at estimated probabilities of detection and occupancy based on our actual site data. Use the <code>summary</code> function to look at the ranges of values that are predicted for the sites.
+</p>
 <p>
 <strong>Q6: What are the average, min and max predicted values of occupancy across our sites? How does this compare to naive occupancy?</strong>
+</p>
 <p>
 <strong>Q7: What is our average detection probability across our sites and how does this compare to our value for ovenbird detection probability?</strong>
+</p>
 <p>
-<p><strong>Q8: With this average detection probability, what is the probability of not detecting this species at a site at least once (i.e. missing it 4 times in a row) if it was actually present?</strong></p>
+<strong>Q8: With this average detection probability, what is the probability of not detecting this species at a site at least once (i.e. missing it 4 times in a row) if it was actually present?</strong>
+</p>
 </div>
 <div id="graphical-interpretation-of-model-covariates" class="section level3">
 <h3>Graphical Interpretation of Model Covariates</h3>
 <p>
 Let’s now take a graphical look at how our covariates influence occupancy and detection.
+</p>
 <p>
 Step7: Use the <code>predict</code> function to predict values for detection probability, over a range of values for each important covariates. Use these predicted values to create response curves for detection covariates, and occupacy covariates. If observer is an important factor in the deteciton model, have each graph of any other detection covariates show a separate line for each observer.
+</p>
 <p>
 <em>Hint: If something like time of day, or day of year are important, you’ll need to figure out how to set mean or median values of these covariates (which are stored as times or dates in <code>visits</code>). Check back for code in the ovenbird demo that shows how we converted them to numeric values.</em>
+</p>
 <p>
-<p>STEP8: Now look at how our covariates influence blackburnian occupancy. As above we need to first create a new dataframe. Create a graph representing the relationship between each of your significant occupancy covariates, and probability of occupancy.</p>
+STEP8: Now look at how our covariates influence blackburnian occupancy. As above we need to first create a new dataframe. Create a graph representing the relationship between each of your significant occupancy covariates, and probability of occupancy.
+</p>
 </div>
 <div id="final-conclusions" class="section level3">
 <h3>Final Conclusions</h3>
 <p>
 Our ultimate goal in this analysis was to investigate the factors influencing occupancy of Blackburnian Warblers across the Hubbard Brook valley. To do this in the most robust way, we also wanted to account for imperfect detection, and we included a range of covariates to further assist us in accounting for those factors that may cause detection probability to vary across sites or site visits.
+</p>
 <p>
 <strong>Q9: Describe in a few sentences what we have learned about Blackburnian Warblers in this landscape, with respect to both how they are detected and what influences their occupancy. </strong>
+</p>
 <p>
 <strong>Q10: Let’s assume the Blackburnian Warbler was endangered. Think about how a manager might use this information from this analysis to better manage this population.</strong>
+</p>
 <p>
-<p><strong>Q11: This analysis was simplified for this exercise, particularly with respect to the small number of covariates on occupancy. What other covariates might be interesting to test in this situation?</strong></p>
+<strong>Q11: This analysis was simplified for this exercise, particularly with respect to the small number of covariates on occupancy. What other covariates might be interesting to test in this situation?</strong>
+</p>
 </div>
 </div>
 </div>

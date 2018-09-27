@@ -73,8 +73,8 @@ output:
 </li>
 <li><b>Occupancy modeling</b>
 <ul>
-<li><a href = "https://smbc-nzp.github.io/mb2018/OccupancyDemo_Oven.html" target="_blank">Occupancy demo, Ovenbird</a> test</li>
-<li><a href = "https://smbc-nzp.github.io/mb2018/OccupancyExercise_BLBW.html" target="_blank">Occupancy exercise, Black-throated blue warbler</a></li>
+<li><a href = "https://smbc-nzp.github.io/mb2018/OccupancyDemo_Oven.html" target="_blank">Occupancy demo: Ovenbird</a></li>
+<li><a href = "https://smbc-nzp.github.io/mb2018/OccupancyExercise_BLBW.html" target="_blank">Occupancy exercise: Black-throated blue warbler</a></li>
 </ul>
 </li>
 </ul>
