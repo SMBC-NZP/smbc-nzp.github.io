@@ -13,15 +13,15 @@
 
 <title></title>
 
-<script src="OccupancyDemo_Oven_files/jquery-1.11.3/jquery.min.js"></script>
+<script src="occupancydemo_oven_files/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="OccupancyDemo_Oven_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
-<script src="OccupancyDemo_Oven_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="OccupancyDemo_Oven_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="OccupancyDemo_Oven_files/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="OccupancyDemo_Oven_files/navigation-1.1/tabsets.js"></script>
-<link href="OccupancyDemo_Oven_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="OccupancyDemo_Oven_files/highlightjs-9.12.0/highlight.js"></script>
+<link href="occupancydemo_oven_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="occupancydemo_oven_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="occupancydemo_oven_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="occupancydemo_oven_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="occupancydemo_oven_files/navigation-1.1/tabsets.js"></script>
+<link href="occupancydemo_oven_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="occupancydemo_oven_files/highlightjs-9.12.0/highlight.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -125,7 +125,7 @@ $(document).ready(function () {
 
 
 <head>
-<link rel="stylesheet" href="N:/Capacity Building and Academic Programs/SI-Mason Grad & Prof Training/Individual Courses--Folders/Bird Migration/2018/Materials/Distance/Exercises"> <link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <div id="occupancy-modeling-demo-exercise" class="section level1">
 <h1>Occupancy Modeling Demo Exercise</h1>
@@ -156,7 +156,8 @@ library(lubridate) #for the `yday` function</code></pre>
 <div id="data-import-and-exploration" class="section level3">
 <h3>Data Import and Exploration</h3>
 <p>
-<p>We can bring in data using our <code>read.csv</code> command, with our data files stored in our course dropbox folder as opposed to on our local computer.</p>
+We can bring in data using our <code>read.csv</code> command, with our data files stored in our course dropbox folder as opposed to on our local computer.
+</p>
 <pre class="r"><code>counts &lt;- 
   read.csv(&#39;https://www.dropbox.com/s/fdotemoww8qdu8l/countData.csv?dl=1&#39;)
 
@@ -166,7 +167,8 @@ visits &lt;-
 siteCovs &lt;-
   read.csv(&#39;https://www.dropbox.com/s/gbrxt85jwid2t55/siteData.csv?dl=1&#39;)</code></pre>
 <p>
-<p>Let’s have a look at what these files contain. The countData file contains all observations during this study of each of our 5 bird species, across 4 sampling ocassions. Although the plot ID goes to 400, every plot number is not represented in this data set. We can use the <code>unique</code> function to see that we actually have 296 plots in the data set.</p>
+Let’s have a look at what these files contain. The countData file contains all observations during this study of each of our 5 bird species, across 4 sampling ocassions. Although the plot ID goes to 400, every plot number is not represented in this data set. We can use the <code>unique</code> function to see that we actually have 296 plots in the data set.
+</p>
 <pre class="r"><code>head(counts)</code></pre>
 <pre><code>##   plot replicate period species n
 ## 1    1         0      1    BTBW 1
@@ -200,7 +202,8 @@ siteCovs &lt;-
 <pre class="r"><code>length(unique(counts$plot))</code></pre>
 <pre><code>## [1] 296</code></pre>
 <p>
-<p>The siteCovs file contains covariates associated wtih these 296 sampled sites. Here we will just be working with elevation, aspect and slope as site covariates.</p>
+The siteCovs file contains covariates associated wtih these 296 sampled sites. Here we will just be working with elevation, aspect and slope as site covariates.
+</p>
 <pre class="r"><code>head(siteCovs)</code></pre>
 <pre><code>##   plot elevation    aspect     slope
 ## 1    1  818.6771 0.1894924 0.1808274
@@ -224,7 +227,8 @@ siteCovs &lt;-
 ##  3rd Qu.:307.25   3rd Qu.:733.0   3rd Qu.:3.51656   3rd Qu.:0.28442  
 ##  Max.   :400.00   Max.   :935.5   Max.   :6.21228   Max.   :0.61949</code></pre>
 <p>
-<p>We also have survey covariates as well. These are covariates associated with each visit to each site. In other words, the values can vary across our 4 ocassions. That means we have 4*296 rows of data here. We have time of survey, observer, and two climatic variables representing the cloud cover (sky) and wind level (wind).</p>
+We also have survey covariates as well. These are covariates associated with each visit to each site. In other words, the values can vary across our 4 ocassions. That means we have 4*296 rows of data here. We have time of survey, observer, and two climatic variables representing the cloud cover (sky) and wind level (wind).
+</p>
 <pre class="r"><code>head(visits)</code></pre>
 <pre><code>##   plot replicate      date    time observer sky wind
 ## 1  314         0 5/22/2015 5:32:00       CH   0    0
@@ -270,7 +274,8 @@ siteCovs &lt;-
   mutate(n = 1) %&gt;%
   distinct</code></pre>
 <p>
-<p>Let’s look at <code>ovencounts</code> and make sure we understand what the code above has done.</p>
+Let’s look at <code>ovencounts</code> and make sure we understand what the code above has done.
+</p>
 <pre class="r"><code>head(ovenCounts)</code></pre>
 <pre><code>##   plot replicate n
 ## 1    1         1 1
@@ -281,8 +286,10 @@ siteCovs &lt;-
 ## 6    3         1 1</code></pre>
 <p>
 Our data is almost ready, but remember that the rows we have represent all the observations. Occupancy modeling draws key pieces of information from absences as well. Our <code>visits</code> object let’s us know which sites were visited, regardless of what was seen there. We need to use this information to make sure we represent every site visit, even when the species wasn’t seen. The code below first <code>select</code>s the plot and replicate columns from the <code>visits</code> object. We then use <code>left_join</code> to essentially merge <code>visits</code> with <code>ovenCounts</code>, using our plot and replicate columns. The <code>left_join</code> indicates we want to keep everything in the <code>visits</code> object (i.e. all the sites). We then use the amazing <code>spread</code> function to expand this data into a full matrix, according to the information in replicate, which is each of 4 values (0-3). For any situation where there is not an existing combination of replicate and plot, a zero will be <code>fill</code>ed. These are our absences. Lastly we will remove the plot column (column 1) with the <code>select</code> function and convert the object to a matrix.
+</p>
 <p>
-<p><em>Note that the spread function below will not work perfectly if one did not visit each site the same number of times, even though this is perfectly acceptable for a study design. Other R functions could be used to account for this situation.</em></p>
+<em>Note that the spread function below will not work perfectly if one did not visit each site the same number of times, even though this is perfectly acceptable for a study design. Other R functions could be used to account for this situation.</em>
+</p>
 <pre class="r"><code>detectionFrameOven &lt;-
   visits %&gt;%
   select(plot, replicate) %&gt;%
@@ -293,7 +300,8 @@ Our data is almost ready, but remember that the rows we have represent all the o
   select(-1) %&gt;%
   as.matrix</code></pre>
 <p>
-<p>Let’s confirm what we have now, which should be a matrix of 296 sites (rows) and 4 occasions (columns) indicating in which situations the species was observed or not observed.</p>
+Let’s confirm what we have now, which should be a matrix of 296 sites (rows) and 4 occasions (columns) indicating in which situations the species was observed or not observed.
+</p>
 <pre class="r"><code>head(detectionFrameOven)</code></pre>
 <pre><code>##      0 1 2 3
 ## [1,] 0 1 0 1
@@ -303,7 +311,8 @@ Our data is almost ready, but remember that the rows we have represent all the o
 ## [5,] 0 1 1 1
 ## [6,] 0 0 1 1</code></pre>
 <p>
-<p>Finally we need to create a list, which includes our survey covariates. Each element in the list should be a dataframe, with a row for each site, and a column for each sampling ocassion. Here again, as above, we use the <code>select</code> function to choose which columns of data we want from the <code>visits</code> object, then we use the <code>spread</code> function to expand the data in a long-form matrix. We then remove the plot column, as it is no longer needed and cannot remain in these data frames. We also need to change our time and date variables from factor variables to something we can analyze.</p>
+Finally we need to create a list, which includes our survey covariates. Each element in the list should be a dataframe, with a row for each site, and a column for each sampling ocassion. Here again, as above, we use the <code>select</code> function to choose which columns of data we want from the <code>visits</code> object, then we use the <code>spread</code> function to expand the data in a long-form matrix. We then remove the plot column, as it is no longer needed and cannot remain in these data frames. We also need to change our time and date variables from factor variables to something we can analyze.
+</p>
 <pre class="r"><code>obsCovs &lt;-
   list(
     observer = visits %&gt;%
@@ -330,13 +339,15 @@ Our data is almost ready, but remember that the rows we have represent all the o
       mutate(plot = NULL)
   )</code></pre>
 <p>
-<p>Our data are now ready for the <code>unmarkedFrameOccu</code> function which prepares our data for occupancy analysis.We need to provide three objects, the detection matrix, our site covariates data frame, and a list of dataframes for our observation/survey covariates.</p>
+Our data are now ready for the <code>unmarkedFrameOccu</code> function which prepares our data for occupancy analysis.We need to provide three objects, the detection matrix, our site covariates data frame, and a list of dataframes for our observation/survey covariates.
+</p>
 <pre class="r"><code>umfOven &lt;-
   unmarkedFrameOccu(y = detectionFrameOven,
   siteCovs = siteCovs,
   obsCovs = obsCovs)</code></pre>
 <p>
-<p>We can look at a general summary of the data using <code>summary</code> on this object</p>
+We can look at a general summary of the data using <code>summary</code> on this object
+</p>
 <pre class="r"><code>summary(umfOven)</code></pre>
 <pre><code>## unmarkedFrame Object
 ## 
@@ -375,10 +386,12 @@ Our data is almost ready, but remember that the rows we have represent all the o
 ##  Max.   :6.0000</code></pre>
 <p>
 This show us naive occupancy here is 87%, that is ovenbirds were found at 87% of the sites.
+</p>
 <p>
-<p>The <code>unmarked</code> package also has a built in <code>plot</code> setting to show you detections across sites and ocassions. It is a bit crazy looking, but gives at least some sense of how your presences and absences fall out over sites and ocassions.</p>
+The <code>unmarked</code> package also has a built in <code>plot</code> setting to show you detections across sites and ocassions. It is a bit crazy looking, but gives at least some sense of how your presences and absences fall out over sites and ocassions.
+</p>
 <pre class="r"><code>plot(umfOven)</code></pre>
-<p><img src="OccupancyDemo_Oven_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="occupancydemo_oven_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>
 <div id="model-fitting-and-model-selection---occupancy-covariates" class="section level3">
 <h3>Model Fitting and Model Selection - Occupancy covariates</h3>
@@ -400,7 +413,8 @@ PsiSlopeElev_pFull &lt;- occu( ~ wind + sky + dayOfYear + observer + timeOfDay
 PsiAspectSlopeElev_pFull &lt;- occu( ~ wind + sky + dayOfYear + observer + timeOfDay 
                         ~ aspect +slope + elevation, data = umfOven)</code></pre>
 <p>
-<p>Once we have our models run, we can use the <code>fitList</code> function to compile the models together, in preparation for model selection. We then use the <code>modSel</code> function to bring together the model results and compare using AIC-based approaches. Note that putting parentheses around code that creates something, will print that object automatically to the console</p>
+Once we have our models run, we can use the <code>fitList</code> function to compile the models together, in preparation for model selection. We then use the <code>modSel</code> function to bring together the model results and compare using AIC-based approaches. Note that putting parentheses around code that creates something, will print that object automatically to the console.
+</p>
 <pre class="r"><code>ObsModsO &lt;- fitList(Psidot_pFull,PsiElev_pFull,PsiSlope_pFull, PsiAspect_pFull, PsiAspectElev_pFull, PsiAspectSlope_pFull,PsiSlopeElev_pFull,PsiAspectSlopeElev_pFull)
 (ObsModsRank &lt;- modSel(ObsModsO))</code></pre>
 <pre><code>##                          nPars     AIC delta  AICwt cumltvWt
@@ -413,7 +427,8 @@ PsiAspectSlopeElev_pFull &lt;- occu( ~ wind + sky + dayOfYear + observer + timeO
 ## PsiSlopeElev_pFull          11 1456.97 10.90 0.0020     1.00
 ## PsiSlope_pFull              10 1458.15 12.08 0.0011     1.00</code></pre>
 <p>
-<p>We can see that our best model includes both aspect and elevation. Before we focus on interpreting the results, let’s see if we can simplify our detection model by trying various more simple combinations of our 5 survey covariates, along with our best occupancy model from above. Unfortunately, with even just 5 covariates, we have a lot of potential models we can test…27 to be exact! You’ll note below that I’ve had to specify starting values to get some of these models to run. We run into some challenges with this dataset, because ovenbirds were seen at some many of our sites. This reduces the amount of variation available for different covariates to try to explain. This also means that for some levels or combinations of covariates, there may be no sites, or ocassions, where birds were not seen. This all causes some models to fail to find maximum likelihood values, and starting values can help with this. These starting values represent estimated coefficient values for all model parameters. To get these, we can take a model that did run, and use the <code>coef</code> function to look at the coefficient values and help us get a sense of what we should use.</p>
+We can see that our best model includes both aspect and elevation. Before we focus on interpreting the results, let’s see if we can simplify our detection model by trying various more simple combinations of our 5 survey covariates, along with our best occupancy model from above. Unfortunately, with even just 5 covariates, we have a lot of potential models we can test…27 to be exact! You’ll note below that I’ve had to specify starting values to get some of these models to run. We run into some challenges with this dataset, because ovenbirds were seen at some many of our sites. This reduces the amount of variation available for different covariates to try to explain. This also means that for some levels or combinations of covariates, there may be no sites, or ocassions, where birds were not seen. This all causes some models to fail to find maximum likelihood values, and starting values can help with this. These starting values represent estimated coefficient values for all model parameters. To get these, we can take a model that did run, and use the <code>coef</code> function to look at the coefficient values and help us get a sense of what we should use.
+</p>
 </div>
 <div id="model-fitting-and-selection---detection-covariates" class="section level3">
 <h3>Model Fitting and Selection - Detection covariates</h3>
@@ -577,12 +592,14 @@ PsiAspectElev_pWindSkyObsTime &lt;- occu( ~ wind + sky + observer + timeOfDay
 ## PsiAspectElev_pSkyTime            6 1472.44 30.61 7.1e-08     1.00
 ## PsiAspectElev_pSkyDayTime         7 1474.16 32.33 3.0e-08     1.00</code></pre>
 <p>
-<p>We can see from our model selection table that in the end, only wind level and observer are important covariates in determining probability of detection of ovenbirds across our site. Let’s move forward with some interpretation of what seems to be our best supported model, <code>PsiAspectElev_pWindObs</code>.</p>
+We can see from our model selection table that in the end, only wind level and observer are important covariates in determining probability of detection of ovenbirds across our site. Let’s move forward with some interpretation of what seems to be our best supported model, <code>PsiAspectElev_pWindObs</code>.
+</p>
 </div>
 <div id="model-interpretation-and-value-prediction" class="section level3">
 <h3>Model Interpretation and Value Prediction</h3>
 <p>
-<p>We can first look at a basic summary of this model using the <code>summary</code> function. Remember that we can look at just the coefficients with the <code>coef</code> function as well.</p>
+We can first look at a basic summary of this model using the <code>summary</code> function. Remember that we can look at just the coefficients with the <code>coef</code> function as well.
+</p>
 <pre class="r"><code>summary(PsiAspectElev_pWindObs)</code></pre>
 <pre><code>## 
 ## Call:
@@ -606,22 +623,23 @@ PsiAspectElev_pWindSkyObsTime &lt;- occu( ~ wind + sky + observer + timeOfDay
 ## AIC: 1441.831 
 ## Number of sites: 296
 ## optim convergence code: 0
-## optim iterations: 79 
+## optim iterations: 77 
 ## Bootstrap iterations: 0</code></pre>
 <p>
-We can see, based on coefficient values, that as wind level increases, probability of detection decreases. Regarding observer, we see that observer AJS is not shown in the coefficient list. This means that the detection probability parameter of AJS is accounted for in the intercept term. The values of the other coefficients are relative to this AJS baseline. The other three observers show lower detection probabilities than AJS, this being a substantial difference in the case of CH and DJW.<br />
-
+We can see, based on coefficient values, that as wind level increases, probability of detection decreases. Regarding observer, we see that observer AJS is not shown in the coefficient list. This means that the detection probability parameter of AJS is accounted for in the intercept term. The values of the other coefficients are relative to this AJS baseline. The other three observers show lower detection probabilities than AJS, this being a substantial difference in the case of CH and DJW.
+</p>
 <p>
-<p>We can use the <code>predict</code> function to look at estimated probabilities of detection and occupancy based on our actual site data. We need to set the type of estimate of we want as either “state” for occupancy values or “det” for detection probability.This will show us values for all 296 sites, so let’s use the <code>head</code> function to show just the first 20.</p>
+We can use the <code>predict</code> function to look at estimated probabilities of detection and occupancy based on our actual site data. We need to set the type of estimate of we want as either “state” for occupancy values or “det” for detection probability.This will show us values for all 296 sites, so let’s use the <code>head</code> function to show just the first 20.
+</p>
 <pre class="r"><code>head(predict(PsiAspectElev_pWindObs, type = &quot;state&quot;), 20)</code></pre>
 <pre><code>##    Predicted         SE     lower     upper
 ## 1  0.9830955 0.00899099 0.9526985 0.9940801
 ## 2  0.9773647 0.01091637 0.9425797 0.9912722
 ## 3  0.9659182 0.01415440 0.9242545 0.9850359
 ## 4  0.8797440 0.04744408 0.7523252 0.9462907
-## 5  0.8988999 0.04122739 0.7851473 0.9558160
-## 6  0.9162934 0.03619232 0.8127792 0.9650367
-## 7  0.8836914 0.05016752 0.7448249 0.9518700
+## 5  0.8988999 0.04122740 0.7851473 0.9558160
+## 6  0.9162934 0.03619233 0.8127792 0.9650367
+## 7  0.8836914 0.05016753 0.7448249 0.9518700
 ## 8  0.8656616 0.05004262 0.7349181 0.9374117
 ## 9  0.8671167 0.04580649 0.7496115 0.9343101
 ## 10 0.8090537 0.05955044 0.6656010 0.9001948
@@ -636,7 +654,8 @@ We can see, based on coefficient values, that as wind level increases, probabili
 ## 19 0.9366686 0.01742950 0.8926475 0.9633789
 ## 20 0.9503998 0.01650266 0.9060855 0.9743950</code></pre>
 <p>
-<p>Keep in mind these values can be associated back to our site covariates in <code>obsCovs</code> and <code>siteCovs</code>, in the order they appear there, but the row numbers here do not represent actual site numbers. In others words row 10 here is not necessarily our site #10, but it is the 10th site in our siteCovs file. We can summarize our predicted values to see the range of predicted occupancy values.</p>
+Keep in mind these values can be associated back to our site covariates in <code>obsCovs</code> and <code>siteCovs</code>, in the order they appear there, but the row numbers here do not represent actual site numbers. In others words row 10 here is not necessarily our site #10, but it is the 10th site in our siteCovs file. We can summarize our predicted values to see the range of predicted occupancy values.
+</p>
 <pre class="r"><code>summary(predict(PsiAspectElev_pWindObs, type = &quot;state&quot;))</code></pre>
 <pre><code>##    Predicted            SE               lower            upper       
 ##  Min.   :0.5155   Min.   :0.008106   Min.   :0.3206   Min.   :0.7058  
@@ -646,7 +665,8 @@ We can see, based on coefficient values, that as wind level increases, probabili
 ##  3rd Qu.:0.9473   3rd Qu.:0.037345   3rd Qu.:0.9010   3rd Qu.:0.9721  
 ##  Max.   :0.9857   Max.   :0.104421   Max.   :0.9571   Max.   :0.9953</code></pre>
 <p>
-<p>We can see that our minimum predicted site occupancy value is 51.5%, but average site occupancy across our sites is 87.8%. Why is this so close to our naive occupancy estimate? To find out, let’s look at our detection probability estimates.</p>
+We can see that our minimum predicted site occupancy value is 51.5%, but average site occupancy across our sites is 87.8%. Why is this so close to our naive occupancy estimate? To find out, let’s look at our detection probability estimates.
+</p>
 <pre class="r"><code>head(predict(PsiAspectElev_pWindObs, type = &quot;det&quot;), 20)</code></pre>
 <pre><code>##    Predicted         SE     lower     upper
 ## 1  0.5547656 0.03428648 0.4869729 0.6205798
@@ -678,21 +698,28 @@ We can see, based on coefficient values, that as wind level increases, probabili
 ##  3rd Qu.:0.7891   3rd Qu.:0.03067   3rd Qu.:0.7279   3rd Qu.:0.8340  
 ##  Max.   :0.8114   Max.   :0.07009   Max.   :0.7557   Max.   :0.8569</code></pre>
 <p>
-Predicted detection probability, per ocassion, is between 48.5% and 81.1%. The mean across our sites is 69.9%. If this is the probability of detecting an ovenbird, when present, within a single occassion, what is the probability of missing a bird, on all 4 ocassions? <span class="math display">\[Pr(0000 | \Psi = 1, p) = (1-p_0) * (1-p_1) * (1-p_2) * (1-p_3)\]</span> <span class="math display">\[ = (1-p)^4\]</span>
+Predicted detection probability, per ocassion, is between 48.5% and 81.1%. The mean across our sites is 69.9%. If this is the probability of detecting an ovenbird, when present, within a single occassion, what is the probability of missing a bird, on all 4 ocassions?
+</p>
+<span class="math display">\[Pr(0000 | \Psi = 1, p) = (1-p_0) * (1-p_1) * (1-p_2) * (1-p_3)\]</span> <span class="math display">\[ = (1-p)^4\]</span>
 <p>
-<p>For our scenario this value is 0.008.</p>
+For our scenario this value is 0.008.
+</p>
 <p>
-<p>If we subtract this value from 1, we get “pcap” or p prime, which is the probability of seeing an ovenbird at least once across the 4 ocassions, if the site is occupied. This value is 0.992. And so it follows that our naive occupancy should be very similar to our estimated probability of occupancy for this species. It is VERY unlikely that an observer would visit a site occupied by ovenbirds 4 times, and never detect a single ovenbird.</p>
+If we subtract this value from 1, we get “pcap” or p prime, which is the probability of seeing an ovenbird at least once across the 4 ocassions, if the site is occupied. This value is 0.992. And so it follows that our naive occupancy should be very similar to our estimated probability of occupancy for this species. It is VERY unlikely that an observer would visit a site occupied by ovenbirds 4 times, and never detect a single ovenbird.
+</p>
 </div>
 <div id="graphical-interpretation-of-model-covariates" class="section level3">
 <h3>Graphical Interpretation of Model Covariates</h3>
 <p>
-<p>Let’s now take a look at how our covariates influence occupancy and detection. We know that as wind increases, probability of detection decreases, but we can create a response curve which allows us to visualize how dramatic this effect is, across a set of values of wind. To do this we use the predict function, but this time we provide the set of values we want to use for the prediction. We will vary the values of wind from its minimum to its maximum. In order to graphically show its effect though, we need to hold the other covariates constant.</p>
+Let’s now take a look at how our covariates influence occupancy and detection. We know that as wind increases, probability of detection decreases, but we can create a response curve which allows us to visualize how dramatic this effect is, across a set of values of wind. To do this we use the predict function, but this time we provide the set of values we want to use for the prediction. We will vary the values of wind from its minimum to its maximum. In order to graphically show its effect though, we need to hold the other covariates constant.
+</p>
 <p>
-<p>Let’s first save our best model with a shorter name.</p>
+Let’s first save our best model with a shorter name.
+</p>
 <pre class="r"><code>best &lt;- PsiAspectElev_pWindObs</code></pre>
 <p>
-<p>To predict across a particular set of values using our model equation, we need to create a new dataframe. Remember the names of your columns here need to be exactly the same as the names of your covariates in the unmarked data objects.Here we are predicting across all possible values of the wind covariate (0-6), and setting the observer to “AJS”.</p>
+To predict across a particular set of values using our model equation, we need to create a new dataframe. Remember the names of your columns here need to be exactly the same as the names of your covariates in the unmarked data objects.Here we are predicting across all possible values of the wind covariate (0-6), and setting the observer to “AJS”.
+</p>
 <pre class="r"><code>newDataDetWind_AJS &lt;- data.frame(wind = seq(0, 6),
                                  observer = factor(&quot;AJS&quot;,
                                  levels = c(&quot;AJS&quot;, &quot;CH&quot;, &quot;DJW&quot;, &quot;JDW&quot;)))
@@ -705,7 +732,8 @@ head(newDataDetWind_AJS)                                               </code></
 ## 5    4      AJS
 ## 6    5      AJS</code></pre>
 <p>
-<p>We will now use this dataframe to create predictions of detection probability, using our equation from our best model.</p>
+We will now use this dataframe to create predictions of detection probability, using our equation from our best model.
+</p>
 <pre class="r"><code>EstDetWindAJS &lt;- predict(best,
                          type = &quot;det&quot;,
                          newdata = newDataDetWind_AJS,
@@ -743,7 +771,8 @@ EstDetWindJDW &lt;- predict(best,
                          newdata = newDataDetWind_JDW,
                          appendData = TRUE)</code></pre>
 <p>
-<p>Now we have predicted values of detection probability for all values of wind, and for all values of oberver. Let’s graph them together to see what the relationships look like.</p>
+Now we have predicted values of detection probability for all values of wind, and for all values of oberver. Let’s graph them together to see what the relationships look like.
+</p>
 <pre class="r"><code>#AJS
 plot(
   Predicted ~ wind,
@@ -845,11 +874,13 @@ legend(
   col = c(&quot;black&quot;, &quot;green&quot;, &quot;red&quot;, &quot;blue&quot;),
   bty = &quot;n&quot;
   )</code></pre>
-<img src="OccupancyDemo_Oven_files/figure-html/unnamed-chunk-26-1.png" width="672" />
+<img src="occupancydemo_oven_files/figure-html/unnamed-chunk-26-1.png" width="672" />
 <p>
 While interpreting the model coefficients directly can be tricky, we can now see clearly that DJW had the lowest detection probability, and both AJS and JDW displayed similarly high relative detection probablity. We can also now see how wind level affects detection probability.
+</p>
 <p>
-<p>But typically detection covariates are not the part of the model we are most interested. We tpyically want to know how covariates influence occupancy. Let’s now look at how aspect and elevation influence ovenbird occupancy. As above we need to first create a new dataframe. Let’s start with looking at our most important covariates, aspect and elevation. Our model for occupancy has two covariates, so that is what we need in the new dataframe.We need two separate dataframes though, one which allows aspect to vary and holds elevation constant, the other which allows elevation to vary.</p>
+But typically detection covariates are not the part of the model we are most interested. We tpyically want to know how covariates influence occupancy. Let’s now look at how aspect and elevation influence ovenbird occupancy. As above we need to first create a new dataframe. Let’s start with looking at our most important covariates, aspect and elevation. Our model for occupancy has two covariates, so that is what we need in the new dataframe.We need two separate dataframes though, one which allows aspect to vary and holds elevation constant, the other which allows elevation to vary.
+</p>
 <pre class="r"><code>newDataOccAspect &lt;-
   data.frame(
   aspect = seq(min(siteCovs$aspect), max(siteCovs$aspect), length.out = 100),
@@ -881,14 +912,15 @@ EstOccElev &lt;- predict(best,
                       appendData = TRUE)
 head(EstOccElev)</code></pre>
 <pre><code>##   Predicted         SE     lower     upper   aspect elevation
-## 1 0.6764097 0.09280446 0.4765922 0.8275470 2.351254  252.0147
-## 2 0.6829948 0.09020303 0.4877560 0.8297878 2.351254  258.9181
-## 3 0.6895074 0.08762241 0.4989088 0.8320184 2.351254  265.8216
-## 4 0.6959458 0.08506553 0.5100382 0.8342391 2.351254  272.7251
-## 5 0.7023083 0.08253521 0.5211319 0.8364503 2.351254  279.6286
-## 6 0.7085935 0.08003416 0.5321777 0.8386525 2.351254  286.5321</code></pre>
+## 1 0.6764097 0.09280448 0.4765922 0.8275470 2.351254  252.0147
+## 2 0.6829948 0.09020304 0.4877560 0.8297878 2.351254  258.9181
+## 3 0.6895074 0.08762242 0.4989087 0.8320184 2.351254  265.8216
+## 4 0.6959458 0.08506555 0.5100382 0.8342391 2.351254  272.7251
+## 5 0.7023083 0.08253523 0.5211319 0.8364503 2.351254  279.6286
+## 6 0.7085935 0.08003417 0.5321777 0.8386525 2.351254  286.5321</code></pre>
 <p>
-<p>Now let’s graph the relationships.</p>
+Now let’s graph the relationships.
+</p>
 <pre class="r"><code>par(mfrow = c(1,2))
 #Aspect
 plot(
@@ -944,9 +976,10 @@ lines(
   lty = 2,
   col = &quot;blue&quot;
   )</code></pre>
-<img src="OccupancyDemo_Oven_files/figure-html/unnamed-chunk-28-1.png" width="672" /> ________________________________________________________________________________________________ <img style="float:right" src="images/radians.gif" />
+<p><img src="occupancydemo_oven_files/figure-html/unnamed-chunk-28-1.png" width="672" /> ________________________________________________________________________________________________ <img style="float:right" src="images/radians.gif" /></p>
 <p>
-<p>A Note about Aspect: You’ll notice aspect ranges from around zero to a bit more than 6. Aspect here was recorded in radians, which can be converted to degrees by multiplying the value by 180 degrees and dividing by Pi. Refer to the figure here to see what these radian values refer to, in terms of cardinal directions. As you can see, a value near zero represents east, with increasing values moving counterclockwise. Do you see any potential issues with how we have analyzed aspect here?</p>
+A Note about Aspect: You’ll notice aspect ranges from around zero to a bit more than 6. Aspect here was recorded in radians, which can be converted to degrees by multiplying the value by 180 degrees and dividing by Pi. Refer to the figure here to see what these radian values refer to, in terms of cardinal directions. As you can see, a value near zero represents east, with increasing values moving counterclockwise. Do you see any potential issues with how we have analyzed aspect here?
+</p>
 </div>
 </div>
 </div>

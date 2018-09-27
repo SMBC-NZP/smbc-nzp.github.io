@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title></title>
+
+<script src="OccupancyExercise_BLBW_key_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="OccupancyExercise_BLBW_key_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="OccupancyExercise_BLBW_key_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="OccupancyExercise_BLBW_key_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="OccupancyExercise_BLBW_key_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="OccupancyExercise_BLBW_key_files/navigation-1.1/tabsets.js"></script>
+<link href="OccupancyExercise_BLBW_key_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="OccupancyExercise_BLBW_key_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<head>
+<link rel="stylesheet" href="N:/Capacity Building and Academic Programs/SI-Mason Grad & Prof Training/Individual Courses--Folders/Bird Migration/2018/Materials/Distance/Exercises"> <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<div id="occupancy-modeling-student-exercise-key---blackburnian-warbler" class="section level1">
+<h1>Occupancy Modeling Student Exercise Key - Blackburnian Warbler</h1>
+<p>
+<i>Joe Kolowski, Ph.D.</i>
+</p>
+<div id="project-description-and-context" class="section level2">
+<h2>Project Description and Context</h2>
+<p><img style="float:right" src="images/BLBW.jpg" /></p>
+<p>We are working here with the same dataset described in the Ovenbird demo exercise. The data were provided by Mike Hallworth, and collected at Hubbard Brook New Hampshire, USA. The full data set at Hubbard Brook had 373 point count survey locations systematically placed throughout Hubbard Brook Valley along 15 transects. Our data set includes 296 of these survey points. Point counts were conducted 4 times per year, and have been collected since 1999. Here we are working with a single year’s data. Surveys typically started at the end of May, and all 4 surveys were typically done within a month. Each point count was split into 3 consecutive “periods” of 3 minutes, 20 seconds each (so the observer spent 10 minutes at each location during a survey). These data are part of a large, long-term study focused on investigating many aspects of songbird ecology including habitat use, recruitment, species richness and abundance, and many others. In this demo we’ll be working only with the Blackburnian Warbler (BLBW). Here our goal is to assess what factors influence occupancy probability of blackburnian warblers in this landscape, while accounting for factors that may influence detection.</p>
+</div>
+<div id="exercise-objectives" class="section level2">
+<h2>Exercise Objectives</h2>
+<ul>
+<li>Continue to practice with importing and formating raw data from point count field studies for occupancy analysis</li>
+<li>Practice functions in the package <code>unmarked</code> for single-season occupancy analysis</li>
+<li>Independently run a single season occupancy modeling analysis with covariates on both occupancy and detection probability</li>
+<li>Independently interpret output results of occupancy models and use model selection approaches to address competing ecological hypotheses</li>
+<li>Create response curves for model covariates to assist in model interpretation</li>
+</ul>
+<div id="librariessetup" class="section level3">
+<h3>Libraries/Setup</h3>
+<p>Let’s first call the packages we’ll need in this exercise. Use <code>install.packages</code> if you do not have these packages already on your machine.</p>
+<pre class="r"><code>library(unmarked)
+library(tidyverse)
+library(lubridate) #for the `yday` function</code></pre>
+<p>
+<p>Remember also when starting a new analysis to clear your environment. This is generally always a good idea, particularly in cases where you might be using models of the same names as previous analyses.</p>
+<pre class="r"><code>rm(list = ls())</code></pre>
+</div>
+<div id="data-import-and-exploration" class="section level3">
+<h3>Data Import and Exploration</h3>
+<p>
+<p>We can bring in data using our <code>read.csv</code> command, with our data files stored in our course dropbox folder as opposed to on our local computer.</p>
+<pre class="r"><code>counts &lt;- 
+  read.csv(&#39;https://www.dropbox.com/s/fdotemoww8qdu8l/countData.csv?dl=1&#39;)
+
+visits &lt;- 
+  read.csv(&#39;https://www.dropbox.com/s/wr961cx2lxxfssp/visitData.csv?dl=1&#39;)
+
+siteCovs &lt;-
+  read.csv(&#39;https://www.dropbox.com/s/gbrxt85jwid2t55/siteData.csv?dl=1&#39;)</code></pre>
+</div>
+<div id="data-formatting" class="section level3">
+<h3>Data Formatting</h3>
+<p>Since we are using the same data set from the ovenbird demonstration, we need to perform the same formatting steps to prepare the data for analysis.</p>
+<p>
+Step1: Using the ovenbird demo as a guide, first pull out only the Blackburnian warbler observation from the <code>counts</code> object, select out the <code>plot</code> and <code>replicate</code> columns, and create a new column for counts (<code>n</code>) that is set to 1. Remember to keep only unique rows, since we sometimes have more than one observation within a 10 minute period. Review your new counts object to make sure everything worked properly.
+<p>
+<strong>Q1: How many observations of Blackburnian Warblers were recorded?</strong>
+<p>
+<p>A1: 544</p>
+<pre class="r"><code>BlbwCounts &lt;-
+  counts %&gt;%
+  filter(species == &#39;BLBW&#39;) %&gt;%
+  select(plot, replicate) %&gt;%
+  mutate(n = 1) %&gt;%
+  distinct</code></pre>
+<p>
+<p>Let’s look at <code>Blbwcounts</code> and make sure we understand what the code above has done.</p>
+<pre class="r"><code>head(BlbwCounts)</code></pre>
+<pre><code>##   plot replicate n
+## 1    1         0 1
+## 2    1         2 1
+## 3    2         1 1
+## 4    2         2 1
+## 5    3         0 1
+## 6    3         1 1</code></pre>
+<p>Step 2: Create a detection frame for these counts, being sure to account for visits where no observations were recorded. This requires use of the <code>visits</code> object. View your detection frame to make sure everything worked properly.</p>
+<pre class="r"><code>detectionFrameBlbw &lt;-
+  visits %&gt;%
+  select(plot, replicate) %&gt;%
+  left_join(BlbwCounts,
+            by = c(&#39;plot&#39;, &#39;replicate&#39;)) %&gt;%
+  distinct %&gt;%
+  spread(replicate, n, fill = 0) %&gt;%
+  select(-1) %&gt;%
+  as.matrix</code></pre>
+<p>
+<p>Let’s confirm what we have now, which should be a matrix of 296 sites (rows) and 4 occasions (columns) indicating in which situations the species was observed or not observed.</p>
+<pre class="r"><code>head(detectionFrameBlbw)</code></pre>
+<pre><code>##      0 1 2 3
+## [1,] 1 0 1 0
+## [2,] 0 1 1 0
+## [3,] 1 1 1 0
+## [4,] 0 0 0 0
+## [5,] 1 1 1 0
+## [6,] 1 1 0 0</code></pre>
+<p>Step3: Our last step in data formatting will be to create a list of our survey covariates. These are stored in the <code>visits</code> object. But now each separate covariates needs to exist in its own data frame within a list. Each data frame should have 296 rows (for each site) and 4 columns (for each ocassion). This code should be the same as in the ovenbird demo, since these covariates are not specific to the species we are analyzing.</p>
+<pre class="r"><code>obsCovs &lt;-
+  list(
+    observer = visits %&gt;%
+      select(plot, replicate, observer) %&gt;%
+      spread(replicate, observer) %&gt;%
+      mutate(plot = NULL),
+    timeOfDay = visits %&gt;%
+      select(plot, replicate, time) %&gt;%
+      mutate(time = as.numeric(time)) %&gt;%
+      spread(replicate, time) %&gt;%
+      mutate(plot = NULL),
+    dayOfYear = visits %&gt;%
+      select(plot, replicate, date) %&gt;%
+      mutate(date = yday(strptime(date, format = &quot;%m/%d/%Y&quot;))) %&gt;%
+      spread(replicate, date) %&gt;%
+      mutate(plot = NULL),
+    sky = visits %&gt;%
+      select(plot, replicate, sky) %&gt;%
+      spread(replicate, sky) %&gt;%
+      mutate(plot = NULL),
+    wind = visits %&gt;%
+      select(plot, replicate, wind) %&gt;%
+      spread(replicate, wind) %&gt;%
+      mutate(plot = NULL)
+  )</code></pre>
+<p>
+Our data are now ready for the <code>unmarkedFrameOccu</code> function which prepares our data for occupancy analysis.We need to provide three objects, the detection matrix, our site covariates data frame, and a list of dataframes for our observation/survey covariates.
+<p>
+<p>Step4: Create an unmarked frame for use in our occupancy models and use <code>summary</code> to review this object.</p>
+<pre class="r"><code>umfBlbw &lt;-
+  unmarkedFrameOccu(y = detectionFrameBlbw,
+  siteCovs = siteCovs,
+  obsCovs = obsCovs)</code></pre>
+<p>
+<p>We can look at a general summary of the data using <code>summary</code> on this object</p>
+<pre class="r"><code>summary(umfBlbw)</code></pre>
+<pre><code>## unmarkedFrame Object
+## 
+## 296 sites
+## Maximum number of observations per site: 4 
+## Mean number of observations per site: 4 
+## Sites with at least one detection: 244 
+## 
+## Tabulation of y observations:
+##   0   1 
+## 640 544 
+## 
+## Site-level covariates:
+##       plot          elevation         aspect            slope        
+##  Min.   :  1.00   Min.   :252.0   Min.   :0.01254   Min.   :0.01818  
+##  1st Qu.: 89.75   1st Qu.:512.6   1st Qu.:1.03913   1st Qu.:0.14567  
+##  Median :182.50   Median :611.3   Median :2.35125   Median :0.20885  
+##  Mean   :192.46   Mean   :612.1   Mean   :2.48843   Mean   :0.21922  
+##  3rd Qu.:307.25   3rd Qu.:733.0   3rd Qu.:3.51656   3rd Qu.:0.28442  
+##  Max.   :400.00   Max.   :935.5   Max.   :6.21228   Max.   :0.61949  
+## 
+## Observation-level covariates:
+##  observer    timeOfDay       dayOfYear          sky       
+##  AJS:308   Min.   :  1.0   Min.   :141.0   Min.   :0.000  
+##  CH :302   1st Qu.: 59.0   1st Qu.:153.0   1st Qu.:0.000  
+##  DJW:327   Median :121.0   Median :162.0   Median :1.000  
+##  JDW:247   Mean   :125.3   Mean   :162.7   Mean   :1.119  
+##            3rd Qu.:191.0   3rd Qu.:173.8   3rd Qu.:2.000  
+##            Max.   :275.0   Max.   :187.0   Max.   :5.000  
+##       wind       
+##  Min.   :0.0000  
+##  1st Qu.:0.0000  
+##  Median :1.0000  
+##  Mean   :0.9451  
+##  3rd Qu.:1.0000  
+##  Max.   :6.0000</code></pre>
+<p>
+<strong>Q2: What is our naive occupancy probability for this species?</strong>
+<p>
+<p>A2: 0.8243243</p>
+</div>
+<div id="model-fitting-and-model-selection---occupancy-and-detection-covariates" class="section level3">
+<h3>Model Fitting and Model Selection - Occupancy and Detection Covariates</h3>
+<p>
+We now are ready to run some single-season occupancy models. Remember that it is best practice to first test a range of models that investigate potential hypotheses for what covariates are impacting occupancy, while using a fully general model for detection probability. Once you refine your occupancy variables you can then refine/simplify your detection covariates if possible. Use the ovenbird demo exercise as a guide. Here again, as in the ovenbird demo, you may need to use starting values if some models fail to run.
+<p>
+Step 5: Conduct a complete model selection and comparison work flow to arrive at a best final model describing occupancy/detection of this species.
+<p>
+<p><strong>Q3: Which covariates are important in determing probability of occupancy of this species?</strong></p>
+<pre class="r"><code>Psidot_pFull &lt;- occu( ~ wind + sky + dayOfYear + observer + timeOfDay 
+                      ~ 1, data = umfBlbw) 
+PsiElev_pFull &lt;- occu( ~ wind + sky + dayOfYear + observer + timeOfDay 
+                       ~ elevation, data = umfBlbw)
+PsiSlope_pFull &lt;- occu( ~ wind + sky + dayOfYear + observer + timeOfDay 
+                        ~ slope, data = umfBlbw)
+PsiAspect_pFull &lt;- occu( ~ wind + sky + dayOfYear + observer + timeOfDay 
+                        ~ aspect, data = umfBlbw)
+PsiAspectElev_pFull &lt;- occu( ~ wind + sky + dayOfYear + observer + timeOfDay 
+                        ~ aspect + elevation, data = umfBlbw)
+PsiAspectSlope_pFull &lt;- occu( ~ wind + sky + dayOfYear + observer + timeOfDay 
+                        ~ aspect + slope, data = umfBlbw)
+PsiSlopeElev_pFull &lt;- occu( ~ wind + sky + dayOfYear + observer + timeOfDay 
+                        ~ slope + elevation, data = umfBlbw)
+PsiAspectSlopeElev_pFull &lt;- occu( ~ wind + sky + dayOfYear + observer + timeOfDay 
+                        ~ aspect +slope + elevation, data = umfBlbw)</code></pre>
+<p>
+<p>Once we have our models run, we can use the <code>fitList</code> function to compile the models together, in preparation for model selection. We then use the <code>modSel</code> function to bring together the model results and compare using AIC-based approaches. Note that putting parentheses around code that creates something, will print that object automatically to the console</p>
+<pre class="r"><code>ObsModsBB &lt;- fitList(Psidot_pFull,PsiElev_pFull,PsiSlope_pFull, PsiAspect_pFull, PsiAspectElev_pFull, PsiAspectSlope_pFull,PsiSlopeElev_pFull,PsiAspectSlopeElev_pFull)
+(ObsModsRankBB &lt;- modSel(ObsModsBB))</code></pre>
+<pre><code>##                          nPars     AIC delta AICwt cumltvWt
+## PsiAspectElev_pFull         11 1553.17  0.00 0.434     0.43
+## PsiAspectSlopeElev_pFull    12 1555.19  2.02 0.158     0.59
+## PsiAspect_pFull             10 1555.39  2.23 0.142     0.73
+## Psidot_pFull                 9 1556.47  3.31 0.083     0.82
+## PsiElev_pFull               10 1556.71  3.54 0.074     0.89
+## PsiAspectSlope_pFull        11 1557.39  4.23 0.052     0.94
+## PsiSlope_pFull              10 1558.47  5.30 0.031     0.97
+## PsiSlopeElev_pFull          11 1558.75  5.58 0.027     1.00</code></pre>
+<p>
+<p>A3: We can see that our best model includes both aspect and elevation.These are the same two covariates that were most important in determining occupancy of ovenbirds.</p>
+<p>
+<strong>Q4: What are the most important covariates in determining detection probability of this species?</strong>
+<p>
+<p>Here again, as in the ovenbird demo, I’ve had to use starting values, for the same problematic models. I cheated a bit here and just used the same starting values as for the ovenbird, which is not necessarily the best approach. But in this case, these starting values did help in getting the models to coverge properly.</p>
+<pre class="r"><code>PsiAspectElev_pdot &lt;- occu( ~ 1
+                            ~ aspect + elevation,
+                            data = umfBlbw,
+                            starts = c(.6,-.4, .004, 1)
+)
+PsiAspectElev_pwind &lt;- occu( ~ wind
+                             ~ aspect + elevation,
+                             data = umfBlbw,
+                             starts = c(.6,-.4, .004, 2.3,-.15)
+)
+PsiAspectElev_psky &lt;- occu( ~ sky
+                            ~ aspect + elevation,
+                            data = umfBlbw,
+                            starts = c(.6,-.4, .004, 2.3,-.07)
+)
+PsiAspectElev_pobs &lt;- occu( ~ observer
+                            ~ aspect + elevation,
+                            data = umfBlbw,
+                            starts = c(.6, -.4, .004, 1.3, -.6, -.9, -.09)
+)
+PsiAspectElev_pday &lt;- occu(~ dayOfYear
+                           ~ aspect + elevation, data = umfBlbw)
+
+PsiAspectElev_ptime &lt;- occu(~ timeOfDay
+                            ~ aspect + elevation, data = umfBlbw)
+
+PsiAspectElev_pWindSky &lt;- occu( ~ wind + sky
+                                ~ aspect + elevation,
+                                data = umfBlbw,
+                                starts = c(.6, -.4, .004, 2.3, -.15, -.07)
+)
+
+PsiAspectElev_pWindday &lt;- occu(~ wind + dayOfYear
+                               ~ aspect + elevation, data = umfBlbw)
+
+PsiAspectElev_pWindObs &lt;- occu( ~ wind + observer
+                                ~ aspect + elevation,
+                                data = umfBlbw,
+                                starts = c(.6, -.4, .004, 2.3, -.15, -.62, -.97, -.12)
+)
+
+PsiAspectElev_pWindTime &lt;- occu( ~ wind + timeOfDay
+                                 ~ aspect + elevation, data = umfBlbw)
+
+PsiAspectElev_pSkyDay &lt;- occu( ~ sky + dayOfYear
+                               ~ aspect + elevation, data = umfBlbw)
+
+PsiAspectElev_pSkyObs &lt;- occu( ~ sky + observer
+                              ~ aspect + elevation,
+                              data = umfBlbw,
+                              starts = c(.6, -.4, .004, 2.3, -.07, -.62, -.97, -.12)
+)
+
+PsiAspectElev_pSkyTime &lt;- occu(~ sky + timeOfDay
+                               ~ aspect + elevation, data = umfBlbw)
+
+PsiAspectElev_pDayofYearObs &lt;- occu(~ dayOfYear + observer
+                                    ~ aspect + elevation, data = umfBlbw)
+
+PsiAspectElev_pDayTime &lt;- occu(~ dayOfYear + timeOfDay
+                               ~ aspect + elevation, data = umfBlbw)
+
+PsiAspectElev_pObsTime &lt;- occu(~ observer + timeOfDay
+                               ~ aspect + elevation, data = umfBlbw)
+
+PsiAspectElev_pWindSkyDay &lt;- occu(~ wind + sky + dayOfYear
+                                  ~ aspect + elevation, data = umfBlbw)
+
+PsiAspectElev_pWindSkyObs &lt;- occu(~ wind + sky + observer
+                                  ~ aspect + elevation,
+                                  data = umfBlbw,
+                                  starts = c(.6, -.4, .004, 2.3, -.15, -.07, -.62, -.97, -.12)
+)
+
+PsiAspectElev_pWindSkyTime &lt;- occu(~ wind + sky + timeOfDay
+                                   ~ aspect + elevation, data = umfBlbw)
+
+PsiAspectElev_pWindDayObs &lt;- occu(~ wind + dayOfYear + observer
+                                  ~ aspect + elevation, data = umfBlbw)
+
+PsiAspectElev_pWindDayTime &lt;- occu(~ wind + dayOfYear + timeOfDay
+                                   ~ aspect + elevation, data = umfBlbw)
+
+PsiAspectElev_pSkyDayObs &lt;- occu(~ sky + dayOfYear + observer
+                                 ~ aspect + elevation, data = umfBlbw)
+
+PsiAspectElev_pSkyDayTime &lt;- occu(~ sky + dayOfYear + timeOfDay
+                                  ~ aspect + elevation, data = umfBlbw)
+PsiAspectElev_pDayObsTime &lt;- occu( ~ dayOfYear + observer + timeOfDay
+                                   ~ aspect + elevation, data = umfBlbw)
+
+PsiAspectElev_pWindSkyDayObs &lt;- occu( ~ wind + sky + dayOfYear + observer
+                                      ~ aspect + elevation, data = umfBlbw)
+
+PsiAspectElev_pSkyDayObsTime &lt;- occu( ~ sky + dayOfYear + observer + timeOfDay
+                                      ~ aspect + elevation, data = umfBlbw)
+
+PsiAspectElev_pWindSkyObsTime &lt;- occu( ~ wind + sky + observer + timeOfDay
+                                       ~ aspect + elevation, data = umfBlbw)</code></pre>
+<pre class="r"><code>ObsModsP &lt;-
+  fitList(
+  PsiAspectElev_pdot,
+  PsiAspectElev_pwind,
+  PsiAspectElev_psky,
+  PsiAspectElev_pobs,
+  PsiAspectElev_pday,
+  PsiAspectElev_ptime,
+  PsiAspectElev_pWindSky,
+  PsiAspectElev_pWindday,
+  PsiAspectElev_pWindObs,
+  PsiAspectElev_pWindTime,
+  PsiAspectElev_pSkyDay,
+  PsiAspectElev_pSkyObs,
+  PsiAspectElev_pSkyTime,
+  PsiAspectElev_pDayofYearObs,
+  PsiAspectElev_pDayTime,
+  PsiAspectElev_pObsTime,
+  PsiAspectElev_pWindSkyDay,
+  PsiAspectElev_pWindSkyObs,
+  PsiAspectElev_pWindSkyTime,
+  PsiAspectElev_pWindDayObs,
+  PsiAspectElev_pWindDayTime,
+  PsiAspectElev_pSkyDayObs,
+  PsiAspectElev_pSkyDayTime,
+  PsiAspectElev_pDayObsTime,
+  PsiAspectElev_pWindSkyDayObs,
+  PsiAspectElev_pSkyDayObsTime,
+  PsiAspectElev_pWindSkyObsTime
+  )
+
+(ObsModsRankP &lt;- modSel(ObsModsP))</code></pre>
+<pre><code>##                               nPars     AIC delta   AICwt cumltvWt
+## PsiAspectElev_pWindDayObs         9 1550.68  0.00 4.1e-01     0.41
+## PsiAspectElev_pSkyDayObsTime     10 1552.33  1.65 1.8e-01     0.59
+## PsiAspectElev_pDayofYearObs       8 1552.36  1.68 1.8e-01     0.77
+## PsiAspectElev_pDayObsTime         9 1553.12  2.44 1.2e-01     0.89
+## PsiAspectElev_pWindSkyDayObs     10 1554.66  3.98 5.7e-02     0.95
+## PsiAspectElev_pSkyDayObs          9 1554.91  4.23 5.0e-02     1.00
+## PsiAspectElev_pWindday            6 1567.95 17.27 7.3e-05     1.00
+## PsiAspectElev_pday                5 1569.21 18.53 3.9e-05     1.00
+## PsiAspectElev_pWindDayTime        7 1570.53 19.85 2.0e-05     1.00
+## PsiAspectElev_pWindSkyDay         7 1571.59 20.91 1.2e-05     1.00
+## PsiAspectElev_pDayTime            6 1572.46 21.78 7.7e-06     1.00
+## PsiAspectElev_pSkyDay             6 1573.43 22.75 4.7e-06     1.00
+## PsiAspectElev_pSkyDayTime         7 1574.69 24.01 2.5e-06     1.00
+## PsiAspectElev_pObsTime            8 1575.08 24.40 2.1e-06     1.00
+## PsiAspectElev_pobs                7 1575.84 25.16 1.4e-06     1.00
+## PsiAspectElev_pWindObs            8 1577.08 26.40 7.6e-07     1.00
+## PsiAspectElev_pSkyObs             8 1578.40 27.72 3.9e-07     1.00
+## PsiAspectElev_pWindSkyObsTime    10 1578.55 27.87 3.7e-07     1.00
+## PsiAspectElev_pWindSkyObs         9 1580.04 29.36 1.7e-07     1.00
+## PsiAspectElev_pwind               5 1596.11 45.43 5.6e-11     1.00
+## PsiAspectElev_pdot                4 1596.49 45.81 4.7e-11     1.00
+## PsiAspectElev_ptime               5 1597.59 46.91 2.7e-11     1.00
+## PsiAspectElev_pWindTime           6 1598.07 47.39 2.1e-11     1.00
+## PsiAspectElev_pWindSkyTime        7 1598.83 48.15 1.4e-11     1.00
+## PsiAspectElev_pWindSky            6 1598.94 48.26 1.4e-11     1.00
+## PsiAspectElev_psky                5 1599.40 48.72 1.1e-11     1.00
+## PsiAspectElev_pSkyTime            6 1600.36 49.68 6.7e-12     1.00</code></pre>
+<p>
+<p>A4: We can see from our model selection table that wind level, day of year and observer are important covariates in determining probability of detection of blackburnians across our site. Let’s move forward with some interpretation of what seems to be our best supported model, <code>PsiAspectElev_pWindDayObs</code>.</p>
+</div>
+<div id="model-interpretation-and-value-prediction" class="section level3">
+<h3>Model Interpretation and Value Prediction</h3>
+<p>
+<p>Step6: Now that you have identified your best model, use the <code>summary</code> function to review the details of the results. Remember that you can look at just the coefficients with the <code>coef</code> function as well.</p>
+<pre class="r"><code>summary(PsiAspectElev_pWindDayObs)</code></pre>
+<pre><code>## 
+## Call:
+## occu(formula = ~wind + dayOfYear + observer ~ aspect + elevation, 
+##     data = umfBlbw)
+## 
+## Occupancy (logit-scale):
+##             Estimate      SE     z P(&gt;|z|)
+## (Intercept)  2.81027 1.02047  2.75 0.00589
+## aspect       0.26259 0.14112  1.86 0.06277
+## elevation   -0.00247 0.00157 -1.57 0.11626
+## 
+## Detection (logit-scale):
+##             Estimate      SE     z  P(&gt;|z|)
+## (Intercept)   3.6189 0.82253  4.40 1.08e-05
+## wind         -0.0779 0.05681 -1.37 1.70e-01
+## dayOfYear    -0.0233 0.00494 -4.71 2.49e-06
+## observerCH    0.7058 0.18284  3.86 1.13e-04
+## observerDJW   0.5988 0.17815  3.36 7.76e-04
+## observerJDW   0.1048 0.19074  0.55 5.83e-01
+## 
+## AIC: 1550.68 
+## Number of sites: 296
+## optim convergence code: 0
+## optim iterations: 350 
+## Bootstrap iterations: 0</code></pre>
+<p>
+<strong>Q5: Review the coefficient values of your parameters. Describe the relationship between each parameter and its response variable (i.e. occupancy or detection).</strong>
+<p>
+A5: We can see, based on coefficient values, that as wind level increases, probability of detection decreases. The same pattern appears with day of year. As we get further into summer, detection of this species declines. Regarding observer, we see that observer AJS is not shown in the coefficient list. This means that the detection probability parameter of AJS is accounted for in the intercept term. The values of the other coefficients are relative to this AJS baseline. The other three observers show higher detection probabilities than AJS, this being a substantial difference in the case of CH and DJW. Interestingly, with respect to observers, this is opposite to the results for ovenbirds. For occupancy, as aspect increases, so does probability of occupancy. The opposite is true for elevation.
+<p>
+<p>Step7: Use the <code>predict</code> function, to predict values for detection probability, over a range of values for each important covariates. Use these predicted values to create response curves for detection covariates, and occupacy covariates. If observer is an important factor in the deteciton model, have each graph of any other detection covariates show a separate line for each observer.</p>
+<pre class="r"><code>head(predict(PsiAspectElev_pWindDayObs, type = &quot;state&quot;), 10)</code></pre>
+<pre><code>##    Predicted         SE     lower     upper
+## 1  0.6981976 0.09143992 0.4970533 0.8441250
+## 2  0.7422278 0.07462228 0.5727647 0.8608083
+## 3  0.7915502 0.05688111 0.6589509 0.8818396
+## 4  0.9045134 0.05171774 0.7455056 0.9683862
+## 5  0.8934789 0.05494431 0.7301314 0.9629692
+## 6  0.8808115 0.05991543 0.7071436 0.9576585
+## 7  0.9036231 0.05582888 0.7274437 0.9705337
+## 8  0.9106593 0.04845943 0.7602969 0.9703764
+## 9  0.9090740 0.04596120 0.7707529 0.9674597
+## 10 0.9285346 0.04027963 0.7981365 0.9771145</code></pre>
+<pre class="r"><code>summary(predict(PsiAspectElev_pWindDayObs, type = &quot;state&quot;))</code></pre>
+<pre><code>##    Predicted            SE              lower            upper       
+##  Min.   :0.6758   Min.   :0.02623   Min.   :0.4495   Min.   :0.8418  
+##  1st Qu.:0.8274   1st Qu.:0.03080   1st Qu.:0.7280   1st Qu.:0.8888  
+##  Median :0.8670   Median :0.03541   Median :0.7749   Median :0.9252  
+##  Mean   :0.8634   Mean   :0.04084   Mean   :0.7581   Mean   :0.9243  
+##  3rd Qu.:0.9148   3rd Qu.:0.04691   3rd Qu.:0.8233   3rd Qu.:0.9637  
+##  Max.   :0.9657   Max.   :0.10475   Max.   :0.8541   Max.   :0.9927</code></pre>
+<pre class="r"><code>head(predict(PsiAspectElev_pWindDayObs, type = &quot;det&quot;), 10)</code></pre>
+<pre><code>##    Predicted         SE     lower     upper
+## 1  0.6757531 0.03791201 0.5975330 0.7452522
+## 2  0.4972031 0.03756173 0.4241707 0.5703551
+## 3  0.5821584 0.03254870 0.5173386 0.6442591
+## 4  0.3480281 0.04066722 0.2730913 0.4313264
+## 5  0.6757531 0.03791201 0.5975330 0.7452522
+## 6  0.4972031 0.03756173 0.4241707 0.5703551
+## 7  0.5821584 0.03254870 0.5173386 0.6442591
+## 8  0.3305680 0.03927457 0.2585598 0.4115002
+## 9  0.6584565 0.04503621 0.5656011 0.7405676
+## 10 0.4972031 0.03756173 0.4241707 0.5703551</code></pre>
+<pre class="r"><code>summary(predict(PsiAspectElev_pWindDayObs, type = &quot;det&quot;))</code></pre>
+<pre><code>##    Predicted            SE              lower            upper       
+##  Min.   :0.2787   Min.   :0.03115   Min.   :0.1932   Min.   :0.3839  
+##  1st Qu.:0.4510   1st Qu.:0.03385   1st Qu.:0.3757   1st Qu.:0.5324  
+##  Median :0.5251   Median :0.03742   Median :0.4483   Median :0.6018  
+##  Mean   :0.5299   Mean   :0.03819   Mean   :0.4551   Mean   :0.6037  
+##  3rd Qu.:0.6196   3rd Qu.:0.04055   3rd Qu.:0.5448   3rd Qu.:0.6867  
+##  Max.   :0.7396   Max.   :0.07608   Max.   :0.6645   Max.   :0.8028</code></pre>
+<p>
+<strong>Q6: What are the average, min and max predicted values of occupancy across our sites? How does this compare to naive occupancy?</strong>
+<p>
+A6: We can see that our minimum predicted site occupancy value is 67.6%, with a max value of 96.5%. Average site occupancy across our sites is 86.34%. Our naive occupancy estimate is 0.824. Let’s look at our detection probability estimates.
+<p>
+<strong>Q7: What is our average detection probability across our sites and how does this compare to our value for ovenbird detection probability?</strong>
+<p>
+A7: Mean detection probability across our sites is about 53% (lower than nearly 70% for ovenbirds).
+<p>
+<strong>Q8: With this average detection probability, what is the probability of not detecting this species at a site at least once (i.e. missing it 4 times in a row) if it was actually present?</strong>
+<p>
+<p>A8: 0.049</p>
+</div>
+<div id="graphical-interpretation-of-model-covariates" class="section level3">
+<h3>Graphical Interpretation of Model Covariates</h3>
+<p>
+Let’s now take a graphical look at how our covariates influence occupancy and detection.
+<p>
+Step7: UUse the <code>predict</code> function to predict values for detection probability, over a range of values for each important covariates. Use these predicted values to create response curves for detection covariates, and occupacy covariates. If observer is an important factor in the deteciton model, have each graph of any other detection covariates show a separate line for each observer.
+<p>
+<p>Hint: If something like time of day, or day of year are important, you’ll need to figure out how to set mean or median values of these covariates (which are stored as times or dates in <code>visits</code>). Check back for code in the ovenbird demo that shows how we converted them to numeric values.</p>
+<p>
+<p>Let’s first save our best model with a shorter name.</p>
+<pre class="r"><code>best &lt;- PsiAspectElev_pWindDayObs</code></pre>
+<p>
+<p>To predict across a particular set of values using our model equation, we need to create a new dataframe. Remember the names of your columns here need to be exactly the same as the names of your covariates in the unmarked data objects. Here we are predicting across all possible values of the wind covariate (0-6), and setting the observer to “AJS”. We need some extra code to convert the day of year to a numeric value, so that we can calculate the mean. These numeric values are those that were used in teh modeling itself, so we have to be consistent in these formats.</p>
+<pre class="r"><code>newDataDetWind_AJS &lt;- data.frame(
+  wind = seq(0, 6),
+  observer = factor(&quot;AJS&quot;,
+    levels = c(&quot;AJS&quot;, &quot;CH&quot;, &quot;DJW&quot;, &quot;JDW&quot;)),
+  dayOfYear = mean(yday(
+    strptime(visits$date, format = &quot;%m/%d/%Y&quot;)
+  )))
+head(newDataDetWind_AJS)                                               </code></pre>
+<pre><code>##   wind observer dayOfYear
+## 1    0      AJS  162.7221
+## 2    1      AJS  162.7221
+## 3    2      AJS  162.7221
+## 4    3      AJS  162.7221
+## 5    4      AJS  162.7221
+## 6    5      AJS  162.7221</code></pre>
+<p>
+<p>We will now use this dataframe to create predictions of detection probability, using our equation from our best model.</p>
+<pre class="r"><code>EstDetWindAJS &lt;- predict(best,
+                         type = &quot;det&quot;,
+                         newdata = newDataDetWind_AJS,
+                         appendData = TRUE)
+head(EstDetWindAJS)</code></pre>
+<pre><code>##   Predicted         SE     lower     upper wind observer dayOfYear
+## 1 0.4581949 0.03606589 0.3888013 0.5292491    0      AJS  162.7221
+## 2 0.4389287 0.03215529 0.3772066 0.5025999    1      AJS  162.7221
+## 3 0.4198449 0.03396636 0.3550932 0.4874790    2      AJS  162.7221
+## 4 0.4009978 0.04040724 0.3249703 0.4821088    3      AJS  162.7221
+## 5 0.3824391 0.04932041 0.2914195 0.4825279    4      AJS  162.7221
+## 6 0.3642170 0.05920624 0.2576473 0.4860082    5      AJS  162.7221</code></pre>
+<p>Let’s repeat this for the other three observers.</p>
+<pre class="r"><code>newDataDetWind_CH &lt;- data.frame(wind = seq(0, 6),
+                                observer = factor(&quot;CH&quot;, levels = c(&quot;AJS&quot;, &quot;CH&quot;, &quot;DJW&quot;, &quot;JDW&quot;)),
+                                dayOfYear = mean(yday(
+    strptime(visits$date, format = &quot;%m/%d/%Y&quot;)
+  )))
+
+EstDetWindCH &lt;- predict(best,
+                        type = &quot;det&quot;,
+                        newdata = newDataDetWind_CH,
+                        appendData = TRUE)
+
+newDataDetWind_DJW &lt;- data.frame(wind = seq(0, 6),
+                                 observer = factor(&quot;DJW&quot;,
+                                 levels = c(&quot;AJS&quot;, &quot;CH&quot;, &quot;DJW&quot;, &quot;JDW&quot;)),
+                                 dayOfYear = mean(yday(
+    strptime(visits$date, format = &quot;%m/%d/%Y&quot;)
+  )))
+
+EstDetWindDJW &lt;- predict(best,
+                         type = &quot;det&quot;,
+                         newdata = newDataDetWind_DJW,
+                         appendData = TRUE)
+
+newDataDetWind_JDW &lt;- data.frame(wind = seq(0, 6),
+                                 observer = factor(&quot;JDW&quot;,
+                                 levels = c(&quot;AJS&quot;, &quot;CH&quot;, &quot;DJW&quot;, &quot;JDW&quot;)),
+                                 dayOfYear = mean(yday(
+    strptime(visits$date, format = &quot;%m/%d/%Y&quot;)
+  )))
+EstDetWindJDW &lt;- predict(best,
+                         type = &quot;det&quot;,
+                         newdata = newDataDetWind_JDW,
+                         appendData = TRUE)</code></pre>
+<p>
+<p>Let’s do this for <code>dayofYear</code> as well. Now we’ll try a different approach, using a function called <code>expand.grid</code>. What we end up with here is a single dataframe, with the first 100 values for AJS, the next 100 for CH and so on.</p>
+<pre class="r"><code>newDataDetDay &lt;- data.frame(expand.grid(
+  wind = mean(visits$wind),
+  observer = c(&quot;AJS&quot;, &quot;CH&quot;, &quot;DJW&quot;, &quot;JDW&quot;),
+  dayOfYear = seq(min(yday(
+  strptime(visits$date, format = &quot;%m/%d/%Y&quot;)
+  )), max(yday(
+  strptime(visits$date, format = &quot;%m/%d/%Y&quot;)
+  )), length.out = 100)
+  ))
+newDataDetDay &lt;- newDataDetDay[order(newDataDetDay$observer),]</code></pre>
+<pre class="r"><code>EstDetDayAllObs &lt;- predict(best,
+                         type = &quot;det&quot;,
+                         newdata = newDataDetDay,
+                         appendData = TRUE)</code></pre>
+<p>
+<p>Now we have predicted values of detection probability for all values of wind, and for all values of oberver. Let’s graph them together to see what the relationships look like.</p>
+<pre class="r"><code>#AJS
+plot(
+  Predicted ~ wind,
+  EstDetWindAJS,
+  type = &quot;l&quot;,
+  ylim = c(0, 1),
+  xlab = &quot;Wind Level&quot;,
+  ylab = &quot;Expected detection probability&quot;,
+  las = 1,
+  bty = &quot;n&quot;
+  )
+#Upper and Lower Confidence Intervals
+lines(
+  lower ~ wind,
+  EstDetWindAJS,
+  type = &quot;l&quot;,
+  lty = 3
+  )
+lines(
+  upper ~ wind,
+  EstDetWindAJS,
+  type = &quot;l&quot;,
+  lty = 3
+  )
+      
+#CH
+lines(
+  Predicted ~ wind,
+  EstDetWindCH,
+  type = &quot;l&quot;,
+  col = &quot;green&quot;
+  )
+lines(
+  lower ~ wind,
+  EstDetWindCH,
+  type = &quot;l&quot;,
+  col = &quot;green&quot;,
+  lty = 3
+  )
+lines(
+  upper ~ wind,
+  EstDetWindCH,
+  type = &quot;l&quot;,
+  col = &quot;green&quot;,
+  lty = 3
+  )
+
+#DJW
+lines(
+  Predicted ~ wind,
+  EstDetWindDJW,
+  type = &quot;l&quot;,
+  col = &quot;red&quot;
+  )
+
+lines(
+  lower ~ wind,
+  EstDetWindDJW,
+  type = &quot;l&quot;,
+  col = &quot;red&quot;,
+  lty = 3
+  )
+lines(
+  upper ~ wind,
+  EstDetWindDJW,
+  type = &quot;l&quot;,
+  col = &quot;red&quot;,
+  lty = 3
+  )
+
+#JDW
+lines(
+  Predicted ~ wind,
+  EstDetWindJDW,
+  type = &quot;l&quot;,
+  col = &quot;blue&quot;
+  )
+
+lines(
+  lower ~ wind,
+  EstDetWindJDW,
+  type = &quot;l&quot;,
+  col = &quot;blue&quot;,
+  lty = 3
+  )
+
+lines(
+  upper ~ wind,
+  EstDetWindJDW,
+  type = &quot;l&quot;,
+  col = &quot;blue&quot;,
+  lty = 3
+  )
+
+legend(
+  &quot;bottomleft&quot;,
+  legend = c(&quot;AJS&quot;, &quot;CH&quot;, &quot;DJW&quot;, &quot;JDW&quot;),
+  lty = 1,
+  col = c(&quot;black&quot;, &quot;green&quot;, &quot;red&quot;, &quot;blue&quot;),
+  bty = &quot;n&quot;
+  )</code></pre>
+<img src="OccupancyExercise_BLBW_key_files/figure-html/unnamed-chunk-24-1.png" width="672" />
+<p>
+<p>Let’s use our expanded grid for varying day of survey to look at how day of year affects detection probability. Note that here we have one dataframe to pull information from, so we just need to keep track of what rows of the dataframe represent each of the 4 observers.</p>
+<pre class="r"><code>#AJS
+plot(
+  Predicted ~ dayOfYear,
+  EstDetDayAllObs[1:100,],
+  type = &quot;l&quot;,
+  ylim = c(0, 1),
+  xlab = &quot;Day of Year&quot;,
+  ylab = &quot;Expected detection probability&quot;,
+  las = 1,
+  bty = &quot;n&quot;
+  )
+#Upper and Lower Confidence Intervals
+lines(
+  lower ~ dayOfYear,
+  EstDetDayAllObs[1:100,],
+  type = &quot;l&quot;,
+  lty = 3
+  )
+lines(
+  upper ~ dayOfYear,
+  EstDetDayAllObs[1:100,],
+  type = &quot;l&quot;,
+  lty = 3
+  )
+      
+#CH
+lines(
+  Predicted ~ dayOfYear,
+  EstDetDayAllObs[101:200,],
+  type = &quot;l&quot;,
+  col = &quot;green&quot;
+  )
+lines(
+  lower ~ dayOfYear,
+  EstDetDayAllObs[101:200,],
+  type = &quot;l&quot;,
+  col = &quot;green&quot;,
+  lty = 3
+  )
+lines(
+  upper ~ dayOfYear,
+  EstDetDayAllObs[101:200,],
+  type = &quot;l&quot;,
+  col = &quot;green&quot;,
+  lty = 3
+  )
+
+#DJW
+lines(
+  Predicted ~ dayOfYear,
+  EstDetDayAllObs[201:300,],
+  type = &quot;l&quot;,
+  col = &quot;red&quot;
+  )
+
+lines(
+  lower ~ dayOfYear,
+  EstDetDayAllObs[201:300,],
+  type = &quot;l&quot;,
+  col = &quot;red&quot;,
+  lty = 3
+  )
+lines(
+  upper ~ dayOfYear,
+  EstDetDayAllObs[201:300,],
+  type = &quot;l&quot;,
+  col = &quot;red&quot;,
+  lty = 3
+  )
+
+#JDW
+lines(
+  Predicted ~ dayOfYear,
+  EstDetDayAllObs[301:400,],
+  type = &quot;l&quot;,
+  col = &quot;blue&quot;
+  )
+
+lines(
+  lower ~ dayOfYear,
+  EstDetDayAllObs[301:400,],
+  type = &quot;l&quot;,
+  col = &quot;blue&quot;,
+  lty = 3
+  )
+
+lines(
+  upper ~ dayOfYear,
+  EstDetDayAllObs[301:400,],
+  type = &quot;l&quot;,
+  col = &quot;blue&quot;,
+  lty = 3
+  )
+
+legend(
+  &quot;bottomleft&quot;,
+  legend = c(&quot;AJS&quot;, &quot;CH&quot;, &quot;DJW&quot;, &quot;JDW&quot;),
+  lty = 1,
+  col = c(&quot;black&quot;, &quot;green&quot;, &quot;red&quot;, &quot;blue&quot;),
+  bty = &quot;n&quot;
+  )</code></pre>
+<img src="OccupancyExercise_BLBW_key_files/figure-html/unnamed-chunk-25-1.png" width="672" />
+<p>
+<p>STEP8: Now look at how our covariates influence blackburnian occupancy. As above we need to first create a new dataframe. Create a graph representing the relationship between each of your significant occupancy covariates, and probability of occupancy.</p>
+<pre class="r"><code>newDataOccAspect &lt;-
+  data.frame(
+  aspect = seq(min(siteCovs$aspect), max(siteCovs$aspect), length.out = 100),
+  elevation = median(siteCovs$elevation)
+  
+  )
+EstOccAspect &lt;- predict(best,
+                        type = &quot;state&quot;,
+                        newdata = newDataOccAspect,
+                        appendData = TRUE)
+head(EstOccAspect)</code></pre>
+<pre><code>##   Predicted         SE     lower     upper     aspect elevation
+## 1 0.7865655 0.05380301 0.6628918 0.8735241 0.01254071  611.2705
+## 2 0.7893132 0.05222920 0.6693450 0.8739513 0.07516437  611.2705
+## 3 0.7920348 0.05069551 0.6756836 0.8744032 0.13778803  611.2705
+## 4 0.7947305 0.04920271 0.6819041 0.8748810 0.20041169  611.2705
+## 5 0.7974002 0.04775160 0.6880033 0.8753863 0.26303535  611.2705
+## 6 0.8000438 0.04634299 0.6939781 0.8759205 0.32565901  611.2705</code></pre>
+<pre class="r"><code>newDataOccElev &lt;- data.frame(
+  aspect = median(siteCovs$aspect),
+  elevation = seq(
+  min(siteCovs$elevation),
+  max(siteCovs$elevation),
+  length.out = 100
+  )
+  )
+EstOccElev &lt;- predict(best,
+                      type = &quot;state&quot;,
+                      newdata = newDataOccElev,
+                      appendData = TRUE)
+head(EstOccElev)</code></pre>
+<pre><code>##   Predicted         SE     lower     upper   aspect elevation
+## 1 0.9429707 0.03743094 0.8086490 0.9847781 2.351254  252.0147
+## 2 0.9420471 0.03743761 0.8091345 0.9842099 2.351254  258.9181
+## 3 0.9411096 0.03743561 0.8096138 0.9836213 2.351254  265.8216
+## 4 0.9401578 0.03742476 0.8100867 0.9830117 2.351254  272.7251
+## 5 0.9391916 0.03740486 0.8105529 0.9823806 2.351254  279.6286
+## 6 0.9382109 0.03737573 0.8110124 0.9817271 2.351254  286.5321</code></pre>
+<p>
+<p>Now let’s graph the relationships.</p>
+<pre class="r"><code>par(mfrow = c(1,2))
+#Aspect
+plot(
+  Predicted ~ aspect,
+  EstOccAspect,
+  type = &quot;l&quot;,
+  col = &quot;red&quot;,
+  ylim = c(0, 1),
+  xlab = &quot;Aspect&quot;,
+  ylab = &quot;Expected occupancy probability&quot;,
+  las = 1,
+  bty = &quot;n&quot;
+  )
+
+lines(
+  lower ~ aspect,
+  EstOccAspect,
+  type = &quot;l&quot;,
+  lty = 2,
+  col = &quot;red&quot;
+  )
+lines(
+  upper ~ aspect,
+  EstOccAspect,
+  type = &quot;l&quot;,
+  lty = 2,
+  col = &quot;red&quot;
+  )
+#Elevation
+plot(
+  Predicted ~ elevation,
+  EstOccElev,
+  type = &quot;l&quot;,
+  col = &quot;blue&quot;,
+  ylim = c(0, 1),
+  xlab = &quot;Elevation (m)&quot;,
+  ylab = &quot;Expected occupancy probability&quot;,
+  las = 1,
+  bty = &quot;n&quot;
+  )
+
+lines(
+  lower ~ elevation,
+  EstOccElev,
+  type = &quot;l&quot;,
+  lty = 2,
+  col = &quot;blue&quot;
+  )
+lines(
+  upper ~ elevation,
+  EstOccElev,
+  type = &quot;l&quot;,
+  lty = 2,
+  col = &quot;blue&quot;
+  )</code></pre>
+<img src="OccupancyExercise_BLBW_key_files/figure-html/unnamed-chunk-27-1.png" width="672" /> ###Final Conclusions
+<p>
+Our ultimate goal in this analysis was to investigate the factors influencing occupancy of Blackburnian Warblers across the Hubbard Brook valley. To do this in the most robust way, we also wanted to account for imperfect detection, and we included a range of covariates to further assist us in accounting for those factors that may cause detection probability to vary across sites or site visits.
+<p>
+<strong>Q9: Describe in a few sentences what we have learned about Blackburnian Warblers in this landscape, with respect to both how they are detected and what influences their occupancy.</strong>
+<p>
+<strong>Q10: Let’s assume the Blackburnian Warbler was endangered. Think about how a manager might use this information from this analysis to better manage this population.</strong>
+<p>
+<p><strong>Q11: This analysis was simplified for this exercise, particularly with respect to the small number of covariates on occupancy. What other covariates might be interesting to test in this situation?</strong></p>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
