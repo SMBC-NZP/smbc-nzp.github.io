@@ -36,13 +36,13 @@ library(unmarked)
 library(tidyverse)
 library(lubridate) #for the `yday` function
 ```
-<p>Remember also when starting a new analysis to clear your environment. This is generally always a good idea, particularly in cases where you might be using models of the same names as previous analyses.
+<p>Remember also when starting a new analysis to clear your environment. This is generally always a good idea, particularly in cases where you might be using models of the same names as previous analyses.</p>
 ```{r, eval = F}
 rm(list = ls())
 ```
 
 ###Data Import and Exploration
-<p>We can bring in data using our `read.csv` command, with our data files stored in our course dropbox folder as opposed to on our local computer.
+<p>We can bring in data using our `read.csv` command, with our data files stored in our course dropbox folder as opposed to on our local computer.</p>
 
 ```{r}
 counts <- 
@@ -57,9 +57,9 @@ siteCovs <-
 ###Data Formatting
 Since we are using the same data set from the ovenbird demonstration, we need to perform the same formatting steps to prepare the data for analysis. 
 
-<p>Step1: Using the ovenbird demo as a guide, first pull out only the Blackburnian warbler observation from the `counts` object, select out the `plot` and `replicate` columns, and create a new column for counts (`n`) that is set to 1. Remember to keep only unique rows, since we sometimes have more than one observation within a 10 minute period. Review your new counts object to make sure everything worked properly.
-<p>**Q1: How many observations of Blackburnian Warblers were recorded?**
-<p>A1: 544
+<p>Step1: Using the ovenbird demo as a guide, first pull out only the Blackburnian warbler observation from the `counts` object, select out the `plot` and `replicate` columns, and create a new column for counts (`n`) that is set to 1. Remember to keep only unique rows, since we sometimes have more than one observation within a 10 minute period. Review your new counts object to make sure everything worked properly.</p>
+<p>**Q1: How many observations of Blackburnian Warblers were recorded?**</p>
+<p>A1: 544</p>
 
 ```{r, warning = F}
 BlbwCounts <-
@@ -70,7 +70,7 @@ BlbwCounts <-
   distinct
 ```
 
-<p>Let's look at `Blbwcounts` and make sure we understand what the code above has done.
+<p>Let's look at `Blbwcounts` and make sure we understand what the code above has done.</p>
 ```{r}
 head(BlbwCounts)
 ```
@@ -89,7 +89,7 @@ detectionFrameBlbw <-
   as.matrix
 ```
 
-<p>Let's confirm what we have now, which should be a matrix of 296 sites (rows) and 4 occasions (columns) indicating in which situations the species was observed or not observed. 
+<p>Let's confirm what we have now, which should be a matrix of 296 sites (rows) and 4 occasions (columns) indicating in which situations the species was observed or not observed. </p>
 ```{r}
 head(detectionFrameBlbw)
 ```
@@ -126,25 +126,25 @@ obsCovs <-
   )
 ```
 
-<p>Our data are now ready for the `unmarkedFrameOccu` function which prepares our data for occupancy analysis.We need to provide three objects, the detection matrix, our site covariates data frame, and a list of dataframes for our observation/survey covariates. 
-<p>Step4: Create an unmarked frame for use in our occupancy models and use `summary` to review this object.
+<p>Our data are now ready for the `unmarkedFrameOccu` function which prepares our data for occupancy analysis.We need to provide three objects, the detection matrix, our site covariates data frame, and a list of dataframes for our observation/survey covariates. </p>
+<p>Step4: Create an unmarked frame for use in our occupancy models and use `summary` to review this object.</p>
 ```{r}
 umfBlbw <-
   unmarkedFrameOccu(y = detectionFrameBlbw,
   siteCovs = siteCovs,
   obsCovs = obsCovs)
 ```
-<p>We can look at a general summary of the data using `summary` on this object
+<p>We can look at a general summary of the data using `summary` on this object</p>
 ```{r}
 summary(umfBlbw)
 ```
-<p>**Q2: What is our naive occupancy probability for this species?**
-<p>A2: `r 244/296`
+<p>**Q2: What is our naive occupancy probability for this species?**</p>
+<p>A2: `r 244/296`</p>
 
 ###Model Fitting and Model Selection - Occupancy and Detection Covariates
-<p>We now are ready to run some single-season occupancy models. Remember that it is best practice to first test a range of models that investigate potential hypotheses for what covariates are impacting occupancy, while using a fully general model for detection probability. Once you refine your occupancy variables you can then refine/simplify your detection covariates if possible. Use the ovenbird demo exercise as a guide. Here again, as in the ovenbird demo, you may need to use starting values if some models fail to run.
-<p>Step 5: Conduct a complete model selection and comparison work flow to arrive at a best final model describing occupancy/detection of this species. 
-<p>**Q3: Which covariates are important in determing probability of occupancy of this species?**
+<p>We now are ready to run some single-season occupancy models. Remember that it is best practice to first test a range of models that investigate potential hypotheses for what covariates are impacting occupancy, while using a fully general model for detection probability. Once you refine your occupancy variables you can then refine/simplify your detection covariates if possible. Use the ovenbird demo exercise as a guide. Here again, as in the ovenbird demo, you may need to use starting values if some models fail to run.</p>
+<p>Step 5: Conduct a complete model selection and comparison work flow to arrive at a best final model describing occupancy/detection of this species.</p> 
+<p>**Q3: Which covariates are important in determing probability of occupancy of this species?**</p>
 ```{r}
 Psidot_pFull <- occu( ~ wind + sky + dayOfYear + observer + timeOfDay 
                       ~ 1, data = umfBlbw) 
@@ -164,15 +164,15 @@ PsiAspectSlopeElev_pFull <- occu( ~ wind + sky + dayOfYear + observer + timeOfDa
                         ~ aspect +slope + elevation, data = umfBlbw)
 
 ```
-<p>Once we have our models run, we can use the `fitList` function to compile the models together, in preparation for model selection. We then use the `modSel` function to bring together the model results and compare using AIC-based approaches. Note that putting parentheses around code that creates something, will print that object automatically to the console
+<p>Once we have our models run, we can use the `fitList` function to compile the models together, in preparation for model selection. We then use the `modSel` function to bring together the model results and compare using AIC-based approaches. Note that putting parentheses around code that creates something, will print that object automatically to the console</p>
 ```{r, warning = F, message = F}
 ObsModsBB <- fitList(Psidot_pFull,PsiElev_pFull,PsiSlope_pFull, PsiAspect_pFull, PsiAspectElev_pFull, PsiAspectSlope_pFull,PsiSlopeElev_pFull,PsiAspectSlopeElev_pFull)
 (ObsModsRankBB <- modSel(ObsModsBB))
 ```
-<p>A3: We can see that our best model includes both aspect and elevation.These are the same two covariates that were most important in determining occupancy of ovenbirds.
+<p>A3: We can see that our best model includes both aspect and elevation.These are the same two covariates that were most important in determining occupancy of ovenbirds.</p>
 
-<p>**Q4: What are the most important covariates in determining detection probability of this species?**
-<p> Here again, as in the ovenbird demo, I've had to use starting values, for the same problematic models. I cheated a bit here and just used the same starting values as for the ovenbird, which is not necessarily the best approach. But in this case, these starting values did help in getting the models to coverge properly. 
+<p>**Q4: What are the most important covariates in determining detection probability of this species?**</p>
+<p> Here again, as in the ovenbird demo, I've had to use starting values, for the same problematic models. I cheated a bit here and just used the same starting values as for the ovenbird, which is not necessarily the best approach. But in this case, these starting values did help in getting the models to coverge properly. </p>
 ```{r}
 
 PsiAspectElev_pdot <- occu( ~ 1
@@ -310,16 +310,16 @@ ObsModsP <-
 
 (ObsModsRankP <- modSel(ObsModsP))
 ```
-<p>A4: We can see from our model selection table that wind level, day of year and observer are important covariates in determining probability of detection of blackburnians across our site. Let's move forward with some interpretation of what seems to be our best supported model, `PsiAspectElev_pWindDayObs`.
+<p>A4: We can see from our model selection table that wind level, day of year and observer are important covariates in determining probability of detection of blackburnians across our site. Let's move forward with some interpretation of what seems to be our best supported model, `PsiAspectElev_pWindDayObs`.</p>
 
 ###Model Interpretation and Value Prediction
-<p>Step6: Now that you have identified your best model, use the `summary` function to review the details of the results. Remember that you can look at just the coefficients with the `coef` function as well.
+<p>Step6: Now that you have identified your best model, use the `summary` function to review the details of the results. Remember that you can look at just the coefficients with the `coef` function as well.</p>
 ```{r}
 summary(PsiAspectElev_pWindDayObs)
 ```
-<p>**Q5: Review the coefficient values of your parameters. Describe the relationship between each parameter and its response variable (i.e. occupancy or detection).**
+<p>**Q5: Review the coefficient values of your parameters. Describe the relationship between each parameter and its response variable (i.e. occupancy or detection).**</p>
 <p>A5: We can see, based on coefficient values, that as wind level increases, probability of detection decreases. The same pattern appears with day of year. As we get further into summer, detection of this species declines. Regarding observer, we see that observer AJS is not shown in the coefficient list. This means that the detection probability parameter of AJS is accounted for in the intercept term. The values of the other coefficients are relative to this AJS baseline. The other three observers show higher detection probabilities than AJS, this being a substantial difference in the case of CH and DJW. Interestingly, with respect to observers, this is opposite to the results for ovenbirds. For occupancy, as aspect increases, so does probability of occupancy. The opposite is true for elevation.
-<p>Step7: Use the `predict` function, to predict values for detection probability, over a range of values for each important covariates. Use these predicted values to create response curves for detection covariates, and occupacy covariates. If observer is an important factor in the deteciton model, have each graph of any other detection covariates show a separate line for each observer. 
+<p>Step7: Use the `predict` function, to predict values for detection probability, over a range of values for each important covariates. Use these predicted values to create response curves for detection covariates, and occupacy covariates. If observer is an important factor in the deteciton model, have each graph of any other detection covariates show a separate line for each observer. </p>
 ```{r}
 head(predict(PsiAspectElev_pWindDayObs, type = "state"), 10)
 summary(predict(PsiAspectElev_pWindDayObs, type = "state"))
@@ -329,23 +329,23 @@ summary(predict(PsiAspectElev_pWindDayObs, type = "state"))
 head(predict(PsiAspectElev_pWindDayObs, type = "det"), 10)
 summary(predict(PsiAspectElev_pWindDayObs, type = "det"))
 ```
-<p>**Q6: What are the average, min and max predicted values of occupancy across our sites? How does this compare to naive occupancy?**
-<p>A6: We can see that our minimum predicted site occupancy value is 67.6%, with a max value of 96.5%. Average site occupancy across our sites is 86.34%. Our naive occupancy estimate is `r round(244/296, 3)`. Let's look at our detection probability estimates. 
-<p>**Q7: What is our average detection probability across our sites and how does this compare to our value for ovenbird detection probability?**
-<p>A7: Mean detection probability across our sites is about 53% (lower than nearly 70% for ovenbirds).
-<p>**Q8: With this average detection probability, what is the probability of not detecting this species at a site at least once (i.e. missing it 4 times in a row) if it was actually present?**
-<p>A8: `r round((1-.53)^4,3)`
+<p>**Q6: What are the average, min and max predicted values of occupancy across our sites? How does this compare to naive occupancy?**</p>
+<p>A6: We can see that our minimum predicted site occupancy value is 67.6%, with a max value of 96.5%. Average site occupancy across our sites is 86.34%. Our naive occupancy estimate is `r round(244/296, 3)`. Let's look at our detection probability estimates. </p>
+<p>**Q7: What is our average detection probability across our sites and how does this compare to our value for ovenbird detection probability?**</p>
+<p>A7: Mean detection probability across our sites is about 53% (lower than nearly 70% for ovenbirds).</p>
+<p>**Q8: With this average detection probability, what is the probability of not detecting this species at a site at least once (i.e. missing it 4 times in a row) if it was actually present?**</p>
+<p>A8: `r round((1-.53)^4,3)`</p>
 
 ###Graphical Interpretation of Model Covariates
-<p> Let's now take a graphical look at how our covariates influence occupancy and detection. 
-<p>Step7: UUse the `predict` function to predict values for detection probability, over a range of values for each important covariates. Use these predicted values to create response curves for detection covariates, and occupacy covariates. If observer is an important factor in the deteciton model, have each graph of any other detection covariates show a separate line for each observer.
-<p>Hint: If something like time of day, or day of year are important, you'll need to figure out how to set mean or median values of these covariates (which are stored as times or dates in `visits`). Check back for code in the ovenbird demo that shows how we converted them to numeric values.
+<p> Let's now take a graphical look at how our covariates influence occupancy and detection. </p>
+<p>Step7: UUse the `predict` function to predict values for detection probability, over a range of values for each important covariates. Use these predicted values to create response curves for detection covariates, and occupacy covariates. If observer is an important factor in the deteciton model, have each graph of any other detection covariates show a separate line for each observer.</p>
+<p>Hint: If something like time of day, or day of year are important, you'll need to figure out how to set mean or median values of these covariates (which are stored as times or dates in `visits`). Check back for code in the ovenbird demo that shows how we converted them to numeric values.</p>
 
-<p>Let's first save our best model with a shorter name.
+<p>Let's first save our best model with a shorter name.</p>
 ```{r}
 best <- PsiAspectElev_pWindDayObs
 ```
-<p>To predict across a particular set of values using our model equation, we need to create a new dataframe. Remember the names of your columns here need to be exactly the same as the names of your covariates in the unmarked data objects. Here we are predicting across all possible values of the wind covariate (0-6), and setting the observer to "AJS". We need some extra code to convert the day of year to a numeric value, so that we can calculate the mean. These numeric values are those that were used in teh modeling itself, so we have to be consistent in these formats. 
+<p>To predict across a particular set of values using our model equation, we need to create a new dataframe. Remember the names of your columns here need to be exactly the same as the names of your covariates in the unmarked data objects. Here we are predicting across all possible values of the wind covariate (0-6), and setting the observer to "AJS". We need some extra code to convert the day of year to a numeric value, so that we can calculate the mean. These numeric values are those that were used in teh modeling itself, so we have to be consistent in these formats. </p>
 
 ```{r}
 newDataDetWind_AJS <- data.frame(
@@ -357,7 +357,7 @@ newDataDetWind_AJS <- data.frame(
   )))
 head(newDataDetWind_AJS)                                               
 ```
-<p>We will now use this dataframe to create predictions of detection probability, using our equation from our best model.
+<p>We will now use this dataframe to create predictions of detection probability, using our equation from our best model.</p>
 ```{r}
 EstDetWindAJS <- predict(best,
                          type = "det",
@@ -402,7 +402,7 @@ EstDetWindJDW <- predict(best,
                          appendData = TRUE)
 ```
 
-<p>Let's do this for `dayofYear` as well. Now we'll try a different approach, using a function called `expand.grid`. What we end up with here is a single dataframe, with the first 100 values for AJS, the next 100 for CH and so on. 
+<p>Let's do this for `dayofYear` as well. Now we'll try a different approach, using a function called `expand.grid`. What we end up with here is a single dataframe, with the first 100 values for AJS, the next 100 for CH and so on. </p>
 ```{r}
 newDataDetDay <- data.frame(expand.grid(
   wind = mean(visits$wind),
@@ -422,7 +422,7 @@ EstDetDayAllObs <- predict(best,
                          newdata = newDataDetDay,
                          appendData = TRUE)
 ```
-<p>Now we have predicted values of detection probability for all values of wind, and for all values of oberver. Let's graph them together to see what the relationships look like. 
+<p>Now we have predicted values of detection probability for all values of wind, and for all values of oberver. Let's graph them together to see what the relationships look like. </p>
 
 
 ```{r}
@@ -529,7 +529,7 @@ legend(
   )
 
 ```
-<p>Let's use our expanded grid for varying day of survey to look at how day of year affects detection probability. Note that here we have one dataframe to pull information from, so we just need to keep track of what rows of the dataframe represent each of the 4 observers.
+<p>Let's use our expanded grid for varying day of survey to look at how day of year affects detection probability. Note that here we have one dataframe to pull information from, so we just need to keep track of what rows of the dataframe represent each of the 4 observers.</p>
 ```{r}
 #AJS
 plot(
@@ -634,7 +634,7 @@ legend(
   )
 
 ```
-<p>STEP8: Now look at how our covariates influence blackburnian occupancy. As above we need to first create a new dataframe. Create a graph representing the relationship between each of your significant occupancy covariates, and probability of occupancy.
+<p>STEP8: Now look at how our covariates influence blackburnian occupancy. As above we need to first create a new dataframe. Create a graph representing the relationship between each of your significant occupancy covariates, and probability of occupancy.</p>
 ```{r}
 newDataOccAspect <-
   data.frame(
@@ -662,7 +662,7 @@ EstOccElev <- predict(best,
                       appendData = TRUE)
 head(EstOccElev)
 ```
-<p>Now let's graph the relationships.
+<p>Now let's graph the relationships.</p>
 ```{r}
 par(mfrow = c(1,2))
 #Aspect
@@ -722,7 +722,7 @@ lines(
 
 ```
 ###Final Conclusions
-<p> Our ultimate goal in this analysis was to investigate the factors influencing occupancy of Blackburnian Warblers across the Hubbard Brook valley. To do this in the most robust way, we also wanted to account for imperfect detection, and we included a range of covariates to further assist us in accounting for those factors that may cause detection probability to vary across sites or site visits. 
-<p>**Q9: Describe in a few sentences what we have learned about Blackburnian Warblers in this landscape, with respect to both how they are detected and what influences their occupancy.** 
-<p>**Q10: Let's assume the Blackburnian Warbler was endangered. Think about how a manager might use this information from this analysis to better manage this population.** 
-<p>**Q11: This analysis was simplified for this exercise, particularly with respect to the small number of covariates on occupancy. What other covariates might be interesting to test in this situation?**
+<p> Our ultimate goal in this analysis was to investigate the factors influencing occupancy of Blackburnian Warblers across the Hubbard Brook valley. To do this in the most robust way, we also wanted to account for imperfect detection, and we included a range of covariates to further assist us in accounting for those factors that may cause detection probability to vary across sites or site visits. </p>
+<p>**Q9: Describe in a few sentences what we have learned about Blackburnian Warblers in this landscape, with respect to both how they are detected and what influences their occupancy.** </p>
+<p>**Q10: Let's assume the Blackburnian Warbler was endangered. Think about how a manager might use this information from this analysis to better manage this population.** </p>
+<p>**Q11: This analysis was simplified for this exercise, particularly with respect to the small number of covariates on occupancy. What other covariates might be interesting to test in this situation?**</p>
