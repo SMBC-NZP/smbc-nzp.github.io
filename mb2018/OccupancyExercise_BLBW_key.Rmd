@@ -14,8 +14,6 @@ knitr::opts_chunk$set(echo = TRUE)
 #Occupancy Modeling Student Exercise Key - Blackburnian Warbler
 <p><i>Joe Kolowski, Ph.D.</i></p>
 
-<p>test</p>
-
 ## Project Description and Context
 
 <img style="float:right" src="images/BLBW.jpg" />
