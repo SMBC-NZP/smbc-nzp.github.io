@@ -31,17 +31,21 @@ We are working here with the same dataset described in the Ovenbird demo exercis
 
 ###Libraries/Setup
 Let's first call the packages we'll need in this exercise. Use `install.packages` if you do not have these packages already on your machine.
+
 ```{r, warning = FALSE, message = FALSE}
 library(unmarked)
 library(tidyverse)
 library(lubridate) #for the `yday` function
 ```
+
 <p>Remember also when starting a new analysis to clear your environment. This is generally always a good idea, particularly in cases where you might be using models of the same names as previous analyses.</p>
+
 ```{r, eval = F}
 rm(list = ls())
 ```
 
 ###Data Import and Exploration
+
 <p>We can bring in data using our `read.csv` command, with our data files stored in our course dropbox folder as opposed to on our local computer.</p>
 
 ```{r}
@@ -54,7 +58,9 @@ visits <-
 siteCovs <-
   read.csv('https://www.dropbox.com/s/gbrxt85jwid2t55/siteData.csv?dl=1')
 ```
+
 ###Data Formatting
+
 Since we are using the same data set from the ovenbird demonstration, we need to perform the same formatting steps to prepare the data for analysis. 
 
 <p>Step1: Using the ovenbird demo as a guide, first pull out only the Blackburnian warbler observation from the `counts` object, select out the `plot` and `replicate` columns, and create a new column for counts (`n`) that is set to 1. Remember to keep only unique rows, since we sometimes have more than one observation within a 10 minute period. Review your new counts object to make sure everything worked properly.</p>
@@ -71,6 +77,7 @@ BlbwCounts <-
 ```
 
 <p>Let's look at `Blbwcounts` and make sure we understand what the code above has done.</p>
+
 ```{r}
 head(BlbwCounts)
 ```
@@ -373,6 +380,7 @@ summary(predict(PsiAspectElev_pWindDayObs, type = "det"))
 <p>Hint: If something like time of day, or day of year are important, you'll need to figure out how to set mean or median values of these covariates (which are stored as times or dates in `visits`). Check back for code in the ovenbird demo that shows how we converted them to numeric values.</p>
 
 <p>Let's first save our best model with a shorter name.</p>
+
 ```{r}
 best <- PsiAspectElev_pWindDayObs
 ```
@@ -399,7 +407,9 @@ EstDetWindAJS <- predict(best,
                          appendData = TRUE)
 head(EstDetWindAJS)
 ```
+
 Let's repeat this for the other three observers.
+
 ```{r}
 newDataDetWind_CH <- data.frame(wind = seq(0, 6),
                                 observer = factor("CH", levels = c("AJS", "CH", "DJW", "JDW")),
@@ -763,6 +773,7 @@ lines(
   )
 
 ```
+
 ###Final Conclusions
 
 <p> Our ultimate goal in this analysis was to investigate the factors influencing occupancy of Blackburnian Warblers across the Hubbard Brook valley. To do this in the most robust way, we also wanted to account for imperfect detection, and we included a range of covariates to further assist us in accounting for those factors that may cause detection probability to vary across sites or site visits. </p>
