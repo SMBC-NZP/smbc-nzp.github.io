@@ -9,11 +9,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 <head>
+<link rel="stylesheet" href="N:/Capacity Building and Academic Programs/SI-Mason Grad & Prof Training/Individual Courses--Folders/Bird Migration/2018/Materials/Distance/Exercises">
 <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
-# Occupancy Modeling Student Exercise Key - Blackburnian Warbler
-
+#Occupancy Modeling Student Exercise Key - Blackburnian Warbler
 <p><i>Joe Kolowski, Ph.D.</i></p>
 
 ## Project Description and Context
