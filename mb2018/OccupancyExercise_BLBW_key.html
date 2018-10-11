@@ -125,7 +125,7 @@ $(document).ready(function () {
 
 
 <head>
-<link rel="stylesheet" href="N:/Capacity Building and Academic Programs/SI-Mason Grad & Prof Training/Individual Courses--Folders/Bird Migration/2018/Materials/Distance/Exercises"> <link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <div id="occupancy-modeling-student-exercise-key---blackburnian-warbler" class="section level1">
 <h1>Occupancy Modeling Student Exercise Key - Blackburnian Warbler</h1>
@@ -552,6 +552,7 @@ Step6: Now that you have identified your best model, use the <code>summary</code
 </p>
 <p>
 A5: We can see, based on coefficient values, that as wind level increases, probability of detection decreases. The same pattern appears with day of year. As we get further into summer, detection of this species declines. Regarding observer, we see that observer AJS is not shown in the coefficient list. This means that the detection probability parameter of AJS is accounted for in the intercept term. The values of the other coefficients are relative to this AJS baseline. The other three observers show higher detection probabilities than AJS, this being a substantial difference in the case of CH and DJW. Interestingly, with respect to observers, this is opposite to the results for ovenbirds. For occupancy, as aspect increases, so does probability of occupancy. The opposite is true for elevation.
+</p>
 <p>
 Step7: Use the <code>predict</code> function, to predict values for detection probability, over a range of values for each important covariates. Use these predicted values to create response curves for detection covariates, and occupacy covariates. If observer is an important factor in the deteciton model, have each graph of any other detection covariates show a separate line for each observer.
 </p>
@@ -817,7 +818,7 @@ legend(
   col = c(&quot;black&quot;, &quot;green&quot;, &quot;red&quot;, &quot;blue&quot;),
   bty = &quot;n&quot;
   )</code></pre>
-<img src="OccupancyExercise_BLBW_key_files/figure-html/unnamed-chunk-24-1.png" width="672" />
+<p><img src="OccupancyExercise_BLBW_key_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 <p>
 Let’s use our expanded grid for varying day of survey to look at how day of year affects detection probability. Note that here we have one dataframe to pull information from, so we just need to keep track of what rows of the dataframe represent each of the 4 observers.
 </p>
@@ -922,7 +923,7 @@ legend(
   col = c(&quot;black&quot;, &quot;green&quot;, &quot;red&quot;, &quot;blue&quot;),
   bty = &quot;n&quot;
   )</code></pre>
-<img src="OccupancyExercise_BLBW_key_files/figure-html/unnamed-chunk-25-1.png" width="672" />
+<p><img src="OccupancyExercise_BLBW_key_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 <p>
 STEP8: Now look at how our covariates influence blackburnian occupancy. As above we need to first create a new dataframe. Create a graph representing the relationship between each of your significant occupancy covariates, and probability of occupancy.
 </p>
@@ -1022,7 +1023,7 @@ lines(
   lty = 2,
   col = &quot;blue&quot;
   )</code></pre>
-<img src="OccupancyExercise_BLBW_key_files/figure-html/unnamed-chunk-27-1.png" width="672" /> ###Final Conclusions
+<p><img src="OccupancyExercise_BLBW_key_files/figure-html/unnamed-chunk-27-1.png" width="672" /> ###Final Conclusions</p>
 <p>
 Our ultimate goal in this analysis was to investigate the factors influencing occupancy of Blackburnian Warblers across the Hubbard Brook valley. To do this in the most robust way, we also wanted to account for imperfect detection, and we included a range of covariates to further assist us in accounting for those factors that may cause detection probability to vary across sites or site visits.
 </p>
