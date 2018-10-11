@@ -9,28 +9,30 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 <head>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="css/styles.css">
+<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
-#Occupancy Modeling Student Exercise Key - Blackburnian Warbler
+# Occupancy Modeling Student Exercise Key - Blackburnian Warbler
+
 <p><i>Joe Kolowski, Ph.D.</i></p>
 
 ## Project Description and Context
 
 <img style="float:right" src="images/BLBW.jpg" />
 
-We are working here with the same dataset described in the Ovenbird demo exercise. The data were provided by Mike Hallworth, and collected at Hubbard Brook New Hampshire, USA. The full data set at Hubbard Brook had 373 point count survey locations systematically placed throughout Hubbard Brook Valley along 15 transects. Our data set includes 296 of these survey points. Point counts were conducted 4 times per year, and have been collected since 1999. Here we are working with a single year's data. Surveys typically started at the end of May, and all 4 surveys were typically done within a month. Each point count was split into 3 consecutive "periods" of 3 minutes, 20 seconds each (so the observer spent 10 minutes at each location during a survey). These data are part of a large, long-term study focused on investigating many aspects of songbird ecology including habitat use, recruitment, species richness and abundance, and many others. In this demo we'll be working only with the Blackburnian Warbler (BLBW). Here our goal is to assess what factors influence occupancy probability of blackburnian warblers in this landscape, while accounting for factors that may influence detection. 
+<p>We are working here with the same dataset described in the Ovenbird demo exercise. The data were provided by Mike Hallworth, and collected at Hubbard Brook New Hampshire, USA. The full data set at Hubbard Brook had 373 point count survey locations systematically placed throughout Hubbard Brook Valley along 15 transects. Our data set includes 296 of these survey points. Point counts were conducted 4 times per year, and have been collected since 1999. Here we are working with a single year's data. Surveys typically started at the end of May, and all 4 surveys were typically done within a month. Each point count was split into 3 consecutive "periods" of 3 minutes, 20 seconds each (so the observer spent 10 minutes at each location during a survey). These data are part of a large, long-term study focused on investigating many aspects of songbird ecology including habitat use, recruitment, species richness and abundance, and many others. In this demo we'll be working only with the Blackburnian Warbler (BLBW). Here our goal is to assess what factors influence occupancy probability of blackburnian warblers in this landscape, while accounting for factors that may influence detection.</p>
 
-##Exercise Objectives
+## Exercise Objectives
+
   * Continue to practice with importing and formating raw data from point count field studies for occupancy analysis
   * Practice functions in the package `unmarked` for single-season occupancy analysis
   * Independently run a single season occupancy modeling analysis with covariates on both occupancy and detection probability
   * Independently interpret output results of occupancy models and use model selection approaches to address competing ecological hypotheses
   * Create response curves for model covariates to assist in model interpretation
 
-###Libraries/Setup
-Let's first call the packages we'll need in this exercise. Use `install.packages` if you do not have these packages already on your machine.
+### Libraries/Setup
+
+<p>Let's first call the packages we'll need in this exercise. Use `install.packages` if you do not have these packages already on your machine.</p>
 
 ```{r, warning = FALSE, message = FALSE}
 library(unmarked)
@@ -44,7 +46,7 @@ library(lubridate) #for the `yday` function
 rm(list = ls())
 ```
 
-###Data Import and Exploration
+### Data Import and Exploration
 
 <p>We can bring in data using our `read.csv` command, with our data files stored in our course dropbox folder as opposed to on our local computer.</p>
 
@@ -59,12 +61,14 @@ siteCovs <-
   read.csv('https://www.dropbox.com/s/gbrxt85jwid2t55/siteData.csv?dl=1')
 ```
 
-###Data Formatting
+### Data Formatting
 
-Since we are using the same data set from the ovenbird demonstration, we need to perform the same formatting steps to prepare the data for analysis. 
+<p>Since we are using the same data set from the ovenbird demonstration, we need to perform the same formatting steps to prepare the data for analysis.</p>
 
 <p>Step1: Using the ovenbird demo as a guide, first pull out only the Blackburnian warbler observation from the `counts` object, select out the `plot` and `replicate` columns, and create a new column for counts (`n`) that is set to 1. Remember to keep only unique rows, since we sometimes have more than one observation within a 10 minute period. Review your new counts object to make sure everything worked properly.</p>
+
 <p>**Q1: How many observations of Blackburnian Warblers were recorded?**</p>
+
 <p>A1: 544</p>
 
 ```{r, warning = F}
@@ -82,7 +86,7 @@ BlbwCounts <-
 head(BlbwCounts)
 ```
 
-Step 2: Create a detection frame for these counts, being sure to account for visits where no observations were recorded. This requires use of the `visits` object. View your detection frame to make sure everything worked properly.
+<p>Step 2: Create a detection frame for these counts, being sure to account for visits where no observations were recorded. This requires use of the `visits` object. View your detection frame to make sure everything worked properly.</p>
 
 ```{r}
 detectionFrameBlbw <-
@@ -96,14 +100,13 @@ detectionFrameBlbw <-
   as.matrix
 ```
 
-<p>Let's confirm what we have now, which should be a matrix of 296 sites (rows) and 4 occasions (columns) indicating in which situations the species was observed or not observed. </p>
+<p>Let's confirm what we have now, which should be a matrix of 296 sites (rows) and 4 occasions (columns) indicating in which situations the species was observed or not observed.</p>
 
 ```{r}
 head(detectionFrameBlbw)
 ```
 
-
-Step3: Our last step in data formatting will be to create a list of our survey covariates. These are stored in the `visits` object. But now each separate covariates needs to exist in its own data frame within a list. Each data frame should have 296 rows (for each site) and 4 columns (for each ocassion). This code should be the same as in the ovenbird demo, since these covariates are not specific to the species we are analyzing.
+<p>Step3: Our last step in data formatting will be to create a list of our survey covariates. These are stored in the `visits` object. But now each separate covariates needs to exist in its own data frame within a list. Each data frame should have 296 rows (for each site) and 4 columns (for each ocassion). This code should be the same as in the ovenbird demo, since these covariates are not specific to the species we are analyzing.</p>
 
 ```{r}
 obsCovs <-
@@ -133,7 +136,7 @@ obsCovs <-
   )
 ```
 
-<p>Our data are now ready for the `unmarkedFrameOccu` function which prepares our data for occupancy analysis.We need to provide three objects, the detection matrix, our site covariates data frame, and a list of dataframes for our observation/survey covariates. </p>
+<p>Our data are now ready for the `unmarkedFrameOccu` function which prepares our data for occupancy analysis.We need to provide three objects, the detection matrix, our site covariates data frame, and a list of dataframes for our observation/survey covariates.</p>
 
 <p>Step4: Create an unmarked frame for use in our occupancy models and use `summary` to review this object.</p>
 
@@ -193,7 +196,7 @@ ObsModsBB <- fitList(Psidot_pFull,PsiElev_pFull,PsiSlope_pFull, PsiAspect_pFull,
 
 <p>**Q4: What are the most important covariates in determining detection probability of this species?**</p>
 
-<p> Here again, as in the ovenbird demo, I've had to use starting values, for the same problematic models. I cheated a bit here and just used the same starting values as for the ovenbird, which is not necessarily the best approach. But in this case, these starting values did help in getting the models to coverge properly. </p>
+<p> Here again, as in the ovenbird demo, I've had to use starting values, for the same problematic models. I cheated a bit here and just used the same starting values as for the ovenbird, which is not necessarily the best approach. But in this case, these starting values did help in getting the models to coverge properly.</p>
 
 ```{r}
 
@@ -335,7 +338,7 @@ ObsModsP <-
 
 <p>A4: We can see from our model selection table that wind level, day of year and observer are important covariates in determining probability of detection of blackburnians across our site. Let's move forward with some interpretation of what seems to be our best supported model, `PsiAspectElev_pWindDayObs`.</p>
 
-###Model Interpretation and Value Prediction
+### Model Interpretation and Value Prediction
 
 <p>Step6: Now that you have identified your best model, use the `summary` function to review the details of the results. Remember that you can look at just the coefficients with the `coef` function as well.</p>
 
@@ -347,7 +350,7 @@ summary(PsiAspectElev_pWindDayObs)
 
 <p>A5: We can see, based on coefficient values, that as wind level increases, probability of detection decreases. The same pattern appears with day of year. As we get further into summer, detection of this species declines. Regarding observer, we see that observer AJS is not shown in the coefficient list. This means that the detection probability parameter of AJS is accounted for in the intercept term. The values of the other coefficients are relative to this AJS baseline. The other three observers show higher detection probabilities than AJS, this being a substantial difference in the case of CH and DJW. Interestingly, with respect to observers, this is opposite to the results for ovenbirds. For occupancy, as aspect increases, so does probability of occupancy. The opposite is true for elevation.</p>
 
-<p>Step7: Use the `predict` function, to predict values for detection probability, over a range of values for each important covariates. Use these predicted values to create response curves for detection covariates, and occupacy covariates. If observer is an important factor in the deteciton model, have each graph of any other detection covariates show a separate line for each observer. </p>
+<p>Step7: Use the `predict` function, to predict values for detection probability, over a range of values for each important covariates. Use these predicted values to create response curves for detection covariates, and occupacy covariates. If observer is an important factor in the deteciton model, have each graph of any other detection covariates show a separate line for each observer.</p>
 
 ```{r}
 head(predict(PsiAspectElev_pWindDayObs, type = "state"), 10)
@@ -371,9 +374,9 @@ summary(predict(PsiAspectElev_pWindDayObs, type = "det"))
 
 <p>A8: `r round((1-.53)^4,3)`</p>
 
-###Graphical Interpretation of Model Covariates
+### Graphical Interpretation of Model Covariates
 
-<p> Let's now take a graphical look at how our covariates influence occupancy and detection. </p>
+<p>Let's now take a graphical look at how our covariates influence occupancy and detection.</p>
 
 <p>Step7: UUse the `predict` function to predict values for detection probability, over a range of values for each important covariates. Use these predicted values to create response curves for detection covariates, and occupacy covariates. If observer is an important factor in the deteciton model, have each graph of any other detection covariates show a separate line for each observer.</p>
 
@@ -385,7 +388,7 @@ summary(predict(PsiAspectElev_pWindDayObs, type = "det"))
 best <- PsiAspectElev_pWindDayObs
 ```
 
-<p>To predict across a particular set of values using our model equation, we need to create a new dataframe. Remember the names of your columns here need to be exactly the same as the names of your covariates in the unmarked data objects. Here we are predicting across all possible values of the wind covariate (0-6), and setting the observer to "AJS". We need some extra code to convert the day of year to a numeric value, so that we can calculate the mean. These numeric values are those that were used in teh modeling itself, so we have to be consistent in these formats. </p>
+<p>To predict across a particular set of values using our model equation, we need to create a new dataframe. Remember the names of your columns here need to be exactly the same as the names of your covariates in the unmarked data objects. Here we are predicting across all possible values of the wind covariate (0-6), and setting the observer to "AJS". We need some extra code to convert the day of year to a numeric value, so that we can calculate the mean. These numeric values are those that were used in teh modeling itself, so we have to be consistent in these formats.</p>
 
 ```{r}
 newDataDetWind_AJS <- data.frame(
@@ -408,7 +411,7 @@ EstDetWindAJS <- predict(best,
 head(EstDetWindAJS)
 ```
 
-Let's repeat this for the other three observers.
+<p>Let's repeat this for the other three observers.</p>
 
 ```{r}
 newDataDetWind_CH <- data.frame(wind = seq(0, 6),
@@ -446,7 +449,7 @@ EstDetWindJDW <- predict(best,
                          appendData = TRUE)
 ```
 
-<p>Let's do this for `dayofYear` as well. Now we'll try a different approach, using a function called `expand.grid`. What we end up with here is a single dataframe, with the first 100 values for AJS, the next 100 for CH and so on. </p>
+<p>Let's do this for `dayofYear` as well. Now we'll try a different approach, using a function called `expand.grid`. What we end up with here is a single dataframe, with the first 100 values for AJS, the next 100 for CH and so on.</p>
 
 ```{r}
 newDataDetDay <- data.frame(expand.grid(
@@ -774,12 +777,12 @@ lines(
 
 ```
 
-###Final Conclusions
+### Final Conclusions
 
 <p> Our ultimate goal in this analysis was to investigate the factors influencing occupancy of Blackburnian Warblers across the Hubbard Brook valley. To do this in the most robust way, we also wanted to account for imperfect detection, and we included a range of covariates to further assist us in accounting for those factors that may cause detection probability to vary across sites or site visits. </p>
 
-<p>**Q9: Describe in a few sentences what we have learned about Blackburnian Warblers in this landscape, with respect to both how they are detected and what influences their occupancy.** </p>
+<p>**Q9: Describe in a few sentences what we have learned about Blackburnian Warblers in this landscape, with respect to both how they are detected and what influences their occupancy.**</p>
 
-<p>**Q10: Let's assume the Blackburnian Warbler was endangered. Think about how a manager might use this information from this analysis to better manage this population.** </p>
+<p>**Q10: Let's assume the Blackburnian Warbler was endangered. Think about how a manager might use this information from this analysis to better manage this population.**</p>
 
 <p>**Q11: This analysis was simplified for this exercise, particularly with respect to the small number of covariates on occupancy. What other covariates might be interesting to test in this situation?**</p>
