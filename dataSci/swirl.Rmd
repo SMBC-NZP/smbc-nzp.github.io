@@ -1,0 +1,40 @@
+---
+output: html_document
+---
+
+# SWIRL self-guided learning exercises for R
+_Brian S. Evans  
+Smithsonian Conservation Biology Institute  
+Migratory Bird Center_
+
+The R community has created a number of interactive learning exercises that will help you get your R skills up to speed for this course. Regardless of your skill level, you will undoubtedly be able to learn a considerable amount from these courses. 
+
+### Before you begin: 
+
+1. If you do not yet have a current version R on your computer, download and install Program R ([link](https://cran.r-project.org/)).
+2. Download and install R Studio onto your computer ([link](https://www.rstudio.com/products/rstudio/download/)).
+
+### Install SWIRL:
+
+Open R Studio.
+
+SWIRL is essentially a user-generated program (also called a **package** or **library**) for use in R. To access this, you must first install the program. In the Console panel (bottom left), type or copy-and-paste the following and press Enter:
+
+```{r, eval=FALSE}
+install.packages("swirl")
+
+library(swirl)
+```
+_Note: You may be prompted to select a "mirror" from which to download the package. If this is the case, it is recommended that you choose the mirror that is geographically closest to you._
+
+
+### SWIRL Lessons:
+
+To best prepare you for this course, we ask that you complete lessons 1 through 8 of the R Programming SWIRL course. Begin by typing `swirl()` in your console. When prompted, select "R Programming: The basics of programming in R" (selection 1) and "R programming" (selection 1) in the following menu (if applicable). Select the appropriate lesson from the list of options to continue.  
+
+Have fun!
+
+----
+
+<img style="float: right; margin: 0px 0px 15px 15px" src="images/nzpLogoSideways2.png" width="50%" />
+
