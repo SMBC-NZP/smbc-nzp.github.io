@@ -1,0 +1,13 @@
+name: home
+title: home
+username:
+account: smbc
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1037848
+bundleId: 2242012
+url: https://smbc.shinyapps.io/home/
+when: 1563394529.20673
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: home.html|L0-intro_RStudio.html|L0-intro_RStudio.Rmd|L1-rValues.html|L1-rValues.Rmd|L2-rObjects.Rmd|L3-indexing.html|L3-indexing.Rmd|L4-functions.html|css/styles.css|images

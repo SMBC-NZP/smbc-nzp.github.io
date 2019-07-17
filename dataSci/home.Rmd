@@ -1,0 +1,69 @@
+---
+output:
+  html_document:
+    theme: yeti
+---
+
+<!-- html head --> 
+
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+<!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
+</head>
+
+<div class = "row">
+<img style="float:right;padding-left:25px;border:none" src="images/smsc_logo.jpg" width = "500px"/>
+</div>
+
+<br>
+<div class = "row">
+
+<h2 style="text-align: left;">Introduction to Data Science and the Art of Wrangling for Ecologists</h2>
+<hr>
+<img style="float:right;padding-left:10px;border:none" src="images/catbirdBanded.jpg" width = "250px"/>
+
+<p>Welcome to "Managing Ecological Data in R: Introduction to Data Science and the Art of Wrangling for Ecologists"! This website will be our home base for this course. R has become the universal quantitative interface for ecologists - it's free, powerful, flexible enough to do everything but write manuscripts for you, and is relatively user-friendly. Each lesson has accompanying hyperlinks that may include:</p>
+<ul>
+<li><b>Lesson instructions</b>: Website with written-out instructions and exercises associated with a presentation or lab activity (<i>Note: The instructions hyperlinks are the highlighted lesson titles</i>).</li>
+<li><b>Lesson code</b>: The R code that accompanies a lesson, when applicable (<i>Note: These links will download an R file</i>).</li>
+<li><b>Exercises</b>: Some workshop material will have accompanying assignments (<i>Note: The hyperlinks are the highlighted exercise titles</i>).</li>
+</ul>
+</div>
+<br>
+
+<h3>Preliminary exercises</h3>
+<hr>
+<p>We ask that, regardless of your current level of R knowledge, you please complete the following preliminary exercises prior to attending the course. Please feel free to email Brian Evans with any questions at <a href="mailto:evansbr@si.edu">evansbr@si.edu</a></p>
+ 
+<ul>
+<li><b><a href = "https://smbc.shinyapps.io/mb2018-L0-intro_RStudio" target="_blank">Introduction to R Studio</a></b>. This lesson will provide new R users with the baseline knowledge necessary to use R and R Studio and align experienced R users with some of the terminology and best management practices used throughout this course.
+</li>
+<li><b><a href = "https://smbc.shinyapps.io/mb2018-L1-rValues" target="_blank">Lesson 1: Values</a></b>. Learn the primary classes of values you will use in this course</li>
+<li><b><a href = "https://smbc.shinyapps.io/mb2018-L2-rObjects" target="_blank">Lesson 2: Objects</a></b>. Learn the primary types of objects that are used to store values</li>
+<li><b><a href = "https://smbc.shinyapps.io/mb2018-L3-indexing" target="_blank">Lesson 3: Indexing</a></b>. Learn how to query objects using indexing in base R</li>
+<li><b><a href = "https://smbc.shinyapps.io/mb2018-L4-functions" target="_blank">Lesson 4: Functions</a></b>. Learn how to write custom functions</li>
+</ul>
+
+<p>Do you want to do more course preparation or practice your R skills? If so, we strongly recommend completing these <a href = "https://smbc-nzp.github.io/mb2018/mb2018-swirl.html" target = "_blank"><b>SWIRL courses</b></a> prior to the course.</p>
+
+<div class = "row">
+<hr>
+<img src = "images/robotBird.jpg"
+  style = "float:left;
+  padding-left: 0px;
+  padding-right: 10px;
+  width: 15%;">
+<i><p><b>About the Instructor</b>: Brian Evans is an avian ecologist and data scientist at the Smithsonian Migratory Bird Center. He received his Ph.D. in quantitative ecology from the University of North Carolina in 2015. Brian has been using R for over 10 years and has been teaching classes and workshops in R and data management since 2012. Follow Brian on Twitter: <a href = "https://twitter.com/bsevans_unc">@bsevans_unc</a></i></p>
+</div>
+<hr>
+<div class = "row">
+<img 
+  src="images/nzpLogo.png"
+  style= "display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;"/>
+</div>
+
+
