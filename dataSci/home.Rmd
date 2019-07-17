@@ -45,7 +45,7 @@ output:
 <li><b><a href = "https://smbc.shinyapps.io/L4-functions" target="_blank">Lesson 4: Functions</a></b>. Learn how to write custom functions</li>
 </ul>
 
-<p>Do you want to do more course preparation or practice your R skills? If so, we strongly recommend completing these <a href = "https://smbc-nzp.github.io/swirl.html" target = "_blank"><b>SWIRL courses</b></a> prior to the course.</p>
+<p>Do you want to do more course preparation or practice your R skills? If so, we strongly recommend completing these <a href = "https://smbc-nzp.github.io/dataSci/swirl.html" target = "_blank"><b>SWIRL courses</b></a> prior to the course.</p>
 
 <div class = "row">
 <hr>
