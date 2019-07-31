@@ -1,0 +1,13 @@
+name: L1-rValues
+title: L1-rValues
+username:
+account: smbc
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1037871
+bundleId: 2242061
+url: https://smbc.shinyapps.io/L1-rValues/
+when: 1563395452.33358
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: home.html|home.Rmd|L0-intro_RStudio.html|L0-intro_RStudio.Rmd|L1-rValues.html|L2-rObjects.Rmd|L3-indexing.html|L3-indexing.Rmd|L4-functions.html|L4-functions.Rmd
