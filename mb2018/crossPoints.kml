@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.2">
+<Document>
+<name>Cross points</name>
+<description><![CDATA[]]></description>
+
+<Style id="style1">
+  <IconStyle>
+    <Icon>
+      <href>http://maps.google.com/mapfiles/ms/micons/sunny.png</href>
+    </Icon>
+  </IconStyle>
+</Style>
+
+<Placemark>
+  <name>site 1</name>
+  <description><![CDATA[]]></description>
+  <styleUrl>#style1</styleUrl>
+  <Point>
+    <coordinates>
+-78.1647095904809,38.8870791731716
+    </coordinates>
+  </Point>
+</Placemark>
+<Placemark>
+  <name>site 2</name>
+  <description><![CDATA[]]></description>
+  <styleUrl>#style1</styleUrl>
+  <Point>
+    <coordinates>
+-78.1646984884821,38.88676125352
+    </coordinates>
+  </Point>
+</Placemark>
+<Placemark>
+  <name>site 3</name>
+  <description><![CDATA[]]></description>
+  <styleUrl>#style1</styleUrl>
+  <Point>
+    <coordinates>
+-78.164709590481,38.8870791731716
+    </coordinates>
+  </Point>
+</Placemark>
+<Placemark>
+  <name>site 4</name>
+  <description><![CDATA[]]></description>
+  <styleUrl>#style1</styleUrl>
+  <Point>
+    <coordinates>
+-78.1650584728778,38.8870425041541
+    </coordinates>
+  </Point>
+</Placemark>
+</Document>
+</kml>

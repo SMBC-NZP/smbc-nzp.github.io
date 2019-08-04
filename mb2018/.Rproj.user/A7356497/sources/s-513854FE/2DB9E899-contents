@@ -1,0 +1,148 @@
+# Set up ------------------------------------------------------------------
+
+# The package is located online, not on CRAN:
+
+source('https://raw.githubusercontent.com/cran/sigloc/master/R/sigloc.R')
+
+# Additional packages we will be using for this lab:
+
+library(sp)
+library(rgdal)
+library()
+
+# Get example telemetry data
+
+telemetryData <-
+  read.csv('https://www.dropbox.com/s/rzi1ghq0bg24coh/exampleTelemetry.csv?dl=1')
+
+# Write the telemtry data as an KML file and view it in Google Earth:
+
+telemetryData %>%
+  select(x, y) %>%
+  SpatialPointsDataFrame(
+    data = telemetryData,
+    proj4string = CRS('+proj=longlat +ellps=WGS84 +datum=WGS84')
+  ) %>%
+  kmlPoints(
+    kmlfile = 'telemetryData.kml',
+    kmlname = 'Example telemetry data',
+    icon = 'http://maps.google.com/mapfiles/ms/micons/sunny.png'
+  )
+
+# Take a moment to view in Google Earth:
+
+# Let's change the icon by going to: http://sites.google.com/site/gmapsdevelopment
+
+telemetryData %>%
+  select(x, y) %>%
+  SpatialPointsDataFrame(
+    data = telemetryData,
+    proj4string = CRS('+proj=longlat +ellps=WGS84 +datum=WGS84')
+  ) %>%
+  kmlPoints(
+  kmlfile = 'telemetryData.kml',
+  kmlname = 'Example telemetry data',
+  icon = 'http://maps.google.com/mapfiles/ms/micons/sunny.png'
+)
+
+# Convert telemetry data to a signal-location frame:
+
+observations <-
+  telemetryData %>%
+  make_sigFrame
+
+# Have a look:
+
+observations
+
+str(telemetryData)
+
+str(observations)
+
+# Plot the data:
+
+plot(observations)
+
+plot(observations, bearings = TRUE)
+
+# Let's look at the above in Google Earth. We'll start by using a custom function called make_bearingLines:
+
+make_bearingLines(telemetryData)
+
+# We'll use the function kmlLines to make a kml for viewing in Google Earth:
+
+make_bearingLines(telemetryData) %>%
+  kmlLines(kmlfile = 'testLines.kml', col = 'white', lwd = 2)
+
+
+# The findintersects function determines the points in which the trajectories cross:
+
+cross <- 
+  findintersects(observations)
+
+cross
+
+plot(cross, add = TRUE)
+
+# Let's add these intersects to our Google Earth map:
+
+cross_df <- cross %>%
+  data.frame %>%
+  unique
+
+cross_df %>%
+  select(X, Y) %>%
+  SpatialPointsDataFrame(
+    data = cross_df,
+    proj4string = CRS('+proj=longlat +ellps=WGS84 +datum=WGS84')
+  ) %>%
+  kmlPoints(
+    kmlfile = 'crossPoints.kml',
+    kmlname = 'Cross points'
+  )
+
+# The locate function provides a maximum likelihood approach to estimate developed by Lenth 1981
+# Lenth, R.V. (1981). On Finding the Source of a Signal. Technometrics, 23(2), 149-154.
+
+loc <- 
+  locate(observations)
+
+plot(loc, add = TRUE)
+
+# We can convert this file to a KML file for use in Google Earth or maps.
+
+# We'll start with plotting the estimated location of the point:
+
+loc_df <-
+  loc %>%
+  as.data.frame
+
+loc_df %>%
+  select(X, Y) %>%
+  SpatialPointsDataFrame(
+    data = loc_df,
+    proj4string = CRS('+proj=longlat +ellps=WGS84 +datum=WGS84')
+  ) %>%
+  kmlPoints(
+    kmlfile = 'pointEstimate.kml',
+    kmlname = 'Point estimate',
+    name = "Point estimate",
+    icon = 'http://maps.google.com/mapfiles/kml/paddle/grn-stars.png'
+  )
+
+# Next, we'll add the error ellipse:
+
+loc %>% 
+  makeEllipse_poly %>%
+  kmlPolygon('errorEllipse.kml')
+
+# It doesn't look too pretty though, let's make the line thicker and add some color:
+
+loc %>% 
+  makeEllipse_poly %>%
+  kmlPolygon('errorEllipse.kml',
+             col = 'red',
+             lwd = 2,
+             border = 'blue') 
+
+

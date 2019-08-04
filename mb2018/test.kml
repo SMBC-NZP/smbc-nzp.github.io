@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.2">
+<Document>
+<name></name>
+<description><![CDATA[]]></description>
+
+<Placemark>
+<name>R Lines</name>
+<description><![CDATA[]]></description>
+<visibility>1</visibility>
+<Style><LineStyle><width>1</width><color></color></LineStyle></Style>
+<MultiGeometry>
+<LineString><coordinates>
+-78.16463,38.8848
+-348995045.189638,9993908309.07576
+</coordinates></LineString>
+<LineString><coordinates>
+-78.16356,38.8872
+-9945219031.84629,-1045284593.78934
+</coordinates></LineString>
+<LineString><coordinates>
+-78.16654,38.8882
+7880107457.90068,-6156614714.36838
+</coordinates></LineString>
+</MultiGeometry>
+</Placemark>
+
+</Document>
+</kml>

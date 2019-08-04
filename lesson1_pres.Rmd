@@ -79,7 +79,9 @@ theme_add <- function(){
 
 # Preset values
 
-exampleFactor <- factor(c('three','two','one', 'one'))
+exampleFactor <- 
+  factor(
+    c('three','two','one', 'one'))
 
 exampleFactorLevels <- factor(
   exampleFactor,
@@ -230,7 +232,7 @@ Attributes (metadata), e.g.:
 	      border-color: white;
 	      width: 65%;"/>
 
-<!include: Developing a flexible R skillset, and combating the inertia of our Excel-trained brains, requires us to not think of collections of values as fixed entities, but rather as sets that may be arranged ...>
+<!Developing a flexible R skillset, and combating the inertia of our Excel-trained brains, requires us to not think of collections of values as fixed entities, but rather as sets that may be arranged ...>
 
 ## Values
 
@@ -250,7 +252,7 @@ Attributes (metadata), e.g.:
 	      border-color: white;
 	      width: 65%;"/>
 
-<!include: Developing a flexible R skillset, and combating the inertia of our Excel-trained brains, requires us to not think of collections of values as fixed entities, but rather as sets that may be arranged ...>
+<!Developing a flexible R skillset, and combating the inertia of our Excel-trained brains, requires us to not think of collections of values as fixed entities, but rather as sets that may be arranged ...>
 
 ## Values
 
@@ -270,7 +272,35 @@ Attributes (metadata), e.g.:
 	      border-color: white;
 	      width: 65%;"/>
 
-<!include: ... and re-arranged>
+<!and re-arranged>
+
+## Key-value pairs
+
+<hr>
+<p style="text-align: center;">Values may be directly input into R or may be called by a <b>key</b>. Writing an assignment operator (`<-`) generates a key-value pair.</p>
+```{r eval = FALSE}
+# Create a vector of numeric values:
+
+3
+
+key <- 3
+
+key
+```
+
+## Key-value pairs
+
+<hr>
+<p style="text-align: center;">Values may be directly input into R or may be called by a <b>key</b>. Writing an assignment operator (`<-`) generates a key-value pair.</p>
+```{r eval = FALSE}
+# Create a vector of numeric values:
+
+1:3
+
+key <- 1:3
+
+key
+```
 
 ## Classes of values
 
@@ -295,7 +325,8 @@ Attributes (metadata), e.g.:
 ```{r eval = FALSE}
 # Create a vector of numeric values:
 
-numericV <- c(3, 2, 1, 1)
+numericV <- 
+  c(3, 2, 1, 1)
 
 numericV
 
@@ -355,10 +386,22 @@ summary(numericInteger)
 ```{r eval = FALSE}
 # Create a vector of character values:
 
-exampleCharacter <- c('three', 'two', 'one', 'one')
+exampleCharacter <- 
+  c('three', 
+    'two',
+    'one', 
+    'one')
 
 exampleCharacter
+```
 
+
+## Classes of values: Character
+
+<hr>
+<p style="text-align: center;"> A <b>character</b> or "string" value is a symbol or set of symbols from a given library</p>
+
+```{r eval = FALSE}
 # What type of object is this?
 
 class(exampleCharacter)
@@ -382,10 +425,25 @@ summary(exampleCharacter)
 ```{r eval = FALSE}
 # Create a vector of factor values:
 
-exampleFactor <- factor(c('three', 'two', 'one', 'one'))
+exampleFactor <- 
+  factor(
+    c('three', 'two', 'one', 'one'))
 
 exampleFactor
+```
 
+## Classes of values: Factor
+
+<hr>
+<p> A <b>factor</b> value includes the following information:</p>
+<ul>
+<li><b>Integer value</b>: Numeric integer value associated with factor level</li>
+<li><b>Levels</b>: Character values associated with integer value</li>
+<li><b>Labels</b>: Characters to assign to each factor level</li>
+</ul>
+
+
+```{r eval = FALSE}
 # What type of object is this?
 
 class(exampleFactor)
@@ -424,11 +482,33 @@ summary(exampleFactor)
 ```{r eval = FALSE}
 # Set factor levels and labels:
 
-factor(c('three', 'two', 'one', 'one'))
+factor(
+  c('three', 'two', 'one', 'one'))
 
 factor(
   c('three', 'two', 'one', 'one'),
   levels = c('one', 'two', 'three')
+  )
+```
+
+## Classes of values: Factor
+
+<hr>
+<p> A <b>factor</b> value includes the following information:</p>
+<ul>
+<li><b>Integer value</b>: Numeric integer value associated with factor level</li>
+<li><b>Levels</b>: Character values associated with integer value</li>
+<li><b>Labels</b>: Characters to assign to each factor level</li>
+</ul>
+
+<p>You can use the `levels` function to print the levels associated with a factor:</p>
+
+```{r eval = FALSE}
+# View factor levels:
+
+levels(
+  factor(
+    c('three', 'two', 'one', 'one'))
   )
 ```
 
@@ -461,7 +541,8 @@ factor(
 ```{r eval = FALSE}
 # Set factor levels and labels:
 
-factor(c('three', 'two', 'one', 'one'))
+factor(
+  c('three', 'two', 'one', 'one'))
 
 factor(
   c('three', 'two', 'one', 'one'),
@@ -595,7 +676,8 @@ FALSE + TRUE + TRUE
 ```{r}
 # A vector of numeric values:
 
-numericVector <- c(1, 1, 2, 3)
+numericVector <- 
+  c(1, 1, 2, 3)
 
 numericVector
 
@@ -611,7 +693,8 @@ summary(numericVector)
 
 numericVector
 
-messyVector <- c(1, 'one', 2, 3)
+messyVector <- 
+  c(1, 'one', 2, 3)
 
 messyVector
 ```
@@ -678,7 +761,8 @@ numericVector
 
 names(numericVector)
 
-names(numericVector) <- c('orange', 'pear', 'apple', 'apple')
+names(numericVector) <- 
+  c('orange', 'pear', 'apple', 'apple')
 ```
 
 ## Vector objects: Attributes
@@ -707,6 +791,39 @@ numericVector['pear']
 numericVector[2] == numericVector['pear']
 
 numericVector[c('orange', 'pear')]
+```
+
+## Vector objects: Summarizing
+<hr>
+<p>There are a number of functions that are useful for summarizing vectors. Observe what each of the following do:</p>
+
+```{r eval = FALSE}
+# Summarizing a vector:
+
+unique(numericVector)
+
+min(numericVector)
+
+max(numericVector)
+
+mean(numericVector)
+
+median(numericVector)
+
+quantile(numericVector)
+
+sd(numericVector)
+```
+
+## Vector objects: Summarizing
+<hr>
+<p>You can use the `summary` function to provide userful summary information in one step:</p>
+
+```{r}
+# Summarizing a vector:
+
+summary(numericVector)
+
 ```
 
 ## Matrix objects: Structure
@@ -740,7 +857,10 @@ numericVector[c('orange', 'pear')]
 ```{r eval = TRUE}
 # Generate matrix:
 
-m <- matrix(c(1, 1, 2, 3), ncol = 2)
+m <- 
+  matrix(
+    c(1, 1, 2, 3),
+    ncol = 2)
 
 m
 ```
@@ -749,12 +869,18 @@ m
 <hr>
 <p>A vector can be structured horizontally (row-wise) or vertically (column-wise) within a matrix:</p>
 
-```{r }
+```{r, eval = FALSE}
 # Compare matrices built row-wise and column-wise:
 
-matrix(c(1, 1, 2, 3), ncol = 2, byrow = TRUE)
+matrix(
+  c(1, 1, 2, 3),
+  ncol = 2,
+  byrow = TRUE)
 
-matrix(c(1, 1, 2, 3), ncol = 2, byrow = FALSE)
+matrix(
+  c(1, 1, 2, 3),
+  ncol = 2,
+  byrow = FALSE)
 ```
 
 ## Matrix objects: Structure
@@ -765,7 +891,10 @@ matrix(c(1, 1, 2, 3), ncol = 2, byrow = FALSE)
 
 # Matrix built with multiple types:
 
-messyMatrix <- matrix(c(1, 'one', 2, 3), ncol = 2)
+messyMatrix <- 
+  matrix(
+    c(1, 'one', 2, 3),
+    ncol = 2)
 
 messyMatrix
 ```
@@ -909,10 +1038,24 @@ m
 ```{r}
 # List of a numeric vector and matrices:
 
-exampleList <- list(numericVector, m, messyMatrix)
+exampleList <- 
+  list(
+    numericVector,
+    m, 
+    messyMatrix)
+
+```
+
+## List objects: Structure
+<hr>
+<p>A <b>list</b> is a one dimensional object constructed by combining ANY objects with ANY dimensionality.</p>
+
+```{r}
+# List of a numeric vector and matrices:
 
 exampleList
 ```
+
 
 ## List objects: Indexing
 <hr>
@@ -986,9 +1129,6 @@ exampleList
 
 ```{r}
 # List indexing:
-
-exampleList
-
 exampleList[[2]]
 ```
 
@@ -1062,7 +1202,8 @@ exampleList
 
 names(exampleList)
 
-names(exampleList) <- c('numericVector', 'm', 'messyMatrix')
+names(exampleList) <- 
+  c('numericVector', 'm', 'messyMatrix')
 
 attributes(exampleList)
 ```
@@ -1085,7 +1226,7 @@ exampleList$messyMatrix
 
 ## Data frame objects: Structure
 <hr>
-<p>A <b>data frame</b> is a two dimensional object constructed by combining vectors.</p>
+<p>A <b>data frame</b> is a two dimensional list object constructed by combining vectors.</p>
 
 <p>Each value in a data frame has a row and column position, denoted by "[<i>x</i>, <i>y</i>]"</p>
 <br>
@@ -1109,24 +1250,40 @@ exampleList$messyMatrix
 
 ## Data frame objects: Structure
 <hr>
-<p>A <b>data frame</b> is a two dimensional object constructed by combining vectors.</p>
+<p>A <b>data frame</b> is a two dimensional list object constructed by combining vectors.</p>
 
 ```{r}
 # Generate a data frame:
 
-df <- data.frame(a = c(1, 1), b =  c(2, 3))
+df <- 
+  data.frame(
+    a = c(1, 1),
+    b =  c(2, 3))
 
 df
 ```
 
 ## Data frame objects: Structure
 <hr>
-<p>The vectors that are contained in a data frame may be of different classes.</p>
+<p>A <b>data frame</b> is a two dimensional list object constructed by combining vectors.</p>
+
+```{r}
+# Generate a data frame:
+
+df
+```
+
+
+## Data frame objects: Structure
+<hr>
+<p>Because data frames are lists, the vectors that are contained in a data frame may be of different classes.</p>
 
 ```{r}
 # Generate a data frame of different vector classes:
 
-data.frame(a = c('one', 'one'), b =  c(2, 3))
+data.frame(
+  a = c('one', 'one'),
+  b =  c(2, 3))
 
 ```
 
@@ -1137,7 +1294,10 @@ data.frame(a = c('one', 'one'), b =  c(2, 3))
 ```{r}
 # Attempt to generate a data frame with heterogeneous vectors:
 
-messyDf <- data.frame(a = c(1, 'one'), b =  c(2, 3))
+messyDf <- 
+  data.frame(
+    a = c(1, 'one'), 
+    b =  c(2, 3))
 
 messyDf
 
@@ -1203,27 +1363,48 @@ summary(df)
 # View attributes of the messy dataframe:
 
 str(messyDf)
-
-dfStrings <- data.frame(
-  a = c(1, 'one'), 
-  b =  c(2, 3),
-  stringsAsFactors = FALSE
-  )
-
-str(dfStrings)
-
 ```
 
 ## Data frame objects: Attributes
 <hr>
-<p>Name attributes are automatically set when a data frame is created. Failing to set this attribute leads to bad names:</p>
+<p>Always check attributes prior to working with data frame!</p>
 
 ```{r}
-# Set and unset names:
+# View attributes of the messy dataframe:
 
-data.frame(a = c(1, 1), b =  c(2, 3))
+str(
+   data.frame(
+    a = c(1, 'one'), 
+    b =  c(2, 3),
+    stringsAsFactors = FALSE
+  )
+)
 
-data.frame(c(1, 1),c(2, 3))
+```
+
+
+## Data frame objects: Attributes
+<hr>
+<p>Name attributes are automatically set when a data frame is created:</p>
+
+```{r}
+# Good names:
+
+data.frame(
+  a = c(1, 1),
+  b = c(2, 3))
+```
+
+## Data frame objects: Attributes
+<hr>
+<p>Failing to set the names attribute leads to bad names:</p>
+
+```{r}
+# Bad names:
+
+data.frame(
+  c(1, 1),
+  c(2, 3))
 
 ```
 
@@ -1234,9 +1415,13 @@ data.frame(c(1, 1),c(2, 3))
 ```{r}
 # View data frame attributes:
 
-exampleDf <- data.frame(c(1, 1),c(2, 3))
+exampleDf <- 
+  data.frame(
+    c(1, 1),
+    c(2, 3))
 
-names(exampleDf) <- c('hello', 'world')
+names(exampleDf) <-
+  c('hello', 'world')
 
 exampleDf
 
@@ -1256,6 +1441,96 @@ exampleDf$hello
 
 ```
 
+
+## Exploring and summarizing data frames:
+<hr>
+<p>There are a number of useful functions for further exploring the structure of the data.</p>
+
+<p>Let's load some real data to explore:</p>
+
+```{r}
+# Load data:
+
+birdCounts <-
+  read.csv(
+    'https://raw.githubusercontent.com/bsevansunc/smsc_data_science/master/data/exampleBirdData.csv')
+```
+
+## Exploring and summarizing data frames:
+<hr>
+<p>There are a number of useful functions for further exploring the structure of the data.</p>
+
+<p>Explore the structure of the data:</p>
+
+```{r}
+# Load data:
+
+str(birdCounts)
+```
+
+## Exploring and summarizing data frames:
+<hr>
+<p>There are a number of useful functions for further exploring the structure of the data.</p>
+
+<p>The function `head` prints the first six rows of birdCounts:</p>
+
+```{r eval = FALSE}
+# View data frame attributes:
+
+head(birdCounts)
+```
+
+## Exploring and summarizing data frames:
+<hr>
+<p>There are a number of useful functions for further exploring the structure of the data.</p>
+
+<p>The function `tail` prints the last six rows of birdCounts:</p>
+
+```{r eval = FALSE}
+# View data frame attributes:
+
+tail(birdCounts)
+```
+
+## Exploring and summarizing data frames:
+<hr>
+<p>There are a number of useful functions for further exploring the structure of the data.</p>
+
+<p>We can use the `summary` function to view several summary statistics at once:</p>
+
+```{r eval = FALSE}
+# View data frame attributes:
+
+summary(birdCounts)
+```
+
+## Exploring and summarizing data frames:
+<hr>
+<p>There are a number of useful functions for further exploring the structure of the data.</p>
+
+<p>The `ncol` and `nrow` functions can be used to determine the dimensions of the data frame:</p>
+
+```{r eval = FALSE}
+# View data frame attributes:
+
+ncol(birdCounts)
+
+nrow(birdCounts)
+
+```
+
+## Exploring and summarizing data frames:
+<hr>
+<p>There are a number of useful functions for further exploring the structure of the data.</p>
+
+<p>If we use the `n` argument, we can specify the number of rows we would like to show in the console:</p>
+
+```{r eval = FALSE}
+# View data frame attributes:
+
+head(birdCounts, n = 10)
+```
+
 ## Data frame objects: The tibble!
 <hr>
 <p>A <b>tibble</b> is a special type of data frame provided by the package tidyverse.</p>
@@ -1265,11 +1540,18 @@ exampleDf$hello
 
 library(tidyverse)
 
+```
+
+## Data frame objects: The tibble!
+<hr>
+<p>A <b>tibble</b> is a special type of data frame provided by the package tidyverse.</p>
+
+```{r}
 # Generate a tibble data frame:
 
-tibbleDf <- data_frame(a = c(1, 'one'), b =  c(2, 3))
-
-tibbleDf
+tibble(
+  a = c(1, 'one'),
+  b =  c(2, 3))
 ```
 
 ## Data frame objects: The tibble!
@@ -1279,9 +1561,21 @@ tibbleDf
 ```{r}
 # Convert a data frame to a tbl:
 
-tbl_df(messyDf)
+as_tibble(messyDf)
 
-tbl_df(data.frame(a = c(1, 'one'), b =  c(2, 3)))
+```
+
+## Data frame objects: The tibble!
+<hr>
+<p>Base R data frames can also be converted to a tibble.</p>
+
+```{r}
+# Convert a data frame to a tbl:
+
+as_tibble(
+  data.frame(
+    a = c(1, 'one'),
+    b =  c(2, 3)))
 
 ```
 
@@ -1292,24 +1586,27 @@ tbl_df(data.frame(a = c(1, 'one'), b =  c(2, 3)))
 ```{r}
 # Compare tibble and base R data frame:
 
-data.frame(a = c(1, 'one'), b =  c(2, 3))
+baseDf <-
+  data.frame(
+    a = c(1, 'one'),
+    b =  c(2, 3))
 
-data_frame(a = c(1, 'one'), b =  c(2, 3))
+tibbleDf <-
+  tibble(
+    a = c(1, 'one'),
+    b =  c(2, 3))
 ```
 
 ## Data frame objects: The tibble!
 <hr>
 <p>How do tibbles differ from Base R data frames?</p>
 
-```{r eval = FALSE}
-# Load data from:
+```{r}
+# Compare tibble and base R data frame:
 
-data(mtcars)
+str(baseDf)
 
-mtcars
-
-tbl_df(mtcars)
-
+str(tibbleDf)
 ```
 
 ## Summary
@@ -1361,8 +1658,8 @@ tbl_df(mtcars)
 </div>
 </div>
 
-## Summary
+## Exercises:
 <hr>
 <div style = "text-align: center;text-size: 1.2em;">
-<p style = "text-align: center; text-size: 1.2em;">By next Wednesday, please complete <a href = "http://scbi-migbirds.github.io/IntroductionToR.html"><b>this worksheet</b></a>.</p>
+<p style = "text-align: center; text-size: 1.2em;">Please complete <a href = "http://scbi-migbirds.github.io/IntroductionToR.html"><b>this worksheet</b></a>.</p>
 </div>

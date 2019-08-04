@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "<html>\n\n<head>\n<title>Title</title>\n</head>\n\n<body>\n\n<p>This is an R HTML document. When you click the <b>Knit HTML</b> button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>\n\n<!--begin.rcode\nsummary(cars)\nend.rcode-->\n\n<p>You can also embed plots, for example:</p>\n\n<!--begin.rcode fig.width=7, fig.height=6\nplot(cars)\nend.rcode-->\n\n</body>\n</html>\n",
+    "created" : 1521538972045.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "3000722842",
+    "id" : "60AB1CC1",
+    "lastKnownWriteTime" : 8026043499746845793,
+    "last_content_update" : 1521538972045,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled2"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_html"
+}

@@ -1,0 +1,13 @@
+name: mb2018-L1-rValues
+title: mb2018-L1-rValues
+username:
+account: smbc
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 395930
+bundleId: 1535963
+url: https://smbc.shinyapps.io/mb2018-L1-rValues/
+when: 1534329318.96797
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: mb2018-home.html|mb2018-home.Rmd|mb2018-L0-intro_RStudio.html|mb2018-L0-intro_RStudio.Rmd|mb2018-L2-rObjects.html|mb2018-L2-rObjects.Rmd|mb2018-L3-indexing.html|mb2018-L3-indexing.Rmd|mb2018-L3-indexing_a.html|mb2018-L3-indexing_a.Rmd|mb2018-L4-functions.html|mb2018-L4-functions.Rmd|mb2018-L5-forLoops.html|mb2018-L5-forLoops.Rmd|mb2018-swirl.html|mb2018-swirl.Rmd|test.html|test.Rmd

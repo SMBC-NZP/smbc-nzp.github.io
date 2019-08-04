@@ -1,0 +1,639 @@
+---
+output:
+ html_document:
+  theme: yeti
+  css: worksheet_styles.css
+---
+
+##<!---- set up ---->
+
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+```{r setup eval, eval = TRUE, include  = FALSE}
+# Load libraries:
+
+library(RCurl)
+
+# Load a source script:
+
+script <-
+  getURL(
+    "https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode_workshop.R"
+  )
+
+# Evaluate then remove the source script:
+
+eval(parse(text = script))
+
+rm(script)
+
+library(knitr) ; library(kableExtra)
+
+options(knitr.table.format = "html")
+
+```
+
+##<!---- introduction ---->
+
+<h1 style="text-align: center;">Introduction to data science in R:<br/>Putting it all together</h1>
+<br>
+<!img style="float: left; margin: 0px 0px 15px 15px;" src="nzpLogo.jpg" width="150" />
+<p style = "text-align: center; font-size: 14px;">Brian S. Evans, Ph.D.<br />
+Migratory Bird Center<br/>
+Smithsonian Conservation Biology Institute</p>
+<hr>
+<br>
+<img class = "img_center" src="rWorkshop/images/nzpLogo.png" width="300">
+
+<h2>Introduction</h2>
+
+<p>Lorem ipsum</p>
+
+<div class = "column" style = "width: 40%">
+<h3>Today's goals</h3>
+<ul>
+<li>Bells and whistles in R studio</li>
+<ul>
+<li>Code sections</li>
+<li>R Projects</li>
+<li>R Notebooks and Markdown</li>
+</ul>
+<li>Sourcing code</li>
+<li>Github</li>
+<ul>
+<li>What is version control?</li>
+<li>The bash environment</li>
+<li>gitBash</li>
+</ul>
+</ul>
+</div>
+
+<div class = "column" style = "width: 60%">
+<img class = "img_center" src="rWorkshop/images/dsWorkflowOverview.png" >
+</div>
+
+<hr>
+<h2>Before we begin</h2>
+<p>Copy, paste, and run the following code in R Studio to load the packages and read in the data that we will be using for this lesson:</p>	      
+
+<p>Please visit <a href = "https://git-scm.com/downloads" target = "_blank">this link</a> to download GitHub (if you don’t already have it):</p>
+
+<p>We will be using GitHub from BASH (command line, Unix environment). If you are new to Git, please follow <a href = "https://help.github.com/articles/set-up-git/"target = "_blank">these directions</a> to set up your git bash.</p>
+
+<p>If you find yourself lost, I recommend the following links:</p>
+<ul>
+<li><a href = "https://git-scm.com/book/en/v2/Getting-Started-Installing-Git"" target = "_blank">Installation</a></li> 
+<li><a href = "https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup" target = "_blank">Setup</a></li> 
+</ul>
+
+<hr>
+
+####<!---- code sections ---->
+
+<h2>R Studio: Code sections</h2>
+
+<p><b>Code sections</b>: Break larger file into discrete regions</p>
+<ul>
+<li>Improve workflow and readability</li>
+<li>Simplify code navigation</li>
+<li><b>Foldable</b></li>
+</ul>
+<br>
+<p>Insert section head:</p>
+```{r eval = FALSE}
+# Section 1 
+
+# Section 1 -----
+
+# Section 1 ----*
+```
+
+
+<p><b>Code sections</b>: Break larger file into discrete regions</p>
+<ul>
+<li>Improve workflow and readability</li>
+<li>Simplify code navigation</li>
+<li><b>Foldable</b></li>
+</ul>
+<br>
+<p>Insert section head using CTRL(CMD)+SHIFT+R:</p>
+
+<img 
+  src="rWorkshop/images/codeWorkflow/shortcut_sectionHead.png"
+  class = "img_center">
+	      
+<br>
+<p><b>Insert section head</b>: Ctrl(Cmd)+Shift+R:</p>
+<img 
+  src="rWorkshop/images/codeWorkflow/shortcut_sectionHead2.png"
+  class = "img_center">
+  
+<br>	      
+
+<img 
+  src="rWorkshop/images/codeWorkflow/sections_workflow.png"
+  class = "img_center">
+	      
+<br>
+<p><b>Jump to</b>: Shift+Alt+J</p>
+
+<img 
+  src="rWorkshop/images/codeWorkflow/nav_window.png"
+  class = "img_center">
+
+<br>
+<img 
+  src="rWorkshop/images/codeWorkflow/fold1.png"
+  class = "img_center">
+  
+<br>	      
+<p><b>Fold all</b>: Alt+O</p>
+
+<img 
+  src="rWorkshop/images/codeWorkflow/foldAll.png"
+  class = "img_center">
+	      
+<br>
+<p><b>Expand</b></p>
+
+<img 
+  src="rWorkshop/images/codeWorkflow/expand1.png"
+  class = "img_center">
+	      
+<br>
+<p><b>Expand all</b>: Shift+Alt+O</p>
+
+<img 
+  src="rWorkshop/images/codeWorkflow/expandAll.png"
+  class = "img_center">
+
+	      
+##<!---- exercise 1 ---->
+<blockquote>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h2>
+<hr>
+<p>Explore the code sections of the file `sourceCode_workshop.R`. Use this file to do the following:</p>
+<ol>
+<li>The data frames `birdCounts` and `birdMeasures` are in the same code section. Provide separate code sections for each data frame.</li>
+<li>Explore folding and unfolding these code sections.</li>
+</ol>
+<br>
+</blockquote>
+
+
+
+##<!---- projects ---->
+<h2>R Studio: R Projects</h2>
+<hr>
+<div class = "column" style = "width: 60%">
+<p>If you work on multiple projects, it is useful to separate tasks into <b>R projects</b>. An R project has its own:</p>
+<ul>
+<li>Environment</li>
+<li>Working directory</li>
+<li>History</li>
+</ul>
+</div>
+
+<div class = "column" style = "width: 40%">
+<img src="rWorkshop/images/codeWorkflow/projectMenu.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 60%;"/>
+</div>
+
+##
+<h2>R Studio: R Projects</h2>
+<hr>
+<img src="rWorkshop/images/codeWorkflow/projects_new.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>
+
+##
+<h2>R Studio: R Projects</h2>
+<hr>
+<img src="rWorkshop/images/codeWorkflow/projectDirectory.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>
+
+##
+<h2>R Studio: R Projects</h2>
+<hr>
+<img src="rWorkshop/images/codeWorkflow/projectEnvironment.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 1000px;"/>
+	      
+##<!---- exercise 2 ---->
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
+<hr>
+<br>
+<p>Create a project in the directory where you are running the R files for this class.</p>
+
+##<!---- notebooks and markdown ---->
+<h2>R Studio: R Notebooks and Markdown</h2>
+<hr>
+<p>R <b>Notebooks</b> are digital lab notebooks written in <b>Markdown</b>, a plain text formatting language.</p>
+<img src="rWorkshop/images/codeWorkflow/notebookMenu.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 650px;"/>
+	      
+##
+<h2>R Studio: R Notebooks and Markdown</h2>
+<hr>
+<p>R <b>Notebooks</b> are digital lab notebooks written in <b>Markdown</b>, a plain text formatting language.</p>
+<img src="rWorkshop/images/codeWorkflow/notebookNew.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>
+	      
+##
+<h2>R Studio: R Notebooks and Markdown</h2>
+<hr>
+<p>R <b>Markdown</b> documents</p>
+<img src="rWorkshop/images/codeWorkflow/notebookNew.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>
+	      
+##
+<h2>R Studio: R Notebooks and Markdown</h2>
+<hr>
+<p>R <b>Markdown</b> documents</p>
+<img src="rWorkshop/images/codeWorkflow/markdownFormatting1.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: #D3D3D3;
+	      width: 800px;"/>
+	      
+##
+<h2>R Studio: R Notebooks and Markdown</h2>
+<hr>
+<p>R <b>Markdown</b> documents</p>
+<img src="rWorkshop/images/codeWorkflow/markdownFormatting1a.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>
+	      
+##
+<h2>R Studio: R Notebooks and Markdown</h2>
+<hr>
+<p>R <b>Markdown</b> documents</p>
+<img src="rWorkshop/images/codeWorkflow/markdownFormatting2.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: #D3D3D3;
+	      width: 800px;"/>
+	      
+##
+<h2>R Studio: R Notebooks and Markdown</h2>
+<hr>
+<p>R <b>Markdown</b> documents</p>
+<img src="rWorkshop/images/codeWorkflow/markdownFormatting2a.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>
+	      
+##
+<h2>R Studio: R Notebooks and Markdown</h2>
+<hr>
+<p>R <b>Markdown</b> documents can also be written in html (<i>like all of the presentations in this workshop</i>).</p>
+
+<img src="rWorkshop/images/codeWorkflow/markdownHtml.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>
+	      
+##<!---- exercise 3 ---->
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h2>
+<hr>
+<br>
+<p>Create a new R notebook. Copy-and-paste the code from the `functions` code section of `sourceCodeWorkshop.R` into the notebook document. Replace the comments with markdown text and wrap code sections for evaluation.</p>   
+	      
+##
+<h2>Sourcing code</h2>
+<hr>
+<p>Scripts called <b>source code</b> can be run from within another script.</p>
+<ul>
+<li>Use global source code for steps you run for every project</li>
+<li>Split large, multi-step projects into multiple scripts</li>
+<ol>
+<li>Use project-level source code for long or multi-step projects</li>
+<li>Connect scripts with source code</li>
+</ol>
+</ul>
+	      
+<img src="rWorkshop/images/codeWorkflow/sourceCode1.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 700px;"/>
+	      
+##
+<h2>Sourcing code</h2>
+<hr>
+<p>Scripts called <b>source code</b> can be run from within another script.</p>
+<ul>
+<li>Use global source code for steps you run for every project</li>
+<li>Split large, multi-step projects into multiple scripts</li>
+<ol>
+<li>Use project-level source code for long or multi-step projects</li>
+<li>Connect scripts using sourcing</li>
+</ol>
+</ul>
+
+```{r eval = FALSE}
+source('sourceCode_workshop.R')
+```
+	      
+##<!---- exercise 4 ---->
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Four:</h2>
+<hr>
+<ol>
+<li>Use the keyboard shortcut Ctrl(Cmd)+Shift+N to open a blank worksheet.</li>
+<li>Copy-and-paste the following function into the worksheet:</li>
+```{r eval = FALSE}
+printHw <- function(){
+  "Hello world!"
+}
+```
+<li>Save the worksheet as `sourceFunctions.R` in your current working directory.</li>
+<li>Use the function `printHw` to remove the function from your environment.</li>
+<li>Type the following into your console:</li>
+```{r eval = FALSE}
+source(`sourceFunctions.R`)
+
+printHw()
+```
+</ol>
+
+
+##<!---- git ---->
+<h2>Github: What is version control?</h2>
+<hr>
+<img src="rWorkshop/images/codeWorkflow/badManagement.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 700px;"/>
+	      
+##
+<h2>Github: What is version control?</h2>
+<hr>
+<img src="rWorkshop/images/codeWorkflow/gitManagement.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 900px;"/>
+	      
+##
+<h2>Github: What is version control?</h2>
+<hr>
+<img src="rWorkshop/images/codeWorkflow/gitHistory.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 900px;"/>
+
+##
+<h2>Github: The bash environment</h2>
+<hr>
+<p>Open Git Bash</p>
+<p>Use `pwd` to print working directory</p>
+<p>Use `ls` to list files in your current working directory</p>
+<img src="rWorkshop/images/codeWorkflow/bash1.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>
+	      
+##
+<h2>Github: The bash environment</h2>
+<hr>
+<p>Use `cd` to change directories</p>
+<ul>
+<li>Navigate down by typing the name of the directory</li>
+<li>Navigate up by typing `cd ..`</li>
+</ul>
+<p>Use `cd` to navigate to your rWorkshop working directory</p>
+
+<img src="rWorkshop/images/codeWorkflow/bash2.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>
+
+##
+<h2>Github: The bash environment</h2>
+<hr>
+<p>Use `mkdir` to make a new folder, name the folder "rWorkshop_example"</p>
+<ul>
+<li>Navigate down by typing the name of the directory</li>
+<li>Navigate up by typing `cd ..`</li>
+</ul>
+<p>Use `cd` to navigate to the new folder</p>
+
+<img src="rWorkshop/images/codeWorkflow/bash3.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>	      
+
+
+##
+<h2>Github: Starting up</h2>
+<hr>
+<p>Use `mkdir` to make a new folder, name the folder "rWorkshop_example"</p>
+<ul>
+<li>Navigate down by typing the name of the directory</li>
+<li>Navigate up by typing `cd ..`</li>
+</ul>
+<p>Use `cd` to navigate to the new folder</p>
+
+<img src="rWorkshop/images/codeWorkflow/myGit.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>	
+	      
+##
+<h2>Github: Starting up</h2>
+<hr>
+<p>On the github webpage, navigate to your repositories and enter a new repository.</p>
+
+<img src="rWorkshop/images/codeWorkflow/myGit.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>	
+	      
+##
+<h2>Github: Starting up</h2>
+<hr>
+<p>Create a new repository</p>
+
+<img src="rWorkshop/images/codeWorkflow/gitSetup2.png" 
+	title="the tidyverse"
+	alt = "icons"
+	border="0"
+		style= "display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 800px;"/>	
+	      
+##
+<h2>Github: gitBash</h2>
+<hr>
+<p>Add "git" ...</p>
+```{r eval = FALSE}
+git pull origin master
+git add [modified file]
+git commit -m "add commit message here"
+git push
+```
+
+
+

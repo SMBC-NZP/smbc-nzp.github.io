@@ -1,0 +1,13 @@
+name: test
+title: test
+username:
+account: smbc
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 168236
+bundleId: 1535883
+url: https://smbc.shinyapps.io/test/
+when: 1534325391.31204
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: mb2018-home.html|mb2018-home.Rmd|mb2018-L0-intro_RStudio.html|mb2018-L0-intro_RStudio.Rmd|mb2018-L1-rValues.html|mb2018-L1-rValues.Rmd|mb2018-L2-rObjects.html|mb2018-L2-rObjects.Rmd|mb2018-L3-indexing.html|mb2018-L3-indexing.Rmd|mb2018-L3-indexing_a.html|mb2018-L3-indexing_a.Rmd|mb2018-L4-functions.html|mb2018-L4-functions.Rmd|mb2018-L5-forLoops.html|mb2018-L5-forLoops.Rmd

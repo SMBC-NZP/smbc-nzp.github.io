@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document id="root_doc">
+<Schema name="observations_spDf" id="observations_spDf">
+	<SimpleField name="x" type="float"></SimpleField>
+	<SimpleField name="y" type="float"></SimpleField>
+	<SimpleField name="bearing" type="int"></SimpleField>
+</Schema>
+<Folder><name>observations_spDf</name>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#observations_spDf">
+		<SimpleData name="x">-78.16463</SimpleData>
+		<SimpleData name="y">38.8848</SimpleData>
+		<SimpleData name="bearing">358</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-78.16463,38.8848</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#observations_spDf">
+		<SimpleData name="x">-78.16356</SimpleData>
+		<SimpleData name="y">38.8872</SimpleData>
+		<SimpleData name="bearing">264</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-78.16356,38.8872</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#observations_spDf">
+		<SimpleData name="x">-78.16654</SimpleData>
+		<SimpleData name="y">38.8882</SimpleData>
+		<SimpleData name="bearing">128</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-78.16654,38.8882</coordinates></Point>
+  </Placemark>
+</Folder>
+</Document></kml>

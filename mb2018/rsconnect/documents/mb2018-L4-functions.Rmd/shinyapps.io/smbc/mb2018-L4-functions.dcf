@@ -1,0 +1,13 @@
+name: mb2018-L4-functions
+title: mb2018-L4-functions
+username:
+account: smbc
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 410671
+bundleId: 1558646
+url: https://smbc.shinyapps.io/mb2018-L4-functions/
+when: 1535487385.82052
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: mb2018-home.html|mb2018-home.Rmd|mb2018-L0-intro_RStudio.html|mb2018-L0-intro_RStudio.Rmd|mb2018-L1-rValues.html|mb2018-L1-rValues.Rmd|mb2018-L2-rObjects.html|mb2018-L2-rObjects.Rmd|mb2018-L3-indexing.html|mb2018-L3-indexing.Rmd|mb2018-L3-indexing_a.html|mb2018-L3-indexing_a.Rmd|mb2018-L4-functions_worksheet.html|mb2018-L4-functions_worksheet.Rmd|mb2018-L5-forLoops.html|mb2018-L5-forLoops.Rmd|mb2018-swirl.html|mb2018-swirl.Rmd|test.html|test.Rmd

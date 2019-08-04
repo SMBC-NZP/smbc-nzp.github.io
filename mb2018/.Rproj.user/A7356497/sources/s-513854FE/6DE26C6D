@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1536681255091.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "6DE26C6D",
+    "lastKnownWriteTime" : 0,
+    "last_content_update" : 1536681255091,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "context" : ".GlobalEnv:::as.data.frame.receiver"
+    },
+    "relative_order" : 10,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_code_browser"
+}
