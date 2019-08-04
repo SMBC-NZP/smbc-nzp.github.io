@@ -1,0 +1,392 @@
+---
+title: "Lesson one: Values"
+author: "Brian S. Evans, Ph.D."
+output:
+  html_document:
+    df_print: paged
+theme: yeti
+---
+
+<!-- html head --> 
+
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+<!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
+</head>
+
+```{r setup, include=FALSE}
+# Load libraries:
+
+library(RCurl)
+library(lubridate)
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+
+knitr::opts_chunk$set(echo = FALSE)
+options(knitr.table.format = "html")
+
+# Objects used:
+
+numberObject <-
+  c(1, 1, 2, 3)
+
+exampleFactor <- 
+  factor(
+    c('one', 'one', 'two', 'three')
+    )
+
+```
+<br>
+
+## Introduction  
+
+<p>Many early R users find the process of learning R a grueling uphill climb. I believe that one of the biggest impediments to learning R stems from studying applications of the program without taking the appropriate time to learn the language itself. Developing a flexible R skillset, and thus being able to apply what you learn in this course, requires us to better understand R as a language and develop new ways of thinking about data.</p>
+
+<p>In this lesson we will begin our exploration of R as a language by learning the primary types of values that users interact with. A <b>value</b> is any single unit of data. A value can be described by its "<b>class</b>", which describes what kind of value it is, and "<b>type</b>" which describes how the value is stored in R. The most commonly used classes of values are:</p>
+<ul>
+<li><b>Numbers</b>: Numbers can be double (e.g., 1.123) or integer (e.g., 1, 2, 3)</li>
+<li><b>Characters</b>: Words or symbols (e.g., "hello")</li>
+<li><b>Factors</b>: Symbols or words assigned to integer values (e.g., "hello" = 1, "world" = 2)</li>
+<li><b>Logical</b>: Integer values of 0 and 1 assigned to FALSE and TRUE</li>
+</ul>
+
+<hr>
+
+<p><i>Please complete the sections of this lesson in order. Even if some elements of this lesson are very easy for you, it is important that each step is completed. Additionally, I ask that the steps are completed with the methodology shown -- the goals of this introductory material is to provide early R users with foundational skills while ensuring that advanced users understand some of the nuances of the R language.</i></p>
+
+
+## A review  {data-progressive=TRUE}
+
+<p>The function "combine", `c()`, can be used to combine multiple values into a single object. For example, we can use to combine the numbers 5, 8, and 13 into an object you would type `c(5, 8, 13)`.</p>
+
+<p>You can store the object in memory by assigning a name to the object using the assignment operator `<-`. For example, assign the name "bunnies" to the object by typing `bunnies <- c(5, 8, 13)`.</p>
+
+<p>To print the R object in your Console panel, you can simply type the name of the object. For example, we can view the values of the object named "bunnies" by typing `bunnies` in the R console.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Please complete the following steps to generate an R object and store that object in your system's memory:</p>
+<ul>
+<li>Create an object that contains the numbers 1, 1, 2, and 3</li>
+<li>Store the object in your system's memory by assigning the name "numberObject"</li>
+<li>Print the R object</li>
+</ul>
+</p>
+
+</div>
+
+<br>
+
+<p>The function `mean()` can be used to calculate the average of number values within an object. We will use this function, in conjunction with the `numberObject`, to review non-nested and nested code structures.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Calculate the `mean` of the values stored in the object `numberObject`:</p>
+
+</div>
+
+<br>
+<p>Because `numberObject` is simply the name assigned to the object `c(1, 1, 2, 3)`, we can write the above using a nested coding structure by substituting `numberObject` with `c(1, 1, 2, 3)`.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use a nested coding structure to calculate the `mean` of the values `c(1, 1, 2, 3)`:</p>
+
+</div>
+
+## Numbers  
+
+<br>
+<p>There are two basic kinds of numbers in R:</p>
+<ul>
+<li><b>Numeric, double</b>: For our purposes, this can be thought of simply as a decimal number</li>
+<li><b>Integer</b>: whole numbers</li>
+</ul>
+
+<br>
+<p>The functions `class()` and `typeof()` are used to to determine the <b>class</b> and <b>type</b> of a value, respectively.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use the functions `class` and `typeof` to explore the attributes of `numberObject`.</p>
+
+
+</div>
+
+<br>
+<p>If you specify a range of whole numbers, using the notation `min:max`, you can generate integer values.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Please use a nested coding structure to complete the following:</p>
+<ul>
+<li>Generate an ordered sequence of whole numbers from 1 to 3 using the `:` operator and use `class()` and `typeof()` to explore object.</li>
+
+<li>Use `c()` to generate an ordered sequence of whole numbers from 1 to 3. Explore the object using `class()` and `typeof()`.</li>
+
+<li>How do the two objects differ?</li>
+</ul>
+</div>
+
+<br>
+<p>We can coerce double numeric values into integer numeric values using `as.integer()`. This is only safe, however, if the number that you are converting to an integer is a whole number!</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use `as.integer()` to convert `numberObject` from numeric double to integer values. Use the `class()` and `typeof` functions to describe the object.</p>
+<ul>
+<li>Complete this process using an object assignment coding structure.
+
+
+</li>
+<li>Complete this process using a nested coding structure.
+</li>
+</ul>
+</div>
+
+<br>
+<p>Similarly, we can use the function `as.numeric()` to convert a value to a double numeric value.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use a nested coding structure and `as.numeric()` to convert a set of integers to double numeric values.</p>
+
+
+<p>Describe the object using a nested coding structure and the `class()` and `typeof()` functions.</p>
+
+</div>
+<br>
+<p><i class="fa fa-user-secret" aria-hidden="true" style = "font-size: 150%"></i> If you've clicked on the hints, you may have noticed that there is a specific, and maybe strange, format to my code. The format I use represents best management practices in coding. You can enhance the readability of your code by:</p><ul>
+<li>Assigning a name to an object in its own line</li>
+<li>Writing each step of a nested function on a separate line</li>
+</ul>
+
+## Characters
+
+<br>
+<p> A <b>character</b> or "string" value is a symbol or set of symbols from a given alphabet (note: also includes numbers and punctuation). The type and class of character values are both "character".</p>
+<p>Whenever you are working with characters, you specify the character values within single or double quotation marks. For example, "hello world" would be written in R as `'hello world'` or `"hello world"`.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Please use a nested coding structure to complete the following:</p>
+<ul>
+<li>Create an object that contains the months, "March", "February", "January", and "January". 
+
+
+
+
+</li>
+
+<li>Explore the <b>class</b> and <b>type</b> of the object using a nested coding structure .
+</li>
+</ul>
+
+</div>
+
+## Factors
+
+<br>
+<p> A <b>factor</b> is a value that includes the following information:</p>
+<ul>
+<li><b>Integer value</b>: Numeric integer value associated with factor level. For example, you may construct a factor of female and male treatment groups. In this instance, each treatment group would be assigned to a different integer value. </li>
+<li><b>Levels</b>: Character values that are associated with the integer value. Continuing with the example above, the levels would be female and male.</li>
+<li><b>Labels</b>: Characters to assign to each factor level. This relates to the character values that you see when you print or plot your data. For example, you may want to visualize female as "F" and males as "M".</li>
+</ul>
+<p><b>Why would you use factors?</b> You would use factors in instances in which data can be grouped into one of a few (or several) values. For example, banded birds may be grouped into females and males. Factors also may be useful if you are interested in specifying the order that values are displayed. For example, the days of the week, in alphabetical order, are Friday, Monday, Saturday, Sunday, Thursday, Tuesday, and Wednesday. To specify the days of the week in date order, you can change the object into a factor (as below).</p>
+
+<p>Factors are generated using the function `factor()`. The first argument to provide to `factor()` is a set of character values that you would like to structure as factor variables.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Create a factor that contains the words, "one", "one", "two", and "three". Assign the name `exampleFactor` to the resultant object.</p>
+
+
+<p>Explore the <b>class</b> and <b>type</b> of the object using object assignment.</p>
+
+</div>
+
+<br>
+<p>Notice that the type of object is integer??? Remember that this lets us know how R is storing the object internally. Any guesses as to why R would store the object as a integer?</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> The function `levels()` provides us with information on the levels of a factor. Use `levels()` to view the factor levels of `exampleFactor`.</p>
+
+</div>
+<br>
+
+<p>The object `exampleFactor`, as written, might cause us some trouble because levels are ordered alphabetically by default. To see why this might be a problem, let's use a new function, `plot()` to represent the object graphically. The first argument of `plot()` is the data that you evaluating (see `?plot`). When a factor object is plotted, the default output is the count of records (y-axis) at each factor level.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use the `plot()` function to observe why this might be an issue.</p>
+
+</div>
+<br>
+
+<p>To address this, levels can be manually set, as `levels` can be used as one of the arguments for the `factor` function (see `?factor`). To do so, provide the set of unique characters (`c(...)`) in the order that you would like them to be arranged. Recall that arguments of functions are separated by a comma (e.g., `myFunction(arg1 = x, arg2 = y)`).</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Create a factor that contains the words, "one", "one", "two", and "three". Use the `levels` argument of `factor()` to provide levels in sequential number order. Do not assign a name to the resultant object.</p>
+
+
+<p>Using a nested coding structure, plot the releveled factor:</p>
+
+</div>
+
+<br>
+<p>Likewise, labels can be manually set if those that are automatically assigned are not ideal. Labels can be set manually using the `labels` argument of the `factor` function. To do so, provide the set of unique characters (`c(...)`) in the order of the factor `labels`. Recall that arguments of functions are separated by a comma (e.g., `myFunction(arg1 = x, arg2 = y)`)</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Create a factor that contains the words, "one", "one", "two", and "three". Use the `levels` argument of `factor()` to provide levels in sequential number order. Do not assign a name to the resultant object. Use the `labels` argument of the `factor` function to capitalize the factor labels.</p>
+
+
+<p>Using a nested coding structure, plot the releveled factor with the nicer-looking labels:</p>
+
+</div>
+
+<br>
+<p><i class="fa fa-user-secret" aria-hidden="true" style = "font-size: 150%"></i> Factors are very useful (especially for statisticians!), but can also be a bit of a pain to deal with. If you are working with a factor that has an untenable number of levels, consider simplifying the factor or using character values instead. At one time, evaluating characters required much more memory to process, but this is no longer the case. I recommend avoiding factors unless they are necessary for the application that you are working on.</p>
+
+<hr>
+
+## Logical values
+<br>
+<div style = "text-align: left;">
+<p> R reserves the words TRUE and FALSE as logical constants. These constants are mapped to integer values:</p>
+<ul>
+<li><b>FALSE</b>: 0</li>
+<li><b>TRUE</b>: 1</li>
+</ul>
+</div>
+<br>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> To better understand logical values, take a moment to run and explore the output of the code below.</p>
+
+```{r ft, echo= TRUE, results = 'hide'}
+FALSE
+
+TRUE
+
+as.numeric(FALSE)
+
+as.numeric(TRUE)
+
+mean(
+  c(FALSE, TRUE, TRUE)
+  )
+
+FALSE + TRUE
+
+FALSE + TRUE + TRUE
+```
+</div>
+
+<br>
+
+<p>Logical values can be obtained by evaluating objects with <b>logical operators</b>. Logical operators in R include those displayed in the table below. We will explore logical operators in-depth in a future lesson.</p>
+
+<br>
+
+```{r echo = FALSE}
+df <-
+  data.frame(
+  `Operator` = c('==', '!=','!', '|', '&','%in%', '<', '<=', '>', '>='),
+  `Usage` = c('x == y', 'x != y', '!(x)','x | y', 'x & y','x %in% yz', 'x < y', 'x <= y', 'x > y', 'x >= y'),
+  `Meaning` = c(
+    'x is equal to y',
+    'x is NOT equal to y',
+    'not x',
+    'x OR y',
+    'x AND y',
+    'x is in the vector c(y,z)',
+    'x is less than y',
+    'x is less than or equal to y',
+    'x is greater than y',
+    'x is greater than or equal to y')
+  )
+
+kable(df, "html") %>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE, position = 'left', font_size = 14)
+```
+
+<br>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use the logical operator `==` to test whether each set of values is equivalent ($\equiv$). For example, the first set of expressions would be written as `3 == 3`.</p>
+
+<p>$3 \equiv 3$</p>
+
+<p>$3 \equiv 4$</p>
+
+<p>$3 \equiv 2 + 1$</p>
+
+<p>$3 \equiv 3 + 1$</p> 
+
+<p>$2 + 2 \equiv 3 + 1$</p>
+
+<p>$(3 \equiv 3) + (3 \equiv 2 + 1)$</p>
+
+</div>
+
+<hr style="border-width: 10px;">
+## Term review and glossary
+
+<div class="roundBorder">
+<p><b>Functions and operators</b></p>
+<ul> 
+
+<li>`as.integer` Convert an object from double numeric to an integer</li>
+<li>`as.numeric` Convert an object from integer to double numeric</li>
+<li>`c` Combine objects</li>
+<li>`class` Determine the class of an object</li>
+<li>`factor` Make a factor object</li>
+<li>`levels` Determine the levels of a factor object</li>
+<li>`mean` Take the average of a set of values (note, use na.rm = TRUE in the presence of NA's)</li>
+<li>`plot` Plot an object, used in this exercise to plot a factor</li>
+<li>`typeof` Determine how R stores an object in your global environment</li>
+
+
+<li>`<-` Assign a name to an object in R (assignment operator)</li>
+<li>`?` Get help for a given function</li> 
+</ul>
+<p><b>Logical operators</b></p>
+```{r echo = FALSE}
+require(knitr)
+require(kableExtra)
+
+df <-
+  data.frame(
+  `Operator` = c('==', '!=', '|', '&', '<', '<=', '%in%','>', '>='),
+  `Usage` = c('x == y', 'x != y', 'x | y', 'x & y','x %in% yz', 'x < y', 'x <= y', 'x > y', 'x >= y'),
+  `Meaning` = c(
+    'x is equal to y',
+    'x is NOT equal to y',
+    'x OR y',
+    'x AND y',
+    'x is in the vector c(y,z)',
+    'x is less than y',
+    'x is less than or equal to y',
+    'x is greater than y',
+    'x is greater than or equal to y')
+  )
+
+kable(df, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE, position = 'left', font_size = 14)
+```
+
+<hr style = "border: 1px solid #30288C;">
+
+<p><b>Vocabulary</b></p>
+<ul>
+<li><b>Character</b>: a symbol or set of symbols from a given alphabet (note: also includes numbers and punctuation)</li>
+<li><b>Factor</b>: a value in which characters are mapped to integer levels and labels</li>
+<li><b>Integer</b>: a whole number</li>
+<li><b>Labels (of a factor)</b>: character values associated with a factor level when printing or plotting factors</li>
+<li><b>Levels (of a factor)</b>: character values mapped to integer values</li>
+<li><b>Logical operator</b>: Operators that are used to test logical statements (e.g., 3 `>` 2)</li>
+<li><b>Logical value</b>: TRUE or FALSE</li>
+<li><b>Numeric, double</b>: For our purposes, a decimal number</li>
+<li><b>Type</b>: how a value is stored in R (e.g., double or integer)</li>
+<li><b>Value</b>: any single unit of data</li>
+</ul>
+</div>
+
+<hr style="border-width: 10px;">
+<img style="float: right; margin: 0px 0px 15px 15px" src="images/nzpLogoSideways2.png" width="50%" />
+
+
+<b>End of lesson!</b>

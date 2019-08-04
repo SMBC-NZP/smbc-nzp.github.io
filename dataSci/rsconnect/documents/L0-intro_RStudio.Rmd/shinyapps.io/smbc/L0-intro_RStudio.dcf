@@ -1,0 +1,13 @@
+name: L0-intro_RStudio
+title: L0-intro_RStudio
+username:
+account: smbc
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1037866
+bundleId: 2242049
+url: https://smbc.shinyapps.io/L0-intro_RStudio/
+when: 1563395334.16765
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: home.html|home.Rmd|L1-rValues.html|L1-rValues.Rmd|L2-rObjects.Rmd|L3-indexing.html|L3-indexing.Rmd|L4-functions.html|L4-functions.Rmd

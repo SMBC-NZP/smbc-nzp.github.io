@@ -1,0 +1,436 @@
+---
+title: "Lesson three: Indexing"
+author: "Brian S. Evans, Ph.D."
+output:
+  html_document:
+    df_print: paged
+runtime: shiny_prerendered
+theme: yeti
+---
+
+<!-- html head --> 
+
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+<!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
+</head>
+
+
+```{r setup, include = FALSE}
+library(knitr)
+library(tidyverse)
+
+knitr::opts_chunk$set(echo = TRUE)
+
+# Libraries:
+library(tidyverse)
+
+# Functions:
+
+theme_add <- function(){
+  theme(
+    axis.title = element_text(size = rel(1.5))
+  )
+}
+
+# Preset values
+
+exampleFactor <- factor(c('three','two','one', 'one'))
+
+exampleFactorLevels <- factor(
+  exampleFactor,
+  levels = c('one', 'two', 'three')
+)
+
+exampleFactorLabels <- factor(
+  exampleFactorLevels,
+  labels = c('One', 'Two', 'Three')
+)
+
+numericVector <- c(1, 1, 2, 3)
+
+v <- 
+  c(1, 1, 2, 3, 5, 8)
+
+df <-
+  data.frame(
+    hello = c(1, 1, 2),
+    world = c(3, 5, 8)
+  )
+
+m <- 
+  matrix(
+    c(1, 1, 2, 3, 5, 8), 
+    ncol = 2
+  )
+
+```
+
+## Introduction
+
+<p>The process of querying data -- in other words subsetting or filtering data by some condition -- is one of the most important data operations we use when evaluating data collected in the field. In this lesson we will be exploring how to query data using what is often called "indexing" or "matrix notation". We will learn a <b>much easier</b> way to query data by the end of this course. I start by teaching this method of querying because it is helpful in understanding how R objects work, gives a glimpse of what is happening under the hood when using other querying techniques, and still used for some advanced querying techniques.</p>
+
+<br>
+<h4>Review: logical values</h4>
+<p>Recall that logical values can be obtained by evaluating objects with <b>logical operators</b>. For example, the logical operator `==` tests whether a value is equal to another value.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use the logical operator `==` to test whether the each set of values is equivalent ($\equiv$).</p>
+
+<p>$21 \equiv 34$</p>
+
+<p>$21 \equiv 21$</p>
+
+<p>$21 \equiv 34 - 13$</p>
+
+<p>$34 \equiv 21 + 13$</p> 
+
+<p>$21 \equiv 13 - 34$</p>
+
+<p>$(21 \equiv 34) + (34 \equiv 21 + 13)$</p>
+
+</div>
+
+
+<br>
+
+## Using logic with objects
+
+<br>
+<p>We can run a logic test on objects with more than one value. This is executed in the same way as evaluating a single value</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use the logical operator `==` to examine which values in the objects below are equivalent ($\equiv$) to the number 3.</p>
+<ul>
+<li>An atomic vector object:</li>
+```{r logic_objects_vector, echo= TRUE, results = 'hide'}
+
+v <- 
+  c(1, 1, 2, 3, 5, 8)
+
+v
+
+```
+<li>A matrix object:</li>
+```{r logic_objects_matrix, echo= TRUE, results = 'hide'}
+m <- 
+  matrix(
+    c(1, 1, 2, 3, 5, 8), 
+    ncol = 2
+  )
+
+m
+
+```
+
+<li>A data frame object:</li>
+```{r logic_objects_dataframe, echo= TRUE, results = 'hide'}
+
+df <-
+  data.frame(
+    a = c(1, 1, 2),
+    b = c(3, 5, 8)
+  )
+
+df
+
+df == 3
+```
+</ul>
+</div>
+
+
+## The logical operators
+
+<h4>Comparing values in objects</h4>
+
+<p>The table below provides a set of the logical operators that are most commonly used to compare values. In each of the table items we are evaluating some object (or value) x relative to some object y.</p>
+
+```{r echo = FALSE}
+df <-
+  data.frame(
+  `Operator` = c('==', '!=','!', '|', '&','%in%', '<', '<=', '>', '>='),
+  `Usage` = c('x == y', 'x != y', '!(x)','x | y', 'x & y','x %in% yz', 'x < y', 'x <= y', 'x > y', 'x >= y'),
+  `Meaning` = c(
+    'x is equal to y',
+    'x is NOT equal to y',
+    'not x',
+    'x OR y',
+    'x AND y',
+    'x is in the vector c(y,z)',
+    'x is less than y',
+    'x is less than or equal to y',
+    'x is greater than y',
+    'x is greater than or equal to y')
+  )
+
+kable(df, "html") %>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE, position = 'left', font_size = 14)
+```
+<br>
+<p>Each of the logical operators above can be applied in the same way that we have applied `==` thus far.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Using vector `v`, as above, use logical operators to test the following statements:</p>
+<ul>
+<li>`v` is not equal to 3</li>
+
+<li>`v` is less than 3</li>
+
+<li>`v` is less than or equal to 3</li>
+
+<li>`v` is greater than 3</li>
+
+<li>`v` is greater than or equal to 3</li>
+
+<li>`v` is equal to 2 <b>or</b> `v` is equal to 3</li>
+
+<li>`v` is equal to 2 <b>and</b> `v` is equal to 3</li>
+
+</ul>
+
+<p>Explore logical operators as above using matrix `m`:</p>
+
+```{r logic_operators_m, echo= TRUE, results = 'hide'}
+
+m
+
+```
+
+
+<p>Explore logical operators as above using data frame `df`:</p>
+
+```{r logic_operators_df, echo= TRUE, results = 'hide'}
+
+df
+
+```
+</div>
+
+<br>
+
+<h4>Comparing sets of values</h4>
+
+<p>We are often interested in comparing sets of values with one another. Using the code above, we may be interested in testing whether values `1` and `3` appear in vector `v`. We can use the or statement, as above, with the syntax `v == 1 | v == 3`. This can quickly get cumbersome if we are comparing long value sets. Instead, we use the operator `%in%`, which tests the logic statement "is in".</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Test which values of `v` are in the vector `c(1,3)`:</p>
+
+</div>
+<br>
+
+<p>The NOT statement, `!(x)` has limited utility for simple statements. For example, the statement `!(x == 1)` is written more simply as `x != 1`. Likewise, `!(x < 1)` may be written as `x >= 1`. In more complex logical operations, such as when it used in combination with `%in%`, it becomes a powerful tool to examine sets.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Test which values of `v` are NOT in the vector `c(1,3)`:</p>
+
+</div>
+<br>
+
+<p>You can also compare sets with <i>and/or</i> statements, represented in R by `&` and `|`. As described above, the statement `v == 1 | v ==3` is equivalent to `v %in% c(1,3)`. The "and" statement (`&`) is not very useful for logical problems such as these, because no value can be both 1 and 3 at the same time. The `&` operator becomes very useful when querying across multiple conditions.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Test whether values of `v` are less than 5 and not equal to 2:</p>
+
+</div>
+
+
+<br>
+
+## Querying vectors
+
+<p>Recall that the position of value `x` in vector `v` would be notated as `v[x]`. This notation, indexing, instructs R to evaluate and return the statement "vector `v` where position v<sub>x</sub> is equal to 3". R returns all of the values from vector `v` for which this statement was `TRUE`. In other words, you conducted a query of vector `v` by <b>position</b>.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset vector `v` to its first and second values by position</p>
+
+</div>
+
+<br>
+<p>You may also query values by <b>condition</b>, using logic, in the same manner as above. For example, you may want R to evaluate the statement "vector `v` where value v<sub>x</sub> is greater than two".</p>
+
+```{r logic_query_vector, echo= TRUE, results = 'hide'}
+v
+
+v > 2
+
+v[v > 2]
+
+```
+
+
+<br>
+<p>Notice in the above that the line `v > 2` returned logical values of `v` associated with that test. The next line of code, `v[v > 2]` returned values from `v` that met this condition.</p>
+
+<p>Why does this work? Let's take a quick look under the hood. The function `which` provides the index location (i.e.,position) in which a logical statement evaluates as true. Using the `v > 2` query above, we can see that:</p>
+
+```{r echo= TRUE, results = 'hide'}
+v
+
+v > 2
+
+which(v > 2)
+
+v[v > 2]
+```
+<br>
+
+<p>All of the various logical statements can be applied in the same manner.</p> 
+
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use indexing to query vector `v` based on the following conditions:</p>
+<ul>
+<li>Values greater than or equal to 3</li>
+
+<li>Values that do not equal 2</li>
+
+<li>Values that equal 2</li>
+
+<li>Values that are greater than or equal to 3 but do not equal 5</li>
+
+<li>Values that are 3 or 5</li>
+
+</ul>
+</div>
+<br>
+
+
+## Querying matrices
+
+<h4>Review: Index matrices by position</h4>
+<p>Recall that the position of value `x,y` (row, column) in a matrix, `m`, can be notated as `m[x,y]`. Supplying a value or set values for `x`and/or `y` allows us to index matrix `m` by position. For example, the notation `m[1,2]` returns the value of matrix `m` in the first row of the second column.</p>
+
+<p>If the `x` or `y` position is left blank, all values for that dimension are returned. For example, the notation `m[,]` would return all the rows and columns of matrix `m`. The notation `m[,y]` would return all values in column `y` of matrix `m`. Likewise, the notation `m[x,]` returns all values in row `x` of matrix `m`</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use indexing by position to subset matrix `m` as described below:</p>
+<ul>
+<li>The value in the first row and first column</li>
+
+<li>All values in the first row</li>
+
+<li>All values in the second column</li>
+
+<li>The first and third values of the second column</li>
+
+</ul>
+</div>
+
+<br>
+<h4>Indexing with logic</h4>
+
+<p>In the above, note that the object `m[,1]` is a vector. As such, we can query this vector by position using logic. Note the output of the below code, which tests `m[,1]` to determine whether each value is greater than 1:</p>
+```{r matrix_justLogic, echo= TRUE, results = 'hide'}
+m
+
+m[,1]
+
+m[,1] > 1
+```
+
+
+<br>
+<p>We see that this statement only evaluates as TRUE at one position in the vector. Let's use `which`, as above, to determine the index associated with this position:</p>
+
+```{r matrix_justLogic_which, echo= TRUE, results = 'hide'}
+which(m[,1] > 1)
+```
+
+<br>
+<p>Because our `which` statement evaluates to 3, the following queries are equivalent:</p>
+
+```{r matrix_justLogic_whichQuery, echo= TRUE, results = 'hide'}
+m[3, ]
+
+m[m[,1] > 1, ]
+
+```
+
+<br>
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset matrix `m` as described below:</p>
+<ul>
+<li>All values in which the values of column 1 are equal to 1</li>
+
+<li>All values in which the values in column 2 are equal to 3 or 8</li>
+
+<li>All values in which the values in column 2 are greater than 3</li>
+
+<li>All values in which the values in column 1 are less than 2</li>
+
+</ul>
+</div>
+<br>
+
+## Querying data frames
+
+<h4>Review: Index data frames by position</h4>
+
+<p>Just like matrices, the position of value `x,y` (row, column) in a data frame, `df`, can be notated as `df[x,y]`.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use indexing by position to subset matrix `m` as described below:</p>
+<ul>
+<li>The value in the first row and first column</li>
+
+<li>The value in the second row and second column</li>
+
+<li>All values in the second row</li>
+
+<li>All values in the second column</li>
+
+<li>The first and third values in the second column</li>
+
+</ul>
+</div>
+
+<br>
+<p>An important difference between querying matrices and dataframes is that data frames have a "names" attribute by default:</p>
+```{r df_attributes, echo= TRUE, results = 'hide'}
+# Attributes of object df:
+
+attributes(df)
+```
+
+<br>
+<p>Recall that the component vectors in a data frame (i.e., columns -- in this case `c(1,1,2)`) can be accessed by name using the `$` notation:</p>
+<br>
+
+```{r df_dollarSign, echo= TRUE, results = 'hide'}
+
+# Data frame indexing by position ...
+
+df[,1]
+
+# ... is equivalent to:
+
+df$hello
+```
+
+<br>
+<p>The above is very useful for querying data frames, because the `$` notation is much easier to read than "matrix notation".</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Convert the following expressions to `$` notation:</p>
+
+```{r convert_dollarSign1, echo= TRUE, results = 'hide'}
+df[,1] > 1
+```
+
+```{r convert_dollarSign2, echo= TRUE, results = 'hide'}
+which(df[,1] > 1)
+```
+
+```{r convert_dollarSign3, echo= TRUE, results = 'hide'}
+df[df[,1] > 1,]
+```
+</div>
+<hr>
+<b>End of lesson!</b>
+<hr style="border-width: 10px;">
+<img style="float: right; margin: 0px 0px 15px 15px" src="images/nzpLogoSideways2.png" width="50%" />
+
+
+

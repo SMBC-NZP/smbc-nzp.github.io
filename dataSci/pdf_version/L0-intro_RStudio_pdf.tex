@@ -1,0 +1,797 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Introduction to R and R Studio},
+            pdfauthor={Brian S. Evans, Ph.D.},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Introduction to R and R Studio}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Brian S. Evans, Ph.D.}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+    \date{}
+    \predate{}\postdate{}
+  
+
+\begin{document}
+\maketitle
+
+\subsection{Introduction to R Studio}\label{introduction-to-r-studio}
+
+This document will begin to prepare you for the material presented in
+this course. Please read and complete the following steps. Even if you
+are entering this class with loads of R experience, please thoroughly
+read and complete each section of this document, as each section
+contains terminology you may be unfamiliar with and the beginnings of
+the R data science workflow that we will develop over the course of this
+class.
+
+Throughout documents of this class there are a number of icons and
+formats to pay special attention to:
+
+ Represents sections where user input is necessary.
+
+\texttt{Gray\ boxes} are sections that appear exactly as they would in
+the R environment. You may copy-and-paste these sections directly into R
+(CTRL+C to copy and CTRL+V to paste).
+
+The spy icon () provide tips and tricks for users.
+
+The end of each document will provide summary information on keyboard
+shortcuts, operators, functions, and vocabulary.
+
+Important! Throughout this class we will be using keyboard shortcuts.
+Class documents refer to Windows/Linux keyboard mapping. Mac users
+should use ``command'' instead of CTRL to execute keyboard shortcuts.
+
+\subsection{R and the R Studio
+environment}\label{r-and-the-r-studio-environment}
+
+ Our first step is to ensure that you have R and R Studio Desktop
+installed on your computer.
+
+If you do not have R installed on your computer, visit this link and
+follow the directions to do so.
+
+If you do not have R Studio Desktop installed on your computer, visit
+this link and follow the directions to do so.
+
+ Please ensure that both programs are installed on your computer and
+open R Studio.
+
+R Studio is an interface to R that has numerous advantages over using
+R's built-in interface. More than anything, R Studio provides an
+environment that is easy to organize. R Studio is divided into four
+panels, as described in the image below. We will use panel names and
+their functionality considerably throughout this class, so please take a
+moment to familiarize yourself with them.
+
+ Open R Studio and create a new R script in the source panel using the
+keyboard combination CTRL+SHIFT+N. Even before you begin writing any
+code, it's good to save the script you will be working on. Save the file
+on your computer using the keyboard combination CTRL+S. Name the file
+``rIntro'' (note: the extension, ``.R'' will be assigned automatically).
+
+The source panel
+
+The source panel provides a useful interface for writing and editing
+scripts and is a great tool for observing and communicating what you
+have done. To execute code from the source panel, place your cursor on
+the line you would like to run and use the keyboard shortcut CTRL+Enter.
+To run multiple lines of code at once, use your mouse to highlight the
+section of code you would like to run and hit CTRL+Enter.
+
+ Type \texttt{1+1+2} on the first line of your script in the source
+panel. Use the keyboard shortcut CTRL+Enter to execute the line of code
+that the cursor is on.
+
+ Type or copy-and-paste the following into the source panel, select the
+section of code with your mouse, and run the section using CTRL+Enter:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1}\OperatorTok{+}\DecValTok{1}\OperatorTok{+}\DecValTok{2}
+\DecValTok{3}\OperatorTok{*}\DecValTok{5}\OperatorTok{*}\DecValTok{8}
+\end{Highlighting}
+\end{Shaded}
+
+ You may also use your mouse and CTRL+Enter to run a subset of a line of
+code. Using your entry above, highlight just \texttt{5*8} with your
+mouse and hit CTRL+Enter to run.
+
+Note: Make sure that you have CTRL+Enter in your muscle memory -- you
+are going to be using it a lot!
+
+ Any code that you will use more than once or upon which future lines of
+code depend should always be written and executed in the source panel.
+
+The console panel
+
+The console panel is the R Studio interface to program R. When a line of
+code is run from the command prompt (the symbol \texttt{\textgreater{}})
+on the console, the interface sends the code to R which evaluates it and
+returns any potential output. When you ran the above sections of code
+from the source panel, you may have noticed that the input and output
+appeared in the console panel. This highlights a component of how R
+Studio works: code written in the source panel is sent to the console
+panel (CTRL+Enter), the console panel sends the code to R for
+evaluation, and R prints the results in the console panel (if
+applicable).
+
+You can run code directly from the console panel. To do so, simply type
+the code you would like to run and press enter.
+
+ Type \texttt{1+1+2} after the command prompt on the console panel and
+press enter to run.
+
+ Copy-and-paste the following into the console panel and press enter to
+run the section:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1}\OperatorTok{+}\DecValTok{1}\OperatorTok{+}\DecValTok{2}
+\DecValTok{3}\OperatorTok{*}\DecValTok{5}\OperatorTok{*}\DecValTok{8}
+\end{Highlighting}
+\end{Shaded}
+
+ You can use your keyboard to navigate between lines of code you've run
+in the console panel. This can be especially useful for modifying part
+of a section of code. For example, use the up arrow on your keyboard to
+change the line \texttt{1+1+2} to \texttt{1+1+2+3}.
+
+ Any code that you will use only once should be written and executed in
+the console panel. Do not write code into the console panel if future
+code elements will depend on the code's output!
+
+ Mathematical operators are similar to that in Excel (e.g., \texttt{*}
+for multiplication and \texttt{/} for division). Likewise, R follows the
+conventional order of operations (i.e., the same order of operations you
+would find on a scientific calculator or in Microsoft Excel --
+parentheses, exponents, multiplication/division, then
+addition/subtraction). For example, the mathematical expression:
+
+\[\frac{1+1+2}{3} + \frac{5}{8}\]
+
+Would be written in R as:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\DecValTok{1}\OperatorTok{+}\DecValTok{1}\OperatorTok{+}\DecValTok{2}\NormalTok{)}\OperatorTok{/}\DecValTok{3}\OperatorTok{+}\DecValTok{5}\OperatorTok{/}\DecValTok{8} 
+\end{Highlighting}
+\end{Shaded}
+
+ If you are new to R, please take a moment to explore using R as a
+calculator.
+
+The workspace panel
+
+When you open R you initiate an R session. An R session is defined by
+all of the code that you have run and any objects that you've stored in
+the global environment. The global environment is a temporary storage
+location for all of the objects and functions that you create in an R
+working session. The workspace panel is where you can view your global
+environment and your session history. In addition to viewing, you can
+use this panel to save or clean your session history and objects in your
+global environment. Using these tools can help streamline your R
+workflow and aid in replication.
+
+ Click on the ``History'' tab of the workspace panel to view the
+commands that you have run so far.
+
+ Click on the save icon on the history tab of the workspace panel. Save
+your history as ``migBirds'' (the file type will be added
+automatically). We will build on this file over the course of this
+class.
+
+ Click on the broom icon on the history tab of the workspace panel. This
+will remove everything you've done in R since your session began.
+
+Note: The workspace panel contains tools for a number of other tasks,
+including tools for importing and exporting data and executing code. We
+will not be using most of these features in this class but you may want
+to explore them to determine whether you'd like to integrate them into
+your workflow.
+
+ Be aware of how many objects are stored in your global environment. You
+can manage these objects on the ``Environment'' tab of the workspace
+panel. To limit the amount of data stored in memory and make best use of
+the workspace panel, be sure to remove unecessary objects.
+
+The viewer panel
+
+There is a lot going on in the viewer panel, but basically it provides
+tools for viewing anything other than command line output. The tabs on
+this panel include:
+
+Files: A file manager window. This shows the files located in your
+working directory, which is the folder on your computer that R is
+reading from and writing to.
+
+Plots: Any plots that you create can be viewed here.
+
+Packages: R libraries that have been installed onto your system.
+
+Help: Help files that provide in-depth information into any R function
+that you will use.
+
+Viewer: Images and maps can be viewed here.
+
+Note: The viewer panel contains tools for a number of other tasks,
+including tools for loading and installing libraries and managing files.
+We will not be using most of these features in this class but you may
+want to explore them to determine whether you'd like to integrate them
+into your workflow.
+
+\subsection{The assignment operator}\label{the-assignment-operator}
+
+In R, it is often useful to save objects in your global environment by
+assigning a name to them. Assignment allows you to recall saved objects
+by typing the name rather than recreating the object. This is often
+necessary, as objects can be quite complex.
+
+ Type \texttt{hello\ world} into the console panel and hit CTRL+Enter.
+
+You should have received the error message:
+\texttt{Error:\ unexpected\ symbol\ in\ "hello\ world"}. If you aren't
+already, you will soon become super annoyed by messages like these. So
+what did you do wrong? When you type a word without quotes (which can be
+single or double), R thinks you are calling an object from your
+environment. The object was undefined, so it produced an error.
+
+ Repeat the above, this time typing either
+\texttt{\textquotesingle{}hello\ world\textquotesingle{}} or
+\texttt{"hello\ world"} and running the line.
+
+ Now lets define our object. We'll make an object called
+\texttt{helloWorld} using R's assignment operator \texttt{\textless{}-}.
+Enter or copy-and-paste the following into the source panel and execute
+using CTRL+Enter:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{helloWorld <-}
+\StringTok{  'hello world'}
+\end{Highlighting}
+\end{Shaded}
+
+You will notice there is no output in the console. If you look at the
+workspace panel, however, you will see that your global environment now
+contains a ``Value'' with the name helloWorld.
+
+ Type \texttt{helloWorld} into the console panel and notice the printed
+output.
+
+ Enter or copy-and-paste the following into the source panel and execute
+using CTRL+Enter:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{simpleAddition <-}\StringTok{ }
+\StringTok{  }\DecValTok{1} \OperatorTok{+}\StringTok{ }\DecValTok{1} \OperatorTok{+}\StringTok{ }\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+You have just created an object with the value of \texttt{1+1+2} and the
+name \texttt{simpleAddition}. You can use the name as a representation
+of the object.
+
+ Explore the results of the object that you created by typing the
+following in the console panel:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{simpleAddition }\OperatorTok{*}\StringTok{ }\DecValTok{4}
+
+\NormalTok{simpleAddition }\OperatorTok{+}\StringTok{ }\DecValTok{2}
+
+\NormalTok{simpleAddition }\OperatorTok{/}\StringTok{ }\DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
+
+Note: If you are new to R, you probably have yet to grasp how powerful
+assignments are. As most users begin to develop their R skillset, the
+number of assignments they use grows. What began as a useful tool can
+end up leading to an addiction that causes messy, hard-to-read scripts.
+In this course you will learn how to use assignments effectively and
+avoid the confusion that over-assignment causes.
+
+ Do not use assignments unless you have to. Two key rules are:
+
+Only define an object if you truly want to use it in the future. We
+probably wouldn't really want to assign a name to \texttt{1+1+2} in the
+real world.
+
+Make sure to explore the object prior to assigning a name to it.
+Assigning a name before testing an object can lead to headaches and
+unseen errors in your code.
+
+ Being careful with your naming conventions is very important! There are
+a lot of conventions out there for naming objects. The most important
+thing to avoid is naming an object and forgetting what you named it. The
+workspace panel can help you remember names (if you keep it clean), but
+the best practice is to use a consistent naming convention. Best
+management practices for naming objects include:
+
+Avoid using all caps and unnecessary capitalization. When misused,
+capitalization leads to extra keystrokes without conveying additional
+information.
+
+Be careful when using punctuation to separate words as it may convey
+meanings that you may not intend. For example, assigning the name
+\texttt{hello.world} should be avoided because we should reserve the use
+of \texttt{.} to specify file types. When using punctuation to separate
+words, use \texttt{\_}. For example you may assign the name
+\texttt{hello\_world} to an object.
+
+Do use camel case! Camel case provides a clear distinction between words
+while avoiding too many keystrokes or symbols that convey meaning. Camel
+case is used in multi-word labels in which the first word is all
+lowercase and the first letter of any additional words is uppercase. For
+example, camel case would be written as camelCase.
+
+Do not assign names to multiple versions of the same object. For example
+\texttt{helloWorld1} and \texttt{helloWorld2}.
+
+Never, never, never, never include spaces in names!
+
+\subsection{Commenting out script:
+\#comment!}\label{commenting-out-script-comment}
+
+Good coding practices in most languages means adding plenty of
+descriptive content so you (and others) know what the script is doing at
+each point. This is known as adding comments or commenting your script.
+Comments act as a rudder by making your scripts easy to communicate to
+others, adding structure to scripts, and helping you to retrace your
+steps when necessary. In R, you add a comment using \texttt{\#}. R will
+not evaluate any part of a line that follows a hashtag.
+
+ Try running the following from the source panel and observe what
+happens:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Adding a comment}
+
+\DecValTok{1}\OperatorTok{+}\DecValTok{1}\OperatorTok{+}\DecValTok{2} \CommentTok{# Adding a comment}
+\end{Highlighting}
+\end{Shaded}
+
+It is good to add a comment before steps in a code that describes what
+happens. Make sure that the comments you've added truly describe the
+process. Your comment should be able to provide a description of what a
+section of code is doing that outside observers can comprehend.
+
+ Add comments to the lines of code from the previous section:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Practicing simple math and adding assignments:}
+\NormalTok{simpleAddition <-}\StringTok{ }
+\StringTok{  }\DecValTok{1} \OperatorTok{+}\StringTok{ }\DecValTok{1} \OperatorTok{+}\StringTok{ }\DecValTok{2}
+
+\CommentTok{# Practicing adding an assignment to a computer-nerd phrase:}
+\NormalTok{helloWorld <-}\StringTok{ }
+\StringTok{  'hello world'}
+\end{Highlighting}
+\end{Shaded}
+
+ Script writing is like any other type of writing in that it is best to
+take your target audience into consideration when commenting a script.
+If you are new to R or writing code for someone who is just starting
+out, your script should be full of comments that explain every
+potentially confusing process. As you develop your R skills, or are
+communicating to more advanced R users, you will likely need less
+commenting. We will cover best management practices in commenting
+scripts considerably throughout this course.
+
+\subsection{The function}\label{the-function}
+
+Functions are what data-wrangling-guru Hadley Wickham calls the
+``fundamental building block of R''. Functions are a special type of R
+object that allow you to conduct often lengthy evaluations with limited
+work. The R environment contains many functions for data management,
+graphical display, and statistical analysis. To run a function, you type
+the name of the function followed by a set of parentheses enclosing what
+you want your function to evaluate.
+
+ Combine the integers 1, 1, and 2 into a single object (the combine
+function in R is \texttt{c}) in the source panel and name the object
+\texttt{firstSet}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Combine values:}
+
+\NormalTok{firstSet <-}\StringTok{ }
+\StringTok{  }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Before you use a function it is often necessary to get a good sense of
+how it works. The ``Help'' tab of the viewer panel provides in-depth
+resources on each function. To access the help file for a given function
+simply type \texttt{?} followed by the name of the function in the
+console panel.
+
+Functions can be used to explore, modify, or create objects as well as
+define how R interacts with your computer's file system. The functions
+below can be used to get the working directory R reads to and write
+from, list the files in that folder, and change the working directly to
+some other folder on your computer:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Retrieve the location of your working directory:}
+
+\KeywordTok{getwd}\NormalTok{()}
+
+\CommentTok{# List the files in your current working directory:}
+
+\KeywordTok{list.files}\NormalTok{()}
+
+\CommentTok{# Change your working directory (modify the code below to a folder in your file system):}
+
+\KeywordTok{setwd}\NormalTok{(}\StringTok{'C:/Users/...'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Nested functions
+
+Functions can be nested inside other functions. In other words, you can
+run a function inside another function. This can avoid making
+unnecessary assignments. To understand nested functions, it is important
+to recall that the name of an object is just a simplified way to call
+the object it describes.
+
+ Enter \texttt{firstSet} and \texttt{c(1,1,2)} in the console panel
+(separately) and note the output for each. Because \texttt{firstSet} IS
+\texttt{c(1,1,2)}, the assigned name and the object are interchangeable.
+
+ In the source panel, enter and run the following line of code to make a
+second set of numbers with the name \texttt{secondSet}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{secondSet <-}\StringTok{ }
+\StringTok{  }\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+ To explore nested functions, run the code below in the console panel,
+noting the nested and non-nested versions of the function and their
+output:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Non-nested combination of the number sets:}
+
+\KeywordTok{c}\NormalTok{(firstSet, secondSet)}
+
+\CommentTok{# Combinations of the number sets using nested functions:}
+
+\KeywordTok{c}\NormalTok{(}
+  \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{),}
+\NormalTok{  secondSet}
+\NormalTok{)}
+
+\KeywordTok{c}\NormalTok{(}
+\NormalTok{  firstSet,}
+  \KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{8}\NormalTok{)}
+\NormalTok{)}
+
+\KeywordTok{c}\NormalTok{(}
+  \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{),}
+  \KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{8}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Arguments in functions
+
+Many functions contain arguments in addition to the object you are
+evaluating. These arguments modify the behavior of the function (Note:
+Some arguments are necessary while some are optional). For example, the
+function \texttt{mean} contains an argument \texttt{na.rm} that tells R
+whether you want to remove NA (data Not Available) prior to running the
+function.
+
+ In the source panel, make an object with two integers and an NA and
+assign the name \texttt{twoValuesWithNA} to the object. In the console
+panel, calculate the mean of the data with (na.rm = TRUE) and without
+(na.rm = FALSE) the modifier argument:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{twoValuesWithNA <-}\StringTok{ }
+\StringTok{  }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\OtherTok{NA}\NormalTok{)}
+
+\KeywordTok{mean}\NormalTok{(}
+\NormalTok{  twoValuesWithNA,}
+  \DataTypeTok{na.rm =} \OtherTok{FALSE}
+\NormalTok{)}
+
+\KeywordTok{mean}\NormalTok{(}
+\NormalTok{  twoValuesWithNA,}
+  \DataTypeTok{na.rm =} \OtherTok{TRUE}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Libraries of functions
+
+Base R is a set of functions that are preloaded when you downloaded R.
+Many functions are available in base R but there are loads of functions
+that have been written by others and assembled into libraries (also
+called packages) that you can download. These user-built libraries are
+very powerful and can automate many of the tasks you confront when
+coding. To download a library, you use the function
+\texttt{install.packages}. This function evaluates the name of a
+library, in quotation marks and installs the library on your computer.
+Note: Each package will only be loaded once, therefore this process
+should be completed in the console panel.
+
+ Install two libraries that we will use throughout the course of this
+class:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{install.packages}\NormalTok{(}\StringTok{'tidyverse'}\NormalTok{)}
+
+\KeywordTok{install.packages}\NormalTok{(}\StringTok{'RCurl'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Once a library is installed on your computer, it is almost ready to use,
+but not quite. You have to load the library into your environment using
+the function \texttt{library}. Installed libraries are defined objects
+therefore quotes are not necessary when loading them. Note: This
+function needs to be run each time a new R session is initiated. Because
+future lines of code may be dependent on the library or libraries
+loaded, loading should always occur in the source panel.
+
+ Load the tidyverse and RCurl libraries:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Load libraries:}
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{library}\NormalTok{(RCurl)}
+\end{Highlighting}
+\end{Shaded}
+
+ Libraries should always be loaded in the source panel! It's best to
+load libraries in one of three locations:
+
+At the top of the script
+
+On a separate source script
+
+Within a user-created function
+
+ Warning! In the early stages of learning R, or even later if you have
+not spent much time learning the language, you will find yourself
+falling into what I call the ``library trap''. The library trap works
+like this:
+
+You need to manipulate your data in some way that you are unfamiliar
+with
+
+You visit Google or Stack overflow and, reading through the answers,
+find sets of libraries that do what you want
+
+You install and load the library and potentially move past the issue
+
+Why is this a problem? Some of the libraries you stumble on will be
+critical to your current and future workflows. Most of the libraries
+found in this way will not. This turns scripts into a sloppy patchwork
+of libraries. It can make code very confusing to follow and lead to
+unseen errors (if the function does not do exactly what you perceive).
+If the issue can be solved with Base R or the packages you are currently
+working with, it will make your code more clear, help you avoid
+problems, and save you time in the future. In this class we will teach
+you a workflow to examine and remedy R problems using a core set of
+packages.
+
+\subsection{Term review and glossary}\label{term-review-and-glossary}
+
+Functions and operators
+
+\texttt{c} Combine objects
+
+\texttt{getwd} print the location of your current working directory
+
+\texttt{install.packages} Add a new library to a user's computer
+
+\texttt{library} Add a new library to a user's current R session
+
+\texttt{list.files} print the files names that are located in your
+current working directory
+
+\texttt{mean} Take the average of a set of values (note, use na.rm =
+TRUE in the presence of NA's)
+
+\texttt{setwd} Set a new location for your working directory
+
+\texttt{\textless{}-} Assign a name to an object in R (assignment
+operator)
+
+Keyboard shortcuts
+
+CTRL+C: Copy
+
+CTRL+V: Paste
+
+CTRL+S: Save file
+
+CTRL+Shift+N: New R script
+
+CTRL+Enter: Execute line or section of code from the source panel
+
+Vocabulary
+
+Argument: Condition that modifies the behavior of a function
+
+Assign: Provide a name for an R object
+
+Camel case: A convention of writing in which multiple words are joined
+without spaces and all words following the initial word are capitalized.
+forExampleThisIsCamelCase.
+
+Code: Any text written in the source or console panel
+
+Comment: Use a \texttt{\#} to communicate to R that the subsequent
+section of code will not be evaluated
+
+Console panel: A panel of R Studio used to execute code and
+writing/running code that users do not intend to replicate
+
+Function: Commands that can be used to execute complex or repetitive
+tasks
+
+Global environment: A storage container that provides a reference point
+for all available objects in the current session
+
+Library: A set of community-generated functions (note: Also called a
+package)
+
+Nested function: A function that is run inside of another function
+
+Object: One of many types of data stored in the R environment, such as
+individual values, functions, tables, lists, and images
+
+Package: A set of community-generated functions (note: Also called a
+library)
+
+R session: Time spent and operations conducted since opening R (note:
+sessions may be saved and loaded to avoid lost work)
+
+Script: A file that contains all code for a set of operations
+
+Session history: All lines of code that have been sent to R since the
+beginning of a session (or since the session history was last cleared)
+
+Source panel: A panel of R Studio used for writing, editing, and running
+scripts
+
+Viewer panel: A panel of R Studio used for navigating your system's
+files, viewing help files, and image/plot output (and more)
+
+Working directory: The location on your computer from which R reads or
+writes files
+
+Workspace panel: A panel of R Studio used to view/manage objects in your
+global environment and your session history
+
+
+\end{document}

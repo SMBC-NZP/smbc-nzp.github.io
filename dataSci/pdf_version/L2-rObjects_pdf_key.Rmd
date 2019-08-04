@@ -1,0 +1,1151 @@
+---
+title: "Lesson two: Objects"
+author: "Brian S. Evans, Ph.D."
+output:
+  html_document:
+    df_print: paged
+theme: yeti
+---
+
+<!-- html head --> 
+
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+<!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
+</head>
+
+```{r setup, include=FALSE}
+# Load libraries:
+
+library(RCurl)
+library(lubridate)
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+
+knitr::opts_chunk$set(echo = FALSE)
+options(knitr.table.format = "html")
+
+# Objects used:
+
+numberObject <-
+  c(1, 1, 2, 3)
+
+numericVector <- 
+  numberObject
+
+exampleFactor <- 
+  factor(
+    c('one', 'one', 'two', 'three')
+    )
+
+myMatrix <-
+  matrix(
+    c(1, 1, 2, 3, 5, 8, 13, 21),
+    ncol = 2
+  )
+
+myList <-
+  list(
+    numericVector,
+    myMatrix
+  )
+
+myList_named <- 
+  myList
+
+names(myList_named) <-
+  c('numericVector', 'myMatrix')
+
+
+myDataFrame <-
+  data.frame(
+    words = c('hello', 'hello', 'world' , 'world'),
+    integers = 1:4
+  )
+
+```
+<br>
+
+## Introduction
+
+<img src="images/dsWorkflowOverview.png" 
+            title="data science workflow"
+            alt = "data science diagram"
+            style= "float: right; width: 50%; padding-right: 0px; padding-left: 10px; padding-bottom:  10px"/>
+            
+<p><b>Re-thinking the structure of data:</b> How we have interacted with data in the past dictates how we structure data mentally. Many of us in science, myself included, have learned to use programs like Microsoft Excel (or iOS' numbers, libreOffice's Calc, Google Sheets, etc.) for viewing and managing data. Through learning and using spreadsheet programs, we tend to format and organize data in ways that are incompatible with environments outside of that system. In other words, there are ways that we interact with data in Excel, especially in regards to how we organize spreadsheets, which do not lend itself well to working with data outside of the spreadsheet environment. Under these conditions, using R (and other programming environments) becomes a frustrating exercise of constantly wrestling with datasets to perform even simple analyses. This process ends up taking most of our computer time.</p>
+
+<p>In addition to increasing our stress level when working with R, the spreadsheet paradigm fails to provide us with fully reproducible data or adequate reporting. Ideally, our target audience should be able to reproduce each step of a data process, starting with the raw data itself.</p>
+
+<p>In this lesson we will work to develop a strong understanding of <b>objects</b>. Objects are containers that hold values or other objects. Different classes of objects structure values in different ways.</p>
+<div class = "row">
+<br>
+```{r echo = FALSE}
+df <-
+  data.frame(
+    `Dimensions` = c('1-D', '2-D'),
+    `Homogeneous` = c('Atomic vector', 'Matrix'),
+    `Heterogeneous` = c('List', 'Data frame')
+  )
+
+kable(df, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+```
+</div>
+
+<div class = "row">
+<p>For each object type, we'll address:</p>
+<ul>
+<li>The number of dimensions: One vs. two dimensions</li>
+<li>The classes of values within an object:
+<ul>
+<li><b>Homogeneous</b>: Only one class of values per object</li>
+<li><b>Heterogeneous</b>: One or more classes of values per object</li>
+</ul>
+<li><b>Attributes</b> of the object class: Names, dimensions, and metadata associated with an object</li>
+<li><b>Indexing</b>: Subsetting an object by the location of a value or values within an object</li>
+</ul>
+</div>
+<br>
+
+
+## Atomic vectors
+
+<p>An <b>atomic vector</b> is a <b>one-dimensional</b> collection of values. Values in an atomic vector are <b>homogeneous</b>. In other words, all values must be of the same class. We've already learned how to create an atomic vector -- this is the type of object that we created using the combine function, `c()`.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i>Create an atomic vector with the numbers 1, 1, 2, and 3 and assign the name `numericVector` to the object.</p>
+
+```{r avec, echo= TRUE, results = 'hide'}
+# Create an atomic vector:
+
+numericVector <- 
+  c(1, 1, 2, 3)
+```
+
+<p>To print the output, type the name assigned to the object:</p>
+
+```{r printAvec, echo= TRUE, results = 'hide'}
+# View the atomic vector:
+
+numericVector
+
+```
+
+</div>
+<br>
+
+<h3>The structure of atomic vectors</h3>
+
+<p>The structure of an object describes the class of object and the number of values of an object in each dimension. In the previous lesson we used `class()` and `typeof()` to observe object class and type. For atomic vectors, which are one-dimensional we can use `length()` to determine the number of values that make up the object.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i>Determine the class and type of values in the object `numericVector`.</p>
+
+```{r classType_avec, echo= TRUE, results = 'hide'}
+# Class and type of numericVector:
+
+class(numericVector)
+
+typeof(numericVector)
+```
+
+<p>Determine the number of values that make up the numericVector.</p>
+
+```{r length_avec, echo= TRUE, results = 'hide'}
+# Number of values in numericVector:
+
+length(numericVector)
+```
+
+</div>
+
+<br>
+<p>We can view the length and class of an object in one step using the function `str()` (structure).</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i>Use `str()` to determine the class and number of values in the object `numericVector` in one step.</p>
+
+```{r str_avec, echo= TRUE, results = 'hide'}
+# str can be used to observe object structure:
+
+str(numericVector)
+```
+</div>
+
+<br>
+<p>If the object is numeric, integer, or factor, we can view quantitative summary information of an object using the `summary()` function.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i>Use `summary()` to calculate summary statistics for the object `numericVector`.</p>
+```{r summary_avec, echo= TRUE, results = 'hide'}
+# str can be used to observe object structure:
+
+str(numericVector)
+```
+</div>
+
+<br>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> To explore how atomic vectors are homogeneous, observe what happens when the values input into an atomic vector are heterogeneous. Create a vector with the values, 1, 'one', 2, and 3</p>
+
+```{r heteroV, echo= TRUE, results = 'hide'}
+# All values in a vector must be of the same class:
+
+c(1, 'one', 2, 3)
+```
+<br>
+<p>Repeat the above and use `class()` to determine the class of the object</p>
+
+
+```{r heteroV_class, echo= TRUE, results = 'hide'}
+# All values in a vector must be of the same class:
+
+class(
+  c(1, 'one', 2, 3)
+)
+```
+<br>
+<p>Repeat the above and use `str()` to determine the length and class of the object</p>
+
+```{r heteroV_str, echo= TRUE, results = 'hide'}
+# All values in a vector must be of the same class:
+
+str(
+  c(1, 'one', 2, 3)
+)
+```
+<br>
+<p>Repeat the above and use `summary()` to calculate the summary statistics of the object (if possible!)</p>
+
+```{r heteroV_summary, echo= TRUE, results = 'hide'}
+# All values in a vector must be of the same class:
+
+summary(
+  c(1, 'one', 2, 3)
+)
+```
+</div>
+<br>
+
+<h3>Attributes of Atomic vectors</h3>
+
+<p>You can determine the attributes of an object using the function `attributes()`. Vectors typically do not have attributes. Some attributes, however, can be added to vectors. For example, we might want to get or add names to a vector. We can both assess and add to the names attribute of a vector using the `names()` function.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Explore the code below, which demonstrates adding names attributes to the values a vector</p>
+```{r vectorNames, echo= TRUE, results = 'hide'}
+# Adding attributes to a vector:
+
+names(numericVector)
+
+names(numericVector) <- 
+  c('orange', 'pear', 'apple', 'grape')
+
+numericVector
+
+attributes(numericVector)
+```
+</div>
+
+<br>
+<h3>Indexing atomic vectors</h3>
+
+<p>Each value in a vector has a both a value and a position, denoted by "[<i>x</i>]". The position and value information for our `numericVector` could be written as:</p>
+
+```{r echo = FALSE}
+
+df <-
+  data.frame(
+    `Position` = c('[1]','[2]','[3]','[4]'),
+    `Value` = c(1, 1, 2, 3)
+  )
+
+df <-
+  tibble(
+    `[1]` = 1,
+    `[2]` = 1,
+    `[3]` = 2,
+    `[4]` = 3
+  )
+
+kable(df, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE, position = 'center')
+```
+
+<br>
+<p>The brackets above represent an index of a values location. We can refer to this index using the notation `object_name[x]`. This process is method to <b>filter</b> or <b>subset</b> a vector by position. Filtering or querying a data object is the process of reducing the number of values in that object to only those that match a given condition. It may be useful to consider the code snippet `object_name[x]` as `object_name` where (`[`) the position is equal to `x`. For example, we could subset the `numericVector` object to the second value by typing `numericVector[2]`.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the atomic vector `numericVector` to the value at position 3:</p>
+```{r numeric3, echo= TRUE, results = 'hide'}
+# Subset numericVector to the value associated with position 3:
+
+numericVector[3]
+```
+</div>
+
+<br>
+<p>The value, `3`, that we indexed above is actually a vector of one value, the number three. We can determine the values at multiple positions by providing a vector of multiple integer positions inside the brackets.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the atomic vector `numericVector` to the values at positions 1, 2, and 3:</p>
+
+```{r numeric123, echo= TRUE, results = 'hide'}
+# Use indexing to subset a vector to the first, second, and third positions:
+
+numericVector[1:3]
+
+# or:
+
+numericVector[c(1,2,3)]
+```
+</div>
+
+
+<br>
+<p>In addition to indexing a named vector by position, you can also index a named vector by name, by indexing a vector of names in quotes. For example, we might consider our vector above as:</p>
+<br>
+```{r echo = FALSE}
+df <-
+  tibble(
+    `['orange']` = 1,
+    `['pear']` = 1,
+    `['apple']` = 2,
+    `['grape']` = 3
+  )
+
+kable(df, "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE, position = 'center')
+```
+<br>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the atomic vector `numericVector` to the position in which the name of the value is "grape":</p>
+```{r vectorNames_subset, echo= TRUE, results = 'hide'}
+# Indexing a vector by the name of the value:
+
+names(numericVector) <- 
+  c('orange', 'pear', 'apple', 'grape')
+
+numericVector['grape']
+```
+</div>
+
+<br>
+<p>You may also choose to subset the named vector by denoting position using a vector of names.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the atomic vector `numericVector` to the position in which value is named "orange" or "grape":</p>
+```{r vectorNames_subset2, echo= TRUE, results = 'hide'}
+# Indexing a vector by the name of the value:
+
+names(numericVector) <- 
+  c('orange', 'pear', 'apple', 'grape')
+
+numericVector[c('orange', 'grape')]
+```
+</div>
+
+<br>
+<p>We will be addressing indexing in depth in the next lesson, so be sure you have a thorough understanding of the above!</p>
+
+<hr>
+
+## Matrix objects
+<br>
+<p>A <b>matrix</b> is a two dimensional object -- an atomic vector that is arranged into rows and columns (see `?matrix`). You can use the function `matrix()` to create a matrix. The first argument to supply to the matrix function is the data that you would like to express as a matrix. You can add arguments specifying the number of rows, `nrow`, or columns, `ncol` to change the shape of the resultant matrix. These arguments accept numeric values.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Convert the atomic vector `c(1, 1, 2, 3)` into a matrix object:</p>
+```{r mat, echo= TRUE, results = 'hide'}
+# Convert c(1, 1, 2, 3) to a matrix:
+
+c(1, 1, 2, 3)
+
+matrix(
+  c(1, 1, 2, 3)
+)
+```
+
+<p>Repeat the above and use the `nrow` or `ncol` arguments to arrange the matrix into an object with two rows and two columns:<p>
+```{r mat_ncol, echo= TRUE, results = 'hide'}
+# Convert c(1, 1, 2, 3) to a matrix:
+
+matrix(
+  c(1, 1, 2, 3),
+  nrow = 2
+)
+
+# or ...
+
+matrix(
+  c(1, 1, 2, 3),
+  ncol = 2
+)
+```
+</div>
+
+<br>
+<p>Note in the above that the matrix was created by arranging the atomic vector into columns. When you generated the matrix without an `nrow` or `ncol` argument, the data were arranged as a one column matrix, in the order of the values of the vector. Specifying `nrow` or `ncol` split the column, but the order of values remains the same. This order is known as "by column". You can specify that you would like to arrange the values of the atomic vector in the matrix "by row" by adding a `byrow` argument to the matrix function. This argument accepts logical values (TRUE or FALSE).</p> 
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Observe what happens when a matrix is generated with the argument `byrow = TRUE`:</p>
+```{r mat_byrow, echo= TRUE, results = 'hide'}
+# Convert c(1, 1, 2, 3) to a matrix:
+
+matrix(
+  c(1, 1, 2, 3),
+  nrow = 2,
+  byrow = FALSE
+)
+
+matrix(
+  c(1, 1, 2, 3),
+  nrow = 2,
+  byrow = TRUE
+)
+```
+</div>
+
+
+<br>
+<p>When we use the `class()` function, the class of object is returned. The `typeof()` function provides the type of values that make up the object. Like the atomic vectors that matrices <i>secretly</i> are, all values in a matrix must be of the same type of values.</p>
+
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Generate a matrix using the values 1, 'one', 2, and 3.</p>
+```{r mat_hetero, echo= TRUE, results = 'hide'}
+# Convert c(1, 'one', 2, 3) to a matrix:
+
+matrix(
+  c(1, 'one', 2, 3)
+)
+
+```
+
+<p>Use `class` to determine the class of object that was generated</p>
+
+```{r mat_hetero_class, echo= TRUE, results = 'hide'}
+# What is the class of the above object?
+
+class(
+  matrix(
+    c(1, 'one', 2, 3)
+  )
+)
+```
+
+<p>Use `typeof()` to determine the type of values that make up the matrix</p>
+
+```{r mat_hetero_typeof, echo= TRUE, results = 'hide'}
+# What type of values make up the above matrix?
+
+typeof(
+  matrix(
+    c(1, 'one', 2, 3)
+  )
+)
+```
+</div>
+
+
+<br>
+<p>Matrices have one attribute (`?attributes`) by default -- the dimensions of the matrix. Additional attributes, such as row and column names, can be added using the `rownames()` and `colnames()` functions, respectively.<p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Generate a two-column matrix using the values 1, 1, 2, 3, 5, 8, 13, and 21 and assign the name `myMatrix` to the object.</p>
+```{r myMat, echo= TRUE, results = 'hide'}
+# Convert c(1, 1, 2, 3, 5, 8, 13, and 21) to a matrix and assign a name:
+
+myMatrix <-
+  matrix(
+    c(1, 1, 2, 3, 5, 8, 13, 21),
+    ncol = 2
+  )
+```
+
+<p>No output? Type the name (and run the line of code) to see the object</p>
+
+```{r myMat_print, echo= TRUE, results = 'hide'}
+
+myMatrix
+```
+
+<p>Determine the attributes of the object `myMatrix`:</p>
+```{r myMat_attributes, echo= TRUE, results = 'hide'}
+# Attributes of myMatrix:
+
+attributes(myMatrix)
+```
+
+<p>Add the column names "hello" and "world" to `myMatrix` and view the attributes of the resultant object:</p>
+```{r myMat_colNames, echo= TRUE, results = 'hide'}
+# Add column names to myMatrix:
+
+colnames(myMatrix) <- 
+  c('hello', 'world')
+
+attributes(myMatrix)
+```
+</div>
+
+
+<br>
+<h3>Matrix objects: Indexing</h3>
+<br>
+<p>Values in a matrix have a row (x) and column (y) position, denoted by "[<i>x</i>, <i>y</i>]". It may be useful for you to think of a value's position (also known as "address") as "[<i>row</i>, <i>column</i>]".</p>
+
+<table style = "font-size: 1.1em; vertical-align: middle;">
+<tr>
+  <th style = "text-align: center; font-weight: normal;"></th>
+  <th style = "text-align: center; font-weight: normal;">[ ,1]</th>
+  <th style = "text-align: center; font-weight: normal;">[ ,2]</th>
+</tr>
+<tr>
+  <td style = "text-align: center;">[1, ]</td>
+  <td style = "text-align: center;">1</td>
+  <td style = "text-align: center;">2</td>
+</tr>
+<tr>
+  <td style = "text-align: center;">[2, ]</td>
+  <td style = "text-align: center;">1</td>
+  <td style = "text-align: center;">3</td>
+</tr>
+</table>
+<br>
+
+<p>Just as you would specify `vectorName[x]` to extract the value from the object `vectorName` at position `x`, you can use this notation to extract values from a matrix. To do so, you need to specify the `x` and `y` address using: `matrixName[x, y]` -- this will return all values of the object `matrixName` where the row number is equal to x and the column number is equal to y.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> What is the value of `myMatrix` at row 1, column 2?</p>  
+
+```{r myMat_index, echo= TRUE, results = 'hide'}
+# Determine the value of myMatrix at row 1, column 2:
+
+myMatrix[1, 2]
+```
+</div>
+
+<br>
+<p>As with atomic vectors, you can specify a range or subset of values by supplying a vector of numbers for either the `x` or `y` position. You can subset a matrix dimension by name by using the column (or row) name instead of the numeric position. You can specify all values for a row or column by leaving the `x` or `y` position blank (e.g., `[x,]` or `[,y]`).</p> 
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the object `myMatrix` using the following criteria:</p>
+
+<ul>
+<li>All values in column 1:</li>
+```{r myMat_index1, echo= TRUE, results = 'hide'}
+
+myMatrix[1, ]
+```
+
+<li>The first <b>through</b> third values in column 2:</li>
+
+```{r myMat_index3, echo= TRUE, results = 'hide'}
+
+myMatrix[1:3, 2]
+```
+
+<li>The first <b>and</b> third values in column 2:</li>
+```{r myMat_index4, echo= TRUE, results = 'hide'}
+
+myMatrix[c(1, 3), 2]
+```
+</ul>
+</div>
+
+<hr>
+
+## List objects
+<br>
+<p>A <b>list</b> is a one dimensional object constructed by combining ANY objects with ANY dimensionality. Because of their flexibility, lists can be very powerful (and occasionally messy and/or dangerous!). A list is created using the `list()` function, the arguments of which are the items contained within the list.</p>
+<br>
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Explore the following to observe the structure of lists:</p>
+<ul>
+<li>A homogeneous list of values:</li>
+```{r list_homoG, echo= TRUE, results = 'hide'}
+# Homogeneous list of values:
+
+list(1, 1, 2)
+```
+<li>A heterogeneous list of values:</li>
+```{r list_heteroG, echo= TRUE, results = 'hide'}
+# Heterogeneous list of values:
+
+list(1, 'one', 2)
+```
+
+<li>A list of multidimensional objects:</li>
+
+```{r list_multiD, echo= TRUE, results = 'hide'}
+# List of multidimensional objects:
+
+list(numericVector, myMatrix)
+```
+
+<li>A list with a name assigned:</li>
+```{r list_assigned, echo= TRUE, results = 'hide'}
+# Assigned list:
+
+myList <-
+  list(numericVector, myMatrix)
+
+myList
+```
+</ul>
+</div>
+<br>
+<p>Lists are vectors, just heterogeneous ones. We can view the structure of list objects in a similar way to atomic vectors.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Explore the structure of `myList`:</p>
+<ul>
+<li>Determine the class of the object:</li>
+```{r list_class, echo= TRUE, results = 'hide'}
+
+class(myList)
+```
+
+<li>Determine the length of the object:</li>
+
+```{r list_length, echo= TRUE, results = 'hide'}
+
+length(myList)
+```
+
+<li>View the overall structure of the object using `str()`:</li>
+
+
+```{r list_str, echo= TRUE, results = 'hide'}
+
+str(myList)
+```
+</div>
+
+
+<br>
+
+<p>Names attributes can be added to list items. To do so, you may name a pre-existing list using the convention `names(listName) <- c(namesVector)`. You may also specify names of list items when a list is created (e.g., `list(hello = 1, world = 2)`).</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Explore the following to observe the naming of list items:</p>
+<ul>
+<li>Name objects when the list is contructed:</li>
+```{r list_names1, echo= TRUE, results = 'hide'}
+
+list(apple = 1, pear = 2)
+```
+
+<li>Specify the names of objects in a pre-existing list:</li>
+```{r list_names2, echo= TRUE, results = 'hide'}
+myList_named <- 
+  myList
+
+names(myList_named) <-
+  c('numericVector', 'myMatrix')
+
+attributes(myList_named)
+```
+</ul>
+</div>
+
+<br>
+<p>Lists are often used to inform functions. For example, we have thus far used `attributes()` to view the attributes of an object. `attributes()` can also be used to assign attributes to an object. This makes it a much more powerful function than it might have appeared.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Add column names to `myMatrix` using a list of attributes:</p>
+```{r list_namesAttributes, echo= TRUE, results = 'hide'}
+# Adding attributes to myMatrix:
+
+attributes(myMatrix)
+
+attributes(myMatrix) <- 
+  list(colnames = c('hello','world'))
+
+attributes(myMatrix)
+```
+</div>
+
+<br>
+<p>When it comes to adding attributes, the sky is the limit. For example, you can add metadata to an object using `attributes()`. This may add useful information without affecting the performance of the object.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Explore adding a description to an object by providing a list of attributes:</p>
+
+```{r list_metadata, echo= TRUE, results = 'hide'}
+# Adding attributes to myMatrix:
+
+attributes(myMatrix) <- 
+  list(
+    colnames = c('hello','world'),
+    author = 'Brian',
+    reason = 'To show attribute lists'
+    )
+
+attributes(myMatrix)
+```
+</div>
+
+
+<br>
+
+<h3>List objects: Indexing</h3>
+
+<p>List position is denoted by [[<i>x</i>]]. To query a list, use the convention `listName[[x]]`.</p>
+
+<div class = "row">
+<div class = "col-sm-4">
+<p>[[1]]</p>
+<table style = "font-size: 1em; vertical-align: middle; float: left; padding: 10px">
+<tr>
+<th style = "text-align: center; font-weight: normal;">[1]</th>
+<th style = "text-align: center; font-weight: normal;">[2]</th>
+<th style = "text-align: center; font-weight: normal;">[3]</th>
+<th style = "text-align: center; font-weight: normal;">[4]</th>
+</tr>
+<tr>
+<td style = "text-align: center;">1</td>
+<td style = "text-align: center;">1</td>
+<td style = "text-align: center;">2</td>
+<td style = "text-align: center;">3</td>
+</tr>
+</table>
+</div>
+
+<div class = "col-sm-4">
+<p>[[2]]</p>
+<table style = "font-size: 1.1em; vertical-align: middle;">
+<tr>
+<th style = "text-align: center; font-weight: normal;"></th>
+<th style = "text-align: center; font-weight: normal;">[ ,1]</th>
+<th style = "text-align: center; font-weight: normal;">[ ,2]</th>
+</tr>
+<tr>
+<td style = "text-align: center;">[1, ]</td>
+<td style = "text-align: center;">1</td>
+<td style = "text-align: center;">2</td>
+</tr>
+<tr>
+<td style = "text-align: center;">[2, ]</td>
+<td style = "text-align: center;">1</td>
+<td style = "text-align: center;">3</td>
+</tr>
+</table>
+</div>
+
+<div class = "col-sm-4">
+<p>[[3]]</p>
+<table style = "font-size: 1.1em; vertical-align: middle;">
+<tr>
+<th style = "text-align: center; font-weight: normal;"></th>
+<th style = "text-align: center; font-weight: normal;">[ ,1]</th>
+<th style = "text-align: center; font-weight: normal;">[ ,2]</th>
+</tr>
+<tr>
+<td style = "text-align: center;">[1, ]</td>
+<td style = "text-align: center;">"1"</td>
+<td style = "text-align: center;">"2"</td>
+</tr>
+<tr>
+<td style = "text-align: center;">[2, ]</td>
+<td style = "text-align: center;">"one"</td>
+<td style = "text-align: center;">"3"</td>
+</tr>
+</table>
+</div>
+</div>
+<br>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> The object `myList` is comprised of two objects. Use indexing to extract the second list object:</p>
+
+```{r list_indexing, echo= TRUE, results = 'hide'}
+# List indexing:
+
+myList[[2]]
+```
+</div>
+
+<br>
+<p>If names have been assigned to list items, lists can be indexed by these names. To do so, refer to the name of the list item, in quotes, formatted as `listName[['listItem_name']]`.</p>  
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Subset the list object `myList_named` to the list item named `myMatrix`.</p>
+```{r list_indexing_name1, echo= TRUE, results = 'hide'}
+# Lists can be indexed by name using the notation:
+
+myList_named[['myMatrix']]
+```
+</div>
+<br>
+<p>You can also use an operator, `$`, as a shorthand for indexing the named list item. To use this operator, instead of typing `listName[['listItem_name']]`, you would type `listName$listItem_name`. Note that the name of the list item is not quoted.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use the `$` operator to subset the list object `myList_named` to the list item named `myMatrix`.</p>
+```{r list_indexing_name2, echo= TRUE, results = 'hide'}
+# Lists can be indexed by name using the notation:
+
+myList_named$myMatrix
+```
+</div>
+
+<hr>
+
+## Data frames
+
+<p>A <b>data frame</b> is the object class that is most often used for storing data. Like a matrix, a data frame has two dimensions with data arranged into rows, <i>x</i>, and columns, <i>y</i>. This is where the similarity between data frames and matrices pretty much ends, however -- a data frame is actually list of atomic vectors in which the length of each vector is equal. As data frames are lists, they are heterogeneous -- each atomic vector that makes up the object (columns) may be of a different type.</p>
+<p>One method for arranging values into data frames is to use the `data.frame()` function. The arguments of this function are the atomic vectors that make up the object (`data.frame(vector1, vector2)`).</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Explore the code below to observe the generation of data frames:</p>
+```{r dFrame, echo= TRUE, results = 'hide'}
+# Make a data frame from vectors:
+
+data.frame(
+  c('hello', 'world'),
+  1:2
+)
+```
+</div>
+<br>
+
+<p>Note in the above that the vectors that make up the data frame may be of different classes. Individual vectors, however, will be coerced into the same class.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Generate a data frame comprised of the vectors `c('hello', 1)` and `1:2`:</p>
+```{r dFrame_hetero, echo= TRUE, results = 'hide'}
+
+data.frame(
+  c('hello', 1),
+  1:2
+)
+```
+</div>
+
+<br>
+<p>As described above, the vectors that make up a data frame must be of the same length. Before making data frames, make sure to explore their length -- making data frames of unequal length vectors may result in errors or lead to unexpected results.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Explore what happens when the vectors that make up a data frame are of unequal lengths</p>
+```{r dFrame_badLength1, echo= TRUE, results = 'hide'}
+data.frame(
+  1:2,
+  1:4
+  )
+```
+
+```{r dFrame_badLength2, echo= TRUE, results = 'hide'}
+data.frame(
+  1,
+  1:4
+  )
+```
+</div>
+
+<br>
+<p>When generating data frames, the columns (vectors) are named by default, but the assigned name may not be meaningful. You can assign the name of the columns when you create the data frame, using the convenction `data.frame(vector1_name = vector1, vector2_name = vector2)`.</p>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Generate a data frame using two vectors, one containing the words "hello" and "world" and the other the integers 1 and 2. Assign the names "factors" and "integers" to the columns.</p>
+```{r dFrame_name1, echo= TRUE, results = 'hide'}
+# Make a data frame from vectors:
+
+data.frame(
+  factors = c('hello', 'world'),
+  integers = 1:2
+)
+```
+</div>
+
+<br>
+<p>If a data frame is generated using pre-defined vector objects, the column titles will be the names assigned to each object.</p>
+
+<h3>Data frame structure and attributes</h3>
+<p>Data frames contain a rich set of structural components and attributes that are worth exploring.</p>
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Run the code below to observe the structure and attributes of data frames.</p>
+<ul>
+<li>Generate the data frame below and assign the name 'myDataFrame':</li>
+```{r myDf, echo= TRUE, results = 'hide'}
+# Make a data frame from vectors:
+
+myDataFrame <-
+  data.frame(
+    words = c('hello', 'hello', 'world' , 'world'),
+    integers = 1:4
+  )
+
+myDataFrame
+```
+
+<li>`class()` tells us that the object arranges values into a data frame:</li>
+```{r myDf_class, echo= TRUE, results = 'hide'}
+class(myDataFrame)
+```
+
+<li>`names()` provides the names of the data frame columns (the names of vectors that make up the object):</li>
+```{r myDf_names, echo= TRUE, results = 'hide'}
+names(myDataFrame)
+```
+
+<li>`attributes()` provides the names of columns and rows, as well as the class of the object:</li>
+```{r myDf_attributes, echo= TRUE, results = 'hide'}
+attributes(myDataFrame)
+```
+
+<li>`length()` provides the number of vectors that make up a data frame:</li>
+```{r myDf_length, echo= TRUE, results = 'hide'}
+length(myDataFrame)
+```
+
+<li>`nrow()` and `ncol()` provides the number of rows and columns of the data frame, respectively:</li>
+```{r myDf_nrow_ncol, exercise = TRUE, exercise.lines = 4}
+nrow(myDataFrame)
+
+ncol(myDataFrame)
+```
+
+<li>`dim()` provides the number of rows and columns of the data frame:</li>
+```{r myDf_dim, echo= TRUE, results = 'hide'}
+dim(myDataFrame)
+```
+
+<li>`str()` provides structural information on the data frame, including the types of values of the composite vectors:</li>
+```{r myDf_str, echo= TRUE, results = 'hide'}
+str(myDataFrame)
+```
+
+<li>`summary()` provides statistical summary information of a data frame:</li>
+```{r myDf_summary, echo= TRUE, results = 'hide'}
+summary(myDataFrame)
+```
+</ul>
+</div>
+
+<br>
+<h3>Indexing data frames</h3>
+<p>Similar to matrices, values in a data frame have a row (x) and column (y) position, denoted by "[<i>x</i>, <i>y</i>]".</p>
+
+<br>
+<div class = "row">
+<div class = "col-sm-2"></div>
+
+<div class = "col-sm-3">
+<table style = "font-size: 1.1em; vertical-align: middle;">
+<tr>
+  <th style = "text-align: center; font-weight: normal;"></th>
+  <th style = "text-align: center; font-weight: normal;">[ ,1]</th>
+  <th style = "text-align: center; font-weight: normal;">[ ,2]</th>
+</tr>
+<tr>
+  <td style = "text-align: center;">[1, ]</td>
+  <td style = "text-align: center;">hello</td>
+  <td style = "text-align: center;">1</td>
+</tr>
+<tr>
+  <td style = "text-align: center;">[2, ]</td>
+  <td style = "text-align: center;">hello</td>
+  <td style = "text-align: center;">2</td>
+</tr>
+<tr>
+  <td style = "text-align: center;">[3, ]</td>
+  <td style = "text-align: center;">world</td>
+  <td style = "text-align: center;">3</td>
+</tr>
+<tr>
+  <td style = "text-align: center;">[4, ]</td>
+  <td style = "text-align: center;">world</td>
+  <td style = "text-align: center;">4</td>
+</tr>
+</table>
+</div>
+
+<div class = "col-sm-1">
+<div class="vl"></div>
+
+</div>
+
+<div class = "col-sm-5">
+<table style = "font-size: 1.1em; vertical-align: middle;">
+<tr>
+  <th style = "text-align: center; font-weight: normal;"></th>
+  <th style = "text-align: center; font-weight: normal;">[ ,'factors']</th>
+  <th style = "text-align: center; font-weight: normal;">[ ,'integers']</th>
+</tr>
+<tr>
+  <td style = "text-align: center;">[1, ]</td>
+  <td style = "text-align: center;">hello</td>
+  <td style = "text-align: center;">1</td>
+</tr>
+<tr>
+  <td style = "text-align: center;">[2, ]</td>
+  <td style = "text-align: center;">hello</td>
+  <td style = "text-align: center;">2</td>
+</tr>
+<tr>
+  <td style = "text-align: center;">[3, ]</td>
+  <td style = "text-align: center;">world</td>
+  <td style = "text-align: center;">3</td>
+</tr>
+<tr>
+  <td style = "text-align: center;">[4, ]</td>
+  <td style = "text-align: center;">world</td>
+  <td style = "text-align: center;">4</td>
+</tr>
+</table>
+</div>
+
+<div class = "col-sm-1"></div>
+
+</div>
+
+<br>
+
+<p>Data frames can be indexed using the convention `dataFrameName[x,y]`, `dataFrameName[,'columnName']`, or `dataFrameName$columnName`.</p> 
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Complete the following indexing operations on the object `myDataFrame`:</p>
+<ul>
+<li>Use the numeric address (`[x,y]`) to extract the value in the first row (x) and column (y):</li>
+```{r myDf_index1, echo= TRUE, results = 'hide'}
+
+myDataFrame[1, 1]
+```
+
+<li>Use the numeric address (`[x,y]`) to extract all values in the first row (x):</li>
+
+```{r myDf_index2, echo= TRUE, results = 'hide'}
+
+myDataFrame[1,]
+```
+
+<li>Use the numeric address (`[x,y]`) to extract all values in the second column (y):</li>
+
+```{r myDf_index3, echo= TRUE, results = 'hide'}
+
+myDataFrame[,2]
+```
+
+<li>Use the numeric address (`[x,y]`) to extract the values in the first and third rows (x) of the first column (y):</li>
+
+```{r myDf_index4, echo= TRUE, results = 'hide'}
+
+myDataFrame[c(1, 3),1]
+```
+
+<li>Use the numeric address for the row (`[x,]`) and the name of the column (`[,'columnName']`) to extract the values in the first and third rows (x) of the first column (y):</li>
+
+```{r myDf_index5, echo= TRUE, results = 'hide'}
+
+myDataFrame[c(1, 3), 'words']
+```
+
+<li>Use the convention `dataFrameName$columnName` to extract the vector associated with column 2 of the data frame:</li>
+```{r myDf_index6, echo= TRUE, results = 'hide'}
+
+myDataFrame$integers
+```
+</ul>
+</div>
+<hr>
+
+## Tibbles!
+<br>
+<p>The final object that we will look at is an object class provided by the package "tidyverse". <i>Note: You must run the "tidyverse" library (`library(tidyverse)`) before you can tibbles</i>! A <b>tibble</b> is a special type of data frame. You can make a tibble using the `tibble()` function. The arguments for this function are the same as that of `data.frame()`.</p>
+<br>
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Generate a data frame and a tibble and observe any differences between the two:</p>
+<ul>
+<li>A data frame:</li>
+```{r df, echo= TRUE, results = 'hide'}
+data.frame(
+  words = c('hello', 'hello', 'world' , 'world'),
+  integers = 1:4
+)
+```
+<li>A tibble:</li>
+```{r tibble, echo= TRUE, results = 'hide'}
+tibble(
+  words = c('hello', 'hello', 'world' , 'world'),
+  integers = 1:4
+)
+```
+</ul>
+</div>
+
+<br>
+<p>Notice that, in addition to printing the data frame, the tibble prints some additional information about the object. By default, tibbles will also only print 10 lines at once for long data frames. This is very useful when working with large datasets. Another thing to notice is the type of object of the "words" column is different -- `data.frame()` produced a factor vector for that column whereas `tibble()` produced a character vector. This is incredibly useful, as factors can cause lots of problems when they are generated unintentionally.</p>
+
+<p>Data frames can also be converted to tibbles using the `as_tibble()` function. This will not, however, convert factor to character columns.</p>
+
+<p>Tibbles behave quite differently from data frames in meaningful ways beyond what I have described above. Advanced R users who are new to tibbles may want to read the tibble vignette (`vignette('tibble')`).
+
+<div class = "reviewDiv">
+<p><i class="fa fa-user-circle-o" aria-hidden="true" style = "font-size: 150%"></i> Use `as_tibble()` to convert `myDataFrame` to a tibble:</p>
+
+```{r as_tibble, echo= TRUE, results = 'hide'}
+
+as_tibble(myDataFrame)
+```
+</div>
+<hr>
+
+## Term review and glossary
+
+<div class="roundBorder">
+
+<p><b>Functions</b></p>
+<ul> 
+<li>`as_tibble` Convert a data frame to a tibble</li>
+<li>`attributes` Print or set the attributes of an object (e.g., names)</li>
+<li>`colnames` Add column names to a matrix or data frame</li>
+<li>`data.frame` Arrange equal length vectors into a data frame data structure</li>
+<li>`dim` Determine the number of rows and columns in a data frame or matrix</li>
+<li>`length` Determine the length of an object. For atomic vectors and matrices, this returns the number of values. For lists and data frames, this returns the number of component objects.</li>
+<li>`list` Structure component objects into a list data structure</li>
+<li>`matrix` Arrange an atomic vector as a matrix data structure</li>
+<li>`names` Add names to an object's values or component objects</li>
+<li>`ncol` Determine the number of columns in a data frame or matrix</li>
+<li>`nrow` Determine the number of rows in a data frame or matrix</li>
+<li>`rownames` Add row names to a matrix or data frame</li>
+<li>`str` Determine the structure of an object, including the length and class of component objects</li>
+<li>`summary` Print summary statistical information for an object</li>
+<li>`tibble` Structure component objects into a tibble data structure</li>
+</ul>
+
+
+<p><b>Operators</b></p>
+<li>`listN[[x]]` Use to subset `listN` to the values or component objects at position `x`</li>
+<li>`vectorN[x]` Use to subset `vectorN` to the values at position `x`</li>
+<li>`matrixN[x, y]` Use to subset `matrixN` to the values at position `x,y` (row, column)</li>
+<li>`dataFrameN[x, y]` Use to subset `dataFrameN` to the values at position `x,y` (row, column)</li>
+<li>`dataFrameN$colName` Use to subset `dataFrameN` (or a tibble) to the column named `colName`</li> 
+</ul>
+
+<hr style = "border: 1px solid #30288C;">
+
+<p><b>Vocabulary</b></p>
+<ul>
+<li><b>Atomic vector</b>: A set of values of the same class (<i>homogeneous</i>) arranged in one dimension.</li>
+<li><b>Attributes</b>: Names, dimensions, and metadata associated with an object.</li>
+<li><b>Data frame</b>: A special type of list that contains equal-length atomic vectors. Data frames are <i>heterogenous</i> and have two dimensions.</li>
+<li><b>Heterogeneous object</b>: a container that holds values of one or more object classes</li>
+<li><b>Homogeneous object</b>: a container that holds values of only one class</li>
+<li><b>Indexing</b>: Subsetting an object by the location of a value or values within an object</li>
+<li><b>List</b>: A storage container that holds objects of any class. Lists are <i>heterogenous</i> and have one dimension.</li>
+<li><b>Matrix</b>: An atomic vector that is arranged into rows and columns. Matrices are <i>homogeneous</i> and have two dimensions.</li>
+<li><b>Object</b>: a container that holds values or other objects</li>
+<li><b>Tibble</b>: A special type of data frame that prints informative metadata about a data frame and does not coerce character vectors to factor.</li>
+</ul>
+</div>
+
+<hr style="border-width: 10px;">
+
+<b>End of lesson 2!</b>
+<img style="float: right; margin: 0px 0px 15px 15px;" src="images/nzpLogoSideways2.png" width="300" />
