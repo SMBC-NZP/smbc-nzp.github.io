@@ -118,10 +118,10 @@ Smithsonian Conservation Biology Institute</p>
 	      padding: 9px;
 	      border-style: solid;
 	      border-width: 10px;
-	      border-color: white;" src="nzpLogo.png" width="300" />
+	      border-color: white;" src="images/nzpLogo.png" width="300" />
 
 ##
-<img src="rWorkshop/images/dsWorkflowOverview.png" 
+<img src="images/dsWorkflowOverview.png" 
 	title="data science workflow"
 	alt = "data science diagram"
 	border="0"
