@@ -48,6 +48,18 @@ output:
 <p>Do you want to do more course preparation or practice your R skills? If so, we strongly recommend completing these <a href = "https://smbc-nzp.github.io/dataSci/swirl.html" target = "_blank"><b>SWIRL courses</b></a> prior to the course.</p>
 
 <div class = "row">
+<h3>Workshop</h3>
+<hr>
+<ul>
+<li><b><a href = "https://smbc-nzp.github.io/dataSci/lesson1_pres.html" target="_blank">Lesson 1: Data management and the art of wrangling</a></b>. A review of data values and R objects while looking toward the future.
+<ul><li><a href = "https://smbc-nzp.github.io/dataSci/lesson1_exercise.html" target="_blank">Problem set</a></li></ul></li>
+<li><b><a href = "https://smbc-nzp.github.io/dataSci/lesson2_pres.html" target="_blank">Lesson 2: Logic & data queries</a></b>. Using logic to query data in R</li>
+<ul><li><a href = "https://smbc-nzp.github.io/dataSci/lesson2_exercise.html" target="_blank">Problem set</a></li></ul></li>
+<li><b><a href = "https://smbc-nzp.github.io/dataSci/lesson3_ggplot_intro.html" target="_blank">Lesson 3: Introduction to ggPlot</a></b>. Our first dive into making elegant graphics.</li>
+</ul>
+</div>
+
+<div class = "row">
 <hr>
 <img src = "images/robotBird.jpg"
   style = "float:left;
