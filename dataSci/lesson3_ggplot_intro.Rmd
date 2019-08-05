@@ -88,8 +88,6 @@ table, td, th {
   clear: both;
 }
 
-
-
 pre{
   border-color: white;
   background-color: #f2f2f2;
@@ -165,7 +163,7 @@ pre{
 </style>
 
 <p style="text-align: center; font-size: 24px;">Introduction to data science in R</p>
-<p style="text-align: center; font-size: 32px;"><b>Lesson 7: Introduction to data visualization</b></p>
+<p style="text-align: center; font-size: 32px;"><b>Introduction to data visualization</b></p>
 <hr>
 <br>
 <br>
@@ -180,36 +178,105 @@ Smithsonian Conservation Biology Institute</p>
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/nzpLogo.png" width="300" />
+	      border-color: white;" src="images/nzpLogo.png" width="300" />
 
 ##
 <h2>Setup for the lesson</h2>
 <hr>
 ```{r setup show, eval = FALSE}
+# Load tidyverse library:
+
+library(tidyverse)
+```
+
+##
+<h2>Setup for the lesson</h2>
+<hr>
+<p>The function `paste0` is used to paste two string values together. For example, we can paste the values `'hello'` and `'World'` together as follows. The resultant object is a nice looking camel case value.</p>
+
+```{r}
 # Load RCurl library:
 
-library(RCurl)
+paste0('hello', 'World')
+```
+##
+<h2>Setup for the lesson</h2>
+<hr>
+<p>We will use the function `paste0` to create an easy-to-read url</p>
 
-# Load a source script:
+```{r}
 
-script <-
-  getURL(
-    "https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode_lesson6.R"
-  )
+gitUrl <-
+  'https://raw.githubusercontent.com/bsevansunc/'
 
-# Evaluate then remove the source script:
+courseData <-
+  'smsc_data_science/master/data/'
 
-eval(parse(text = script))
+paste0(
+  gitUrl,
+  courseData,
+  'birdMeasures.csv')
+```
 
-rm(script)
+##
+<h2>Setup for the lesson</h2>
+<hr>
+<p>We can use this url to read in the data.</p>
 
-library(lubridate)
+```{r}
+birdMeasures <-
+  read.csv(
+    paste0(
+      gitUrl,
+      courseData,
+      'birdMeasures.csv'))
+```
 
+<p>Take a moment to explore the data frame `birdMeasures`</p>
+
+##
+<h2>Setup for the lesson</h2>
+<hr>
+<p>Let's read in `birdMeasures` as a tibble, because there are a lot of data in that file!</p>
+
+```{r}
+birdMeasures <-
+  dplyr::as_tibble(
+    read.csv(
+      paste0(
+        gitUrl,
+        courseData,
+        'birdMeasures.csv')))
+```
+
+##
+<h2>Setup for the lesson</h2>
+<hr>
+<p>I don't like that there are a lot of factors in the data frame. How might we overcome this?</p>
+
+```{r}
+birdMeasures
+```
+
+##
+<h2>Setup for the lesson</h2>
+<hr>
+<p>I don't like that there are a lot of factors in the data frame. How might we overcome this?</p>
+
+```{r}
+birdMeasures <-
+  dplyr::as_tibble(
+    read.csv(
+      paste0(
+        gitUrl,
+        courseData,
+        'birdMeasures.csv'),
+      stringsAsFactors = FALSE))
 ```
 
 ```{r setup eval, eval = TRUE, include  = FALSE}
 # Load libraries:
-
+library(tidyverse)
 library(RCurl)
 library(lubridate)
 
@@ -230,12 +297,14 @@ library(knitr) ; library(kableExtra)
 
 options(knitr.table.format = "html")
 
-mass_histogram <- birdMeasures %>%
+mass_histogram <- 
+  birdMeasures %>%
   filter(spp %in% c('BCCH', 'CACH')) %>%
   ggplot(aes(x = mass)) +
   geom_histogram(aes(fill = spp))
 
-massDensity <- birdMeasures %>%
+massDensity <- 
+  birdMeasures %>%
   filter(spp %in% c('BCCH', 'CACH')) %>%
   ggplot(aes(x = mass)) +
   geom_density(aes(fill = spp))
@@ -244,7 +313,7 @@ zPalette <- c('#9EB8C5', '#F32017')
 ```
 
 ##
-<h2>Today's goals</h2>
+<h2>Our goal</h2>
 <hr>
 <img style="display: block;
 	      margin-left: auto;
@@ -253,22 +322,13 @@ zPalette <- c('#9EB8C5', '#F32017')
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/theme10.png" width="800" />
-
-
-##
-<h2>Today's data</h2>
-<hr>
-<p>The data frame:</p>
-```{r the data}
-birdMeasures
-```
+	      border-color: white;" src="images/ggplotting/theme10.png" width="800" />
 
 ##
 <h2>Initiating a plot</h2>
 <hr>
 ```{r ggplot show, eval = FALSE}
-ggplot(birdMeasures)
+ggplot(data = birdMeasures)
 ```
 
 <img style="display: block;
@@ -278,7 +338,7 @@ ggplot(birdMeasures)
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggstart.png" width="500" />
+	      border-color: white;" src="images/ggplotting/ggstart.png" width="500" />
 
 ##
 <h2>Aesthetics</h2>
@@ -286,8 +346,9 @@ ggplot(birdMeasures)
 <p><b>Aesthetics</b> describe mapping the value of some variable to an observable feature.</p>
 
 ```{r eval = FALSE}
-ggplot(birdMeasures, 
-       aes(x = spp))
+ggplot(
+  data = birdMeasures, 
+  mapping = aes(x = spp))
 ```
 
 <img style="display: block;
@@ -297,7 +358,7 @@ ggplot(birdMeasures,
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggstart2.png" width="500" />
+	      border-color: white;" src="images/ggplotting/ggstart2.png" width="500" />
 	      
 ## 
 <h2>Geometries</h2>
@@ -315,8 +376,9 @@ ggplot(birdMeasures,
 <h2>Geometries</h2>
 <hr>
 ```{r eval = FALSE}
-ggplot(birdMeasures, 
-       aes(x = spp)) +
+ggplot(
+  data = birdMeasures, 
+  mapping = aes(x = spp)) +
   geom_bar()
 ```
 
@@ -327,37 +389,18 @@ ggplot(birdMeasures,
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggstart3.png" width="500" />
-
-## 
-<h2>Geometries</h2>
-<hr>
-<p>Piping helps!</p>
-```{r eval = FALSE}
-birdMeasures %>%
-  ggplot(aes(x = spp)) +
-  geom_bar()
-```	      
-
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
-	      border-style: solid;
-	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggstart3.png" width="500" />
+	      border-color: white;" src="images/ggplotting/ggstart3.png" width="500" />
 	      
 ## 
 <h2>Geometries</h2>
 <hr>
-<p>Piping helps!</p>
+<p>The `data = ` and `mapping = ` were not really necessary. Let's simplify:</p>
 ```{r eval = FALSE}
-birdMeasures %>%
-  filter(spp != 'NOCA') %>%
-  ggplot(aes(x = spp)) +
+ggplot(
+  birdMeasures, 
+  aes(x = spp)) +
   geom_bar()
-```	      
+```
 
 <img style="display: block;
 	      margin-left: auto;
@@ -366,24 +409,24 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggSppNoNoca.png" width="500" />
-
+	      border-color: white;" src="images/ggplotting/ggstart3.png" width="500" />
+	      
 ##<!--- Exercise 1 --->
 <h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h2>
 <hr>
-<p>The function `geom_density` can be used to display the density distribution of a vector. Using the aesthetic `x = mass`, display the distribution of Black-capped and Carolina chickadee mass measurements:</p>
+<p>The function `geom_density` can be used to display the density distribution of a vector. Using the aesthetic `x = mass`, display the distribution of Black-capped chickadee (BCCH) and Carolina chickadee (CACH) mass measurements:</p>
 
 ##
 <h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h2>
 <hr>
-<p>The function `geom_density` can be used to display the density distribution of a vector. Using the aesthetic `x = mass`, display the distribution of Black-capped and Carolina chickadee mass measurements:</p>
+<p>The function `geom_density` can be used to display the density distribution of a vector. Using the aesthetic `x = mass`, display the distribution of Black-capped chickadee (BCCH) and Carolina chickadee (CACH) mass measurements:</p>
 
 ```{r exercise one, eval = FALSE}
 # Subset birdCounts to BCCH and CACH and plot density:
 
-birdMeasures %>%
-  filter(spp %in% c('BCCH', 'CACH')) %>%
-  ggplot(aes(x = mass)) +
+ggplot(
+  birdMeasures[birdMeasures$spp %in% c('BCCH', 'CACH'),],
+  aes(x = mass)) + 
   geom_density()
 ```
 
@@ -398,15 +441,15 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggExercise1.png" width="800" />
+	      border-color: white;" src="images/ggplotting/ggExercise1.png" width="800" />
 	      
 ##<!--- Geometries: Adding arguments --->
 <h2>Geometries: Adding arguments</h2>
 <hr>
 ```{r histogram, eval = FALSE}
-birdMeasures %>%
-  filter(spp %in% c('BCCH', 'CACH')) %>%
-  ggplot(aes(x = mass)) +
+ggplot(
+  birdMeasures[birdMeasures$spp %in% c('BCCH', 'CACH'),],
+  aes(x = mass)) +
   geom_histogram()
 ```
 <img style="display: block;
@@ -416,15 +459,15 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggArguments1.png" width="500" />
+	      border-color: white;" src="images/ggplotting/ggArguments1.png" width="500" />
 	      
 ##
 <h2>Geometries: Adding arguments</h2>
 <hr>
 ```{r histogram binwidth, eval = FALSE}
-birdMeasures %>%
-  filter(spp %in% c('BCCH', 'CACH')) %>%
-  ggplot(aes(x = mass)) +
+ggplot(
+  birdMeasures[birdMeasures$spp %in% c('BCCH', 'CACH'),],
+  aes(x = mass)) +
   geom_histogram(binwidth = 1)
 ```
 <img style="display: block;
@@ -434,15 +477,15 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggArguments2.png" width="500" />
+	      border-color: white;" src="images/ggplotting/ggArguments2.png" width="500" />
 	      
 ##
 <h2>Geometries: Adding arguments</h2>
 <hr>
 ```{r histogram bins, eval = FALSE}
-birdMeasures %>%
-  filter(spp %in% c('BCCH', 'CACH')) %>%
-  ggplot(aes(x = mass)) +
+ggplot(
+  birdMeasures[birdMeasures$spp %in% c('BCCH', 'CACH'),],
+  aes(x = mass)) +
   geom_histogram(bins = 20)
 ```
 <img style="display: block;
@@ -452,15 +495,15 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggArguments3.png" width="500" />
+	      border-color: white;" src="images/ggplotting/ggArguments3.png" width="500" />
 
 ##
 <h2>Geometries: Adding arguments</h2>
 <hr>
 ```{r barplot fill, eval = FALSE}
-birdMeasures %>%
-  filter(spp != 'NOCA') %>%
-  ggplot(aes(x = spp)) +
+ggplot(
+  birdMeasures[birdMeasures$spp != 'NOCA',],
+  aes(x = spp)) +
   geom_bar(fill = 'gray')
 ```
 <img style="display: block;
@@ -470,15 +513,15 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggArguments4.png" width="500" />
+	      border-color: white;" src="images/ggplotting/ggArguments4.png" width="500" />
 	      
 ##
 <h2>Geometries: Adding arguments</h2>
 <hr>
 ```{r barplot color, eval = FALSE}
-birdMeasures %>%
-  filter(spp != 'NOCA') %>%
-  ggplot(aes(x = spp)) +
+ggplot(
+  birdMeasures[birdMeasures$spp != 'NOCA',],
+  aes(x = spp)) +
   geom_bar(fill = 'gray', 
            color = 'black')
 ```
@@ -489,15 +532,15 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggArguments5.png" width="500" />
+	      border-color: white;" src="images/ggplotting/ggArguments5.png" width="500" />
 	      
 ##
 <h2>Geometries: Adding arguments</h2>
 <hr>
 ```{r barplot size, eval = FALSE}
-birdMeasures %>%
-  filter(spp != 'NOCA') %>%
-  ggplot(aes(x = spp)) +
+ggplot(
+  birdMeasures[birdMeasures$spp != 'NOCA',],
+  aes(x = spp)) +
   geom_bar(fill = 'gray', 
            color = 'black',
            size = 0.7)
@@ -509,7 +552,7 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggArguments6.png" width="500" />
+	      border-color: white;" src="images/ggplotting/ggArguments6.png" width="500" />
 	      
 ##<!--- Exercise 2 --->
 <h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
@@ -527,10 +570,10 @@ birdMeasures %>%
 ```{r exercise two, eval = FALSE}
 # Subset birdCounts to BCCH and CACH and plot density:
 
-birdMeasures %>%
-  filter(spp %in% c('BCCH', 'CACH')) %>%
-  ggplot(aes(x = mass)) +
-  geom_density()
+ggplot(
+  birdMeasures[birdMeasures$spp %in% c('BCCH', 'CACH'),],
+  aes(x = mass)) +
+  geom_density(fill = 'gray', alpha = 0.7)
 ```
 
 ##
@@ -543,16 +586,16 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggEx2.png" width="800" />
+	      border-color: white;" src="images/ggplotting/ggEx2.png" width="800" />
 	      
 ##<!--- Geometries: Adding aesthetics --->
 <h2>Geometries: Adding aesthetics</h2>
 <hr>
 <p><b>Aesthetics</b> describe mapping the value of some variable to an observable feature.</p>
 ```{r geometry aes, eval = FALSE}
-birdMeasures %>%
-  filter(spp != 'NOCA') %>%
-  ggplot(aes(x = spp)) +
+ggplot(
+  birdMeasures[birdMeasures$spp != 'NOCA',],
+  aes(x = spp)) +
   geom_bar(aes(fill = region))
 ```
 <img style="display: block;
@@ -562,17 +605,18 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggGeoAes1.png" width="500" />
+	      border-color: white;" src="images/ggplotting/ggGeoAes1.png" width="500" />
 
 ##
 <h2>Geometries: Adding aesthetics</h2>
 <hr>
 ```{r geometry aes hist, eval = FALSE}
-birdMeasures %>%
-  filter(spp %in% c('BCCH', 'CACH')) %>%
-  ggplot(aes(x = mass)) +
-  geom_histogram(aes(fill = sex),
-                 bins = 20)
+ggplot(
+  birdMeasures[birdMeasures$spp %in% c('BCCH', 'CACH'),],
+  aes(x = mass)) +
+  geom_histogram(
+    aes(fill = sex),
+    bins = 20)
 ```
 <img style="display: block;
 	      margin-left: auto;
@@ -581,18 +625,19 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggGeoAes2.png" width="500" />
+	      border-color: white;" src="images/ggplotting/ggGeoAes2.png" width="500" />
 	      
 ##
 <h2>Geometries: Adding aesthetics</h2>
 <hr>
 ```{r geometry aes color, eval = FALSE}
-birdMeasures %>%
-  filter(spp %in% c('BCCH', 'CACH')) %>%
-  ggplot(aes(x = mass)) +
-  geom_histogram(aes(fill = sex),
-                 bins = 20,
-                 color = 'black')
+ggplot(
+  birdMeasures[birdMeasures$spp %in% c('BCCH', 'CACH'),],
+  aes(x = mass)) +
+  geom_histogram(
+    aes(fill = sex),
+    bins = 20,
+    color = 'black')
 ```
 <img style="display: block;
 	      margin-left: auto;
@@ -601,12 +646,12 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggGeoAes3.png" width="500" />
+	      border-color: white;" src="images/ggplotting/ggGeoAes3.png" width="500" />
 	      
 ##<!--- Exercise 3 --->
 <h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h2>
 <hr>
-<p>Modify your density plot from Exercise Two. Use the `fill` argument of the function `geom_density` to assign a different fill color to females and males.</p>
+<p>Modify your density plot from Exercise One. Use the `fill` argument of the function `geom_density` to assign a different fill color to females and males.</p>
 
 ##
 <h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h2>
@@ -615,11 +660,12 @@ birdMeasures %>%
 ```{r exercise three, eval = FALSE}
 # Subset birdCounts to BCCH and CACH and plot density:
 
-birdMeasures %>%
-  filter(spp %in% c('BCCH', 'CACH')) %>%
-  ggplot(aes(x = mass)) +
-  geom_density(aes(fill = sex),
-               alpha = 0.7)
+ggplot(
+  birdMeasures[birdMeasures$spp %in% c('BCCH', 'CACH'),],
+  aes(x = mass)) +
+  geom_density(
+    aes(fill = sex),
+    alpha = 0.7)
 ```
 
 ##
@@ -632,7 +678,7 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggEx3.png" width="800" />
+	      border-color: white;" src="images/ggplotting/ggEx3.png" width="800" />
 	      
 ##<!--- facets --->
 <h2>Facets</h2>
@@ -643,12 +689,13 @@ birdMeasures %>%
 <h2>Facets</h2>
 <hr>
 ```{r facet 1, eval = FALSE}
-birdMeasures %>%
-  filter(spp %in% c('BCCH', 'CACH')) %>%
-  ggplot(aes(x = mass)) +
-  geom_histogram(aes(fill = sex), 
-                 bins = 20,
-                 color = 'black') +
+ggplot(
+  birdMeasures[birdMeasures$spp %in% c('BCCH', 'CACH'),],
+  aes(x = mass)) +
+  geom_histogram(
+    aes(fill = sex), 
+    bins = 20,
+    color = 'black') +
   facet_wrap(~spp)
 ```
 <img style="display: block;
@@ -658,18 +705,19 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/facet1.png" width="500" />
+	      border-color: white;" src="images/ggplotting/facet1.png" width="500" />
 
 ##
 <h2>Facets</h2>
 <hr>
 ```{r facet 2, eval = FALSE}
-birdMeasures %>%
-  filter(spp %in% c('BCCH', 'CACH')) %>%
-  ggplot(aes(x = mass)) +
-  geom_histogram(aes(fill = sex), 
-                 bins = 20,
-                 color = 'black') +
+ggplot(
+  birdMeasures[birdMeasures$spp %in% c('BCCH', 'CACH'),],
+  aes(x = mass)) +
+  geom_histogram(
+    aes(fill = sex), 
+    bins = 20,
+    color = 'black') +
   facet_wrap(~spp, nrow = 2)
 ```
 <img style="display: block;
@@ -679,7 +727,7 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/facet2.png" width="500" />
+	      border-color: white;" src="images/ggplotting/facet2.png" width="500" />
 
 ##<!--- Exercise 4 --->
 <h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Four:</h2>
@@ -691,11 +739,12 @@ birdMeasures %>%
 <hr>
 
 ```{r exercise Four, eval = FALSE}
-birdMeasures %>%
-  filter(spp %in% c('BCCH', 'CACH')) %>%
-  ggplot(aes(x = mass)) +
-  geom_density(aes(fill = sex),
-               alpha = 0.7) +
+ggplot(
+  birdMeasures[birdMeasures$spp %in% c('BCCH', 'CACH'),],
+  aes(x = mass)) +
+  geom_density(
+    aes(fill = sex),
+    alpha = 0.7) +
   facet_wrap(~spp, nrow = 2)
 ```
 
@@ -709,7 +758,7 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggEx4.png" width="800" />
+	      border-color: white;" src="images/ggplotting/ggEx4.png" width="800" />
 	      
 ##<!--- labels --->
 <h2>Labels</h2>
@@ -720,15 +769,17 @@ birdMeasures %>%
 <h2>Labels</h2>
 <hr>
 ```{r labels1, eval = FALSE}
-birdMeasures %>%
-  filter(spp != 'NOCA') %>%
-  ggplot(aes(x = spp)) +
-  geom_bar(aes(fill = region),
-           color = 'black',
-           size = .7) +
-  labs(title = 'Birds banded and recaptured 2000-2017',
-       x = 'Species',
-       y = 'Count')
+ggplot(
+  birdMeasures[birdMeasures$spp != 'NOCA',],
+  aes(x = spp)) +
+  geom_bar(
+    aes(fill = region),
+    color = 'black',
+    size = .7) +
+  labs(
+    title = 'Birds banded and recaptured 2000-2017',
+    x = 'Species',
+    y = 'Count')
 ```
 
 ##
@@ -741,252 +792,29 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/labels1.png" width="800" />
-
-##
-<h2>Labels</h2>
-<hr>
-<p>Piping can be used ...</p>
-```{r labels2, eval = FALSE}
-birdMeasures %>%
-  filter(spp != 'NOCA') %>%
-  mutate(spp = factor(
-    spp,
-    labels = c(
-      'American robin',
-      'Black-capped chickadee',
-      'Carolina chickadee',
-      'Gray catbird'
-    )
-  )) %>%
-  ggplot(aes(x = spp)) +
-   geom_bar(aes(fill = region),
-           color = 'black',
-           size = .7) +
-  labs(title = 'Birds banded and recaptured 2000-2017',
-       x = 'Species',
-       y = 'Count')
-```
-
-##
-<h2>Labels</h2>
-<hr>
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
-	      border-style: solid;
-	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/labels2.png" width="800" />
-	      
-##
-<h2>Labels</h2>
-<hr>
-<p>It's a good time to assign names!</p>
-```{r labels3, eval = FALSE}
-birdCaptures_basicPlot <- birdMeasures %>%
-  filter(spp != 'NOCA') %>%
-  mutate(spp = factor(
-    spp,
-    labels = c(
-      'American robin',
-      'Black-capped chickadee',
-      'Carolina chickadee',
-      'Gray catbird'
-    )
-  )) %>%
-  ggplot(aes(x = spp)) +
-   geom_bar(aes(fill = region),
-           color = 'black',
-           size = .7) +
-  labs(title = 'Birds banded and recaptured 2000-2017',
-       x = 'Species',
-       y = 'Count')
-```
-
-##
-<h2>Labels</h2>
-<hr>
-```{r labels4, eval = FALSE}
-birdCaptures_basicPlot
-```
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
-	      border-style: solid;
-	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/labels3.png" width="800" />
+	      border-color: white;" src="images/ggplotting/labels1.png" width="800" />
 
 ##<!--- Exercise 5 --->
 <h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Five:</h2>
 <hr>
 <p>Modify the density plot you created in Exercise Four:</p>
 <ul>
-<li>Using the piping method, change the names "BCCH" and "CACH" to "Black-capped" and "Carolina"</li>
 <li>Add the title "Mass of Carolina and Black-capped chickadees and capitalize the x and y axis titles</li>
-<li>Assign the name "massDensity" to the plot</li>
 </ul>
 
-##
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Five:</h2>
-<hr>
-
-```{r exercise 5, eval = FALSE}
-# Labels for massDensity:
-
-massDensity <- birdMeasures %>%
-  filter(spp %in% c('BCCH', 'CACH')) %>%
-  mutate(spp = factor(
-    spp,
-    labels = c(
-      'Black-capped',
-      'Carolina'
-    )
-  )) %>%
-  ggplot(aes(x = mass)) +
-  geom_density(aes(fill = sex),
-               alpha = 0.7) +
-  facet_wrap(~spp, nrow = 2) +
-  labs(title = "Mass of Carolina and Black-capped chickadees",
-       x = 'Mass', 
-       y = 'Density')
-
-massDensity
-```
-
-##
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Five:</h2>
-<hr>
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
-	      border-style: solid;
-	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggEx5.png" width="800" />
-	      
-##<!--- scaling --->
-<h2>Scaling axes</h2>
-<hr>
-<p>Changing the <b>scale</b> of an axis changes the range of numbers and the names and locations of tick marks.</p>
-
-##
-<h2>Scaling axes</h2>
-<hr>
-```{r scaling1, eval = FALSE}
-birdCaptures_basicPlot +
-  scale_y_continuous(expand = c(0,0))
-```
-
-##
-<h2>Scaling axes</h2>
-<hr>
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
-	      border-style: solid;
-	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/scaling1.png" width="800" />
-	      
-##
-<h2>Scaling axes</h2>
-<hr>
-```{r scaling2, eval = TRUE}
-birdMeasures %>%
-  filter(spp != 'NOCA') %>%
-  group_by(spp) %>%
-  summarize(n = n())
-```
-
-##
-<h2>Scaling axes</h2>
-<hr>
-```{r scaling3, eval = FALSE}
-birdCaptures_basicPlot +
-  scale_y_continuous(expand = c(0, 0),
-                     limits = c(0, 1500))
-```
-
-##
-<h2>Scaling axes</h2>
-<hr>
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
-	      border-style: solid;
-	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/scaling2.png" width="800" />
-
-##
-<h2>Scaling axes</h2>
-<hr>
-```{r scaling4, eval = FALSE}
-birdCaptures_basicPlot +
-  scale_y_continuous(expand = c(0, 0),
-                     limits = c(0, 1500),
-                     breaks = seq(0, 1500, by = 250))
-```
-
-##
-<h2>Scaling axes</h2>
-<hr>
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
-	      border-style: solid;
-	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/scaling3.png" width="800" />
-
-##<!--- Exercise 6 --->
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Six:</h2>
-<hr>
-<p>Plot massDensity. Use the `expand`, `limits`, and `breaks` arguments of the function `scale_y_continuous` to scale the y-axis such that the scale ranges from 0 to 0.7 and breaks occur at intervals of 0.1.</p>
-
-##
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Six:</h2>
-<hr>
-
-```{r exercise 6, eval = FALSE}
-massDensity +
-  scale_y_continuous(expand = c(0, 0),
-                     limits = c(0, 0.8),
-                     breaks = seq(0, 0.8, by = 0.1))
-```
-
-##
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Six:</h2>
-<hr>
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
-	      border-style: solid;
-	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggEx6.png" width="800" />
-	      
 ##<!--- colors --->
 <h2>Colors</h2>
 <hr>
 <p>The default <b>colors</b> of ggplot are pretty ugly. Luckily you can modify in an infinite number of ways!</p>
 
 ```{r colors1, eval = FALSE}
-birdMeasures %>%
-  filter(spp %in% c('BCCH', 'CACH')) %>%
-  ggplot(aes(x = mass)) +
-  geom_histogram(aes(fill = sex), 
-                 bins = 20,
-                 color = 'black') +
+ggplot(
+  birdMeasures[birdMeasures$spp %in% c('BCCH', 'CACH'),],
+  aes(x = mass)) +
+  geom_histogram(
+    aes(fill = sex), 
+    bins = 20,
+    color = 'black') +
   facet_wrap(~spp, nrow = 2) +
   scale_fill_manual(values = c('blue', 'red'))
 ```
@@ -1001,7 +829,7 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/colors1.png" width="800" />
+	      border-color: white;" src="images/ggplotting/colors1.png" width="800" />
 
 ##
 <h2>Colors</h2>
@@ -1014,19 +842,20 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/lifeAquatic.jpg" width="800" />
+	      border-color: white;" src="images/lifeAquatic.jpg" width="800" />
 
 ##	      
 <h2>Colors</h2>
 <hr>
 <p>Using Team Zissou's hat and shirt color:</p>
 ```{r colors2, eval = FALSE}
-birdMeasures %>%
-  filter(spp %in% c('BCCH', 'CACH')) %>%
-  ggplot(aes(x = mass)) +
-  geom_histogram(aes(fill = sex), 
-                 bins = 20,
-                 color = 'black') +
+ggplot(
+  birdMeasures[birdMeasures$spp %in% c('BCCH', 'CACH'),],
+  aes(x = mass)) +
+  geom_histogram(
+    aes(fill = sex), 
+    bins = 20,
+    color = 'black') +
   facet_wrap(~spp, nrow = 2) +
   scale_fill_manual(values = c('#9EB8C5', '#F32017'))
 ```
@@ -1041,7 +870,7 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/colors2.png" width="800" />
+	      border-color: white;" src="images/ggplotting/colors2.png" width="800" />
 
 ##
 <h2>Colors</h2>
@@ -1051,12 +880,13 @@ birdMeasures %>%
 ```{r colors3, eval = FALSE}
 zPalette <- c('#9EB8C5', '#F32017')
 
-birdMeasures %>%
-  filter(spp %in% c('BCCH', 'CACH')) %>%
-  ggplot(aes(x = mass)) +
-  geom_histogram(aes(fill = sex), 
-                 bins = 20,
-                 color = 'black') +
+ggplot(
+  birdMeasures[birdMeasures$spp %in% c('BCCH', 'CACH'),],
+  aes(x = mass)) +
+  geom_histogram(
+    aes(fill = sex), 
+    bins = 20,
+    color = 'black') +
   facet_wrap(~spp, nrow = 2) +
   scale_fill_manual(values = zPalette)
 ```
@@ -1071,81 +901,26 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/colors2.png" width="800" />
+	      border-color: white;" src="images/ggplotting/colors2.png" width="800" />
 	      
-##<!--- Exercise 7 --->
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Seven:</h2>
+##<!--- Exercise 6 --->
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Six:</h2>
 <hr>
-<p>Modify the density plot you created in Exercise Six. Use `scale_fill_manual` to set custom fill colors.</p>
-
-##
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Seven:</h2>
-<hr>
-
-```{r exercise 7, eval = FALSE}
-# Colors for massDensity:
-
-massDensity +
-  scale_y_continuous(expand = c(0, 0),
-                     limits = c(0, 0.8),
-                     breaks = seq(0, 0.8, by = 0.1)) +
-  scale_fill_manual(values =  c('#9EB8C5', '#F32017'))
-```
-
-##
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Seven:</h2>
-<hr>
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
-	      border-style: solid;
-	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggEx7.png" width="800" />
+<p>Modify the density plot you created in Exercise Five. Use `scale_fill_manual` to set custom fill colors.</p>
 
 ##<!--- legends --->
 <h2>Legends</h2>
 <hr>
-<p>Legends can be modified in a number of ways. One method to do so is to modify the data frame coming into the plotting functions:</p>
-
-```{r legend1, eval = FALSE}
-birdMeasures %>%
-  filter(spp %in% c('BCCH', 'CACH')) %>%
-  mutate(sex = factor(sex,
-                      labels = c('Female','Male'))) %>%
-  ggplot(aes(x = mass)) +
-  geom_histogram(aes(fill = sex), 
-                 bins = 20,
-                 color = 'black') +
-  facet_wrap(~spp, nrow = 2) +
-  scale_fill_manual(values = c('#9EB8C5', '#F32017'))
-```
-
-##
-<h2>Legends</h2>
-<hr>
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
-	      border-style: solid;
-	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/legend1.png" width="800" />
-
-##
-<h2>Legends</h2>
-<hr>
-<p>We can also use the `scale_fill_manual` function from above to modify the legend by specifying the `name` and `label` attributes:</p>
+<p>We can use the `scale_fill_manual` function from above to modify the legend by specifying the `name` and `label` attributes:</p>
 
 ```{r legend2, eval = FALSE}
-birdMeasures %>%
-  filter(spp %in% c('BCCH', 'CACH')) %>%
-  ggplot(aes(x = mass)) +
-  geom_histogram(aes(fill = sex), 
-                 bins = 20,
-                 color = 'black') +
+ggplot(
+  birdMeasures[birdMeasures$spp %in% c('BCCH', 'CACH'),],
+  aes(x = mass)) +
+  geom_histogram(
+    aes(fill = sex), 
+    bins = 20,
+    color = 'black') +
   facet_wrap(~spp, nrow = 2) +
   scale_fill_manual(values = c('#9EB8C5', '#F32017'), 
                     name = 'Sex', 
@@ -1162,425 +937,10 @@ birdMeasures %>%
 	      border-style: solid;
 	      border-width: 10px;
 	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/legend2.png" width="800" />
-	      
+	      border-color: white;" src="images/ggplotting/legend2.png" width="800" />
 
-##<!--- Exercise 8 --->
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Eight:</h2>
+##<!--- Exercise 7 --->
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Seven:</h2>
 <hr>
-<p>Modify the density plot you created in Exercise Seven. Use scale_fill_manual to set the legend title and labels.</p>
+<p>Modify the density plot you created in Exercise Six. Use `scale_fill_manual` to set the legend title and labels.</p>
 
-##
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Eight:</h2>
-<hr>
-
-```{r exercise 8, eval = FALSE}
-# Colors for massDensity:
-massDensity +
-  scale_y_continuous(expand = c(0, 0),
-                     limits = c(0, 0.8),
-                     breaks = seq(0, 0.8, by = 0.1)) +
-  scale_fill_manual(values = zPalette,
-                    name = 'Sex', 
-                    labels = c('Female', 'Male')) 
-```
-
-##
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Eight:</h2>
-<hr>
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
-	      border-style: solid;
-	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/ggEx8.png" width="800" />
-	      
-##<!--- Themes --->
-<h2>Themes</h2>
-<hr>
-
-<p>A <b>theme</b> describes many of the visual elements of a plot.</p>
-<p>Themes are controlled by elements, including:</p>
-<ul>
-<li>`element_blank`: A blank element</li>
-<li>`element_rect`: A rectangle element</li>
-<li>`element_text`: A text element</li>
-<li>`element_line`: A line element</li>
-</ul>
-
-##
-<h2>Themes</h2>
-<hr>
-<p>Before exploring themes, let's take a moment to assign names to the current versions of our plots:</p>
-```{r histogram2Theme, eval = FALSE}
-histogram2Theme <- birdMeasures %>%
-  filter(spp %in% c('BCCH', 'CACH')) %>%
-  mutate(spp = factor(
-    spp,
-    labels = c(
-      'Black-capped',
-      'Carolina'
-    )
-  )) %>%
-  ggplot(aes(x = mass)) +
-  geom_histogram(aes(fill = sex), 
-                 bins = 20,
-                 color = 'black') +
-  scale_y_continuous(expand = c(0, 0),
-                     limits = c(0, 150),
-                     breaks = seq(0, 150, by = 25)) +
-  facet_wrap(~spp, nrow = 2) +
-  scale_fill_manual(values = c('#9EB8C5', '#F32017'), 
-                    name = 'Sex', 
-                    labels = c('Female', 'Male'))
-```
-
-##
-<h2>Themes</h2>
-<hr>
-<p>Before exploring themes, let's take a moment to assign names to the current versions of our plots:</p>
-```{r density2Theme, eval = FALSE}
-density2Theme <- massDensity +
-  scale_y_continuous(expand = c(0, 0),
-                     limits = c(0, 0.8),
-                     breaks = seq(0, 0.8, by = 0.1)) +
-  scale_fill_manual(values = zPalette,
-                    name = 'Sex', 
-                    labels = c('Female', 'Male')) 
-```
-
-##
-<h2>Themes</h2>
-<hr>
-<p>Remove gray panel background using element_rect:</p>
-
-```{r theme 1, eval = FALSE}
-histogram2Theme +
-  labs(title = 'Mass of Carolina and Black-capped chickadees',
-       x = 'Mass',
-       y = 'Density',
-       fill = 'Sex') +
-  theme(
-    panel.background = element_rect(fill = 'white')
-  )
-```
-
-##
-<h2>Themes</h2>
-<hr>
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
-	      border-style: solid;
-	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/theme1.png" width="800" />
-	      
-##
-<h2>Themes</h2>
-<hr>
-<p>Change panel lines using element_line:</p>
-
-```{r theme 2, eval = FALSE}
-histogram2Theme +
-  labs(title = 'Mass of Carolina and Black-capped chickadees',
-     x = 'Mass',
-     y = 'Density',
-     fill = 'Sex') +
-  theme(
-  panel.background = element_rect(fill = 'white'),
-  panel.grid.major = element_line(color = 'gray80', size = .2),
-  )
-```
-
-##
-<h2>Themes</h2>
-<hr>
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
-	      border-style: solid;
-	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/theme2.png" width="800" />
-	      
-##
-<h2>Themes</h2>
-<hr>
-<p>Modify the strip background using element_rect:</p>
-
-```{r theme 3, eval = FALSE}
-histogram2Theme +
-  labs(title = 'Mass of Carolina and Black-capped chickadees',
-       x = 'Mass',
-       y = 'Density',
-       fill = 'Sex') +
-  theme(
-    panel.background = element_rect(fill = 'white'),
-    panel.grid.major = element_line(color = 'gray80', size = .2),
-    strip.background = element_rect(fill = 'white')
-  )
-```
-
-##
-<h2>Themes</h2>
-<hr>
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
-	      border-style: solid;
-	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/theme3.png" width="800" />
-	      
-##
-<h2>Themes</h2>
-<hr>
-<p>Modify the y axis lines using element_line:</p>
-
-```{r theme 4, eval = FALSE}
-histogram2Theme +
-  labs(title = 'Mass of Carolina and Black-capped chickadees',
-       x = 'Mass',
-       y = 'Density',
-       fill = 'Sex') +
-  theme(
-    panel.background = element_rect(fill = 'white'),
-    panel.grid.major = element_line(color = 'gray80', size = .2),
-    axis.line = element_line(color = 'black', size = .5),
-    strip.background = element_rect(fill = 'white')
-  )
-```
-
-##
-<h2>Themes</h2>
-<hr>
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
-	      border-style: solid;
-	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/theme4.png" width="800" />
-	      
-
-##
-<h2>Themes</h2>
-<hr>
-<p>Remove the legend title using element_blank:</p>
-
-```{r theme 5, eval = FALSE}
-histogram2Theme +
-  labs(title = 'Mass of Carolina and Black-capped chickadees',
-       x = 'Mass',
-       y = 'Density',
-       fill = 'Sex') +
-  theme(
-    panel.background = element_rect(fill = 'white'),
-    panel.grid.major = element_line(color = 'gray80', size = .2),
-    axis.line = element_line(color = 'black', size = .5),
-    strip.background = element_rect(fill = 'white'),
-    legend.title = element_blank()
-  )
-```
-
-##
-<h2>Themes</h2>
-<hr>
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
-	      border-style: solid;
-	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/theme5.png" width="800" />
-	      
-
-##
-<h2>Themes</h2>
-<hr>
-<p>Change the size of tick mark text using axis.text and element_text:</p>
-
-```{r theme 6, eval = FALSE}
-histogram2Theme +
-  labs(title = 'Mass of Carolina and Black-capped chickadees',
-       x = 'Mass',
-       y = 'Density',
-       fill = 'Sex') +
-  theme(
-    panel.background = element_rect(fill = 'white'),
-    panel.grid.major = element_line(color = 'gray80', size = .2),
-    axis.line = element_line(color = 'black', size = .5),
-    strip.background = element_rect(fill = 'white'),
-    legend.title = element_blank(),
-    axis.text = element_text(size = 12)
-  )
-```
-
-##
-<h2>Themes</h2>
-<hr>
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
-	      border-style: solid;
-	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/theme6.png" width="800" />
-	      
-
-##
-<h2>Themes</h2>
-<hr>
-<p>Make the axis titles bigger we use axis.title and element_text:</p>
-
-```{r theme 7, eval = FALSE}
-histogram2Theme +
-  labs(title = 'Mass of Carolina and Black-capped chickadees',
-       x = 'Mass',
-       y = 'Density',
-       fill = 'Sex') +
-  theme(
-    panel.background = element_rect(fill = 'white'),
-    panel.grid.major = element_line(color = 'gray80', size = .2),
-    axis.line = element_line(color = 'black', size = .5),
-    strip.background = element_rect(fill = 'white'),
-    legend.title = element_blank(),
-    axis.text = element_text(size = 12),
-    axis.title = element_text(size = 18)
-  )
-```
-
-##
-<h2>Themes</h2>
-<hr>
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
-	      border-style: solid;
-	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/theme7.png" width="800" />
-	      
-##
-<h2>Themes</h2>
-<hr>
-<p>Make the facet labels bigger we use axis.title and element_text:</p>
-
-```{r theme 8, eval = FALSE}
-histogram2Theme +
-  labs(title = 'Mass of Carolina and Black-capped chickadees',
-       x = 'Mass',
-       y = 'Density',
-       fill = 'Sex') +
-  theme(
-    panel.background = element_rect(fill = 'white'),
-    panel.grid.major = element_line(color = 'gray80', size = .2),
-    axis.line = element_line(color = 'black', size = .5),
-    strip.background = element_rect(fill = 'white'),
-    legend.title = element_blank(),
-    axis.text = element_text(size = 12),
-    axis.title = element_text(size = 18),
-    strip.text = element_text(size = 18)
-  )
-```
-
-##
-<h2>Themes</h2>
-<hr>
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
-	      border-style: solid;
-	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/theme8.png" width="800" />
-	      
-
-##
-<h2>Themes</h2>
-<hr>
-<p>Make the plot title larger using plot.title and element_text:</p>
-
-```{r theme 9, eval = FALSE}
-histogram2Theme +
-  labs(title = 'Mass of Carolina and Black-capped chickadees',
-       x = 'Mass',
-       y = 'Density',
-       fill = 'Sex') +
-  theme(
-    panel.background = element_rect(fill = 'white'),
-    panel.grid.major = element_line(color = 'gray80', size = .2),
-    axis.line = element_line(color = 'black', size = .5),
-    strip.background = element_rect(fill = 'white'),
-    legend.title = element_blank(),
-    axis.text = element_text(size = 12),
-    axis.title = element_text(size = 18),
-    strip.text = element_text(size = 18),
-    plot.title = element_text(size = 22)
-  )
-```
-
-##
-<h2>Themes</h2>
-<hr>
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
-	      border-style: solid;
-	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/theme9.png" width="800" />
-	      
-
-##
-<h2>Themes</h2>
-<hr>
-<p>Add a margin between the plot and title (see ?margin):</p>
-
-```{r theme 10, eval = FALSE}
-massPlot +
-  labs(title = 'Mass of Carolina and\nBlack-capped chickadees',
-       x = 'Mass',
-       y = 'Density',
-       fill = 'Sex') +
-  theme(
-    panel.background = element_rect(fill = 'white'),
-    panel.grid.major = element_line(color = 'gray80', size = .2),
-    axis.line = element_line(color = 'black', size = .5),
-    strip.background = element_rect(fill = 'white'),
-    legend.title = element_blank(),
-    axis.text = element_text(size = 12),
-    axis.title = element_text(size = 18),
-    strip.text = element_text(size = 18),
-    plot.title = element_text(size = 22, margin = margin(b = 40))
-  )
-```
-
-##
-<h2>Themes</h2>
-<hr>
-<img style="display: block;
-	      margin-left: auto;
-        margin-right: auto;
-	      padding: 9px;
-	      border-style: solid;
-	      border-width: 10px;
-	      box-shadow: 0px 0px 0px 0px;
-	      border-color: white;" src="rWorkshop/images/ggplotting/theme10.png" width="800" />
-	      
-##
-<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Nine:</h2>
-<hr>
-<p>Make your density plot as pretty as possible using themes!</p>
