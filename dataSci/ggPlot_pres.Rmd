@@ -181,31 +181,6 @@ Smithsonian Conservation Biology Institute</p>
 	      box-shadow: 0px 0px 0px 0px;
 	      border-color: white;" src="images/nzpLogo.png" width="300" />
 
-##
-<h2>Setup for the lesson</h2>
-<hr>
-```{r setup show, eval = FALSE}
-# Load tidyverse library:
-
-library(RCurl)
-
-# Load a source script:
-
-script <-
-  getURL(
-    "https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode_lesson6.R"
-  )
-
-# Evaluate then remove the source script:
-
-eval(parse(text = script))
-
-rm(script)
-
-library(lubridate)
-
-```
-
 ```{r setup eval, eval = TRUE, include  = FALSE}
 # Load libraries:
 
@@ -261,7 +236,9 @@ zPalette <- c('#9EB8C5', '#F32017')
 <h2>Setup</h2>
 <hr>
 <p>Get the data:</p>
-```{r}
+```{r eval = FALSE}
+library(tidyverse)
+
 gitUrl <-
   'https://raw.githubusercontent.com/bsevansunc/'
 
@@ -273,7 +250,7 @@ courseData <-
 <h2>Setup</h2>
 <hr>
 <p>Get the data:</p>
-```{r the data}
+```{r the data, eval = FALSE}
 birdMeasures <- 
   read_csv(
     paste0(
@@ -608,8 +585,9 @@ birdMeasures %>%
 birdMeasures %>%
   filter(spp %in% c('BCCH', 'CACH')) %>%
   ggplot(aes(x = mass)) +
-  geom_histogram(aes(fill = sex),
-                 bins = 20)
+  geom_histogram(
+    aes(fill = sex),
+    bins = 20)
 ```
 
 ##
@@ -829,9 +807,10 @@ birdMeasures %>%
     aes(fill = region),
     color = 'black',
     size = .7) +
-  labs(title = 'Birds banded and recaptured 2000-2017',
-       x = 'Species',
-       y = 'Count')
+  labs(
+    title = 'Birds banded and recaptured 2000-2017',
+    x = 'Species',
+    y = 'Count')
 ```
 
 ##
@@ -868,17 +847,15 @@ birdCaptures_basicPlot <-
     aes(fill = region),
     color = 'black',
     size = .7) +
-  labs(title = 'Birds banded and recaptured 2000-2017',
-       x = 'Species',
-       y = 'Count')
+  labs(
+    title = 'Birds banded and recaptured 2000-2017',
+    x = 'Species',
+    y = 'Count')
 ```
 
 ##
 <h2>Labels</h2>
 <hr>
-```{r labels4, eval = FALSE}
-birdCaptures_basicPlot
-```
 <img style="display: block;
 	      margin-left: auto;
         margin-right: auto;
@@ -920,9 +897,10 @@ massDensity <-
     aes(fill = sex),
     alpha = 0.7) +
   facet_wrap(~spp, nrow = 2) +
-  labs(title = "Mass of Carolina and Black-capped chickadees",
-       x = 'Mass', 
-       y = 'Density')
+  labs(
+    title = "Mass of Carolina and Black-capped chickadees",
+    x = 'Mass', 
+    y = 'Density')
 
 massDensity
 ```
@@ -1189,13 +1167,15 @@ massDensity +
 ```{r legend1, eval = FALSE}
 birdMeasures %>%
   filter(spp %in% c('BCCH', 'CACH')) %>%
-  mutate(sex = factor(
-    sex,
-    labels = c('Female','Male'))) %>%
+  mutate(
+    sex = factor(
+      sex,
+      labels = c('Female','Male'))) %>%
   ggplot(aes(x = mass)) +
-  geom_histogram(aes(fill = sex), 
-                 bins = 20,
-                 color = 'black') +
+  geom_histogram(
+    aes(fill = sex), 
+    bins = 20,
+    color = 'black') +
   facet_wrap(~spp, nrow = 2) +
   scale_fill_manual(values = c('#9EB8C5', '#F32017'))
 ```
@@ -1375,13 +1355,14 @@ histogram2Theme +
 
 ```{r theme 2, eval = FALSE}
 histogram2Theme +
-  labs(title = 'Mass of Carolina and Black-capped chickadees',
-     x = 'Mass',
-     y = 'Density',
-     fill = 'Sex') +
+  labs(
+    title = 'Mass of Carolina and Black-capped chickadees',
+    x = 'Mass',
+    y = 'Density',
+    fill = 'Sex') +
   theme(
-  panel.background = element_rect(fill = 'white'),
-  panel.grid.major = element_line(color = 'gray80', size = .2),
+    panel.background = element_rect(fill = 'white'),
+    panel.grid.major = element_line(color = 'gray80', size = .2),
   )
 ```
 

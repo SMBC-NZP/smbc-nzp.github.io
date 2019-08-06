@@ -66,6 +66,8 @@ output:
 <li><b><a href = "https://smbc-nzp.github.io/dataSci/lesson3_pres_functions_forLoops.html" target="_blank">Lesson 3: Functions and for loops</a></b>. Writing custom functions and for loops for better workflow</li>
 <br>
 <li><b><a href = "https://smbc-nzp.github.io/dataSci/intro_to_tidyverse.html" target="_blank">Lesson 4: Tidy data and the tidyverse</a></b>. Learn the fundamentals of data management from a tidyverse framework</li>
+<br>
+<li><b><a href = "https://smbc-nzp.github.io/dataSci/ggPlot_pres.html" target="_blank">Lesson 5: Elegant graphics with dplyr and ggPlot</a></b>. Learn how to plot lovely graphics, the Wickham way.</li>
 </ul>
 </div>
 
