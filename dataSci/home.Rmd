@@ -65,7 +65,6 @@ output:
 <br>
 <li><b><a href = "https://smbc-nzp.github.io/dataSci/git_bash.html" target="_blank">Some git commands</a></b>. Just some basic commands to start using git in bash.</li>
 <br>
-<br>
 <li><b><a href = "https://smbc-nzp.github.io/dataSci/lesson3_pres_functions_forLoops.html" target="_blank">Lesson 3: Functions and for loops</a></b>. Writing custom functions and for loops for better workflow</li>
 <br>
 <li><b><a href = "https://smbc-nzp.github.io/dataSci/intro_to_tidyverse.html" target="_blank">Lesson 4: Tidy data and the tidyverse</a></b>. Learn the fundamentals of data management from a tidyverse framework</li>
