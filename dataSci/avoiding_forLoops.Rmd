@@ -1,0 +1,601 @@
+---
+output:
+  html_document:
+  theme: yeti
+---
+
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<style>
+
+code{
+background-color:#f2f2f2;
+border-radius: 25px;
+}
+
+span.co{
+color:#000080;
+font-weight: bold;
+}
+
+img{
+display: block;
+padding-left: 15px;
+padding-right: 15px;
+padding-top: 10px;
+padding-bottom: 10px;
+}
+
+h4{
+text-align: left;
+font-size: 20px;
+}
+
+p{
+text-align: left;
+font-size: 16px;
+}
+
+ul, ol{
+line-height: 27px;
+text-align: left;
+font-size: 16px;
+margin-left: 0px;
+}
+
+blockquote{
+font-size: 18px;
+border-left: 8px solid #292093;
+background-color: #e6ffff;
+padding-left: 16px;
+padding-right: 16px;
+}
+
+.row{
+margin: auto;
+}
+
+table {
+border-collapse: collapse;
+}
+
+table, td, th {
+border: 1px solid black;
+padding: 5px;
+text-align: center;
+vertical-align: middle;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+float: left;
+width: 50%;
+padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+content: "";
+display: table;
+clear: both;
+}
+
+.roundBorder {
+border-radius: 25px;
+border: 5px solid #30288C;
+background: #D6EAF8;
+padding-left: 20px;
+padding-right: 20px;
+padding-top: 10px;
+padding-bottom: 10px;
+}
+
+.roundBorderBlack {
+border-radius: 25px;
+border: 10px solid #D3D3D3;
+padding-left: 20px;
+padding-right: 20px;
+padding-top: 10px;
+padding-bottom: 10px;
+}
+
+.roundBorderBlackEx {
+border-radius: 5px;
+border: 5px solid #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+padding-top: 2px;
+}
+
+.roundBorderEx {
+border-radius: 3px;
+border: 5px solid #30288C;
+background: #D6EAF8;
+padding-left: 5px;
+padding-right: 5px;
+padding-top: 2px;
+}
+
+.tt {
+position: relative;
+display: inline-block;
+class: inline; 
+font-weight: bold;
+font-family: "Avenir";
+font-size: 18px;
+border-bottom: 1px black;
+}
+
+/* Tooltip text */
+.tt .ttText {
+visibility: hidden;
+font-weight: normal;
+font-size: 18px;
+width: 200px;
+background-color: black;
+border: 1px solid black;
+color: white;
+text-align: left;
+padding: 5px;
+border-radius: 6px;
+position: absolute;
+z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tt:hover .ttText {
+visibility: visible;
+}
+
+</style>
+
+```{r, eval = TRUE, include  = FALSE}
+# Load RCurl library:
+
+library(RCurl)
+
+source("https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode.R")
+
+# Load data for this lesson:
+
+# Reading location:
+
+gitUrl <-
+  'https://raw.githubusercontent.com/bsevansunc/'
+
+courseData <-
+  'smsc_data_science/master/data/'
+
+readDir <-
+  paste0(
+    gitUrl, 
+    courseData
+  )
+
+# A github reading function!
+
+gitRead <- 
+  function(csvFile, readDir){
+    read_csv(
+      paste0(readDir, csvFile))
+  }
+
+
+birdCounts <- 
+  gitRead('bird_rawCounts.csv', readDir)
+
+birdHabits <- 
+  gitRead('birdHabits.csv', readDir)
+
+birdMeasures <- 
+  gitRead('birdMeasures.csv', readDir)
+
+irisTbl <- 
+  as_tibble(iris) %>%
+  rename(
+    sepalLength = Sepal.Length,
+    sepalWidth = Sepal.Width,
+    petalLength = Petal.Length,
+    petalWidth = Petal.Width,
+    species = Species
+  )
+
+library(knitr) ; library(kableExtra)
+
+options(knitr.table.format = "html")
+```
+
+<div class = "row">
+<img style="float:right;padding-left:15px;border:none" src="images/smsc_logo.jpg" width = "400px"/>
+</div>
+<div>
+<h1 style="text-align: left;">Avoiding <i>for loops</i> with dplyr and purrr</h1>
+<p style = "text-align: left; font-size: 14px;"><i>Brian S. Evans, Ph.D.</i></p>
+</div>
+<hr>
+
+<p>In this lesson, we will turn our attention to the pursuit of developing pain-free data summaries and developing easier and more reader(and writer)-friendly code. The tidyverse gives us two great packages to avoid writing <i>for loops</i>: `dplyr` and `purrr`.</p>
+
+----
+
+<h2>Before we begin</h2>
+<br>
+```{r, eval=FALSE}
+# Load packages:
+
+library(tidyverse)
+```
+
+<p>Write a function that will read in data from github!</p>
+
+```{r, eval=FALSE}
+# Reading location:
+
+gitUrl <-
+  'https://raw.githubusercontent.com/bsevansunc/'
+
+courseData <-
+  'smsc_data_science/master/data/'
+
+readDir <-
+  paste0(
+    gitUrl, 
+    courseData
+  )
+
+# A github reading function!
+
+gitRead <- 
+  function(csvFile, readDir){
+    read_csv(
+      paste0(readDir, csvFile))
+  }
+
+# Load data for this lesson:
+
+birdCounts <- 
+  gitRead('bird_rawCounts.csv', readDir)
+
+birdHabits <- 
+  gitRead('birdHabits.csv', readDir)
+
+birdMeasures <- 
+  gitRead('birdMeasures.csv', readDir)
+
+irisTbl <- as_tibble(iris) %>%
+  rename(
+    sepalLength = Sepal.Length,
+    sepalWidth = Sepal.Width,
+    petalLength = Petal.Length,
+    petalWidth = Petal.Width,
+    species = Species
+  )
+```
+<p>Please take a moment to explore each of the files that you just loaded!</p>
+
+----
+<h2>Split-apply-combine</h2>
+<br>
+<p>In the <i>for loops</i> lesson, we used the <b>split-apply-combine</b> framework to summarize the data. This involves the following:</p>
+<ul>
+<li><b>Split</b>: Subset a data object by a logical condition or position</li>
+<li><b>Apply</b>: Modify each subset, individually</li>
+<li><b>Combine</b>: Combine the subsets to a new data frame</li>
+</ul>
+<br>
+<p>A <i>for loop</i> is typically used for split-apply-combine operations. To illustrate this, let's look at the `irisTbl` dataset again, using split-apply-combine to generate a summary of average (mean) sepalLength by species. We'll start by calculating the mean sepalLength of just species <i>Iris setosa</i>:</p>
+
+```{r}
+# Split:
+
+setosa_sepalLength <-
+  irisTbl %>%
+  filter(species == 'setosa') %>%
+  pull(sepalLength)
+
+# Note: pull is a new function. It extracts a single variable as a vector from the data frame.
+
+# Apply:
+
+mean(setosa_sepalLength)
+```
+
+<p>To calculate this value for each species, we would use a <i>for loop</i>:</p>
+
+```{r}
+# Specify the values that the data will be split on:
+
+iris_spp <- levels(irisTbl$species)
+
+# Generate an empty vector to store the results:
+
+mean_sepals <-
+  vector('numeric', length = length(iris_spp))
+
+# Use a for loop to split the data and modify each section:
+
+for(i in 1:length(iris_spp)){
+  
+  # Split:
+  
+  dataSubset <-
+    irisTbl %>%
+    filter(species == iris_spp[i]) %>%
+    pull(sepalLength)
+  
+  # Apply: 
+  
+  mean_sepals[i] <-
+    mean(dataSubset)
+}
+
+# Combine:
+
+tibble(
+  species = iris_spp,
+  mean_sepals = mean_sepals
+)
+```
+<p>Luckily, we are about to learn a much easier way!</p>
+
+<hr>
+<h2>Avoiding <i>for loops</i> with dplyr</h2>
+
+<p>The `tidyverse` function `group_by` allows you to assign groups to a data frame based on a variable in that table. As an example, let's group `birdCounts` by the `site` variable:</p>
+```{r one group pipe}
+# Group birdCounts by site:
+
+group_by(
+  birdCounts,
+  site)
+
+# Group birdCounts by site using a pipe:
+
+birdCounts %>%
+  group_by(site)
+```
+<br>
+<p><i>What did it do</i>? If you look closely at the output you will see that your tibble now contains "Groups: site [30]". This tells you that your tibble has been <b>split</b> into groups. Functions will be applied to each group separately. For example, let's calculate the species richness (`length(unique(species))`) observed at each site by grouping the data frame and using `mutate` to apply the function:</p>
+
+```{r species richness}
+# Species richness by site (across years):
+
+birdCounts %>%
+  group_by(site) %>%
+  mutate(nSpecies = length(unique(species))) %>%
+  select(site, nSpecies) %>%
+  distinct
+```
+<br>
+
+<p>`group_by` can be used to split the data frame into multiple groups as well. The following example calculates the species richness for each site and year of observation:</p>
+```{r two groups pipe}
+# Group birdCounts by site and year using a pipe:
+
+birdCounts %>%
+  mutate(year = year(date)) %>%
+  group_by(site, year)
+```
+<br>
+<p><i>Note: If you intend to modify your script after using `group_by` be sure to chain the function `ungroup` in a later line. For example, we might want to use `ungroup` within our species richness-by-site calculation:</i></p>
+```{r ungroup}
+# Calculate species richness by site (across years), then ungroup:
+
+birdCounts %>%
+  group_by(site) %>%
+  mutate(nSpecies = length(unique(species))) %>%
+  ungroup %>%
+  select(site, nSpecies) %>%
+  distinct
+```
+
+<br>
+<blockquote>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h2>
+<hr>
+<p>Complete the following to calculate the species richness for each site and year. Ensure that the resulting table is tidy.</p>
+```{r exercise five, eval = FALSE}
+# Calculate the species richness for each site and year:
+
+birdCounts %>%
+  mutate(year = # COMPLETE
+  group_by(site, # COMPLETE
+  mutate(nSpecies = # COMPLETE
+  select(site, year, # COMPLETE
+  # COMPLETE
+```
+<br>
+</blockquote>
+<br>
+
+<h2>Summarizing grouped data</h2>
+
+<p>The `tidyverse` provides use with the function `summarize` that can be used to calculate a summary function across grouped variables. For example<b>summarize</b>: Calculates a summary function for a grouped variable.</p>
+```{r summarize pipe}
+# Calculate species richness by site using a pipe:
+
+birdCounts %>%
+  group_by(site) %>%
+  summarize(nSpecies = n())
+```
+<br>
+<p>We can summarize by multiple grouping variables as well. For example, let's look at the average wing length of birds by region and species in our `birdMeasures` file:
+
+```{r summarize multiple}
+# Calculate species richness by site using a pipe:
+
+birdMeasures %>%
+  group_by(spp, region) %>%
+  summarize(wingLength = mean(
+    wing, 
+    na.rm = TRUE
+  ))
+```
+<p>The summary data frame we created may be tidy, but it's not great for observing summary data. Let's use `spread` to display our summary data:</li>
+```{r summarize multiple spread}
+# Calculate species richness by site using a pipe:
+
+birdMeasures %>%
+  group_by(spp, region) %>%
+  summarize(wingLength = mean(
+    wing, 
+    na.rm = TRUE
+  )) %>%
+  spread(region, wingLength)
+```
+<blockquote>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h2>
+<hr>
+<ol>
+<li>Complete the following to calculate the species richness for each site and year. Ensure that the resulting table is tidy.
+```{r exercise six, eval = FALSE}
+# Calculate the species richness for each site and year:
+
+birdCounts %>%
+  mutate(year # COMPLETE
+  group_by(site, # COMPLETE 
+  summarize(nSpecies = # COMPLETE
+```
+</li>
+<li>Use `group_by` and `summarize` to calculate the mean sepalLength of the iris species.</li>
+<br>
+</blockquote>
+<hr>
+<br>
+
+<h2>Filtering grouped data</h2>
+<p>Another super powerful tool we can do with the split-apply-combine framework is to filter data by the groups. In base R, this would be a fairly complicated operation ... with `group_by` and `filter`, it's a breeze! As an example, let's subset our data to the sites that had the average counts for each of our species:</p>
+
+```{r}
+birdMeasures %>%
+  group_by(region, spp) %>%
+  summarize(mean_wing = mean(wing)) %>%
+  group_by(spp) %>%
+  filter(mean_wing == max(mean_wing))
+```
+
+<h2>Mapping with purrr: Has the map killed the <i>for loop</i>? We'll see.</h2>
+
+<p>The `tidyverse` now has a library `purrr` that really gets us around most of the <i>for loop</i> problem. Let's say, for example, you wanted a data frame of observations where the largest wings of each bird species were recorded (though there will likely be ties). We can do so with a <i>for loop</i> as follows:</p>
+
+```{r}
+sppVector <- unique(birdMeasures$spp)
+
+outList <- 
+  vector('list', length = length(sppVector))
+
+for(i in 1:length(sppVector)){
+  outList[[i]] <-
+    birdMeasures %>%
+    # Split:
+    filter(spp == sppVector[i]) %>%
+    # Apply:
+    filter(wing == max(wing))
+}
+
+# Combine:
+
+bind_rows(outList)
+```
+
+<p>You would do the same operation in `purrr` with the `map_dfr` function. This automatically splits, applies, and combines the data. Here's how the same function would look in `purrr`:</p>
+
+```{r}
+map_dfr(
+  unique(birdMeasures$spp),
+  function(x){
+    birdMeasures %>%
+    # Split:
+    filter(spp == x) %>%
+    # Apply:
+    filter(wing == max(wing))
+  }
+)
+```
+
+<p>The possibities of mapping are huge. For example, perhaps we want to run a simple linear model, `lm`, on each species of birds in the data frame to explore whether the size of a species' wing varies by region (Bergmann's Rule ... sort of). Let's run the model on one species (<i>note: there's a new notation here!</i>):</p>
+
+```{r}
+birdMeasures %>%
+  filter(spp == 'NOCA') %>%
+  lm(wing ~ region, data = .) %>%
+  summary()
+```
+
+<p>This gives us a statistical summary of the linear model for that species. What if we want to run this model on every species? Let's do it first in a for loop context:</p>
+
+```{r eval = FALSE}
+# Get a unique vector of species:
+
+sppVector <- unique(birdMeasures$spp)
+
+# Make an empty list to store the data:
+
+outList <- 
+  vector('list', length = length(sppVector))
+
+# You can set the names of the outlist using the set_names function:
+
+outList <-
+  vector('list', length = length(sppVector)) %>%
+  set_names(sppVector)
+
+# Split and apply the function to each element of the list:
+
+for(i in 1:length(sppVector)){
+  outList[[i]] <-
+    birdMeasures %>%
+    filter(spp == sppVector[i]) %>%
+    lm(wing ~ region, data = .) %>%
+    summary()
+}
+
+# You can add a name to each element of the list as follows:
+
+names(outList) <- sppVector
+
+# Print the results:
+
+outList
+
+# View the list for just the American robin (AMRO):
+
+outList$AMRO
+```
+
+<p>That's a lot of code for a simple task! With the `map` function, you can greatly simplify:
+
+```{r eval = FALSE}
+# Get a unique vector of species:
+
+outList <-
+  map(
+    unique(birdMeasures$spp),
+    function(x){
+      birdMeasures %>%
+        filter(spp == x) %>%
+        lm(wing ~ region, data = .) %>%
+        summary()
+    }) %>%
+  set_names(unique(birdMeasures$spp))
+
+# Print the results:
+
+outList
+
+# View the list for just the American robin (AMRO):
+
+outList$AMRO
+```
+
+<blockquote>
+<h2><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Three:</h2>
+<hr>
+<ol>
+<li>Though I'm a big fan of mapping, we really could have completed filtering operation above (wing) using `group_by` and `filter` in the `dplyr` package. Give it a try!</li>
+<br>
+</blockquote>
+<hr>
+<br>
