@@ -76,6 +76,14 @@ output:
 </div>
 
 <div class = "row">
+<h3>After class</h3>
+<hr>
+<ul>
+<li><a href = "https://smbc-nzp.github.io/dataSci/gilled_iguana/gilled_iguana.html" target="_blank"><b>The gilled iguana</b></a>: Lorena tracks dissolved oxygen in a tank.</li>
+</ul>
+</div>
+
+<div class = "row">
 <hr>
 <img src = "images/robotBird.jpg"
   style = "float:left;
