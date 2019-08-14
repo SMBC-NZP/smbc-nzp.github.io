@@ -72,6 +72,12 @@ output:
 <li><b><a href = "https://smbc-nzp.github.io/dataSci/ggPlot_pres.html" target="_blank">Lesson 5: Elegant graphics with dplyr and ggPlot</a></b>. Learn how to plot lovely graphics, the Wickham way.</li>
 <br>
 <li><b><a href = "https://smbc-nzp.github.io/dataSci/avoiding_forLoops.html" target="_blank">Lesson 6: Avoiding for loops</a></b>. Learn how to write elegant code with dplyr and purrr while, potentially, avoiding having to write for loops in your scripts.</li>
+<br>
+<li><b>R as a GIS</b>: Learn how to use R to work with raster and point data.</li>
+<ul>
+<li><a href = "https://raw.githubusercontent.com/bsevansunc/smsc_data_science/master/scripts/r_as_gis.R">Lesson code</a></li>
+<li><a href = "https://raw.githubusercontent.com/bsevansunc/smsc_data_science/master/scripts/r_as_gis_key.R">Lesson key</a></li>
+</ul>
 </ul>
 </div>
 
