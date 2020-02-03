@@ -1,0 +1,569 @@
+---
+title: "Introduction to strings part 1: RegEx"
+output: 
+  html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(stringr)
+library(tidyverse)
+```
+
+<hr>
+
+<style>
+  p {font-size: 18px;}
+</style>
+
+<p>RegEx is a combination of literal characters (e.g., each 
+letter and the whitespace in "hello world" is a <b>literal character</b>) and
+<b>metacharacters</b>. Metacharacters are characters that contain special 
+meaning -- they do something in the program.</p>
+
+```{r eval = FALSE}
+library(stringr)
+library(tidyverse)
+```
+
+<hr>
+
+<h2>RegEx with literal characters</h2>
+
+Using `str_detect`, we can determine whether a string matches a pattern
+provided in regex. That pattern can refer to literal characters or a 
+combination of literal and metacharacters. 
+
+In the above, str_detect searches the string for an "r" at any position
+in the string.
+
+<br>
+```{r}
+str_detect(string = 'gray', pattern = 'r')
+```
+<br>
+
+In the below, str_detect searches the string for a "g" followed by an
+"r" at any position in the string:
+
+<br>
+```{r}
+str_detect('gray', 'ray')
+```
+<br>
+In the below, however, the regex statement is evaluated as FALSE, why?
+
+<br>
+```{r}
+str_detect('gray', 'gry')
+```
+<br>
+<h2>metacharacter: character class, "[ ]"</h2>
+
+Square brackets provide character classes for characters in a string.
+
+Detect gray or grey:
+
+
+<br>
+```{r}
+c('gray', 'grey') %>% 
+  str_detect('gr[ae]y') 
+```
+<br>
+Detect June or june:
+
+<br>
+```{r}
+c('June', 'june') %>% 
+  str_detect('[Jj]une') 
+```
+<br>
+<h2>Metacharacter: range, "[ - ]"</h2>
+
+Outside square backets, "-" is a literal character:
+
+<br>
+```{r}
+c('June-1', 'june 1', 'JUNE') %>% 
+  str_detect('-')
+```
+<br>
+When used inside square brackets, "-" is used to specify a range of 
+character values.
+
+Detect any lower-case letter:
+
+<br>
+```{r}
+c('June', 'june', 'JUNE') %>% 
+  str_detect('[a-z]') 
+```
+<br>
+Detect any upper-case letter:
+
+<br>
+```{r}
+c('June', 'june', 'JUNE') %>% 
+  str_detect('[A-Z]') 
+```
+<br>
+Detect any number:
+
+<br>
+```{r}
+c('June', 'june 1', 'JUNE') %>% 
+  str_detect('[0-9]') 
+```
+<br>
+
+These can be used in combination:
+
+<br>
+```{r}
+c('June', 'june 1', 'JUNE') %>% 
+  str_detect('[A-Z0-9a-z]') 
+```
+<br>
+But why does "June" evaluate to TRUE when it doesn't have a number and
+"june" evaluate to TRUE when it doesn't have an uppercase character?
+
+- because it acts like an "or" statement!
+
+<h2>Metacharacter: negated character class, "[^ ]"</h2>
+
+Detect not gray, not grey:
+
+<br>
+```{r}
+c('gray', 'grey') %>% 
+  str_detect('gr[^e]y')
+```
+<br>
+
+
+Of course, this is a toy example, your regex would just be:
+
+<br>
+```{r}
+c('gray', 'grey') %>% 
+  str_detect('gray') 
+
+```
+<br>
+
+<h2>Metacharacter: end of line, "$"</h2>
+
+Detect gray or grey, not grays:
+
+<br>
+```{r}
+c('gray', 'grey', 'grays') %>% 
+  str_detect('gr[ae]y$') 
+```
+<br>
+Match Jun or jun, not June:
+
+<br>
+```{r}
+c('Jun', 'jun', 'June') %>% 
+  str_detect('[Jj]un$') 
+```
+<br>
+<h2>Metacharacter: start of line, "^"</h2>
+
+Detect gray or grey, not stingray:
+
+<br>
+```{r}
+c('gray', 'grey', 'stingray') %>% 
+  str_detect('^gr[ae]y')
+```
+<br>
+Detect june or June, not disjunct:
+
+<br>
+```{r}
+c('jun', 'June', 'disjunct') %>% 
+  str_detect('^[Jj]un')
+```
+<br>
+<h2>Metacharacter: optional match, "?"</h2>
+
+A "?" after a character will make that character optional.
+
+Detect gray, grey, or grays, not stingray or graying:
+
+<br>
+```{r}
+c('gray',
+  'grey',
+  'grays',
+  'stingray',
+  'graying') %>% 
+  str_detect('^gr[ae]ys?$')
+```
+<br>
+Detect jun or June, not juniper or disjunct:
+
+<br>
+```{r}
+c('jun',
+  'June',
+  'juniper',
+  'disjunct') %>% 
+  str_detect('^[Jj]une?$')
+```
+<br>
+<h2>Metacharacter: any character match, "."</h2>
+
+Detect grayer or greyed, not stingray or graying:
+
+<br>
+```{r}
+c('grayed',
+  'greyer',
+  'stingray',
+  'graying') %>% 
+  str_detect('^gr[ae]ye.$') 
+```
+<br>
+Of course, the above wouldn't catch spelling errors, like "grayes":
+
+<br>
+```{r}
+str_detect('grayes', '^gr[ae]ye.$')
+```
+<br>
+
+This can be solved using the character class metacharacter:
+
+<br>
+```{r}
+c('grayed',
+  'greyer',
+  'grayes',
+  'stingray',
+  'graying') %>% 
+  str_detect('gr[ae]ye[dr]$') 
+```
+<br>
+This can be useful for dates:
+
+<br>
+```{r}
+c('Jun 1',
+  'jun 1',
+  'June/1',
+  'June-1',
+  'June') %>% 
+  str_detect('^[Jj]une?.[0-9]$')
+```
+<br>
+But this would only identify single-digit dates, we'll address this
+later.
+
+<h2>Metacharacter: or, "|"</h2>
+
+Detect gray or grey, not stingray or graying:
+
+<br>
+```{r}
+c('gray',
+  'grey',
+  'stingray',
+  'graying') %>% 
+  str_detect('^gray|grey$') 
+```
+<br>Detect June, june, jun, or Jun:
+
+<br>
+```{r}
+c('jun',
+  'June',
+  'juniper',
+  'disjunct') %>% 
+  str_detect('^[Jj]une|[Jj]un$')
+```
+<br>
+Note: as toy examples, these are not very parsimonious and not how the 
+regex would look in the real world ('^gr[ae]y' and '[Jj]une?').
+
+<h2>Metacharacter: alternation constraint, "()"</h2>
+
+Parentheses allows us to assess groups of characters. For example, if we
+wanted to use an "or" operator to detect gray or grey, the following 
+does not work:
+
+<br>
+```{r}
+c('gray',
+  'grey',
+  'grape',
+  'honeysuckle') %>% 
+  str_detect('gra|ey')
+
+```
+<br>The regex above searches for "gra" or "ey"in the string. 
+
+Parentheses restricts the environment of the"or" statements. We place 
+them around the characters for which we want the "or" statement to 
+apply:
+
+<br>
+```{r}
+c('gray',
+  'grey',
+  'grape',
+  'honeysuckle') %>% 
+  str_detect('gr(a|e)y')
+```
+<br>
+Detect gray or grey, not stingray or graying:
+
+<br>
+```{r}
+c('gray',
+  'grey',
+  'stingray',
+  'graying') %>% 
+  str_detect('^gr(a|e)y$') 
+```
+<br>This is more complicated than our previous regex statement:
+
+<br>
+```{r}
+c('gray', 'grey') %>% 
+  str_detect('gr[ae]y')
+```
+<br>
+But can be used for more complex statements. For example, detect grayer,
+greyed, or graying, not stingray or grays:
+
+<br>
+```{r}
+c('grayed',
+  'greyer',
+  'grayes',
+  'stingray',
+  'graying') %>% 
+  str_detect('^gr[ae]y(er|ed|ing)$')
+```
+<br>Or:
+
+<br>
+```{r}
+c('grayed',
+  'greyer',
+  'grayes',
+  'stingray',
+  'graying') %>% 
+  str_detect('^gr[ae]y(e[rd]|ing)$') 
+```
+<br>
+What if we wanted to include gray and grey in our list of acceptible
+strings? (gray, grey, grayer, greyed, or graying). This doesn't work for
+that:
+
+<br>
+```{r}
+c('gray',
+  'grey',
+  'grayed',
+  'greyer',
+  'grayes',
+  'stingray',
+  'graying') %>% 
+  str_detect('^gr[ae]y(e[rd]|ing)$') 
+```
+<br>
+We can address this with "?", which will make the entire parenthetical
+statement optional (gray, grey, grayer, greyed, or graying):
+
+<br>
+```{r}
+c('gray',
+  'grey',
+  'grayed',
+  'greyer',
+  'grayes',
+  'stingray',
+  'graying') %>% 
+  str_detect('^gr[ae]y(e[rd]|ing)?$')
+```
+<br>Likewise, we can use the grouping nature of the parenthesis operators
+on our date object:
+
+<br>
+```{r}
+c('Jun 1',
+  'jun-1st',
+  'jun-1s',
+  'jun-15') %>% 
+  str_detect('[Jj]un.1(st)?$')
+```
+<br>Or even:
+
+<br>
+```{r}
+c('Jun 1',
+  'jun-1st',
+  'jun-first',
+  'jun-15') %>% 
+  str_detect('[Jj]un.(first|1(st)?)$')
+```
+<br>Interesting regex statements can be generated at this point. For example,
+we can use parentheses, or, and character classes to evaluate whether 
+strings of numbers are within a specified range. a range of numbers. The 
+code below evaluates whether the values are between 1 and 59.
+
+<br>
+```{r}
+c(2, 57, 61) %>% 
+  str_detect('^([1-9]|[1-5][0-9])$')
+```
+<br>
+<h2>Repetition metacharacters</h2>
+
+We can use the "*" metacharacter to represent characters repeated none or
+an unlimited number of times (match the whale and wolf):
+
+<br>
+```{r}
+c('gray whale',
+  'gray wolf', 
+  'blue-gray gnatcatcher',
+  'blue whale') %>% 
+  str_detect('^gray.*$')
+```
+<br>
+Matching all of the strings that include "gray":
+
+<br>
+```{r}
+c('gray whale',
+  'gray wolf',
+  'blue-gray gnatcatcher',
+  'blue whale') %>% 
+  str_detect('^*gray.*$')
+```
+<br>
+
+Of course, in the real world this would more simply be written as:
+
+<br>
+```{r}
+c('gray whale',
+  'gray wolf',
+  'blue-gray gnatcatcher',
+  'blue whale') %>% 
+  str_detect('gray')
+```
+<br>
+
+The "+" metacharacter means "at least one".
+
+Match the animals that contain gray and have at least one character prior
+to the word gray:
+
+<br>
+```{r}
+c('gray whale',
+  'gray wolf',
+  'blue-gray gnatcatcher',
+  'blue whale') %>% 
+  str_detect('^.+gray.*$')
+```
+<br>
+
+Curly brackets, "{  }" provide an opportunity to provide the number of characters, or a range in the number of characters, in a string.
+
+If we provide a single number, we can specify an exact number of characters in a string:
+
+<br>
+```{r}
+c('jun', 'june') %>% 
+  str_detect('^[a-z]{4}$')
+```
+<br>
+
+<p>... of in a part of a string:</p>
+<br>
+```{r}
+c('jun-1', 'june-1') %>% 
+  str_detect('^[a-z]{4}-1$')
+```
+<br>
+
+Inside the curly brackets we can also provide the lowest and maximum number of characters. For example:
+
+<br>
+<br>
+```{r}
+c('jun', 'june', 'juniper') %>% 
+  str_detect('^[a-z]{3,4}$')
+```
+<br>
+We can use this feature to search for dates with days of the month 
+provided as 1 or 2 digit numbers:
+
+<br>
+```{r}
+c('Jun 1',
+  'jun 19',
+  'June/132',
+  'June-99',
+  'June') %>% 
+  str_detect('^[Jj]une?+.[0-9]{1,2}$')
+```
+<br>
+It's easy to see that this solution is powerful, but not very useful 
+for dates if there are crazy numbers in the date!
+
+<h2>Escaping a metacharacter</h2>
+
+Escaping a metacharacter turns it into a literal character. Let's observe
+what happens with this statement:
+
+
+<br>
+```{r}
+str_detect(c(15, '-'), '[0-9]')
+```
+<br>
+
+Hmmm ... how about here?
+
+<br>
+```{r}
+str_detect(c(15, '-'), '[0-9]|-')
+```
+<br>
+Recall that "-" is a metacharacter when it used inside of square 
+brackets, but a literal character outside of the brackets. Different
+regex has different "flavors" -- which refers to differences in syntax
+and behavior in different programming environments. In R, "\\" is a
+metacharacter escape. To evaluate "-" as a literal character in the 
+brackets, we need to use the escape metacharacter:
+
+<br>
+```{r}
+str_detect(c(15, '-'), '[0-9\\-]')
+```
+<br>
+We can escape all metacharacters in this way. For example, recall that
+"." is a metacharacter that represents any character. Therefore:
+
+<br>
+```{r}
+str_detect(c(1.5, 38), '.')
+```
+<br>
+
+What if we wanted to actually detect a decimal point?
+
+<br>
+```{r}
+str_detect(c(1.5, 38), '\\.')
+```
+<br>
