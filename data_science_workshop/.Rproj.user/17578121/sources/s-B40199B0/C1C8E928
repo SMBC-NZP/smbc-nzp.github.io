@@ -1,24 +1,24 @@
 {
-    "id": "0FD353F2",
+    "id": "C1C8E928",
     "path": "~/gits/smbc-nzp.github.io/data_science_workshop/workflow_and_logic.Rmd",
     "project_path": "workflow_and_logic.Rmd",
     "type": "r_markdown",
     "hash": "0",
     "contents": "",
     "dirty": false,
-    "created": 1614787615506.0,
+    "created": 1614800354361.0,
     "source_on_save": false,
-    "relative_order": 6,
+    "relative_order": 4,
     "properties": {
-        "cursorPosition": "982,0",
-        "scrollLine": "977"
+        "cursorPosition": "959,4",
+        "scrollLine": "941"
     },
     "folds": "",
-    "lastKnownWriteTime": 1614797054,
+    "lastKnownWriteTime": 1614808979,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1614797054407,
+    "last_content_update": 1614808979287,
     "read_only": false,
     "read_only_alternatives": []
 }
