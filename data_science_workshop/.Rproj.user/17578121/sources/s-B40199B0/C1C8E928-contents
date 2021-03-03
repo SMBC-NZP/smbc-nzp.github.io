@@ -67,7 +67,7 @@ df <-
 
   p{
     text-align: left;
-    font-size: 24px;
+    font-size: 18px;
   }
 
   ul, ol{
