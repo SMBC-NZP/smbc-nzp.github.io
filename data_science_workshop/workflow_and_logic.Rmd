@@ -207,7 +207,7 @@ Smithsonian Conservation Biology Institute</p>
 <li>Best practices in coding</li>
 <li>Logic
 <ul>
-<li><b>Object</b>: Container for holding values</li>
+<li><b>Objects</b>: Container for holding values</li>
 <li><b>Indexing</b>: Querying objects by position</li>
 <li><b>Logic</b>: Querying objects using logical operators
 </ul></li>
@@ -229,37 +229,46 @@ Smithsonian Conservation Biology Institute</p>
 	      border-color: white;
 	      width: 100%;"/>
 
-## Best practices - Always work in a project!
+## Best practices - A few starting points
 <hr>
 
 <ul style="line-height: 150%;">
-<li>No long references to points on your computer</li>
-
+<li>Always work in a project! Avoiding `setwd()` or long references to points on your computer</li>
 ```{r eval = FALSE}
 /Users/brianevans/gits/smbc-nzp.github.io/www/kml.jpg
 ```
-
-<li>No setwd()!</li>
-</ul>
-
-## Best practices - Keyboard shortcuts!
-<hr>
-<ul style="line-height: 150%;">
+<li>Using `source` to stop rebuilding the wheel (<a style = "color: red;">danger</a>)</li>
+<li>Avoiding package proliferation</li>
+<li>Use keyboard shortcuts!
+<ul>
 <li>Shortcut help: option(alt)-shift-k</li>
 <li>Running code! cmd(ctrl)-return(enter)</li>
-<li>Commenting code: cmd(ctrl)-shift-c</li>
-<li>Formatting code chunks: cmd-shift-a</li>
+</ul>
+</li>
 </ul>
 
 ## Best practices - Communicating code
 <hr>
 <ul style="line-height: 150%;">
 <li>Sectioning: cmd-shift-r</li>
-<li>Commenting code: </li>
+<li>Commenting code</li>
 <li>Formatting code chunks</li>
 <li>Reading and writing data</li>
 <li>Version control (Github)</li>
 </ul>
+<img src="images/gitLogo.png" 
+	title="GitHub Logo"
+	alt = "GitHub Logo"
+	border="0"
+	style= "
+	      display: block;
+	      margin-left: auto;
+        margin-right: auto;
+	      padding: 9px;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;
+	      width: 50%;"/>
 
 ## Querying data
 <hr>
@@ -703,25 +712,6 @@ df[1:2,2]
 <hr>
 <p>Recall ...</p>
 <br>
-```{r data frame reset names, eval = FALSE}
-
-# Attributes of object df:
-
-attributes(df)
-
-# Reset names of object df:
-
-names(df) <- c('hello', 'world')
-
-df
-
-attributes(df)
-```
-
-## Indexing & logic: Data frames
-<hr>
-<p>Recall ...</p>
-<br>
 ```{r data frame reset names 2, eval = FALSE}
 # Data frame indexing by position ...
 
@@ -774,6 +764,7 @@ df[df$hello > 1,]
 
 ```{r load fruits, eval = FALSE} 
 library(tidyverse)
+library(stringr)
 
 fruit
 
