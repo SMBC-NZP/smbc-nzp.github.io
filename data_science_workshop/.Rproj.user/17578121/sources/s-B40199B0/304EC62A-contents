@@ -22,8 +22,7 @@
     <ul class="nav navbar-nav">
       <li><a href="home.html">Home</a></li>
       <li class="active"> <a href="#">Preliminary exercises</a></li>
-      <li><a href="3.%20BTBW%20Demography%20and%20Population%20Study.html">Workshop lessons</a></li>
-            <li><a href="3.%20BTBW%20Demography%20and%20Population%20Study.html">Datasets</a></li>
+      <li><a href="workshop_lessons.html">Workshop lessons</a></li>
     </ul>
   </div>
 </nav>

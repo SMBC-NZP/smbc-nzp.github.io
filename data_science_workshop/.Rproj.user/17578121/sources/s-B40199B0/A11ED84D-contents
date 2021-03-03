@@ -23,7 +23,6 @@
       <li class="active"><a href="#">Home</a></li>
       <li><a href="preliminary_exercises.html">Preliminary exercises</a></li>
       <li><a href="workshop_lessons.html">Workshop lessons</a></li>
-            <li><a href="datasets.html">Datasets</a></li>
     </ul>
   </div>
 </nav>
@@ -50,15 +49,6 @@
 </div>
 
 <br>
-
-<div class = "row">
-<h3>Workshop</h3>
-<hr>
-<ul>
-<li><b><a href = "https://smbc-nzp.github.io/dataSci/lesson1_pres.html" target="_blank">Data management and the art of wrangling</a></b>. A review of data values and R objects while looking toward the future.
-<li><a href = "https://smbc-nzp.github.io/dataSci/lesson1_exercise.html" target="_blank">Problem set</a></li>
-</ul>
-</div>
 
 <div class = "row">
 <hr>
