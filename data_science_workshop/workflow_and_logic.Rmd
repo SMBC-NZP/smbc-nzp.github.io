@@ -579,11 +579,6 @@ v[c(1,3)]
 
 ```
 
-## Indexing & logic: Query vectors
-<hr>
-<p>The position of value `x` in vector `v` is notated as `v[x]`
-<br>
-
 ## Indexing & logic: Vectors
 <hr>
 <p>You may also query values by <b>condition</b>, using logic, in the same manner as above.</p> 
@@ -928,20 +923,17 @@ fruit[str_detect(fruit, 'apple')]
 
 # Make a dummy data frame:
 
-dummyData <-  data.frame(
+dummyData <-  
+  data.frame(
   gen = c('a', 'b', 'a', 'a', 'b'),
   n = c(3,5,8,13, 21)
   )
 
 dummyData
 
-# Basic summary statistics of the dummy data frame:
+# Basic summary of the dummy data frame:
 
 summary(dummyData)
-
-min(dummyData$n)
-
-max(dummyData$n)
 
 ```
 
