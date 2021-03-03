@@ -926,8 +926,7 @@ fruit[str_detect(fruit, 'apple')]
 dummyData <-  
   data.frame(
   gen = c('a', 'b', 'a', 'a', 'b'),
-  n = c(3,5,8,13, 21)
-  )
+  n = c(3,5,8,13, 21))
 
 dummyData
 

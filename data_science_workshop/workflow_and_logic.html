@@ -2501,12 +2501,6 @@ Now you … test whether values in v are less than 5 and not equal to 2 OR equal
 <span id="cb15-6"><a href="#cb15-6"></a></span>
 <span id="cb15-7"><a href="#cb15-7"></a>v[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</span></code></pre></div>
 </section>
-<section id="indexing-logic-query-vectors-1" class="slide level2">
-<h2>Indexing &amp; logic: Query vectors</h2>
-<hr>
-<p>
-<p>The position of value <code>x</code> in vector <code>v</code> is notated as <code>v[x]</code> <br></p>
-</section>
 <section id="indexing-logic-vectors" class="slide level2">
 <h2>Indexing &amp; logic: Vectors</h2>
 <hr>
@@ -2655,61 +2649,42 @@ The position of value <code>x,y</code> (row, column) in a data frame, <code>df</
 Recall …
 </p>
 <p><br></p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># Attributes of object df:</span></span>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># Data frame indexing by position ...</span></span>
 <span id="cb22-2"><a href="#cb22-2"></a></span>
-<span id="cb22-3"><a href="#cb22-3"></a><span class="kw">attributes</span>(df)</span>
+<span id="cb22-3"><a href="#cb22-3"></a>df[,<span class="dv">1</span>]</span>
 <span id="cb22-4"><a href="#cb22-4"></a></span>
-<span id="cb22-5"><a href="#cb22-5"></a><span class="co"># Reset names of object df:</span></span>
+<span id="cb22-5"><a href="#cb22-5"></a>df[,<span class="dv">2</span>]</span>
 <span id="cb22-6"><a href="#cb22-6"></a></span>
-<span id="cb22-7"><a href="#cb22-7"></a><span class="kw">names</span>(df) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;hello&#39;</span>, <span class="st">&#39;world&#39;</span>)</span>
+<span id="cb22-7"><a href="#cb22-7"></a><span class="co"># ... is equivalent to:</span></span>
 <span id="cb22-8"><a href="#cb22-8"></a></span>
-<span id="cb22-9"><a href="#cb22-9"></a>df</span>
+<span id="cb22-9"><a href="#cb22-9"></a>df<span class="op">$</span>hello</span>
 <span id="cb22-10"><a href="#cb22-10"></a></span>
-<span id="cb22-11"><a href="#cb22-11"></a><span class="kw">attributes</span>(df)</span></code></pre></div>
+<span id="cb22-11"><a href="#cb22-11"></a>df<span class="op">$</span>world</span></code></pre></div>
 </section>
 <section id="indexing-logic-data-frames-2" class="slide level2">
-<h2>Indexing &amp; logic: Data frames</h2>
-<hr>
-<p>
-Recall …
-</p>
-<p><br></p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># Data frame indexing by position ...</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a></span>
-<span id="cb23-3"><a href="#cb23-3"></a>df[,<span class="dv">1</span>]</span>
-<span id="cb23-4"><a href="#cb23-4"></a></span>
-<span id="cb23-5"><a href="#cb23-5"></a>df[,<span class="dv">2</span>]</span>
-<span id="cb23-6"><a href="#cb23-6"></a></span>
-<span id="cb23-7"><a href="#cb23-7"></a><span class="co"># ... is equivalent to:</span></span>
-<span id="cb23-8"><a href="#cb23-8"></a></span>
-<span id="cb23-9"><a href="#cb23-9"></a>df<span class="op">$</span>hello</span>
-<span id="cb23-10"><a href="#cb23-10"></a></span>
-<span id="cb23-11"><a href="#cb23-11"></a>df<span class="op">$</span>world</span></code></pre></div>
-</section>
-<section id="indexing-logic-data-frames-3" class="slide level2">
 <h2>Indexing &amp; logic: Data frames</h2>
 <hr>
 <p>
 Thus …
 </p>
 <p><br></p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># Querying data frames using &quot;matrix notation&quot; ...</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a></span>
-<span id="cb24-3"><a href="#cb24-3"></a>df[,<span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span></span>
-<span id="cb24-4"><a href="#cb24-4"></a></span>
-<span id="cb24-5"><a href="#cb24-5"></a><span class="kw">which</span>(df[,<span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>)</span>
-<span id="cb24-6"><a href="#cb24-6"></a></span>
-<span id="cb24-7"><a href="#cb24-7"></a>df[df[,<span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>,]</span>
-<span id="cb24-8"><a href="#cb24-8"></a></span>
-<span id="cb24-9"><a href="#cb24-9"></a><span class="co"># ... is equivalent to using column names:</span></span>
-<span id="cb24-10"><a href="#cb24-10"></a></span>
-<span id="cb24-11"><a href="#cb24-11"></a>df<span class="op">$</span>hello <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span></span>
-<span id="cb24-12"><a href="#cb24-12"></a></span>
-<span id="cb24-13"><a href="#cb24-13"></a><span class="kw">which</span>(df<span class="op">$</span>hello <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>)</span>
-<span id="cb24-14"><a href="#cb24-14"></a></span>
-<span id="cb24-15"><a href="#cb24-15"></a>df[df<span class="op">$</span>hello <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>,]</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># Querying data frames using &quot;matrix notation&quot; ...</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a></span>
+<span id="cb23-3"><a href="#cb23-3"></a>df[,<span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a></span>
+<span id="cb23-5"><a href="#cb23-5"></a><span class="kw">which</span>(df[,<span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb23-6"><a href="#cb23-6"></a></span>
+<span id="cb23-7"><a href="#cb23-7"></a>df[df[,<span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>,]</span>
+<span id="cb23-8"><a href="#cb23-8"></a></span>
+<span id="cb23-9"><a href="#cb23-9"></a><span class="co"># ... is equivalent to using column names:</span></span>
+<span id="cb23-10"><a href="#cb23-10"></a></span>
+<span id="cb23-11"><a href="#cb23-11"></a>df<span class="op">$</span>hello <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span></span>
+<span id="cb23-12"><a href="#cb23-12"></a></span>
+<span id="cb23-13"><a href="#cb23-13"></a><span class="kw">which</span>(df<span class="op">$</span>hello <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb23-14"><a href="#cb23-14"></a></span>
+<span id="cb23-15"><a href="#cb23-15"></a>df[df<span class="op">$</span>hello <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>,]</span></code></pre></div>
 </section>
-<section id="indexing-logic-data-frames-4" class="slide level2">
+<section id="indexing-logic-data-frames-3" class="slide level2">
 <h2>Indexing &amp; logic: Data frames</h2>
 <hr>
 <br>
@@ -2726,13 +2701,14 @@ Now you: Query <code>df</code> such that values of column one are less than 2 an
 The tidyverse has a packages <code>stringr</code> that is useful for querying strings.
 </p>
 <p><br></p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="kw">library</span>(tidyverse)</span>
-<span id="cb25-2"><a href="#cb25-2"></a></span>
-<span id="cb25-3"><a href="#cb25-3"></a>fruit</span>
-<span id="cb25-4"><a href="#cb25-4"></a></span>
-<span id="cb25-5"><a href="#cb25-5"></a><span class="co"># Query the first five fruits by index:</span></span>
-<span id="cb25-6"><a href="#cb25-6"></a></span>
-<span id="cb25-7"><a href="#cb25-7"></a>fruit[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="kw">library</span>(stringr)</span>
+<span id="cb24-3"><a href="#cb24-3"></a></span>
+<span id="cb24-4"><a href="#cb24-4"></a>fruit</span>
+<span id="cb24-5"><a href="#cb24-5"></a></span>
+<span id="cb24-6"><a href="#cb24-6"></a><span class="co"># Query the first five fruits by index:</span></span>
+<span id="cb24-7"><a href="#cb24-7"></a></span>
+<span id="cb24-8"><a href="#cb24-8"></a>fruit[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</span></code></pre></div>
 </section>
 <section id="indexing-logic-strings-1" class="slide level2">
 <h2>Indexing &amp; logic: Strings</h2>
@@ -2740,21 +2716,21 @@ The tidyverse has a packages <code>stringr</code> that is useful for querying st
 <p>
 Which fruits are apples?
 </p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co"># Which position in the fruit vector is apple?</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a></span>
-<span id="cb26-3"><a href="#cb26-3"></a>fruit <span class="op">==</span><span class="st"> &#39;apple&#39;</span></span>
-<span id="cb26-4"><a href="#cb26-4"></a></span>
-<span id="cb26-5"><a href="#cb26-5"></a><span class="kw">which</span>(fruit <span class="op">==</span><span class="st"> &#39;apple&#39;</span>)</span>
-<span id="cb26-6"><a href="#cb26-6"></a></span>
-<span id="cb26-7"><a href="#cb26-7"></a><span class="co"># Subsetting to fruits named &quot;apple&quot; by position ...</span></span>
-<span id="cb26-8"><a href="#cb26-8"></a></span>
-<span id="cb26-9"><a href="#cb26-9"></a>fruit[<span class="dv">1</span>]</span>
-<span id="cb26-10"><a href="#cb26-10"></a></span>
-<span id="cb26-11"><a href="#cb26-11"></a>fruit[<span class="kw">which</span>(fruit <span class="op">==</span><span class="st"> &#39;apple&#39;</span>)]</span>
-<span id="cb26-12"><a href="#cb26-12"></a></span>
-<span id="cb26-13"><a href="#cb26-13"></a><span class="co"># ... is equivalent to subsetting by condition:</span></span>
-<span id="cb26-14"><a href="#cb26-14"></a></span>
-<span id="cb26-15"><a href="#cb26-15"></a>fruit[fruit <span class="op">==</span><span class="st"> &#39;apple&#39;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="co"># Which position in the fruit vector is apple?</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a></span>
+<span id="cb25-3"><a href="#cb25-3"></a>fruit <span class="op">==</span><span class="st"> &#39;apple&#39;</span></span>
+<span id="cb25-4"><a href="#cb25-4"></a></span>
+<span id="cb25-5"><a href="#cb25-5"></a><span class="kw">which</span>(fruit <span class="op">==</span><span class="st"> &#39;apple&#39;</span>)</span>
+<span id="cb25-6"><a href="#cb25-6"></a></span>
+<span id="cb25-7"><a href="#cb25-7"></a><span class="co"># Subsetting to fruits named &quot;apple&quot; by position ...</span></span>
+<span id="cb25-8"><a href="#cb25-8"></a></span>
+<span id="cb25-9"><a href="#cb25-9"></a>fruit[<span class="dv">1</span>]</span>
+<span id="cb25-10"><a href="#cb25-10"></a></span>
+<span id="cb25-11"><a href="#cb25-11"></a>fruit[<span class="kw">which</span>(fruit <span class="op">==</span><span class="st"> &#39;apple&#39;</span>)]</span>
+<span id="cb25-12"><a href="#cb25-12"></a></span>
+<span id="cb25-13"><a href="#cb25-13"></a><span class="co"># ... is equivalent to subsetting by condition:</span></span>
+<span id="cb25-14"><a href="#cb25-14"></a></span>
+<span id="cb25-15"><a href="#cb25-15"></a>fruit[fruit <span class="op">==</span><span class="st"> &#39;apple&#39;</span>]</span></code></pre></div>
 </section>
 <section id="indexing-logic-strings-2" class="slide level2">
 <h2>Indexing &amp; logic: Strings</h2>
@@ -2762,21 +2738,21 @@ Which fruits are apples?
 <p>
 Extract characters from strings using <code>str_sub</code>.
 </p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># Subset &quot;hello world&quot; to just &quot;hello&quot;:</span></span>
-<span id="cb27-2"><a href="#cb27-2"></a></span>
-<span id="cb27-3"><a href="#cb27-3"></a><span class="kw">str_sub</span>(<span class="st">&#39;hello world&#39;</span>, <span class="dt">start =</span> <span class="dv">1</span>, <span class="dt">end =</span> <span class="dv">5</span>)</span>
-<span id="cb27-4"><a href="#cb27-4"></a></span>
-<span id="cb27-5"><a href="#cb27-5"></a><span class="co"># Subset to just &quot;world&quot;:</span></span>
-<span id="cb27-6"><a href="#cb27-6"></a></span>
-<span id="cb27-7"><a href="#cb27-7"></a><span class="kw">str_sub</span>(<span class="st">&#39;hello world&#39;</span>, <span class="dt">start =</span> <span class="dv">7</span>, <span class="dt">end =</span> <span class="dv">12</span>)</span>
-<span id="cb27-8"><a href="#cb27-8"></a></span>
-<span id="cb27-9"><a href="#cb27-9"></a><span class="co"># You actually don&#39;t have to specify the end point here:</span></span>
-<span id="cb27-10"><a href="#cb27-10"></a></span>
-<span id="cb27-11"><a href="#cb27-11"></a><span class="kw">str_sub</span>(<span class="st">&#39;hello world&#39;</span>, <span class="dt">start =</span> <span class="dv">7</span>)</span>
-<span id="cb27-12"><a href="#cb27-12"></a></span>
-<span id="cb27-13"><a href="#cb27-13"></a><span class="co"># You can also count from the end:</span></span>
-<span id="cb27-14"><a href="#cb27-14"></a></span>
-<span id="cb27-15"><a href="#cb27-15"></a><span class="kw">str_sub</span>(<span class="st">&#39;hello world&#39;</span>, <span class="dt">start =</span> <span class="dv">-5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co"># Subset &quot;hello world&quot; to just &quot;hello&quot;:</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a></span>
+<span id="cb26-3"><a href="#cb26-3"></a><span class="kw">str_sub</span>(<span class="st">&#39;hello world&#39;</span>, <span class="dt">start =</span> <span class="dv">1</span>, <span class="dt">end =</span> <span class="dv">5</span>)</span>
+<span id="cb26-4"><a href="#cb26-4"></a></span>
+<span id="cb26-5"><a href="#cb26-5"></a><span class="co"># Subset to just &quot;world&quot;:</span></span>
+<span id="cb26-6"><a href="#cb26-6"></a></span>
+<span id="cb26-7"><a href="#cb26-7"></a><span class="kw">str_sub</span>(<span class="st">&#39;hello world&#39;</span>, <span class="dt">start =</span> <span class="dv">7</span>, <span class="dt">end =</span> <span class="dv">12</span>)</span>
+<span id="cb26-8"><a href="#cb26-8"></a></span>
+<span id="cb26-9"><a href="#cb26-9"></a><span class="co"># You actually don&#39;t have to specify the end point here:</span></span>
+<span id="cb26-10"><a href="#cb26-10"></a></span>
+<span id="cb26-11"><a href="#cb26-11"></a><span class="kw">str_sub</span>(<span class="st">&#39;hello world&#39;</span>, <span class="dt">start =</span> <span class="dv">7</span>)</span>
+<span id="cb26-12"><a href="#cb26-12"></a></span>
+<span id="cb26-13"><a href="#cb26-13"></a><span class="co"># You can also count from the end:</span></span>
+<span id="cb26-14"><a href="#cb26-14"></a></span>
+<span id="cb26-15"><a href="#cb26-15"></a><span class="kw">str_sub</span>(<span class="st">&#39;hello world&#39;</span>, <span class="dt">start =</span> <span class="dv">-5</span>)</span></code></pre></div>
 </section>
 <section id="indexing-logic-strings-3" class="slide level2">
 <h2>Indexing &amp; logic: Strings</h2>
@@ -2784,21 +2760,21 @@ Extract characters from strings using <code>str_sub</code>.
 <p>
 <code>str_sub</code> can be used for smart queries of strings. For example, which fruits start with the letter “a”?
 </p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="co"># str_sub can be used to examine the first letter of each value:</span></span>
-<span id="cb28-2"><a href="#cb28-2"></a></span>
-<span id="cb28-3"><a href="#cb28-3"></a><span class="kw">str_sub</span>(fruit, <span class="dt">start =</span> <span class="dv">1</span>, <span class="dt">end =</span> <span class="dv">1</span>)</span>
-<span id="cb28-4"><a href="#cb28-4"></a></span>
-<span id="cb28-5"><a href="#cb28-5"></a><span class="kw">str_sub</span>(fruit, <span class="dt">start =</span> <span class="dv">1</span>, <span class="dt">end =</span> <span class="dv">1</span>) <span class="op">==</span><span class="st"> &#39;a&#39;</span></span>
-<span id="cb28-6"><a href="#cb28-6"></a></span>
-<span id="cb28-7"><a href="#cb28-7"></a><span class="kw">which</span>(<span class="kw">str_sub</span>(fruit, <span class="dt">start =</span> <span class="dv">1</span>, <span class="dt">end =</span> <span class="dv">1</span>) <span class="op">==</span><span class="st"> &#39;a&#39;</span>)</span>
-<span id="cb28-8"><a href="#cb28-8"></a></span>
-<span id="cb28-9"><a href="#cb28-9"></a><span class="co"># Subsetting to fruits with 7 characters by index or condition:</span></span>
-<span id="cb28-10"><a href="#cb28-10"></a></span>
-<span id="cb28-11"><a href="#cb28-11"></a>fruit[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</span>
-<span id="cb28-12"><a href="#cb28-12"></a></span>
-<span id="cb28-13"><a href="#cb28-13"></a>fruit[<span class="kw">which</span>(<span class="kw">str_sub</span>(fruit, <span class="dt">start =</span> <span class="dv">1</span>, <span class="dt">end =</span> <span class="dv">1</span>) <span class="op">==</span><span class="st"> &#39;a&#39;</span>)]</span>
-<span id="cb28-14"><a href="#cb28-14"></a></span>
-<span id="cb28-15"><a href="#cb28-15"></a>fruit[<span class="kw">str_sub</span>(fruit, <span class="dt">start =</span> <span class="dv">1</span>, <span class="dt">end =</span> <span class="dv">1</span>) <span class="op">==</span><span class="st"> &#39;a&#39;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># str_sub can be used to examine the first letter of each value:</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a></span>
+<span id="cb27-3"><a href="#cb27-3"></a><span class="kw">str_sub</span>(fruit, <span class="dt">start =</span> <span class="dv">1</span>, <span class="dt">end =</span> <span class="dv">1</span>)</span>
+<span id="cb27-4"><a href="#cb27-4"></a></span>
+<span id="cb27-5"><a href="#cb27-5"></a><span class="kw">str_sub</span>(fruit, <span class="dt">start =</span> <span class="dv">1</span>, <span class="dt">end =</span> <span class="dv">1</span>) <span class="op">==</span><span class="st"> &#39;a&#39;</span></span>
+<span id="cb27-6"><a href="#cb27-6"></a></span>
+<span id="cb27-7"><a href="#cb27-7"></a><span class="kw">which</span>(<span class="kw">str_sub</span>(fruit, <span class="dt">start =</span> <span class="dv">1</span>, <span class="dt">end =</span> <span class="dv">1</span>) <span class="op">==</span><span class="st"> &#39;a&#39;</span>)</span>
+<span id="cb27-8"><a href="#cb27-8"></a></span>
+<span id="cb27-9"><a href="#cb27-9"></a><span class="co"># Subsetting to fruits with 7 characters by index or condition:</span></span>
+<span id="cb27-10"><a href="#cb27-10"></a></span>
+<span id="cb27-11"><a href="#cb27-11"></a>fruit[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</span>
+<span id="cb27-12"><a href="#cb27-12"></a></span>
+<span id="cb27-13"><a href="#cb27-13"></a>fruit[<span class="kw">which</span>(<span class="kw">str_sub</span>(fruit, <span class="dt">start =</span> <span class="dv">1</span>, <span class="dt">end =</span> <span class="dv">1</span>) <span class="op">==</span><span class="st"> &#39;a&#39;</span>)]</span>
+<span id="cb27-14"><a href="#cb27-14"></a></span>
+<span id="cb27-15"><a href="#cb27-15"></a>fruit[<span class="kw">str_sub</span>(fruit, <span class="dt">start =</span> <span class="dv">1</span>, <span class="dt">end =</span> <span class="dv">1</span>) <span class="op">==</span><span class="st"> &#39;a&#39;</span>]</span></code></pre></div>
 </section>
 <section id="indexing-logic-strings-4" class="slide level2">
 <h2>Indexing &amp; logic: Strings</h2>
@@ -2806,18 +2782,18 @@ Extract characters from strings using <code>str_sub</code>.
 <p>
 We can also query by the number of characters (i.e., symbols, numbers, or letters) in the string. For example, perhaps we’re not interested in “apple” but rather any fruit that has five letters:
 </p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="co"># str_count can be used to determine the number of letters</span></span>
-<span id="cb29-2"><a href="#cb29-2"></a><span class="co"># or symbols in a string:</span></span>
-<span id="cb29-3"><a href="#cb29-3"></a></span>
-<span id="cb29-4"><a href="#cb29-4"></a>fruit</span>
-<span id="cb29-5"><a href="#cb29-5"></a></span>
-<span id="cb29-6"><a href="#cb29-6"></a><span class="kw">str_count</span>(fruit)</span>
-<span id="cb29-7"><a href="#cb29-7"></a></span>
-<span id="cb29-8"><a href="#cb29-8"></a><span class="co"># Which fruits have exactly 5 letters?</span></span>
-<span id="cb29-9"><a href="#cb29-9"></a></span>
-<span id="cb29-10"><a href="#cb29-10"></a><span class="kw">str_count</span>(fruit) <span class="op">==</span><span class="st"> </span><span class="dv">5</span></span>
-<span id="cb29-11"><a href="#cb29-11"></a></span>
-<span id="cb29-12"><a href="#cb29-12"></a><span class="kw">which</span>(<span class="kw">str_count</span>(fruit) <span class="op">==</span><span class="st"> </span><span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="co"># str_count can be used to determine the number of letters</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="co"># or symbols in a string:</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a></span>
+<span id="cb28-4"><a href="#cb28-4"></a>fruit</span>
+<span id="cb28-5"><a href="#cb28-5"></a></span>
+<span id="cb28-6"><a href="#cb28-6"></a><span class="kw">str_count</span>(fruit)</span>
+<span id="cb28-7"><a href="#cb28-7"></a></span>
+<span id="cb28-8"><a href="#cb28-8"></a><span class="co"># Which fruits have exactly 5 letters?</span></span>
+<span id="cb28-9"><a href="#cb28-9"></a></span>
+<span id="cb28-10"><a href="#cb28-10"></a><span class="kw">str_count</span>(fruit) <span class="op">==</span><span class="st"> </span><span class="dv">5</span></span>
+<span id="cb28-11"><a href="#cb28-11"></a></span>
+<span id="cb28-12"><a href="#cb28-12"></a><span class="kw">which</span>(<span class="kw">str_count</span>(fruit) <span class="op">==</span><span class="st"> </span><span class="dv">5</span>)</span></code></pre></div>
 </section>
 <section id="indexing-logic-strings-5" class="slide level2">
 <h2>Indexing &amp; logic: Strings</h2>
@@ -2825,17 +2801,17 @@ We can also query by the number of characters (i.e., symbols, numbers, or letter
 <p>
 We can also query by the number of characters (i.e., symbols, numbers, or letters) in the string. For example, perhaps we’re not interested in “apple” but rather any fruit that has five letters:
 </p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co"># Subsetting to fruits with 5 characters by index ...</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a></span>
-<span id="cb30-3"><a href="#cb30-3"></a>fruit[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">34</span>,<span class="dv">36</span>,<span class="dv">44</span>,<span class="dv">49</span>,<span class="dv">53</span>,<span class="dv">58</span>)]</span>
-<span id="cb30-4"><a href="#cb30-4"></a></span>
-<span id="cb30-5"><a href="#cb30-5"></a><span class="co"># ... is equivalent to ...</span></span>
-<span id="cb30-6"><a href="#cb30-6"></a></span>
-<span id="cb30-7"><a href="#cb30-7"></a>fruit[<span class="kw">which</span>(<span class="kw">str_count</span>(fruit) <span class="op">==</span><span class="st"> </span><span class="dv">5</span>)]</span>
-<span id="cb30-8"><a href="#cb30-8"></a></span>
-<span id="cb30-9"><a href="#cb30-9"></a><span class="co"># ... and is also equivalent to subsetting by condition:</span></span>
-<span id="cb30-10"><a href="#cb30-10"></a></span>
-<span id="cb30-11"><a href="#cb30-11"></a>fruit[<span class="kw">str_count</span>(fruit) <span class="op">==</span><span class="st"> </span><span class="dv">5</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="co"># Subsetting to fruits with 5 characters by index ...</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a></span>
+<span id="cb29-3"><a href="#cb29-3"></a>fruit[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">34</span>,<span class="dv">36</span>,<span class="dv">44</span>,<span class="dv">49</span>,<span class="dv">53</span>,<span class="dv">58</span>)]</span>
+<span id="cb29-4"><a href="#cb29-4"></a></span>
+<span id="cb29-5"><a href="#cb29-5"></a><span class="co"># ... is equivalent to ...</span></span>
+<span id="cb29-6"><a href="#cb29-6"></a></span>
+<span id="cb29-7"><a href="#cb29-7"></a>fruit[<span class="kw">which</span>(<span class="kw">str_count</span>(fruit) <span class="op">==</span><span class="st"> </span><span class="dv">5</span>)]</span>
+<span id="cb29-8"><a href="#cb29-8"></a></span>
+<span id="cb29-9"><a href="#cb29-9"></a><span class="co"># ... and is also equivalent to subsetting by condition:</span></span>
+<span id="cb29-10"><a href="#cb29-10"></a></span>
+<span id="cb29-11"><a href="#cb29-11"></a>fruit[<span class="kw">str_count</span>(fruit) <span class="op">==</span><span class="st"> </span><span class="dv">5</span>]</span></code></pre></div>
 </section>
 <section id="indexing-logic-strings-6" class="slide level2">
 <h2>Indexing &amp; logic: Strings</h2>
@@ -2843,19 +2819,19 @@ We can also query by the number of characters (i.e., symbols, numbers, or letter
 <p>
 <code>str_detect</code> is a logical test of whether a provided pattern is present in a target value. For example, we might explore the example phrase “hello world” as such:
 </p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># Detecting a pattern within a string:</span></span>
-<span id="cb31-2"><a href="#cb31-2"></a></span>
-<span id="cb31-3"><a href="#cb31-3"></a><span class="kw">str_detect</span>(<span class="st">&#39;hello world&#39;</span>, <span class="dt">pattern =</span> <span class="st">&#39;hello&#39;</span>)</span>
-<span id="cb31-4"><a href="#cb31-4"></a></span>
-<span id="cb31-5"><a href="#cb31-5"></a><span class="kw">str_detect</span>(<span class="st">&#39;hello world&#39;</span>, <span class="dt">pattern =</span> <span class="st">&#39;ello&#39;</span>)</span>
-<span id="cb31-6"><a href="#cb31-6"></a></span>
-<span id="cb31-7"><a href="#cb31-7"></a><span class="kw">str_detect</span>(<span class="st">&#39;hello world&#39;</span>, <span class="dt">pattern =</span> <span class="st">&#39;lo wo&#39;</span>)</span>
-<span id="cb31-8"><a href="#cb31-8"></a></span>
-<span id="cb31-9"><a href="#cb31-9"></a><span class="kw">str_detect</span>(<span class="st">&#39;hello world&#39;</span>, <span class="dt">pattern =</span> <span class="st">&#39;world&#39;</span>)</span>
-<span id="cb31-10"><a href="#cb31-10"></a></span>
-<span id="cb31-11"><a href="#cb31-11"></a><span class="kw">str_detect</span>(<span class="st">&#39;hello world&#39;</span>, <span class="dt">pattern =</span> <span class="st">&quot;foo&quot;</span>)</span>
-<span id="cb31-12"><a href="#cb31-12"></a></span>
-<span id="cb31-13"><a href="#cb31-13"></a><span class="kw">str_detect</span>(<span class="st">&#39;hello world&#39;</span>, <span class="dt">pattern =</span> <span class="st">&#39;helloworld&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co"># Detecting a pattern within a string:</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a></span>
+<span id="cb30-3"><a href="#cb30-3"></a><span class="kw">str_detect</span>(<span class="st">&#39;hello world&#39;</span>, <span class="dt">pattern =</span> <span class="st">&#39;hello&#39;</span>)</span>
+<span id="cb30-4"><a href="#cb30-4"></a></span>
+<span id="cb30-5"><a href="#cb30-5"></a><span class="kw">str_detect</span>(<span class="st">&#39;hello world&#39;</span>, <span class="dt">pattern =</span> <span class="st">&#39;ello&#39;</span>)</span>
+<span id="cb30-6"><a href="#cb30-6"></a></span>
+<span id="cb30-7"><a href="#cb30-7"></a><span class="kw">str_detect</span>(<span class="st">&#39;hello world&#39;</span>, <span class="dt">pattern =</span> <span class="st">&#39;lo wo&#39;</span>)</span>
+<span id="cb30-8"><a href="#cb30-8"></a></span>
+<span id="cb30-9"><a href="#cb30-9"></a><span class="kw">str_detect</span>(<span class="st">&#39;hello world&#39;</span>, <span class="dt">pattern =</span> <span class="st">&#39;world&#39;</span>)</span>
+<span id="cb30-10"><a href="#cb30-10"></a></span>
+<span id="cb30-11"><a href="#cb30-11"></a><span class="kw">str_detect</span>(<span class="st">&#39;hello world&#39;</span>, <span class="dt">pattern =</span> <span class="st">&quot;foo&quot;</span>)</span>
+<span id="cb30-12"><a href="#cb30-12"></a></span>
+<span id="cb30-13"><a href="#cb30-13"></a><span class="kw">str_detect</span>(<span class="st">&#39;hello world&#39;</span>, <span class="dt">pattern =</span> <span class="st">&#39;helloworld&#39;</span>)</span></code></pre></div>
 </section>
 <section id="indexing-logic-strings-7" class="slide level2">
 <h2>Indexing &amp; logic: Strings</h2>
@@ -2863,21 +2839,21 @@ We can also query by the number of characters (i.e., symbols, numbers, or letter
 <p>
 How many fruits contain the word apple?
 </p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co"># Which fruits contain the pattern &quot;apple&quot;?</span></span>
-<span id="cb32-2"><a href="#cb32-2"></a></span>
-<span id="cb32-3"><a href="#cb32-3"></a><span class="kw">str_detect</span>(fruit, <span class="st">&#39;apple&#39;</span>)</span>
-<span id="cb32-4"><a href="#cb32-4"></a></span>
-<span id="cb32-5"><a href="#cb32-5"></a><span class="kw">which</span>(<span class="kw">str_detect</span>(fruit, <span class="st">&#39;apple&#39;</span>))</span>
-<span id="cb32-6"><a href="#cb32-6"></a></span>
-<span id="cb32-7"><a href="#cb32-7"></a><span class="co"># Subsetting to fruits with the pattern &quot;apple&quot; by index ...</span></span>
-<span id="cb32-8"><a href="#cb32-8"></a></span>
-<span id="cb32-9"><a href="#cb32-9"></a>fruit[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">62</span>)]</span>
-<span id="cb32-10"><a href="#cb32-10"></a></span>
-<span id="cb32-11"><a href="#cb32-11"></a>fruit[<span class="kw">which</span>(<span class="kw">str_detect</span>(fruit, <span class="st">&#39;apple&#39;</span>))]</span>
-<span id="cb32-12"><a href="#cb32-12"></a></span>
-<span id="cb32-13"><a href="#cb32-13"></a><span class="co"># ... and is also equivalent to subsetting by condition:</span></span>
-<span id="cb32-14"><a href="#cb32-14"></a></span>
-<span id="cb32-15"><a href="#cb32-15"></a>fruit[<span class="kw">str_detect</span>(fruit, <span class="st">&#39;apple&#39;</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># Which fruits contain the pattern &quot;apple&quot;?</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a></span>
+<span id="cb31-3"><a href="#cb31-3"></a><span class="kw">str_detect</span>(fruit, <span class="st">&#39;apple&#39;</span>)</span>
+<span id="cb31-4"><a href="#cb31-4"></a></span>
+<span id="cb31-5"><a href="#cb31-5"></a><span class="kw">which</span>(<span class="kw">str_detect</span>(fruit, <span class="st">&#39;apple&#39;</span>))</span>
+<span id="cb31-6"><a href="#cb31-6"></a></span>
+<span id="cb31-7"><a href="#cb31-7"></a><span class="co"># Subsetting to fruits with the pattern &quot;apple&quot; by index ...</span></span>
+<span id="cb31-8"><a href="#cb31-8"></a></span>
+<span id="cb31-9"><a href="#cb31-9"></a>fruit[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">62</span>)]</span>
+<span id="cb31-10"><a href="#cb31-10"></a></span>
+<span id="cb31-11"><a href="#cb31-11"></a>fruit[<span class="kw">which</span>(<span class="kw">str_detect</span>(fruit, <span class="st">&#39;apple&#39;</span>))]</span>
+<span id="cb31-12"><a href="#cb31-12"></a></span>
+<span id="cb31-13"><a href="#cb31-13"></a><span class="co"># ... and is also equivalent to subsetting by condition:</span></span>
+<span id="cb31-14"><a href="#cb31-14"></a></span>
+<span id="cb31-15"><a href="#cb31-15"></a>fruit[<span class="kw">str_detect</span>(fruit, <span class="st">&#39;apple&#39;</span>)]</span></code></pre></div>
 </section>
 <section id="summarizing-and-queries" class="slide level2">
 <h2>Summarizing and queries</h2>
@@ -2885,22 +2861,19 @@ How many fruits contain the word apple?
 <p>
 Querying with indexing and logic can be a great way to summarize your data.
 </p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="co"># Make a dummy data frame:</span></span>
-<span id="cb33-2"><a href="#cb33-2"></a></span>
-<span id="cb33-3"><a href="#cb33-3"></a>dummyData &lt;-<span class="st">  </span><span class="kw">data.frame</span>(</span>
-<span id="cb33-4"><a href="#cb33-4"></a>  <span class="dt">gen =</span> <span class="kw">c</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>),</span>
-<span id="cb33-5"><a href="#cb33-5"></a>  <span class="dt">n =</span> <span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">13</span>, <span class="dv">21</span>)</span>
-<span id="cb33-6"><a href="#cb33-6"></a>  )</span>
-<span id="cb33-7"><a href="#cb33-7"></a></span>
-<span id="cb33-8"><a href="#cb33-8"></a>dummyData</span>
-<span id="cb33-9"><a href="#cb33-9"></a></span>
-<span id="cb33-10"><a href="#cb33-10"></a><span class="co"># Basic summary statistics of the dummy data frame:</span></span>
-<span id="cb33-11"><a href="#cb33-11"></a></span>
-<span id="cb33-12"><a href="#cb33-12"></a><span class="kw">summary</span>(dummyData)</span>
-<span id="cb33-13"><a href="#cb33-13"></a></span>
-<span id="cb33-14"><a href="#cb33-14"></a><span class="kw">min</span>(dummyData<span class="op">$</span>n)</span>
-<span id="cb33-15"><a href="#cb33-15"></a></span>
-<span id="cb33-16"><a href="#cb33-16"></a><span class="kw">max</span>(dummyData<span class="op">$</span>n)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co"># Make a dummy data frame:</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a></span>
+<span id="cb32-3"><a href="#cb32-3"></a>dummyData &lt;-<span class="st">  </span></span>
+<span id="cb32-4"><a href="#cb32-4"></a><span class="st">  </span><span class="kw">data.frame</span>(</span>
+<span id="cb32-5"><a href="#cb32-5"></a>  <span class="dt">gen =</span> <span class="kw">c</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>),</span>
+<span id="cb32-6"><a href="#cb32-6"></a>  <span class="dt">n =</span> <span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">13</span>, <span class="dv">21</span>)</span>
+<span id="cb32-7"><a href="#cb32-7"></a>  )</span>
+<span id="cb32-8"><a href="#cb32-8"></a></span>
+<span id="cb32-9"><a href="#cb32-9"></a>dummyData</span>
+<span id="cb32-10"><a href="#cb32-10"></a></span>
+<span id="cb32-11"><a href="#cb32-11"></a><span class="co"># Basic summary of the dummy data frame:</span></span>
+<span id="cb32-12"><a href="#cb32-12"></a></span>
+<span id="cb32-13"><a href="#cb32-13"></a><span class="kw">summary</span>(dummyData)</span></code></pre></div>
 </section>
 <section id="summarizing-and-queries-1" class="slide level2">
 <h2>Summarizing and queries</h2>
@@ -2908,17 +2881,17 @@ Querying with indexing and logic can be a great way to summarize your data.
 <p>
 We often want to see summary values associated with treatment levels. Let’s explore querying <code>dummyData</code> by maximum and minimum values:
 </p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="co"># Subset to maximum and minimum values, returning separate results:</span></span>
-<span id="cb34-2"><a href="#cb34-2"></a></span>
-<span id="cb34-3"><a href="#cb34-3"></a>dummyData[dummyData<span class="op">$</span>n <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(dummyData<span class="op">$</span>n),]</span>
-<span id="cb34-4"><a href="#cb34-4"></a></span>
-<span id="cb34-5"><a href="#cb34-5"></a>dummyData[dummyData<span class="op">$</span>n <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(dummyData<span class="op">$</span>n),]</span>
-<span id="cb34-6"><a href="#cb34-6"></a></span>
-<span id="cb34-7"><a href="#cb34-7"></a><span class="co"># Subset to maximum and minimum n values, returning both</span></span>
-<span id="cb34-8"><a href="#cb34-8"></a><span class="co"># results in one frame:</span></span>
-<span id="cb34-9"><a href="#cb34-9"></a></span>
-<span id="cb34-10"><a href="#cb34-10"></a>dummyData[dummyData<span class="op">$</span>n <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(dummyData<span class="op">$</span>n)<span class="op">|</span></span>
-<span id="cb34-11"><a href="#cb34-11"></a><span class="st">            </span>dummyData<span class="op">$</span>n <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(dummyData<span class="op">$</span>n),]</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="co"># Subset to maximum and minimum values, returning separate results:</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a></span>
+<span id="cb33-3"><a href="#cb33-3"></a>dummyData[dummyData<span class="op">$</span>n <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(dummyData<span class="op">$</span>n),]</span>
+<span id="cb33-4"><a href="#cb33-4"></a></span>
+<span id="cb33-5"><a href="#cb33-5"></a>dummyData[dummyData<span class="op">$</span>n <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(dummyData<span class="op">$</span>n),]</span>
+<span id="cb33-6"><a href="#cb33-6"></a></span>
+<span id="cb33-7"><a href="#cb33-7"></a><span class="co"># Subset to maximum and minimum n values, returning both</span></span>
+<span id="cb33-8"><a href="#cb33-8"></a><span class="co"># results in one frame:</span></span>
+<span id="cb33-9"><a href="#cb33-9"></a></span>
+<span id="cb33-10"><a href="#cb33-10"></a>dummyData[dummyData<span class="op">$</span>n <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(dummyData<span class="op">$</span>n)<span class="op">|</span></span>
+<span id="cb33-11"><a href="#cb33-11"></a><span class="st">            </span>dummyData<span class="op">$</span>n <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(dummyData<span class="op">$</span>n),]</span></code></pre></div>
 </section>
 <section id="summarizing-and-queries-2" class="slide level2">
 <h2>Summarizing and queries</h2>
@@ -2926,22 +2899,22 @@ We often want to see summary values associated with treatment levels. Let’s ex
 <p>
 Provide the minimum value of n for treatment level “a”. We might address this as:
 </p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co"># Subset to group &quot;a&quot;:</span></span>
-<span id="cb35-2"><a href="#cb35-2"></a></span>
-<span id="cb35-3"><a href="#cb35-3"></a>dummyData[dummyData<span class="op">$</span>gen <span class="op">==</span><span class="st"> &#39;a&#39;</span>,]</span>
-<span id="cb35-4"><a href="#cb35-4"></a></span>
-<span id="cb35-5"><a href="#cb35-5"></a><span class="co"># As a data frame, we can pull out the second column using indexing ...</span></span>
-<span id="cb35-6"><a href="#cb35-6"></a></span>
-<span id="cb35-7"><a href="#cb35-7"></a>dummyData[dummyData<span class="op">$</span>gen <span class="op">==</span><span class="st"> &#39;a&#39;</span>,<span class="dv">2</span>]</span>
-<span id="cb35-8"><a href="#cb35-8"></a></span>
-<span id="cb35-9"><a href="#cb35-9"></a><span class="co"># ... or by name (my preference):</span></span>
-<span id="cb35-10"><a href="#cb35-10"></a></span>
-<span id="cb35-11"><a href="#cb35-11"></a>dummyData[dummyData<span class="op">$</span>gen <span class="op">==</span><span class="st"> &#39;a&#39;</span>,]<span class="op">$</span>n</span>
-<span id="cb35-12"><a href="#cb35-12"></a></span>
-<span id="cb35-13"><a href="#cb35-13"></a></span>
-<span id="cb35-14"><a href="#cb35-14"></a><span class="co"># We can then calculate the minimum value in group &quot;a&quot; as:</span></span>
-<span id="cb35-15"><a href="#cb35-15"></a></span>
-<span id="cb35-16"><a href="#cb35-16"></a><span class="kw">min</span>(dummyData[dummyData<span class="op">$</span>gen <span class="op">==</span><span class="st"> &#39;a&#39;</span>,]<span class="op">$</span>n)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="co"># Subset to group &quot;a&quot;:</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a></span>
+<span id="cb34-3"><a href="#cb34-3"></a>dummyData[dummyData<span class="op">$</span>gen <span class="op">==</span><span class="st"> &#39;a&#39;</span>,]</span>
+<span id="cb34-4"><a href="#cb34-4"></a></span>
+<span id="cb34-5"><a href="#cb34-5"></a><span class="co"># As a data frame, we can pull out the second column using indexing ...</span></span>
+<span id="cb34-6"><a href="#cb34-6"></a></span>
+<span id="cb34-7"><a href="#cb34-7"></a>dummyData[dummyData<span class="op">$</span>gen <span class="op">==</span><span class="st"> &#39;a&#39;</span>,<span class="dv">2</span>]</span>
+<span id="cb34-8"><a href="#cb34-8"></a></span>
+<span id="cb34-9"><a href="#cb34-9"></a><span class="co"># ... or by name (my preference):</span></span>
+<span id="cb34-10"><a href="#cb34-10"></a></span>
+<span id="cb34-11"><a href="#cb34-11"></a>dummyData[dummyData<span class="op">$</span>gen <span class="op">==</span><span class="st"> &#39;a&#39;</span>,]<span class="op">$</span>n</span>
+<span id="cb34-12"><a href="#cb34-12"></a></span>
+<span id="cb34-13"><a href="#cb34-13"></a></span>
+<span id="cb34-14"><a href="#cb34-14"></a><span class="co"># We can then calculate the minimum value in group &quot;a&quot; as:</span></span>
+<span id="cb34-15"><a href="#cb34-15"></a></span>
+<span id="cb34-16"><a href="#cb34-16"></a><span class="kw">min</span>(dummyData[dummyData<span class="op">$</span>gen <span class="op">==</span><span class="st"> &#39;a&#39;</span>,]<span class="op">$</span>n)</span></code></pre></div>
 </section>
 <section id="practice-with-real-data" class="slide level2">
 <h2>Practice with real data</h2>
@@ -2950,9 +2923,9 @@ Provide the minimum value of n for treatment level “a”. We might address thi
 We will practice on an example data frame built in to the tidyverse package. The data provided are the size of the human population, by country, from 1995 to 2013 (source: World Health Organization’s Tuberculosis Report, see <a href="http://www.who.int/tb/country/data/download/en/" class="uri">http://www.who.int/tb/country/data/download/en/</a>). Let’s first load and explore the data:
 </p>
 <p><br></p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="co"># Load WHO&#39;s TB dataset:</span></span>
-<span id="cb36-2"><a href="#cb36-2"></a></span>
-<span id="cb36-3"><a href="#cb36-3"></a>population</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co"># Load WHO&#39;s TB dataset:</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a></span>
+<span id="cb35-3"><a href="#cb35-3"></a>population</span></code></pre></div>
 </section>
 <section id="practice-with-real-data-1" class="slide level2">
 <h2>Practice with real data</h2>
@@ -2961,28 +2934,28 @@ We will practice on an example data frame built in to the tidyverse package. The
 Let’s explore the population of the United States. We’ll start by subsetting the data to records where the “country” value is the “United States”.
 </p>
 <p><br></p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="co"># Subset population data to the United States:</span></span>
-<span id="cb37-2"><a href="#cb37-2"></a></span>
-<span id="cb37-3"><a href="#cb37-3"></a>population[population<span class="op">$</span>country <span class="op">==</span><span class="st"> &#39;United States&#39;</span>, ]</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="co"># Subset population data to the United States:</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a></span>
+<span id="cb36-3"><a href="#cb36-3"></a>population[population<span class="op">$</span>country <span class="op">==</span><span class="st"> &#39;United States&#39;</span>, ]</span></code></pre></div>
 </section>
 <section id="practice-with-real-data-2" class="slide level2">
 <h2>Practice with real data</h2>
 <hr>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co"># What are the country names?</span></span>
-<span id="cb38-2"><a href="#cb38-2"></a></span>
-<span id="cb38-3"><a href="#cb38-3"></a><span class="kw">unique</span>(population<span class="op">$</span>country)</span>
-<span id="cb38-4"><a href="#cb38-4"></a></span>
-<span id="cb38-5"><a href="#cb38-5"></a><span class="co"># Which of these countries contain the pattern &quot;United&quot;?</span></span>
-<span id="cb38-6"><a href="#cb38-6"></a></span>
-<span id="cb38-7"><a href="#cb38-7"></a><span class="kw">str_detect</span>(<span class="kw">unique</span>(population<span class="op">$</span>country), <span class="st">&#39;United&#39;</span>)</span>
-<span id="cb38-8"><a href="#cb38-8"></a></span>
-<span id="cb38-9"><a href="#cb38-9"></a><span class="kw">unique</span>(population<span class="op">$</span>country)[<span class="kw">str_detect</span>(<span class="kw">unique</span>(population<span class="op">$</span>country),</span>
-<span id="cb38-10"><a href="#cb38-10"></a>                                      <span class="st">&#39;United&#39;</span>)]</span>
-<span id="cb38-11"><a href="#cb38-11"></a></span>
-<span id="cb38-12"><a href="#cb38-12"></a><span class="co"># They call the United States &quot;United States of America&quot;, so </span></span>
-<span id="cb38-13"><a href="#cb38-13"></a><span class="co"># the query could be written as:</span></span>
-<span id="cb38-14"><a href="#cb38-14"></a></span>
-<span id="cb38-15"><a href="#cb38-15"></a>population[population<span class="op">$</span>country <span class="op">==</span><span class="st"> &#39;United States of America&#39;</span>,]</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="co"># What are the country names?</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a></span>
+<span id="cb37-3"><a href="#cb37-3"></a><span class="kw">unique</span>(population<span class="op">$</span>country)</span>
+<span id="cb37-4"><a href="#cb37-4"></a></span>
+<span id="cb37-5"><a href="#cb37-5"></a><span class="co"># Which of these countries contain the pattern &quot;United&quot;?</span></span>
+<span id="cb37-6"><a href="#cb37-6"></a></span>
+<span id="cb37-7"><a href="#cb37-7"></a><span class="kw">str_detect</span>(<span class="kw">unique</span>(population<span class="op">$</span>country), <span class="st">&#39;United&#39;</span>)</span>
+<span id="cb37-8"><a href="#cb37-8"></a></span>
+<span id="cb37-9"><a href="#cb37-9"></a><span class="kw">unique</span>(population<span class="op">$</span>country)[<span class="kw">str_detect</span>(<span class="kw">unique</span>(population<span class="op">$</span>country),</span>
+<span id="cb37-10"><a href="#cb37-10"></a>                                      <span class="st">&#39;United&#39;</span>)]</span>
+<span id="cb37-11"><a href="#cb37-11"></a></span>
+<span id="cb37-12"><a href="#cb37-12"></a><span class="co"># They call the United States &quot;United States of America&quot;, so </span></span>
+<span id="cb37-13"><a href="#cb37-13"></a><span class="co"># the query could be written as:</span></span>
+<span id="cb37-14"><a href="#cb37-14"></a></span>
+<span id="cb37-15"><a href="#cb37-15"></a>population[population<span class="op">$</span>country <span class="op">==</span><span class="st"> &#39;United States of America&#39;</span>,]</span></code></pre></div>
 </section>
 <section id="practice-with-real-data-3" class="slide level2">
 <h2>Practice with real data</h2>
@@ -2990,20 +2963,20 @@ Let’s explore the population of the United States. We’ll start by subsetting
 <p>
 Perhaps you are interested in what the population of the United States was in 2004. Query the data to the year 2004 and return the population size, as below:
 </p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="co"># To determine the size of a population in 2004:</span></span>
-<span id="cb39-2"><a href="#cb39-2"></a></span>
-<span id="cb39-3"><a href="#cb39-3"></a>population[population<span class="op">$</span>year <span class="op">==</span><span class="st"> </span><span class="dv">2004</span>,]</span>
-<span id="cb39-4"><a href="#cb39-4"></a></span>
-<span id="cb39-5"><a href="#cb39-5"></a><span class="co"># Therefore, the data frame reduced to the population </span></span>
-<span id="cb39-6"><a href="#cb39-6"></a><span class="co"># of the United States in 2004:</span></span>
-<span id="cb39-7"><a href="#cb39-7"></a></span>
-<span id="cb39-8"><a href="#cb39-8"></a>population[population<span class="op">$</span>country <span class="op">==</span><span class="st"> &#39;United States of America&#39;</span> <span class="op">&amp;</span></span>
-<span id="cb39-9"><a href="#cb39-9"></a><span class="st">             </span>population<span class="op">$</span>year <span class="op">==</span><span class="st"> </span><span class="dv">2004</span>,]</span>
-<span id="cb39-10"><a href="#cb39-10"></a></span>
-<span id="cb39-11"><a href="#cb39-11"></a><span class="co"># To return just the population information:</span></span>
-<span id="cb39-12"><a href="#cb39-12"></a></span>
-<span id="cb39-13"><a href="#cb39-13"></a>population[population<span class="op">$</span>country <span class="op">==</span><span class="st"> &#39;United States of America&#39;</span> <span class="op">&amp;</span><span class="st"> </span></span>
-<span id="cb39-14"><a href="#cb39-14"></a><span class="st">             </span>population<span class="op">$</span>year <span class="op">==</span><span class="st"> </span><span class="dv">2004</span>,]<span class="op">$</span>population</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co"># To determine the size of a population in 2004:</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a></span>
+<span id="cb38-3"><a href="#cb38-3"></a>population[population<span class="op">$</span>year <span class="op">==</span><span class="st"> </span><span class="dv">2004</span>,]</span>
+<span id="cb38-4"><a href="#cb38-4"></a></span>
+<span id="cb38-5"><a href="#cb38-5"></a><span class="co"># Therefore, the data frame reduced to the population </span></span>
+<span id="cb38-6"><a href="#cb38-6"></a><span class="co"># of the United States in 2004:</span></span>
+<span id="cb38-7"><a href="#cb38-7"></a></span>
+<span id="cb38-8"><a href="#cb38-8"></a>population[population<span class="op">$</span>country <span class="op">==</span><span class="st"> &#39;United States of America&#39;</span> <span class="op">&amp;</span></span>
+<span id="cb38-9"><a href="#cb38-9"></a><span class="st">             </span>population<span class="op">$</span>year <span class="op">==</span><span class="st"> </span><span class="dv">2004</span>,]</span>
+<span id="cb38-10"><a href="#cb38-10"></a></span>
+<span id="cb38-11"><a href="#cb38-11"></a><span class="co"># To return just the population information:</span></span>
+<span id="cb38-12"><a href="#cb38-12"></a></span>
+<span id="cb38-13"><a href="#cb38-13"></a>population[population<span class="op">$</span>country <span class="op">==</span><span class="st"> &#39;United States of America&#39;</span> <span class="op">&amp;</span><span class="st"> </span></span>
+<span id="cb38-14"><a href="#cb38-14"></a><span class="st">             </span>population<span class="op">$</span>year <span class="op">==</span><span class="st"> </span><span class="dv">2004</span>,]<span class="op">$</span>population</span></code></pre></div>
 </section>
 <section id="practice-with-real-data-4" class="slide level2">
 <h2>Practice with real data</h2>
@@ -3011,20 +2984,20 @@ Perhaps you are interested in what the population of the United States was in 20
 <p>
 In what years was the population of the United States greater than 300 million?
 </p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="co"># Subset the population data frame to records with a </span></span>
-<span id="cb40-2"><a href="#cb40-2"></a><span class="co"># population of greater than 300 million:</span></span>
-<span id="cb40-3"><a href="#cb40-3"></a></span>
-<span id="cb40-4"><a href="#cb40-4"></a>population[population<span class="op">$</span>population <span class="op">&gt;</span><span class="st"> </span><span class="dv">300000000</span>,]</span>
-<span id="cb40-5"><a href="#cb40-5"></a></span>
-<span id="cb40-6"><a href="#cb40-6"></a><span class="co"># Repeat the above, but subset the records to the United States:</span></span>
-<span id="cb40-7"><a href="#cb40-7"></a></span>
-<span id="cb40-8"><a href="#cb40-8"></a>population[population<span class="op">$</span>country <span class="op">==</span><span class="st"> &#39;United States of America&#39;</span> <span class="op">&amp;</span></span>
-<span id="cb40-9"><a href="#cb40-9"></a><span class="st">             </span>population<span class="op">$</span>population <span class="op">&gt;</span><span class="st"> </span><span class="dv">300000000</span>,]</span>
-<span id="cb40-10"><a href="#cb40-10"></a></span>
-<span id="cb40-11"><a href="#cb40-11"></a><span class="co"># To return just the years:</span></span>
-<span id="cb40-12"><a href="#cb40-12"></a></span>
-<span id="cb40-13"><a href="#cb40-13"></a>population[population<span class="op">$</span>country <span class="op">==</span><span class="st"> &#39;United States of America&#39;</span> <span class="op">&amp;</span></span>
-<span id="cb40-14"><a href="#cb40-14"></a><span class="st">             </span>population<span class="op">$</span>population <span class="op">&gt;</span><span class="st"> </span><span class="dv">300000000</span>, ]<span class="op">$</span>year</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="co"># Subset the population data frame to records with a </span></span>
+<span id="cb39-2"><a href="#cb39-2"></a><span class="co"># population of greater than 300 million:</span></span>
+<span id="cb39-3"><a href="#cb39-3"></a></span>
+<span id="cb39-4"><a href="#cb39-4"></a>population[population<span class="op">$</span>population <span class="op">&gt;</span><span class="st"> </span><span class="dv">300000000</span>,]</span>
+<span id="cb39-5"><a href="#cb39-5"></a></span>
+<span id="cb39-6"><a href="#cb39-6"></a><span class="co"># Repeat the above, but subset the records to the United States:</span></span>
+<span id="cb39-7"><a href="#cb39-7"></a></span>
+<span id="cb39-8"><a href="#cb39-8"></a>population[population<span class="op">$</span>country <span class="op">==</span><span class="st"> &#39;United States of America&#39;</span> <span class="op">&amp;</span></span>
+<span id="cb39-9"><a href="#cb39-9"></a><span class="st">             </span>population<span class="op">$</span>population <span class="op">&gt;</span><span class="st"> </span><span class="dv">300000000</span>,]</span>
+<span id="cb39-10"><a href="#cb39-10"></a></span>
+<span id="cb39-11"><a href="#cb39-11"></a><span class="co"># To return just the years:</span></span>
+<span id="cb39-12"><a href="#cb39-12"></a></span>
+<span id="cb39-13"><a href="#cb39-13"></a>population[population<span class="op">$</span>country <span class="op">==</span><span class="st"> &#39;United States of America&#39;</span> <span class="op">&amp;</span></span>
+<span id="cb39-14"><a href="#cb39-14"></a><span class="st">             </span>population<span class="op">$</span>population <span class="op">&gt;</span><span class="st"> </span><span class="dv">300000000</span>, ]<span class="op">$</span>year</span></code></pre></div>
 </section>
 <section id="practice-with-real-data-5" class="slide level2">
 <h2>Practice with real data</h2>
