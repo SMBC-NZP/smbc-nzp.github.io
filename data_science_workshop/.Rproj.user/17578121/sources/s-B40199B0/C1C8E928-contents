@@ -694,21 +694,6 @@ numericVector[3]
 <hr>
 <p>You may also query values by <b>condition</b>, using logic, in the same manner as above.</p> 
 <p>For example, vector `v` where value v<sub>x</sub> is greater than two:</p>
-```{r logic query vector, eval = TRUE}
-# Use logic to subset a vector:
-
-numericVector
-
-numericVector > 2
-
-numericVector[numericVector > 2]
-
-```
-
-## Indexing & logic: Vectors
-<hr>
-<p>You may also query values by <b>condition</b>, using logic, in the same manner as above.</p> 
-<p>For example, vector `v` where value v<sub>x</sub> is greater than two:</p>
 
 ```{r logic query with which, eval = TRUE}
 # At which indices does our logical statement evaluate to TRUE?

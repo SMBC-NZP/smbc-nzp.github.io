@@ -3,22 +3,22 @@
     "path": "~/gits/smbc-nzp.github.io/data_science_workshop/workflow_and_logic.Rmd",
     "project_path": "workflow_and_logic.Rmd",
     "type": "r_markdown",
-    "hash": "0",
+    "hash": "4031753799",
     "contents": "",
     "dirty": false,
     "created": 1614800354361.0,
     "source_on_save": false,
     "relative_order": 4,
     "properties": {
-        "cursorPosition": "724,68",
-        "scrollLine": "723"
+        "cursorPosition": "690,3",
+        "scrollLine": "688"
     },
     "folds": "",
-    "lastKnownWriteTime": 1614809634,
+    "lastKnownWriteTime": 1614810019,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1614809634769,
+    "last_content_update": 1614810019355,
     "read_only": false,
     "read_only_alternatives": []
 }
