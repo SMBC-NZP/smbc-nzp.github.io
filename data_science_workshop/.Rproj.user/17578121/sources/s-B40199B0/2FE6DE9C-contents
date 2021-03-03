@@ -44,7 +44,7 @@
 <h3>Workshop lessons</h3>
 <hr>
 <ul>
-<li><b><a href = "https://smbc-nzp.github.io/dataSci/lesson1_pres.html" target="_blank">Data management and the art of wrangling</a></b>. A review of data values and R objects while looking toward the future.</li>
+<li><b><a href = "https://smbc-nzp.github.io/dataSci/workflow_and_logic.html" target="_blank">Workshop introduction and logic</a></b>. The data science workflow, best practices, and a review and exploration of logic.</li>
 <li><a href = "https://smbc-nzp.github.io/dataSci/lesson1_exercise.html" target="_blank">Problem set</a></li>
 </ul>
 </div>
