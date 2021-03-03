@@ -3,22 +3,22 @@
     "path": "~/gits/smbc-nzp.github.io/data_science_workshop/css/styles.css",
     "project_path": "css/styles.css",
     "type": "css",
-    "hash": "2675857201",
+    "hash": "1160207269",
     "contents": "",
     "dirty": false,
     "created": 1614782027591.0,
     "source_on_save": false,
     "relative_order": 8,
     "properties": {
-        "cursorPosition": "68,1",
-        "scrollLine": "39"
+        "cursorPosition": "143,15",
+        "scrollLine": "136"
     },
     "folds": "",
-    "lastKnownWriteTime": 1614785094,
+    "lastKnownWriteTime": 1614809702,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1614785094695,
+    "last_content_update": 1614809702449,
     "read_only": false,
     "read_only_alternatives": []
 }

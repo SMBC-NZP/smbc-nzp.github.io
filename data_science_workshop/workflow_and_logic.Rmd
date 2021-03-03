@@ -727,13 +727,10 @@ numericVector > 2
 ```{r logic query with which2, eval = TRUE}
 # At which indices does our logical statement evaluate to TRUE?
 
-numericVector
-
 which(numericVector > 2)
 
 numericVector[4:6]
 
-numericVector[numericVector > 2]
 ```
 
 ## Indexing & logic: Vectors
