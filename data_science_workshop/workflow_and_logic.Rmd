@@ -679,7 +679,7 @@ numericVector < 5 & numericVector != 2
 
 ```
 
-## Indexing & logic: Query vectors
+## Indexing & logic: Vectors
 <hr>
 <p>Recall that the position of value `x` in vector `v` is notated as `v[x]`</p>
 ```{r vector index review, eval = TRUE}
