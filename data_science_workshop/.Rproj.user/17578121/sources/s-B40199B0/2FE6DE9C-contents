@@ -47,8 +47,15 @@
 <ul>
   <li><a href="code/workshop_logic_code.R" download>Startup code for lesson</a></li>
   <li><a href = "https://smbc-nzp.github.io/data_science_workshop/exercise_logic.html" target="_blank">Problem set</a></li>
-</ul>
-</li>
+  </ul>
+  </li>
+  <li>In pursuit of normal data (Codd’s rules & tidyr)</li>
+  <li>Data visualization (ggplot)</li>
+  <li>Functions and how to avoid them (dplyr)</li>
+  <li>For loops and how to avoid them (purrr)</li>
+  <li>Redefining normal: Nested datasets (purrr)</li>
+  <li>Applications: Introduction to geospatial analysis with R (sf)</li>
+  <li>Introduction to data reporting (RMarkdown & Shiny)</li>
 </ul>
 </div>
 
