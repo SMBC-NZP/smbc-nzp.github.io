@@ -15,7 +15,7 @@
 <body>
   
 
-<nav class="navbar navbar-inverse navbar">
+<nav class="navbar navbar-inverse navbar" style = 'border-radius: 0px;'>
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="#">Data Science Workshop</a>
@@ -38,12 +38,10 @@
 <br>
 
 <div class = "row">
-<h2 style="text-align: left;">Introduction to Data Science and the Art of Wrangling for Ecologists</h2>
+<h3 style="text-align: left;">Workshop lessons</h3>
 <hr>
 
 <div class = "row">
-<h3>Workshop lessons</h3>
-<hr>
 <ul>
 <li><b><a href = "https://smbc-nzp.github.io/data_science_workshop/workflow_and_logic.html" target="_blank">Workshop introduction and logic</a></b>. The data science workflow, best practices, and a review and exploration of logic.
 <ul>

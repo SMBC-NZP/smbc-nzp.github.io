@@ -14,7 +14,7 @@
 
 <body>
 
-<nav class="navbar navbar-inverse navbar">
+<nav class="navbar navbar-inverse navbar" style = 'border-radius: 0px;'>
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="#">Data Science Workshop</a>
