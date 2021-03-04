@@ -3,7 +3,7 @@
     "path": "~/gits/smbc-nzp.github.io/data_science_workshop/home.html",
     "project_path": "home.html",
     "type": "html",
-    "hash": "0",
+    "hash": "3822649659",
     "contents": "",
     "dirty": false,
     "created": 1614782759221.0,
@@ -11,15 +11,15 @@
     "relative_order": 2,
     "properties": {
         "tempName": "Untitled1",
-        "cursorPosition": "14,71",
+        "cursorPosition": "17,37",
         "scrollLine": "2"
     },
-    "folds": "44|43|48|10|\n49|41|52|0|\n",
-    "lastKnownWriteTime": 1614889272,
+    "folds": "43|43|47|10|\n48|41|51|0|\n",
+    "lastKnownWriteTime": 1614890275,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1614889272243,
+    "last_content_update": 1614890275995,
     "read_only": false,
     "read_only_alternatives": []
 }
