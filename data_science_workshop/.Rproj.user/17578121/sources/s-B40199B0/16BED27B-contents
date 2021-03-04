@@ -39,7 +39,7 @@
 
 <div id = "books" class = "row">
 <h3>Books and tutorials</h3>
-<p>There are a few books available for free online that make great references. Paper versions are available as well.</p>
+<p>There are a few books and online tutorials available for free online that make great references. Paper versions of the books below are available as well.</p>
 <br>
 
 <div id = "books-rfordatascience" class = "row">
@@ -61,7 +61,7 @@
 <br><br>
 
 <div id = "books-dplyr" class = "row">
-<p><a href="https://suzan.rbind.io/categories/tutorial/"><img src="https://d33wubrfki0l68.cloudfront.net/621a9c8c5d7b47c4b6d72e8f01f28d14310e8370/193fc/css/images/hex/dplyr.png" alt="dplyr hex sticker" class="r1 c0"  width = "150" style = "float: left; padding: 0px 20px 20px 0px;"></a><b>dplyr tutorial</b> (<a href = "https://suzan.rbind.io/categories/tutorial/" target = "_blank">link</a>): I really think this tutorial, by Suzan Baert, is really an excellent look into using dplyr. Baert is great at communicating R code in a really understandable way.</p>
+<p><a href="https://suzan.rbind.io/categories/tutorial/"><img src="https://d33wubrfki0l68.cloudfront.net/621a9c8c5d7b47c4b6d72e8f01f28d14310e8370/193fc/css/images/hex/dplyr.png" alt="dplyr hex sticker" class="r1 c0"  width = "150" style = "float: left; padding: 0px 20px 20px 0px;"></a><b>dplyr tutorial</b> (<a href = "https://suzan.rbind.io/categories/tutorial/" target = "_blank">link</a>): I really think this tutorial, by Suzan Baert, is an excellent look into using dplyr. Baert is great at communicating R code in a super understandable way.</p>
 </div>
 
 </div>
