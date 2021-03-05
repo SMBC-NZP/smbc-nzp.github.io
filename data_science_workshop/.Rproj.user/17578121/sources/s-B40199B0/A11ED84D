@@ -3,7 +3,7 @@
     "path": "~/gits/smbc-nzp.github.io/data_science_workshop/home.html",
     "project_path": "home.html",
     "type": "html",
-    "hash": "546691433",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1614782759221.0,
@@ -11,8 +11,8 @@
     "relative_order": 2,
     "properties": {
         "tempName": "Untitled1",
-        "cursorPosition": "49,438",
-        "scrollLine": "36"
+        "cursorPosition": "1,16",
+        "scrollLine": "0"
     },
     "folds": "52|41|55|0|\n",
     "lastKnownWriteTime": 1614891342,

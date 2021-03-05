@@ -3,7 +3,7 @@
     "path": "~/gits/smbc-nzp.github.io/data_science_workshop/preliminary_exercises.html",
     "project_path": "preliminary_exercises.html",
     "type": "html",
-    "hash": "3546404399",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1614884991954.0,
@@ -11,15 +11,15 @@
     "relative_order": 3,
     "properties": {
         "tempName": "Untitled1",
-        "cursorPosition": "19,73",
-        "scrollLine": "3"
+        "cursorPosition": "52,5",
+        "scrollLine": "43"
     },
-    "folds": "32|27|68|0|\n",
+    "folds": "",
     "lastKnownWriteTime": 1614890622,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1614890622331,
+    "last_content_update": 1614892285805,
     "read_only": false,
     "read_only_alternatives": []
 }
