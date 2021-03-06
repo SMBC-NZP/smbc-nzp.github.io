@@ -1,5 +1,0 @@
-GET https://api.zotero.org/users/12345/items?limit=30
-
-library(httr)
-
-httr::GET('https://api.zotero.org/users/12345/items?limit=30')

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  
+<head>
+  <title>dataSci</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <!--link rel="stylesheet" href="css/styles.css" type="text/css"-->
+  <style>
+  
+    p, li {
+      font-size: 1.5em;
+    }
+    
+    h1{
+      font-size: 2.25em;
+    }
+    
+    h2{
+      font-size: 2em;
+    }
+    
+    code {
+    font-family: Consolas,"courier new";
+    color: crimson;
+    background-color: #f1f1f1;
+    padding: 2px;
+    font-size: .75em;
+    }
+    
+    .center {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+    
+    .header {
+        background-color: #FFFFFF;
+        margin-bottom: 1vw;
+    }
+      
+    .flex-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    .banner-content {
+      margin-top: 1vw;
+      margin-left: 15vw;
+      margin-right: 15vw;
+    }
+    
+    .content {
+      padding-bottom: 80px;
+      margin-left: 15vw;
+      margin-right: 15vw;
+      flex-grow: 1;
+      background-color: #FFFFFF;
+    }
+  
+    .footer {
+        background-color: #101820;
+    }
+      
+    .fa-twitter {
+      color: white;
+    }
+  </style>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head>
+
+<div class = "flex-container">
+  <div id = "banner" class = "header">
+    <div class = "banner-content">
+      <div class = "row">
+        <h1>Version control: Getting started with GitHub</h1>
+      </div>
+        <hr>
+    </div>
+  </div>
+  <div class = "content">
+    <div id = "introduction" class = "row">
+        <p><a href="https://github.com/">
+          <img src="https://github.githubassets.com/images/modules/logos_page/Octocat.png" width="150" alt="Octocat" class="cover" style="float: left; padding: 0px 20px 20px 0px;"></a>
+          In this lesson, we will explore how to get started GitHub on your computer. This is meant to be almost entirely applied. Please see the <a href = "https://smbc-nzp.github.io/data_science_workshop/additional_resources.html" target = "_blank">additional resources</a> page for more in-depth content on version control and GitHub.</p>
+          </div>
+    <div id = "why_vc" class = "row">
+      <hr>
+      <h2>Why do I need version control?</h2>
+      <p>Version control is a system that tracks and manages changes to your files. It is an indispensable tool for working with data. When you collaborate with others, it allows for a (somewhat) seamless workflow for sharing code and data. For solo projects, it allows you to:</p>
+      <ul>
+        <li>Have the same version of your project across all computers you work on.</li>
+        <li>Have backups to your project files all in one place.</li>
+        <li>View and transport yourself to various points in the history of your files. <b>Important</b>! Because of this, you do not have to have different versions of the same file on your computer!</li>
+        </ul>
+        <p>These are just a few of the early benefits of using version control. There are a lot more that are worth exploring (e.g., forking) once you get a little experience under your belt!</p>
+        </div>
+    <div id = "next" class = "row">
+      <hr>
+      <h2>Downloading GitHub</h2>
+      <br>
+      <p>I prefer to use GitHub from bash (Bourne Again SHell). It is a free Unix shell that can be used across platforms. Those of you who use a command line terminal in Mac or Linux should find it familiar --  it is the default for Mac and Linux applications. Use the following links to download Git (without the larger desktop applications):</p>
+      <ul>
+        <li><b>Downloading for Mac</b>:</li>
+        <ul>
+          <li>With buttons using <a href = "https://git-scm.com/download/mac" target = "_blank">this link</a></li>
+          <li>To install using homebrew, homebrew run the following in terminal:</li>
+          <ul>
+            <li>Install homebrew if you don't yet have it:</li>
+            <br>
+              <br>
+              <pre><code style = "float: left;">/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></pre>
+            <li>Install git:</li>
+            <br>
+            <pre><code style = "float: left;">brew install git</code></pre>
+            </ul>
+          
+        </ul>
+        <li><b>Downloading for Windows</b>: Use this <a href="https://git-scm.com/download/win" target = "_blank">link</a>. The program will install as an <i>.exe</i> file</li>
+      </ul>
+    </div>
+  </div>
+  <div class = "footer">
+    <div class= "container" style = "height: 10vh;">
+      <p style = "color: white; float: left; padding-top: 3vh;">Contact me:</p>
+        <a href="mailto:evansbr@si.edu" class="fa fa-envelope fa-2x" target="_blank" style = "float: left; height: 7vh; padding-top: 3vh;  padding-left: 2vw;"></a>
+        <a href="https://twitter.com/bsevans_unc" class="fa fa-twitter fa-2x" target="_blank" style = "float: left; height: 7vh; padding-top: 3vh; padding-left: 2vw; "></a>
+      <img style = "float: right; height: 7vh; padding-top: 3vh;" src="https://americanindian.si.edu/nationtonation/img/smithsonian-logo-nav.png"/>
+    </div>
+  </div>
+</div>
