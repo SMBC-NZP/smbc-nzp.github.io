@@ -26,12 +26,17 @@
       font-size: 2em;
     }
     
+    pre {
+    color: white;
+    background-color: black;
+    }
+    
     code {
     font-family: Consolas,"courier new";
-    color: crimson;
-    background-color: #f1f1f1;
+    color: white;
+    background-color: black;
     padding: 2px;
-    font-size: .75em;
+    font-size: .8em;
     }
     
     .center {
@@ -115,14 +120,14 @@
     </div>
     <div id = "getting_git" class = "row">
       <hr>
-      <h2>2. Download GitHub</h2>
+      <h2>2. Download and Install GitHub</h2>
       <br>
       <p>I prefer to use GitHub from bash (Bourne Again SHell). It is a free Unix shell that can be used across platforms. Those of you who use a command line terminal in Mac or Linux should find it familiar --  it is the default for Mac and Linux applications. Downloading the command line version of the git will allow you to use either git from bash (which I like) or from RStudio (which I'm amenable to).</p>
       <p>Use the following links to download the command line version of GitHub:</p>
       <ul>
-        <li><b>Download for Mac</b>:</li>
+        <li><b>Download and Install for Mac</b>:</li>
         <ul>
-          <li>Install with buttons using <a href = "https://git-scm.com/download/mac" target = "_blank">this link</a></li>
+          <li>To install automatically, use <a href = "https://git-scm.com/download/mac" target = "_blank">this link</a>.</li>
           <li>To install using homebrew, run the following in terminal:</li>
           <br>
           <ul>
@@ -145,7 +150,7 @@
             </ul>
         </ul>
         <br>
-        <li><b>Download for Windows</b>: Use this <a href="https://git-scm.com/download/win" target = "_blank">link</a>. The program will install as an <i>.exe</i> file</li>
+        <li><b>Download and Install for Windows</b>: Use this <a href="https://git-scm.com/download/win" target = "_blank">link</a>. The program will install as an <i>.exe</i> file.</li>
       </ul>
     </div>
     <div id = "getting_started" class = "row">
@@ -153,9 +158,33 @@
       <h2>3. Configure your GitHub</h2>
       <br>
       <p>With git installed, you now need to configure the program to talk to your account. Working in bash, will use the "config" function in "git" to set it up. Start by providind a user name for your GitHub account:</p> 
-      <pre><code style = "float: left;">git config -- global user.name "Your Name"</code></pre>
-      <p>You'll next provide the email you used to set up your account:
-      <pre><code style = "float: left;">git config -- global user.email "your_email@email.com"</code></pre>
+      <pre><code style = "float: left;">git config --global user.name "Your Name"</code></pre>
+      <p>You'll next provide the email you used to set up your account:</p>
+      <br>
+      <pre><code style = "float: left;">git config --global user.email "your_email@email.com"</code></pre>
+      <br>
+      <p>Have a look to see if you've configured things correctly (you can change things if they're not correct):</p>
+      <br>
+      <pre><code style = "float: left;">git config --list</code></pre>
+      <br>
+      <p>You are now ready to start using GitHub!</p>
+      <br>
+    <div id = "working_in_commandline" class = "row">
+      <hr>
+      <h2>4. Working in command line</h2>
+      <br>
+      <p>
+    </div>
+    <div id = "cloning_a_repository" class = "row">
+      <hr>
+      <h2>5. Clone the workshop repository</h2>
+      <br>
+      <p>Now that you've connected your computer to GitHub, you can <b>clone</b> a repository to start using version control on the files in the folder. Cloning means that you are going to make a copy of the repository on your computer's hard drive.We'll use the repository for the workshop as an example:</p> 
+      <ol>
+        <li>Start by navigating to <a href = "https://github.com/SMBC-NZP/data_science_workshop" target="_blank">this link</a>, which is the repository where the example R code and data are stored for the workshop.</li>
+        <li>Click the green Code button and copy the HTTPS address to your clipboard.</li>
+      </ol>
+      </div>
       <br>
     </div>
   </div>
