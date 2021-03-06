@@ -105,29 +105,58 @@
         </ul>
         <p>These are just a few of the early benefits of using version control. There are a lot more that are worth exploring (e.g., forking) once you get a little experience under your belt!</p>
         </div>
-    <div id = "next" class = "row">
+    <div id = "getting_git" class = "row">
       <hr>
-      <h2>Downloading GitHub</h2>
+      <h2>1. Create a GitHub account</h2>
       <br>
-      <p>I prefer to use GitHub from bash (Bourne Again SHell). It is a free Unix shell that can be used across platforms. Those of you who use a command line terminal in Mac or Linux should find it familiar --  it is the default for Mac and Linux applications. Use the following links to download Git (without the larger desktop applications):</p>
+      <p>It all starts here! <a href="https://github.com/join" target = "_blank">Go to this link</a> and follow the usual steps for creating a new account (but don't download anything if they ask).</p>
+      <img src = "images/join_git.png" style = "width: 70vw">
+      <br>
+    </div>
+    <div id = "getting_git" class = "row">
+      <hr>
+      <h2>2. Download GitHub</h2>
+      <br>
+      <p>I prefer to use GitHub from bash (Bourne Again SHell). It is a free Unix shell that can be used across platforms. Those of you who use a command line terminal in Mac or Linux should find it familiar --  it is the default for Mac and Linux applications. Downloading the command line version of the git will allow you to use either git from bash (which I like) or from RStudio (which I'm amenable to).</p>
+      <p>Use the following links to download the command line version of GitHub:</p>
       <ul>
-        <li><b>Downloading for Mac</b>:</li>
+        <li><b>Download for Mac</b>:</li>
         <ul>
-          <li>With buttons using <a href = "https://git-scm.com/download/mac" target = "_blank">this link</a></li>
-          <li>To install using homebrew, homebrew run the following in terminal:</li>
+          <li>Install with buttons using <a href = "https://git-scm.com/download/mac" target = "_blank">this link</a></li>
+          <li>To install using homebrew, run the following in terminal:</li>
+          <br>
           <ul>
+            <li>Install the Command Line Tools, if you don't yet have it:</li>
+            <br>
+            <pre><code style = "float: left;">xcode-select --install</code></pre>
+            <br>
             <li>Install homebrew if you don't yet have it:</li>
             <br>
               <br>
-              <pre><code style = "float: left;">/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></pre>
+              <pre><code style = "float: left;">curl -fsSL -o install.sh https://raw.githubusercontent.com/Homebrew/install/master/install.sh</code></pre>
+            <br>
+            <li>Did it work? Enter this into your terminal to find out (should say "Your system is ready to brew"):</li>
+            <br>
+            <pre><code style = "float: left;">brew doctor</code></pre>
+            <br>
             <li>Install git:</li>
             <br>
             <pre><code style = "float: left;">brew install git</code></pre>
             </ul>
-          
         </ul>
-        <li><b>Downloading for Windows</b>: Use this <a href="https://git-scm.com/download/win" target = "_blank">link</a>. The program will install as an <i>.exe</i> file</li>
+        <br>
+        <li><b>Download for Windows</b>: Use this <a href="https://git-scm.com/download/win" target = "_blank">link</a>. The program will install as an <i>.exe</i> file</li>
       </ul>
+    </div>
+    <div id = "getting_started" class = "row">
+      <hr>
+      <h2>3. Configure your GitHub</h2>
+      <br>
+      <p>With git installed, you now need to configure the program to talk to your account. Working in bash, will use the "config" function in "git" to set it up. Start by providind a user name for your GitHub account:</p> 
+      <pre><code style = "float: left;">git config -- global user.name "Your Name"</code></pre>
+      <p>You'll next provide the email you used to set up your account:
+      <pre><code style = "float: left;">git config -- global user.email "your_email@email.com"</code></pre>
+      <br>
     </div>
   </div>
   <div class = "footer">
