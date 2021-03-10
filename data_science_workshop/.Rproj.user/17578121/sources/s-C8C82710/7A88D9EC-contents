@@ -42,7 +42,7 @@
 
 <div class = "row">
 <ul>
-<li><b><a href = "https://smbc-nzp.github.io/data_science_workshop/workflow_and_logic.html" target="_blank">Workshop introduction and logic</a></b>. The data science workflow, best practices, and a review and exploration of logic.
+<li><b><a href = "https://smbc-nzp.github.io/data_science_workshop/lessons/workflow_and_logic.html" target="_blank">Workshop introduction and logic</a></b>. The data science workflow, best practices, and a review and exploration of logic.
 <ul>
   <li><a href="code/workshop_logic_code.R" download>Startup code for lesson</a></li>
   <li><a href = "https://smbc-nzp.github.io/data_science_workshop/exercise_logic.html" target="_blank">Problem set</a></li>
