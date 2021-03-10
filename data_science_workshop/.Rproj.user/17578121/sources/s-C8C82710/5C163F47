@@ -1,25 +1,25 @@
 {
-    "id": "D33541BD",
+    "id": "5C163F47",
     "path": "~/gits/smbc-nzp.github.io/data_science_workshop/additional_lessons/github.html",
     "project_path": "additional_lessons/github.html",
     "type": "html",
     "hash": "0",
     "contents": "",
     "dirty": false,
-    "created": 1615045273056.0,
+    "created": 1615382303695.0,
     "source_on_save": false,
     "relative_order": 6,
     "properties": {
         "tempName": "Untitled1",
-        "cursorPosition": "254,0",
-        "scrollLine": "239"
+        "cursorPosition": "266,49",
+        "scrollLine": "252"
     },
-    "folds": "87|38|94|2|\n88|34|93|4|\n96|43|100|8|\n101|37|111|8|\n112|49|119|4|\n120|42|154|4|\n155|44|176|4|\n177|53|202|4|\n203|51|234|6|\n265|24|272|2|\n",
+    "folds": "",
     "lastKnownWriteTime": 1615214997,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1615214997968,
+    "last_content_update": 1615382333539,
     "read_only": false,
     "read_only_alternatives": []
 }

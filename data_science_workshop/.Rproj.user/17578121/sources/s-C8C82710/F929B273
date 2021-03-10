@@ -3,22 +3,22 @@
     "path": "~/gits/smbc-nzp.github.io/data_science_workshop/css/styles.css",
     "project_path": "css/styles.css",
     "type": "css",
-    "hash": "0",
+    "hash": "939221970",
     "contents": "",
     "dirty": false,
     "created": 1615046721488.0,
     "source_on_save": false,
-    "relative_order": 7,
+    "relative_order": 1,
     "properties": {
-        "cursorPosition": "5,27",
-        "scrollLine": "0"
+        "cursorPosition": "168,0",
+        "scrollLine": "148"
     },
-    "folds": "",
-    "lastKnownWriteTime": 1615046881,
+    "folds": "22|9|26|0|\n30|11|37|0|\n41|11|44|0|\n48|20|57|0|\n61|43|63|0|\n67|19|74|0|\n78|21|85|0|\n89|27|91|0|\n94|35|96|0|\n98|14|106|0|\n108|12|116|0|\n118|19|125|0|\n127|21|133|0|\n135|16|142|0|\n174|5|182|0|\n185|13|198|0|\n200|37|202|0|\n205|19|207|0|\n211|7|213|0|\n215|15|221|0|\n224|9|228|0|\n231|12|235|0|\n239|11|245|0|\n247|5|249|0|\n253|5|256|0|\n259|6|265|0|\n",
+    "lastKnownWriteTime": 1615385500,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1615046881168,
+    "last_content_update": 1615385500757,
     "read_only": false,
     "read_only_alternatives": []
 }
