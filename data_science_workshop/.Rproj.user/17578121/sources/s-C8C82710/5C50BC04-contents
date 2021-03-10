@@ -25,8 +25,8 @@ knitr::opts_chunk$set(echo = FALSE)
 <div class = "col-sm-4">
 <img style="padding-right:40px; padding-top: 10px; display: block;" align = "left" src="images/upside_down_birds.jpg" width="45%"  title=" Hideta Nagai, National Geographic"/>
 </div>
-
-<div class = "col-sm-8">
+<div class = "col-sm-1"></div>
+<div class = "col-sm-7">
 <ul style = "padding-left: 10px">
 <li><b>Tolstoy</b>: All happy families are alike; each unhappy family is unhappy in its own way (Tolstoy 1877).</li>
 

@@ -1,9 +1,9 @@
 {
     "id": "67F3EEB3",
-    "path": "~/gits/smbc-nzp.github.io/data_science_workshop/additional_lessons/tidy_data_code.R",
-    "project_path": "additional_lessons/tidy_data_code.R",
+    "path": "~/gits/smbc-nzp.github.io/data_science_workshop/code/tidy_data_code.R",
+    "project_path": "code/tidy_data_code.R",
     "type": "r_source",
-    "hash": "3620301074",
+    "hash": "235502205",
     "contents": "",
     "dirty": false,
     "created": 1615386239611.0,
@@ -11,15 +11,15 @@
     "relative_order": 10,
     "properties": {
         "tempName": "Untitled1",
-        "cursorPosition": "26,51",
-        "scrollLine": "4"
+        "cursorPosition": "130,0",
+        "scrollLine": "105"
     },
     "folds": "",
-    "lastKnownWriteTime": 1615386978,
+    "lastKnownWriteTime": 1615412884,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1615386978914,
+    "last_content_update": 1615412884230,
     "read_only": false,
     "read_only_alternatives": []
 }

@@ -306,6 +306,7 @@ kable(badDate, "html") %>%
   )
 ```
 </div>
+
 <p>To fix this, we separate date into multiple columns, as below (<i>Note: The table below is still not tidy!</i>).</p>
 <br>
 <div class = "row">

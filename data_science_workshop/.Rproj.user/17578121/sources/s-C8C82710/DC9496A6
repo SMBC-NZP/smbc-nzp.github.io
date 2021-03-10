@@ -1,0 +1,25 @@
+{
+    "id": "DC9496A6",
+    "path": "~/gits/smbc-nzp.github.io/data_science_workshop/lessons/tidy_data.Rmd",
+    "project_path": "lessons/tidy_data.Rmd",
+    "type": "r_markdown",
+    "hash": "3555226597",
+    "contents": "",
+    "dirty": false,
+    "created": 1615393734308.0,
+    "source_on_save": false,
+    "relative_order": 12,
+    "properties": {
+        "tempName": "Untitled1",
+        "cursorPosition": "1133,12",
+        "scrollLine": "1117"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1615412557,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1615412557489,
+    "read_only": false,
+    "read_only_alternatives": []
+}
