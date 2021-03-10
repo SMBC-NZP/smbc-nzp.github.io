@@ -170,6 +170,7 @@ h5 {
 p, ol, ul, li {
   font-size: 2rem;
   font-family: "Arial";
+  line-height: 2rem;
 }
 
 .tt {
