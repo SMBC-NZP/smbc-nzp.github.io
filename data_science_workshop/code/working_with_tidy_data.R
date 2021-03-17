@@ -1,15 +1,30 @@
 
 # Set up ------------------------------------------------------------------
 
+# If lubridate is not installed, do so now (uncomment line):
+
+# install.packages('lubridate')
+
 # Load libraries:
 
 library(tidyverse)
 library(lubridate)
 
-# If lubridate generated an error:
+# List files in your working directory:
 
-# install.packages('lubridate')
+list.files()
 
+# If you don't see the value "data" in your list:
+
+# dir.create("data")
+
+# Put the file messy_weather.csv inside the data directory if it isn't 
+# already there. 
+
+# Load file into R:
+
+messy_weather <-
+  read_csv('data/messy_weather.csv')
 
 # Review: Functions -------------------------------------------------------
 
@@ -60,7 +75,7 @@ losing_a_y(3)
 
 y
 
-# Forcing something into your global environemnt:
+# Forcing something into your global environment:
 
 losing_a_y <-
   function(x) {
@@ -79,12 +94,7 @@ y
 my_vector <-
   1:5
 
-# Some very silly functions for illustration:
-
-multiply_by_two <-
-  function(x) {
-    x*2
-  }
+# Add another silly function for illustration:
 
 add_one <-
   function(x) {
@@ -146,21 +156,7 @@ rm(my_vector2)
 
 # The pipe in action! -----------------------------------------------------
 
-# List files in your working directory:
-
-list.files()
-
-# If you don't see the value "data" in your list:
-
-# dir.create("data")
-
-# Put the file messy_weather.csv inside the data directory if it isn't 
-# already there. 
-
-# Load file into R:
-
-messy_weather <-
-  read_csv('data/messy_weather.csv')
+# Look at the messy data:
 
 messy_weather
 
