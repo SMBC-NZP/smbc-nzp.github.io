@@ -180,6 +180,11 @@ library(RCurl)
 library(knitr) ; library(kableExtra) ; library(tidyverse)
 
 options(knitr.table.format = "html")
+
+# Read data files:
+
+messy_weather <-
+  read_csv('../data/messy_weather.csv')
 end.rcode -->
     <nav class="navbar navbar-inverse navbar" style = 'border-radius: 0px;'>
     <div class="container-fluid">
@@ -247,7 +252,7 @@ end.rcode-->
         <p>Using your bash window or your preferred file management system (e.g., Finder), move "messy_weather.csv" into your data folder.</p>
       <p>Load the file into R:</p> <br>
 
-<!--begin.rcode, message = FALSE
+<!--begin.rcode, eval = FALSE
 messy_weather <-
   read_csv('data/messy_weather.csv')
 end.rcode-->
