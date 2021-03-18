@@ -1,0 +1,236 @@
+---
+title: "Normalizing data"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(RCurl)
+library(tidyverse)
+knitr::opts_chunk$set(echo = FALSE)
+# gradethis::gradethis_setup()
+
+
+messy_weather <-
+  read_csv('data/messy_weather.csv')
+
+source("https://raw.githubusercontent.com/bsevansunc/workshop_languageOfR/master/sourceCode.R")
+```
+
+## Initial exploration
+
+### Load and explore the data
+
+The dataset <code>messy_weather</code> has been loaded into this websites environment using the following lines of code:
+
+```{r test, exercise=FALSE, eval = FALSE}
+messy_weather <-
+  read_csv('data/messy_weather.csv')
+```
+
+<pre>
+  <code>
+    messy_weather <-
+      read_csv('data/messy_weather.csv')
+  </code>
+</pre>
+
+View the table by typing the name <code>messy_weather</code> below. You can run this code using the CTRL+Enter (Windows) or CMD+Enter (Mac).
+
+```{r view_messy_weather, exercise=TRUE}
+
+```
+
+This table has a lot of columns. Use the right and left arrows adjacent to the column names to explore the table.
+
+When exploring a data set, I often find that the function <code>glimpse</code> is more informative than viewing the whole table. Type <code>glimpse()</code> in the space below. Notice that the function's arguments (<b>formals</b>) of the function appear on the write after you type the parentheses. As a part of the tidyverse package, the first argument <code>x = </code> is the data source. Provide <code>messy_weather</code> as the data source for this function.
+
+```{r initial_glimpse, exercise=TRUE}
+```
+
+## The rules of tidy data
+
+Now our task is to make these data tidy. In other words, "normalize" the data.
+
+#### Codd's rules for normalizing data:
+
+The three normalization rules of database design (Codd) form the backbone of much of the field of data science and define a tidy dataset. These rules are:
+
+1. **First normal**
+    - All rows represent a unique record (primary key)
+    - All values are atomic
+    - Columns do not contain repeated grouping
+1. **Second normal**: All columns are functionally dependent the primary key (observation)
+1. **Third normal**: All columns are non-transitively dependent. This means that column values are <b>only</b> directly a function of the primary key.
+
+#### Tidy data rules
+
+1. Each variable forms a column
+1. Each observation forms a row
+1. Each level of observation forms a table
+
+Let's `glimpse` again out how are data are structured to see how these rules are violated:
+
+```{r initial_glimpse2, exercise=TRUE}
+glimpse(messy_weather)
+```
+
+## Pivot longer
+
+```{r initial_glimpse3, eval=TRUE, echo = FALSE}
+messy_weather
+```
+
+The first thing that pops out to me with this table is that each day in March is given its own column. This is a really telling (and common) problem. 
+
+```{r question_march_days, echo=FALSE}
+question("Which tidy data rule does this violate?",
+  answer("Each variable forms a column"),
+  answer("Each observation forms a row", correct = TRUE, message = "The data are formatted such that observations are located in columns rather rows."),
+  answer("Each level of observation forms a table"),
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+We can use the function `pivot_longer` to solve this problem. This function reshapes the data, re-organizing columns into rows. The arguments for this function include:
+
+- data: The data frame to pivot
+- cols: A selection of columns that you would like to change from wide to long format
+- names_to: A string specifying the name of the column to create from the data stored in the column names of data
+- values_to: The name of the values column (in this case associated with each day)
+- names_prefix: A regular expression used to remove matching text from the start of each variable name.
+
+Consider the example table, `dfWide`, below. It contains a mass measurement for three subjects in 2016 and 2017. Unique observations of the subjects are stored as columns instead of rows:
+
+```{r wide_example_init, eval = TRUE, echo = FALSE}
+dfWide
+```
+
+We can apply `pivot_longer` to turn this into a tidy(er) frame:
+
+```{r wide_example, eval = TRUE, echo = TRUE}
+pivot_longer(
+  data = dfWide,
+  cols = mass2016:mass2017,
+  names_to = "year",
+  values_to = "mass",
+  names_prefix = "mass"
+)
+```
+
+### Now you
+
+Complete the code below to place each day in its own row. In doing so:
+
+- Assign the name "messy_weather_long_days" to the result
+- Name the days column "day"
+- Name the values column "value"
+- Remove the prefix "march_" from the day values
+
+```{r pivot_longer, exercise=TRUE}
+
+```
+
+```{r pivot_longer-hint-1}
+messy_weather_long_days <-
+```
+
+```{r pivot_longer-hint-2}
+messy_weather_long_days <-
+  pivot_longer()
+```
+
+```{r pivot_longer-hint-3}
+messy_weather_long_days <-
+  pivot_longer(
+    data = messy_weather)
+```
+
+```{r pivot_longer-hint-4}
+messy_weather_long_days <-
+  pivot_longer(
+    data = messy_weather,
+    cols = march_1:march_31)
+```
+
+```{r pivot_longer-hint-5}
+messy_weather_long_days <-
+  pivot_longer(
+    data = messy_weather,
+    cols = march_1:march_31,
+    names_to = "day")
+```
+
+```{r pivot_longer-hint-6}
+messy_weather_long_days <-
+  pivot_longer(
+    data = messy_weather,
+    cols = march_1:march_31,
+    names_to = "day",
+    values_to = "value")
+```
+
+```{r pivot_longer-solution}
+messy_weather_long_days <-
+  pivot_longer(
+    data = messy_weather,
+    cols = march_1:march_31,
+    names_to = "day",
+    values_to = "value",
+    names_prefix = "march_")
+```
+
+
+## Example text below
+
+*Here's an exercise with some prepopulated code as well as `exercise.lines = 5` to provide a bit more initial room to work.*
+
+Now write a function that adds any two numbers and then call it:
+
+```{r add-function, exercise=TRUE, exercise.lines = 5}
+add <- function() {
+  
+}
+```
+
+## Topic 2
+
+### Exercise with Hint
+
+*Here's an exercise where the chunk is pre-evaulated via the `exercise.eval` option (so the user can see the default output we'd like them to customize). We also add a "hint" to the correct solution via the chunk immediate below labeled `print-limit-hint`.*
+
+Modify the following code to limit the number of rows printed to 5:
+
+```{r print-limit, exercise=TRUE, exercise.eval=TRUE}
+mtcars
+```
+
+```{r print-limit-hint}
+head(mtcars)
+```
+
+### Quiz
+
+*You can include any number of single or multiple choice questions as a quiz. Use the `question` function to define a question and the `quiz` function for grouping multiple questions together.*
+
+Some questions to verify that you understand the purposes of various base and recommended R packages:
+
+```{r quiz}
+quiz(
+  question("Which package contains functions for installing other R packages?",
+    answer("base"),
+    answer("tools"),
+    answer("utils", correct = TRUE),
+    answer("codetools")
+  ),
+  question("Which of the R packages listed below are used to create plots?",
+    answer("lattice", correct = TRUE),
+    answer("tools"),
+    answer("stats"),
+    answer("grid", correct = TRUE)
+  )
+)
+```
+
