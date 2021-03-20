@@ -125,7 +125,8 @@ bird_list <-
         site,
         canopyCover))
 
-bird_list[[2]] <- distinct(bird_list[[2]])
+bird_list[[2]] <- 
+  distinct(bird_list[[2]])
 
 bird_list
 

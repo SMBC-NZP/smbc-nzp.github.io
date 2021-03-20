@@ -110,19 +110,6 @@
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 </head>
 
-<nav class="navbar navbar-inverse navbar" style = 'border-radius: 0px;'>
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="home.html" style = "font-size: 1.5em">Data Science Workshop</a>
-    </div>
-    <ul class="nav navbar-nav" style = "font-size: 16px">
-      <li><a href="preliminary_exercises.html">Preliminary exercises</a></li>
-      <li><a href="workshop_lessons.html">Workshop lessons</a></li>
-      <li><a href="additional_resources.html">Additional resources</a></li>
-    </ul>
-  </div>
-</nav>
-
 
 <div class = "flex-container">
   <div id = "banner" class = "header">
@@ -184,7 +171,6 @@ end.rcode-->
 	      width="50%" />
 <p>It is estimated that the process of summarizing and preparing data for statistical analysis, <b>data wrangling</b>, consumes roughly 80 percent of total analysis time (Dasu and Johnson 2003). Despite this, researchers are rarely given much, if any, training on properly managing their data. 
 As a result, researchers in fields outside of data science rarely follow formal data management conventions and tend to format their data for a given analyis, ease of data entry, or for some now-potentially-defunct computer program. This leads to messy, inflexible datasets that are difficult to work with for anything but their initial intention.</p>
-
 
 <p>The goal of this lesson is to introduce you to how to store your field data in a tidy way. Tidy data are datasets that follow the convention of database design. This is the preferable format for data in that:</p>
 <ul>
@@ -541,7 +527,7 @@ end.rcode-->
 <br>
 <br>
 <blockquote>
-<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise:</h3>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h3>
 <br>
 <p>Consider how to structure the following dataset using the three rules of normalizing data:</p>
 <!--begin.rcode echo = FALSE
@@ -766,6 +752,13 @@ bird_list[[2]] <-
 bird_list
 end.rcode-->
 <br>
+
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h3>
+<br>
+<p>The dataset `birdCounts` is located in your global environment. Following the rules outlined above, convert this dataset to tidy-formatted data.</p>
+<br>
+</blockquote>
 <br>
       
   </div>
